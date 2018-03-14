@@ -1,0 +1,379 @@
+本质上这个项目可以理解为一个单页面的BBS。
+写一下后端主要要给前台的接口吧
+
+
+通用异常返回，异常了最好返回这个json为{code:100,msg:"未知错误"}
+任何登陆才能使用的功能（就是需要使用userid参数的功能），在未登录下返回{code:300,msg:"当前用户未登录"},然后跳转到登陆页面
+
+
+格式介绍：
+Function Name:方法名称
+Describe:这个方法的介绍
+Namespace:方法所属的命名空间，比如login方法，在/空间的话路径就是localhost/login,auth空间的话就是localhost/auth/login
+Params：需要提供的参数
+Method:使用的网络方法，通常有post，get，以及post&get三种
+Return:返回类型以及内容
+
+
+Function Name:signIn
+Describe:注册方法，将提交的参数存储到用户表中,觉得能力有余的话加密密码的存储
+Namespace:auth
+Params：包含以下属性的user类{username, nickname, password, sex, age, isNs, motto}
+Method:post
+Return:json：{code:200,msg:"注册成功"}
+			{code:101,msg:"注册失败，该用户名或昵称已存在"}
+			{code:102,msg:"表单填写错误，可能是密码不匹配，或者有选项未输入"}
+
+Function Name:login
+Describe:登陆方法，验证提交的参数，如果通过，将用户信息存储至session中
+Namespace:auth
+Params：username,password
+Method:post
+Return:json:{code:200,msg:"登陆成功"}
+			{code:101,msg:"登陆失败，账号或密码错误"}
+
+Function Name:setUser
+Describe:修改账户信息,将变动的信息存储到user表中
+Namespace:user
+Params：userid与注册表单类似的表单，但是回传一个json，json中包含userid以及用户需要修改的字段名以及结果，然后用update给他更新了
+Method:post
+Return:json:{code:200,msg:"修改成功"}
+			{code:101,msg:"修改失败，该用户名或昵称已存在"}
+
+Function Name:leave
+Describe:注销账号，将该user的alive设为1，该userid的所有blog的,并且从session中删除该用户信息
+Namespace:user
+Params：userid
+Method:post
+Return:json:{code:200,msg:"注销成功"}
+			{code:101,msg:"修改失败，该用户名或昵称已存在"}
+
+Function Name:logout
+Describe:退出登陆，从session中删除用户信息
+Namespace:user
+Params：userid
+Method:post
+Return:json:{code:200,msg:"退出成功"}
+			{code:101,msg:"退出失败，当前用户不存在"}
+
+Function Name:setAvatar
+Describe:上传文件，将文件重命名保存后，把文件名赋予user的avatar字段
+Namespace:user
+Params：userid, 图片
+Method:post
+Return:json：{code:200,msg:设置成功}
+			{code:101,msg:"图片大小超出限制"}
+
+Function Name:setBackground
+Describe:上传文件，将文件重命名保存后，把文件名赋予user的background字段  或者觉得能力有余还可以试一下同时支持纯色背景
+Namespace:user
+Params：userid, 图片（或者rgb
+Method:post
+Return:json：{code:200,msg:设置成功}
+			{code:101,msg:"图片大小超出限制"}
+			{code:102,msg:"参数错误"}
+
+Function Name:searchUser
+Describe:搜索用户，通过得到关键字，分页页数，分页容量进行搜索
+Namespace:/
+Params：keyword, pageNum, pageCap(分页容量，即一页展示pageCap个数据)
+Method:post
+Return:jsonlist:{user.uid,user.nickname,user.avatar,user.motto,follerNum(粉丝数量，在follow表里面select count就出来了),folledNum(关注数量)}
+或者{code:101,msg:"当前用户不存在"}
+
+Function Name:follow
+Describe:关注用户，往关注表里面加一行
+Namespace:user
+Params：userid,followedid(被关注者id)
+Method:post
+Return:json:{code:200,msg:"关注成功"}
+			{code:101,msg:"关注用户不存在"}
+
+Function Name:unfollow
+Describe:取消关注用户，删除关注表中的一行
+Namespace:user
+Params：userid,followedid(被关注者id)
+Method:post
+Return:json:{code:200,msg:"取关成功"}
+			{code:101,msg:"取关用户不存在"}
+
+Function Name:initUser
+Describe:清空微博，将当前用户的全部blog的visibility设为2（通常互联网应用在用户数据这块不会使用真正的delete，而是隐藏
+Namespace:user
+Params：userid
+Method:post
+Return:json:{code:200,msg:"清空成功"}
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
