@@ -62,20 +62,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
-code/.idea/workspace.xml
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-code/.idea/workspace.xml
-code/.idea/workspace.xml
-code/.idea/workspace.xml
-code/.idea/workspace.xml
-=======
 code/.idea/
 code/.gradle/
 >>>>>>> 139be594c58cffee5a21e7c1fda0d2b13404c1b0
-code/.idea/workspace.xml
 >>>>>>> origin/master
-code/.idea/workspace.xml
 doc/~$$数据库.~vsdx
