@@ -3,7 +3,12 @@
 
 
 通用异常返回，异常了最好返回这个json为{code:100,msg:"未知错误"}
+
+code100系列的都是非主键字段参数错误之类的情况,主要是用来提醒下的
+
 任何登陆才能使用的功能（就是需要使用userid参数的功能），在未登录下返回{code:300,msg:"当前用户未登录"},然后跳转到登陆页面
+
+需要使用blogid方法，但是查询不到提交的blogid或者没有提交blogid的情况返回{code:301,msg:"当前微博不存在"}
 
 
 格式介绍：
@@ -104,47 +109,48 @@ Params：userid
 Method:post
 Return:json:{code:200,msg:"清空成功"}
 
-Function Name:
-Describe:
-Namespace:
-Params：
-Method:
-Return:
+Function Name:submitBlog
+Describe:发布微博，就是发布微博
+Namespace:weibo
+Params：userid, content, release_time(默认未空，非空则为预定发布时间)， visibility(默认为空，非空为仅用户自身可见)
+Method:post
+Return:json:{code:200,msg:"发布成功"}
+		json:{code:101,msg:"内容为空或者过长"}
 
-Function Name:
-Describe:
-Namespace:
-Params：
-Method:
-Return:
+Function Name:delBlog
+Describe:删除微博
+Namespace:blog
+Params：userid
+Method:post
+Return:json:{code:200,msg:"删除成功"}
 
-Function Name:
-Describe:
-Namespace:
-Params：
-Method:
-Return:
+Function Name:setBlog
+Describe:修改微博，和发布差不多
+Namespace:blog
+Params：blogid, content, release_time(默认未空，非空则为预定发布时间)， visibility(默认为空，非空为仅用户自身可见)
+Method:post
+Return:json:{code:200,msg:"修改成功"}
 
-Function Name:
-Describe:
-Namespace:
-Params：
-Method:
-Return:
+Function Name:comment
+Describe:评论微博，和发布差不多，但是没有可见性和发布时间这两个属性
+Namespace:blog
+Params：blogid, content
+Method:post
+Return:json:{code:200,msg:"评论成功"}
 
-Function Name:
-Describe:
-Namespace:
-Params：
-Method:
-Return:
+Function Name:thumpup
+Describe:给微博点赞，点第二次消失,做法就是查一下thumb_up表里面有没有同时包含了这个uid和bid的行，有的话删除，没有的话添加
+Namespace:blog
+Params：blogid
+Method:post
+Return:json:{code:200,msg:"评论成功"}
 
-Function Name:
-Describe:
-Namespace:
-Params：
-Method:
-Return:
+Function Name:callAt
+Describe:at一位用户，就是将当前使用at的微博id和目标用户的id添加到一个表中
+Namespace:blog
+Params：userid(目标用户id),blogid(含有at的微博的id)
+Method:post
+Return:json:{code:200,msg:"成功"}后面都懒得写了，200就是各种成功
 
 Function Name:
 Describe:

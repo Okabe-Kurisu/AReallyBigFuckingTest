@@ -1,6 +1,6 @@
-地址:bj.kxvpn.cc
+地址:bj.kxvpn.xyz
 端口：3306
 账号:admin
 密码:admin
 库名：weibo
-在线浏览地址:bj.kxvpn.cc/Makise
+在线浏览地址:bj.kxvpn.xyz/Makise
