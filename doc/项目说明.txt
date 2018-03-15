@@ -146,16 +146,16 @@ Method:post
 Return:json:{code:200,msg:"评论成功"}
 
 Function Name:callAt
-Describe:at一位用户，就是将当前使用at的微博id和目标用户的id添加到一个表中
+Describe:at用户，就是将当前使用at的微博id和目标用户的id添加到一个表中
 Namespace:blog
 Params：userid(目标用户id),blogid(含有at的微博的id)
 Method:post
 Return:json:{code:200,msg:"成功"}后面都懒得写了，200就是各种成功
 
-Function Name:
-Describe:
-Namespace:
-Params：
+Function Name:searchBlog
+Describe:搜索微博，
+Namespace:blog
+Params：keyword,userid(可选项，登陆了就传上去)
 Method:
 Return:
 
