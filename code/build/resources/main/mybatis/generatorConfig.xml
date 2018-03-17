@@ -35,6 +35,7 @@
 
         <!-- sql占位符，表示所有的表 -->
         <table tableName="%">
+            <property name="useActualColumnNames" value="true"/>
             <generatedKey column="epa_id" sqlStatement="Mysql" identity="true" />
         </table>
     </context>

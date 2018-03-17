@@ -13,9 +13,9 @@ public interface InnodbCmpResetMapper {
         "insert into INNODB_CMP_RESET (page_size, compress_ops, ",
         "compress_ops_ok, compress_time, ",
         "uncompress_ops, uncompress_time)",
-        "values (#{pageSize,jdbcType=INTEGER}, #{compressOps,jdbcType=INTEGER}, ",
-        "#{compressOpsOk,jdbcType=INTEGER}, #{compressTime,jdbcType=INTEGER}, ",
-        "#{uncompressOps,jdbcType=INTEGER}, #{uncompressTime,jdbcType=INTEGER})"
+        "values (#{page_size,jdbcType=INTEGER}, #{compress_ops,jdbcType=INTEGER}, ",
+        "#{compress_ops_ok,jdbcType=INTEGER}, #{compress_time,jdbcType=INTEGER}, ",
+        "#{uncompress_ops,jdbcType=INTEGER}, #{uncompress_time,jdbcType=INTEGER})"
     })
     int insert(InnodbCmpReset record);
 
@@ -25,12 +25,12 @@ public interface InnodbCmpResetMapper {
         "from INNODB_CMP_RESET"
     })
     @Results({
-        @Result(column="page_size", property="pageSize", jdbcType=JdbcType.INTEGER),
-        @Result(column="compress_ops", property="compressOps", jdbcType=JdbcType.INTEGER),
-        @Result(column="compress_ops_ok", property="compressOpsOk", jdbcType=JdbcType.INTEGER),
-        @Result(column="compress_time", property="compressTime", jdbcType=JdbcType.INTEGER),
-        @Result(column="uncompress_ops", property="uncompressOps", jdbcType=JdbcType.INTEGER),
-        @Result(column="uncompress_time", property="uncompressTime", jdbcType=JdbcType.INTEGER)
+        @Result(column="page_size", property="page_size", jdbcType=JdbcType.INTEGER),
+        @Result(column="compress_ops", property="compress_ops", jdbcType=JdbcType.INTEGER),
+        @Result(column="compress_ops_ok", property="compress_ops_ok", jdbcType=JdbcType.INTEGER),
+        @Result(column="compress_time", property="compress_time", jdbcType=JdbcType.INTEGER),
+        @Result(column="uncompress_ops", property="uncompress_ops", jdbcType=JdbcType.INTEGER),
+        @Result(column="uncompress_time", property="uncompress_time", jdbcType=JdbcType.INTEGER)
     })
     List<InnodbCmpReset> selectAll();
 }

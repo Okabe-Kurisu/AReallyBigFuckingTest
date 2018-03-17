@@ -16,12 +16,12 @@ public interface ReferentialConstraintsMapper {
         "MATCH_OPTION, UPDATE_RULE, ",
         "DELETE_RULE, TABLE_NAME, ",
         "REFERENCED_TABLE_NAME)",
-        "values (#{constraintCatalog,jdbcType=VARCHAR}, #{constraintSchema,jdbcType=VARCHAR}, ",
-        "#{constraintName,jdbcType=VARCHAR}, #{uniqueConstraintCatalog,jdbcType=VARCHAR}, ",
-        "#{uniqueConstraintSchema,jdbcType=VARCHAR}, #{uniqueConstraintName,jdbcType=VARCHAR}, ",
-        "#{matchOption,jdbcType=VARCHAR}, #{updateRule,jdbcType=VARCHAR}, ",
-        "#{deleteRule,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, ",
-        "#{referencedTableName,jdbcType=VARCHAR})"
+        "values (#{CONSTRAINT_CATALOG,jdbcType=VARCHAR}, #{CONSTRAINT_SCHEMA,jdbcType=VARCHAR}, ",
+        "#{CONSTRAINT_NAME,jdbcType=VARCHAR}, #{UNIQUE_CONSTRAINT_CATALOG,jdbcType=VARCHAR}, ",
+        "#{UNIQUE_CONSTRAINT_SCHEMA,jdbcType=VARCHAR}, #{UNIQUE_CONSTRAINT_NAME,jdbcType=VARCHAR}, ",
+        "#{MATCH_OPTION,jdbcType=VARCHAR}, #{UPDATE_RULE,jdbcType=VARCHAR}, ",
+        "#{DELETE_RULE,jdbcType=VARCHAR}, #{TABLE_NAME,jdbcType=VARCHAR}, ",
+        "#{REFERENCED_TABLE_NAME,jdbcType=VARCHAR})"
     })
     int insert(ReferentialConstraints record);
 
@@ -33,17 +33,17 @@ public interface ReferentialConstraintsMapper {
         "from REFERENTIAL_CONSTRAINTS"
     })
     @Results({
-        @Result(column="CONSTRAINT_CATALOG", property="constraintCatalog", jdbcType=JdbcType.VARCHAR),
-        @Result(column="CONSTRAINT_SCHEMA", property="constraintSchema", jdbcType=JdbcType.VARCHAR),
-        @Result(column="CONSTRAINT_NAME", property="constraintName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="UNIQUE_CONSTRAINT_CATALOG", property="uniqueConstraintCatalog", jdbcType=JdbcType.VARCHAR),
-        @Result(column="UNIQUE_CONSTRAINT_SCHEMA", property="uniqueConstraintSchema", jdbcType=JdbcType.VARCHAR),
-        @Result(column="UNIQUE_CONSTRAINT_NAME", property="uniqueConstraintName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="MATCH_OPTION", property="matchOption", jdbcType=JdbcType.VARCHAR),
-        @Result(column="UPDATE_RULE", property="updateRule", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DELETE_RULE", property="deleteRule", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_NAME", property="tableName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="REFERENCED_TABLE_NAME", property="referencedTableName", jdbcType=JdbcType.VARCHAR)
+        @Result(column="CONSTRAINT_CATALOG", property="CONSTRAINT_CATALOG", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CONSTRAINT_SCHEMA", property="CONSTRAINT_SCHEMA", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CONSTRAINT_NAME", property="CONSTRAINT_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="UNIQUE_CONSTRAINT_CATALOG", property="UNIQUE_CONSTRAINT_CATALOG", jdbcType=JdbcType.VARCHAR),
+        @Result(column="UNIQUE_CONSTRAINT_SCHEMA", property="UNIQUE_CONSTRAINT_SCHEMA", jdbcType=JdbcType.VARCHAR),
+        @Result(column="UNIQUE_CONSTRAINT_NAME", property="UNIQUE_CONSTRAINT_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="MATCH_OPTION", property="MATCH_OPTION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="UPDATE_RULE", property="UPDATE_RULE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DELETE_RULE", property="DELETE_RULE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_NAME", property="TABLE_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="REFERENCED_TABLE_NAME", property="REFERENCED_TABLE_NAME", jdbcType=JdbcType.VARCHAR)
     })
     List<ReferentialConstraints> selectAll();
 }

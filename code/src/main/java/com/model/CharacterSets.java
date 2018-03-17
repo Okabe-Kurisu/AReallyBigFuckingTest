@@ -1,43 +1,43 @@
 package com.model;
 
 public class CharacterSets {
-    private String characterSetName;
+    private String CHARACTER_SET_NAME;
 
-    private String defaultCollateName;
+    private String DEFAULT_COLLATE_NAME;
 
-    private String description;
+    private String DESCRIPTION;
 
-    private Long maxlen;
+    private Long MAXLEN;
 
-    public String getCharacterSetName() {
-        return characterSetName;
+    public String getCHARACTER_SET_NAME() {
+        return CHARACTER_SET_NAME;
     }
 
-    public void setCharacterSetName(String characterSetName) {
-        this.characterSetName = characterSetName == null ? null : characterSetName.trim();
+    public void setCHARACTER_SET_NAME(String CHARACTER_SET_NAME) {
+        this.CHARACTER_SET_NAME = CHARACTER_SET_NAME == null ? null : CHARACTER_SET_NAME.trim();
     }
 
-    public String getDefaultCollateName() {
-        return defaultCollateName;
+    public String getDEFAULT_COLLATE_NAME() {
+        return DEFAULT_COLLATE_NAME;
     }
 
-    public void setDefaultCollateName(String defaultCollateName) {
-        this.defaultCollateName = defaultCollateName == null ? null : defaultCollateName.trim();
+    public void setDEFAULT_COLLATE_NAME(String DEFAULT_COLLATE_NAME) {
+        this.DEFAULT_COLLATE_NAME = DEFAULT_COLLATE_NAME == null ? null : DEFAULT_COLLATE_NAME.trim();
     }
 
-    public String getDescription() {
-        return description;
+    public String getDESCRIPTION() {
+        return DESCRIPTION;
     }
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setDESCRIPTION(String DESCRIPTION) {
+        this.DESCRIPTION = DESCRIPTION == null ? null : DESCRIPTION.trim();
     }
 
-    public Long getMaxlen() {
-        return maxlen;
+    public Long getMAXLEN() {
+        return MAXLEN;
     }
 
-    public void setMaxlen(Long maxlen) {
-        this.maxlen = maxlen;
+    public void setMAXLEN(Long MAXLEN) {
+        this.MAXLEN = MAXLEN;
     }
 }

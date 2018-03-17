@@ -1,193 +1,193 @@
 package com.model;
 
 public class Columns {
-    private String tableCatalog;
+    private String TABLE_CATALOG;
 
-    private String tableSchema;
+    private String TABLE_SCHEMA;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String columnName;
+    private String COLUMN_NAME;
 
-    private Long ordinalPosition;
+    private Long ORDINAL_POSITION;
 
-    private String isNullable;
+    private String IS_NULLABLE;
 
-    private String dataType;
+    private String DATA_TYPE;
 
-    private Long characterMaximumLength;
+    private Long CHARACTER_MAXIMUM_LENGTH;
 
-    private Long characterOctetLength;
+    private Long CHARACTER_OCTET_LENGTH;
 
-    private Long numericPrecision;
+    private Long NUMERIC_PRECISION;
 
-    private Long numericScale;
+    private Long NUMERIC_SCALE;
 
-    private String characterSetName;
+    private String CHARACTER_SET_NAME;
 
-    private String collationName;
+    private String COLLATION_NAME;
 
-    private String columnKey;
+    private String COLUMN_KEY;
 
-    private String extra;
+    private String EXTRA;
 
-    private String privileges;
+    private String PRIVILEGES;
 
-    private String columnComment;
+    private String COLUMN_COMMENT;
 
-    private String columnDefault;
+    private String COLUMN_DEFAULT;
 
-    private String columnType;
+    private String COLUMN_TYPE;
 
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getTABLE_CATALOG() {
+        return TABLE_CATALOG;
     }
 
-    public void setTableCatalog(String tableCatalog) {
-        this.tableCatalog = tableCatalog == null ? null : tableCatalog.trim();
+    public void setTABLE_CATALOG(String TABLE_CATALOG) {
+        this.TABLE_CATALOG = TABLE_CATALOG == null ? null : TABLE_CATALOG.trim();
     }
 
-    public String getTableSchema() {
-        return tableSchema;
+    public String getTABLE_SCHEMA() {
+        return TABLE_SCHEMA;
     }
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema == null ? null : tableSchema.trim();
+    public void setTABLE_SCHEMA(String TABLE_SCHEMA) {
+        this.TABLE_SCHEMA = TABLE_SCHEMA == null ? null : TABLE_SCHEMA.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getColumnName() {
-        return columnName;
+    public String getCOLUMN_NAME() {
+        return COLUMN_NAME;
     }
 
-    public void setColumnName(String columnName) {
-        this.columnName = columnName == null ? null : columnName.trim();
+    public void setCOLUMN_NAME(String COLUMN_NAME) {
+        this.COLUMN_NAME = COLUMN_NAME == null ? null : COLUMN_NAME.trim();
     }
 
-    public Long getOrdinalPosition() {
-        return ordinalPosition;
+    public Long getORDINAL_POSITION() {
+        return ORDINAL_POSITION;
     }
 
-    public void setOrdinalPosition(Long ordinalPosition) {
-        this.ordinalPosition = ordinalPosition;
+    public void setORDINAL_POSITION(Long ORDINAL_POSITION) {
+        this.ORDINAL_POSITION = ORDINAL_POSITION;
     }
 
-    public String getIsNullable() {
-        return isNullable;
+    public String getIS_NULLABLE() {
+        return IS_NULLABLE;
     }
 
-    public void setIsNullable(String isNullable) {
-        this.isNullable = isNullable == null ? null : isNullable.trim();
+    public void setIS_NULLABLE(String IS_NULLABLE) {
+        this.IS_NULLABLE = IS_NULLABLE == null ? null : IS_NULLABLE.trim();
     }
 
-    public String getDataType() {
-        return dataType;
+    public String getDATA_TYPE() {
+        return DATA_TYPE;
     }
 
-    public void setDataType(String dataType) {
-        this.dataType = dataType == null ? null : dataType.trim();
+    public void setDATA_TYPE(String DATA_TYPE) {
+        this.DATA_TYPE = DATA_TYPE == null ? null : DATA_TYPE.trim();
     }
 
-    public Long getCharacterMaximumLength() {
-        return characterMaximumLength;
+    public Long getCHARACTER_MAXIMUM_LENGTH() {
+        return CHARACTER_MAXIMUM_LENGTH;
     }
 
-    public void setCharacterMaximumLength(Long characterMaximumLength) {
-        this.characterMaximumLength = characterMaximumLength;
+    public void setCHARACTER_MAXIMUM_LENGTH(Long CHARACTER_MAXIMUM_LENGTH) {
+        this.CHARACTER_MAXIMUM_LENGTH = CHARACTER_MAXIMUM_LENGTH;
     }
 
-    public Long getCharacterOctetLength() {
-        return characterOctetLength;
+    public Long getCHARACTER_OCTET_LENGTH() {
+        return CHARACTER_OCTET_LENGTH;
     }
 
-    public void setCharacterOctetLength(Long characterOctetLength) {
-        this.characterOctetLength = characterOctetLength;
+    public void setCHARACTER_OCTET_LENGTH(Long CHARACTER_OCTET_LENGTH) {
+        this.CHARACTER_OCTET_LENGTH = CHARACTER_OCTET_LENGTH;
     }
 
-    public Long getNumericPrecision() {
-        return numericPrecision;
+    public Long getNUMERIC_PRECISION() {
+        return NUMERIC_PRECISION;
     }
 
-    public void setNumericPrecision(Long numericPrecision) {
-        this.numericPrecision = numericPrecision;
+    public void setNUMERIC_PRECISION(Long NUMERIC_PRECISION) {
+        this.NUMERIC_PRECISION = NUMERIC_PRECISION;
     }
 
-    public Long getNumericScale() {
-        return numericScale;
+    public Long getNUMERIC_SCALE() {
+        return NUMERIC_SCALE;
     }
 
-    public void setNumericScale(Long numericScale) {
-        this.numericScale = numericScale;
+    public void setNUMERIC_SCALE(Long NUMERIC_SCALE) {
+        this.NUMERIC_SCALE = NUMERIC_SCALE;
     }
 
-    public String getCharacterSetName() {
-        return characterSetName;
+    public String getCHARACTER_SET_NAME() {
+        return CHARACTER_SET_NAME;
     }
 
-    public void setCharacterSetName(String characterSetName) {
-        this.characterSetName = characterSetName == null ? null : characterSetName.trim();
+    public void setCHARACTER_SET_NAME(String CHARACTER_SET_NAME) {
+        this.CHARACTER_SET_NAME = CHARACTER_SET_NAME == null ? null : CHARACTER_SET_NAME.trim();
     }
 
-    public String getCollationName() {
-        return collationName;
+    public String getCOLLATION_NAME() {
+        return COLLATION_NAME;
     }
 
-    public void setCollationName(String collationName) {
-        this.collationName = collationName == null ? null : collationName.trim();
+    public void setCOLLATION_NAME(String COLLATION_NAME) {
+        this.COLLATION_NAME = COLLATION_NAME == null ? null : COLLATION_NAME.trim();
     }
 
-    public String getColumnKey() {
-        return columnKey;
+    public String getCOLUMN_KEY() {
+        return COLUMN_KEY;
     }
 
-    public void setColumnKey(String columnKey) {
-        this.columnKey = columnKey == null ? null : columnKey.trim();
+    public void setCOLUMN_KEY(String COLUMN_KEY) {
+        this.COLUMN_KEY = COLUMN_KEY == null ? null : COLUMN_KEY.trim();
     }
 
-    public String getExtra() {
-        return extra;
+    public String getEXTRA() {
+        return EXTRA;
     }
 
-    public void setExtra(String extra) {
-        this.extra = extra == null ? null : extra.trim();
+    public void setEXTRA(String EXTRA) {
+        this.EXTRA = EXTRA == null ? null : EXTRA.trim();
     }
 
-    public String getPrivileges() {
-        return privileges;
+    public String getPRIVILEGES() {
+        return PRIVILEGES;
     }
 
-    public void setPrivileges(String privileges) {
-        this.privileges = privileges == null ? null : privileges.trim();
+    public void setPRIVILEGES(String PRIVILEGES) {
+        this.PRIVILEGES = PRIVILEGES == null ? null : PRIVILEGES.trim();
     }
 
-    public String getColumnComment() {
-        return columnComment;
+    public String getCOLUMN_COMMENT() {
+        return COLUMN_COMMENT;
     }
 
-    public void setColumnComment(String columnComment) {
-        this.columnComment = columnComment == null ? null : columnComment.trim();
+    public void setCOLUMN_COMMENT(String COLUMN_COMMENT) {
+        this.COLUMN_COMMENT = COLUMN_COMMENT == null ? null : COLUMN_COMMENT.trim();
     }
 
-    public String getColumnDefault() {
-        return columnDefault;
+    public String getCOLUMN_DEFAULT() {
+        return COLUMN_DEFAULT;
     }
 
-    public void setColumnDefault(String columnDefault) {
-        this.columnDefault = columnDefault == null ? null : columnDefault.trim();
+    public void setCOLUMN_DEFAULT(String COLUMN_DEFAULT) {
+        this.COLUMN_DEFAULT = COLUMN_DEFAULT == null ? null : COLUMN_DEFAULT.trim();
     }
 
-    public String getColumnType() {
-        return columnType;
+    public String getCOLUMN_TYPE() {
+        return COLUMN_TYPE;
     }
 
-    public void setColumnType(String columnType) {
-        this.columnType = columnType == null ? null : columnType.trim();
+    public void setCOLUMN_TYPE(String COLUMN_TYPE) {
+        this.COLUMN_TYPE = COLUMN_TYPE == null ? null : COLUMN_TYPE.trim();
     }
 }

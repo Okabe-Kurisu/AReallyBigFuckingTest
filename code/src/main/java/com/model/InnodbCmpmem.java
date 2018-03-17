@@ -1,63 +1,63 @@
 package com.model;
 
 public class InnodbCmpmem {
-    private Integer pageSize;
+    private Integer page_size;
 
-    private Integer bufferPoolInstance;
+    private Integer buffer_pool_instance;
 
-    private Integer pagesUsed;
+    private Integer pages_used;
 
-    private Integer pagesFree;
+    private Integer pages_free;
 
-    private Long relocationOps;
+    private Long relocation_ops;
 
-    private Integer relocationTime;
+    private Integer relocation_time;
 
-    public Integer getPageSize() {
-        return pageSize;
+    public Integer getPage_size() {
+        return page_size;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setPage_size(Integer page_size) {
+        this.page_size = page_size;
     }
 
-    public Integer getBufferPoolInstance() {
-        return bufferPoolInstance;
+    public Integer getBuffer_pool_instance() {
+        return buffer_pool_instance;
     }
 
-    public void setBufferPoolInstance(Integer bufferPoolInstance) {
-        this.bufferPoolInstance = bufferPoolInstance;
+    public void setBuffer_pool_instance(Integer buffer_pool_instance) {
+        this.buffer_pool_instance = buffer_pool_instance;
     }
 
-    public Integer getPagesUsed() {
-        return pagesUsed;
+    public Integer getPages_used() {
+        return pages_used;
     }
 
-    public void setPagesUsed(Integer pagesUsed) {
-        this.pagesUsed = pagesUsed;
+    public void setPages_used(Integer pages_used) {
+        this.pages_used = pages_used;
     }
 
-    public Integer getPagesFree() {
-        return pagesFree;
+    public Integer getPages_free() {
+        return pages_free;
     }
 
-    public void setPagesFree(Integer pagesFree) {
-        this.pagesFree = pagesFree;
+    public void setPages_free(Integer pages_free) {
+        this.pages_free = pages_free;
     }
 
-    public Long getRelocationOps() {
-        return relocationOps;
+    public Long getRelocation_ops() {
+        return relocation_ops;
     }
 
-    public void setRelocationOps(Long relocationOps) {
-        this.relocationOps = relocationOps;
+    public void setRelocation_ops(Long relocation_ops) {
+        this.relocation_ops = relocation_ops;
     }
 
-    public Integer getRelocationTime() {
-        return relocationTime;
+    public Integer getRelocation_time() {
+        return relocation_time;
     }
 
-    public void setRelocationTime(Integer relocationTime) {
-        this.relocationTime = relocationTime;
+    public void setRelocation_time(Integer relocation_time) {
+        this.relocation_time = relocation_time;
     }
 }

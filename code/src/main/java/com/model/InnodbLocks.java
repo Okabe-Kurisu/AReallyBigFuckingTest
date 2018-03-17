@@ -1,103 +1,103 @@
 package com.model;
 
 public class InnodbLocks {
-    private String lockId;
+    private String lock_id;
 
-    private String lockTrxId;
+    private String lock_trx_id;
 
-    private String lockMode;
+    private String lock_mode;
 
-    private String lockType;
+    private String lock_type;
 
-    private String lockTable;
+    private String lock_table;
 
-    private String lockIndex;
+    private String lock_index;
 
-    private Long lockSpace;
+    private Long lock_space;
 
-    private Long lockPage;
+    private Long lock_page;
 
-    private Long lockRec;
+    private Long lock_rec;
 
-    private String lockData;
+    private String lock_data;
 
-    public String getLockId() {
-        return lockId;
+    public String getLock_id() {
+        return lock_id;
     }
 
-    public void setLockId(String lockId) {
-        this.lockId = lockId == null ? null : lockId.trim();
+    public void setLock_id(String lock_id) {
+        this.lock_id = lock_id == null ? null : lock_id.trim();
     }
 
-    public String getLockTrxId() {
-        return lockTrxId;
+    public String getLock_trx_id() {
+        return lock_trx_id;
     }
 
-    public void setLockTrxId(String lockTrxId) {
-        this.lockTrxId = lockTrxId == null ? null : lockTrxId.trim();
+    public void setLock_trx_id(String lock_trx_id) {
+        this.lock_trx_id = lock_trx_id == null ? null : lock_trx_id.trim();
     }
 
-    public String getLockMode() {
-        return lockMode;
+    public String getLock_mode() {
+        return lock_mode;
     }
 
-    public void setLockMode(String lockMode) {
-        this.lockMode = lockMode == null ? null : lockMode.trim();
+    public void setLock_mode(String lock_mode) {
+        this.lock_mode = lock_mode == null ? null : lock_mode.trim();
     }
 
-    public String getLockType() {
-        return lockType;
+    public String getLock_type() {
+        return lock_type;
     }
 
-    public void setLockType(String lockType) {
-        this.lockType = lockType == null ? null : lockType.trim();
+    public void setLock_type(String lock_type) {
+        this.lock_type = lock_type == null ? null : lock_type.trim();
     }
 
-    public String getLockTable() {
-        return lockTable;
+    public String getLock_table() {
+        return lock_table;
     }
 
-    public void setLockTable(String lockTable) {
-        this.lockTable = lockTable == null ? null : lockTable.trim();
+    public void setLock_table(String lock_table) {
+        this.lock_table = lock_table == null ? null : lock_table.trim();
     }
 
-    public String getLockIndex() {
-        return lockIndex;
+    public String getLock_index() {
+        return lock_index;
     }
 
-    public void setLockIndex(String lockIndex) {
-        this.lockIndex = lockIndex == null ? null : lockIndex.trim();
+    public void setLock_index(String lock_index) {
+        this.lock_index = lock_index == null ? null : lock_index.trim();
     }
 
-    public Long getLockSpace() {
-        return lockSpace;
+    public Long getLock_space() {
+        return lock_space;
     }
 
-    public void setLockSpace(Long lockSpace) {
-        this.lockSpace = lockSpace;
+    public void setLock_space(Long lock_space) {
+        this.lock_space = lock_space;
     }
 
-    public Long getLockPage() {
-        return lockPage;
+    public Long getLock_page() {
+        return lock_page;
     }
 
-    public void setLockPage(Long lockPage) {
-        this.lockPage = lockPage;
+    public void setLock_page(Long lock_page) {
+        this.lock_page = lock_page;
     }
 
-    public Long getLockRec() {
-        return lockRec;
+    public Long getLock_rec() {
+        return lock_rec;
     }
 
-    public void setLockRec(Long lockRec) {
-        this.lockRec = lockRec;
+    public void setLock_rec(Long lock_rec) {
+        this.lock_rec = lock_rec;
     }
 
-    public String getLockData() {
-        return lockData;
+    public String getLock_data() {
+        return lock_data;
     }
 
-    public void setLockData(String lockData) {
-        this.lockData = lockData == null ? null : lockData.trim();
+    public void setLock_data(String lock_data) {
+        this.lock_data = lock_data == null ? null : lock_data.trim();
     }
 }

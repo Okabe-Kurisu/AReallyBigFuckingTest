@@ -1,113 +1,113 @@
 package com.model;
 
 public class ReferentialConstraints {
-    private String constraintCatalog;
+    private String CONSTRAINT_CATALOG;
 
-    private String constraintSchema;
+    private String CONSTRAINT_SCHEMA;
 
-    private String constraintName;
+    private String CONSTRAINT_NAME;
 
-    private String uniqueConstraintCatalog;
+    private String UNIQUE_CONSTRAINT_CATALOG;
 
-    private String uniqueConstraintSchema;
+    private String UNIQUE_CONSTRAINT_SCHEMA;
 
-    private String uniqueConstraintName;
+    private String UNIQUE_CONSTRAINT_NAME;
 
-    private String matchOption;
+    private String MATCH_OPTION;
 
-    private String updateRule;
+    private String UPDATE_RULE;
 
-    private String deleteRule;
+    private String DELETE_RULE;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String referencedTableName;
+    private String REFERENCED_TABLE_NAME;
 
-    public String getConstraintCatalog() {
-        return constraintCatalog;
+    public String getCONSTRAINT_CATALOG() {
+        return CONSTRAINT_CATALOG;
     }
 
-    public void setConstraintCatalog(String constraintCatalog) {
-        this.constraintCatalog = constraintCatalog == null ? null : constraintCatalog.trim();
+    public void setCONSTRAINT_CATALOG(String CONSTRAINT_CATALOG) {
+        this.CONSTRAINT_CATALOG = CONSTRAINT_CATALOG == null ? null : CONSTRAINT_CATALOG.trim();
     }
 
-    public String getConstraintSchema() {
-        return constraintSchema;
+    public String getCONSTRAINT_SCHEMA() {
+        return CONSTRAINT_SCHEMA;
     }
 
-    public void setConstraintSchema(String constraintSchema) {
-        this.constraintSchema = constraintSchema == null ? null : constraintSchema.trim();
+    public void setCONSTRAINT_SCHEMA(String CONSTRAINT_SCHEMA) {
+        this.CONSTRAINT_SCHEMA = CONSTRAINT_SCHEMA == null ? null : CONSTRAINT_SCHEMA.trim();
     }
 
-    public String getConstraintName() {
-        return constraintName;
+    public String getCONSTRAINT_NAME() {
+        return CONSTRAINT_NAME;
     }
 
-    public void setConstraintName(String constraintName) {
-        this.constraintName = constraintName == null ? null : constraintName.trim();
+    public void setCONSTRAINT_NAME(String CONSTRAINT_NAME) {
+        this.CONSTRAINT_NAME = CONSTRAINT_NAME == null ? null : CONSTRAINT_NAME.trim();
     }
 
-    public String getUniqueConstraintCatalog() {
-        return uniqueConstraintCatalog;
+    public String getUNIQUE_CONSTRAINT_CATALOG() {
+        return UNIQUE_CONSTRAINT_CATALOG;
     }
 
-    public void setUniqueConstraintCatalog(String uniqueConstraintCatalog) {
-        this.uniqueConstraintCatalog = uniqueConstraintCatalog == null ? null : uniqueConstraintCatalog.trim();
+    public void setUNIQUE_CONSTRAINT_CATALOG(String UNIQUE_CONSTRAINT_CATALOG) {
+        this.UNIQUE_CONSTRAINT_CATALOG = UNIQUE_CONSTRAINT_CATALOG == null ? null : UNIQUE_CONSTRAINT_CATALOG.trim();
     }
 
-    public String getUniqueConstraintSchema() {
-        return uniqueConstraintSchema;
+    public String getUNIQUE_CONSTRAINT_SCHEMA() {
+        return UNIQUE_CONSTRAINT_SCHEMA;
     }
 
-    public void setUniqueConstraintSchema(String uniqueConstraintSchema) {
-        this.uniqueConstraintSchema = uniqueConstraintSchema == null ? null : uniqueConstraintSchema.trim();
+    public void setUNIQUE_CONSTRAINT_SCHEMA(String UNIQUE_CONSTRAINT_SCHEMA) {
+        this.UNIQUE_CONSTRAINT_SCHEMA = UNIQUE_CONSTRAINT_SCHEMA == null ? null : UNIQUE_CONSTRAINT_SCHEMA.trim();
     }
 
-    public String getUniqueConstraintName() {
-        return uniqueConstraintName;
+    public String getUNIQUE_CONSTRAINT_NAME() {
+        return UNIQUE_CONSTRAINT_NAME;
     }
 
-    public void setUniqueConstraintName(String uniqueConstraintName) {
-        this.uniqueConstraintName = uniqueConstraintName == null ? null : uniqueConstraintName.trim();
+    public void setUNIQUE_CONSTRAINT_NAME(String UNIQUE_CONSTRAINT_NAME) {
+        this.UNIQUE_CONSTRAINT_NAME = UNIQUE_CONSTRAINT_NAME == null ? null : UNIQUE_CONSTRAINT_NAME.trim();
     }
 
-    public String getMatchOption() {
-        return matchOption;
+    public String getMATCH_OPTION() {
+        return MATCH_OPTION;
     }
 
-    public void setMatchOption(String matchOption) {
-        this.matchOption = matchOption == null ? null : matchOption.trim();
+    public void setMATCH_OPTION(String MATCH_OPTION) {
+        this.MATCH_OPTION = MATCH_OPTION == null ? null : MATCH_OPTION.trim();
     }
 
-    public String getUpdateRule() {
-        return updateRule;
+    public String getUPDATE_RULE() {
+        return UPDATE_RULE;
     }
 
-    public void setUpdateRule(String updateRule) {
-        this.updateRule = updateRule == null ? null : updateRule.trim();
+    public void setUPDATE_RULE(String UPDATE_RULE) {
+        this.UPDATE_RULE = UPDATE_RULE == null ? null : UPDATE_RULE.trim();
     }
 
-    public String getDeleteRule() {
-        return deleteRule;
+    public String getDELETE_RULE() {
+        return DELETE_RULE;
     }
 
-    public void setDeleteRule(String deleteRule) {
-        this.deleteRule = deleteRule == null ? null : deleteRule.trim();
+    public void setDELETE_RULE(String DELETE_RULE) {
+        this.DELETE_RULE = DELETE_RULE == null ? null : DELETE_RULE.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getReferencedTableName() {
-        return referencedTableName;
+    public String getREFERENCED_TABLE_NAME() {
+        return REFERENCED_TABLE_NAME;
     }
 
-    public void setReferencedTableName(String referencedTableName) {
-        this.referencedTableName = referencedTableName == null ? null : referencedTableName.trim();
+    public void setREFERENCED_TABLE_NAME(String REFERENCED_TABLE_NAME) {
+        this.REFERENCED_TABLE_NAME = REFERENCED_TABLE_NAME == null ? null : REFERENCED_TABLE_NAME.trim();
     }
 }

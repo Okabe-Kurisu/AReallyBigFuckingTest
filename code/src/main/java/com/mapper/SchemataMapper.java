@@ -13,9 +13,9 @@ public interface SchemataMapper {
         "insert into SCHEMATA (CATALOG_NAME, SCHEMA_NAME, ",
         "DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME, ",
         "SQL_PATH)",
-        "values (#{catalogName,jdbcType=VARCHAR}, #{schemaName,jdbcType=VARCHAR}, ",
-        "#{defaultCharacterSetName,jdbcType=VARCHAR}, #{defaultCollationName,jdbcType=VARCHAR}, ",
-        "#{sqlPath,jdbcType=VARCHAR})"
+        "values (#{CATALOG_NAME,jdbcType=VARCHAR}, #{SCHEMA_NAME,jdbcType=VARCHAR}, ",
+        "#{DEFAULT_CHARACTER_SET_NAME,jdbcType=VARCHAR}, #{DEFAULT_COLLATION_NAME,jdbcType=VARCHAR}, ",
+        "#{SQL_PATH,jdbcType=VARCHAR})"
     })
     int insert(Schemata record);
 
@@ -26,11 +26,11 @@ public interface SchemataMapper {
         "from SCHEMATA"
     })
     @Results({
-        @Result(column="CATALOG_NAME", property="catalogName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="SCHEMA_NAME", property="schemaName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DEFAULT_CHARACTER_SET_NAME", property="defaultCharacterSetName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DEFAULT_COLLATION_NAME", property="defaultCollationName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="SQL_PATH", property="sqlPath", jdbcType=JdbcType.VARCHAR)
+        @Result(column="CATALOG_NAME", property="CATALOG_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SCHEMA_NAME", property="SCHEMA_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DEFAULT_CHARACTER_SET_NAME", property="DEFAULT_CHARACTER_SET_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DEFAULT_COLLATION_NAME", property="DEFAULT_COLLATION_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SQL_PATH", property="SQL_PATH", jdbcType=JdbcType.VARCHAR)
     })
     List<Schemata> selectAll();
 }

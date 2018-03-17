@@ -15,11 +15,11 @@ public interface TablespacesMapper {
         "EXTENT_SIZE, AUTOEXTEND_SIZE, ",
         "MAXIMUM_SIZE, NODEGROUP_ID, ",
         "TABLESPACE_COMMENT)",
-        "values (#{tablespaceName,jdbcType=VARCHAR}, #{engine,jdbcType=VARCHAR}, ",
-        "#{tablespaceType,jdbcType=VARCHAR}, #{logfileGroupName,jdbcType=VARCHAR}, ",
-        "#{extentSize,jdbcType=BIGINT}, #{autoextendSize,jdbcType=BIGINT}, ",
-        "#{maximumSize,jdbcType=BIGINT}, #{nodegroupId,jdbcType=BIGINT}, ",
-        "#{tablespaceComment,jdbcType=VARCHAR})"
+        "values (#{TABLESPACE_NAME,jdbcType=VARCHAR}, #{ENGINE,jdbcType=VARCHAR}, ",
+        "#{TABLESPACE_TYPE,jdbcType=VARCHAR}, #{LOGFILE_GROUP_NAME,jdbcType=VARCHAR}, ",
+        "#{EXTENT_SIZE,jdbcType=BIGINT}, #{AUTOEXTEND_SIZE,jdbcType=BIGINT}, ",
+        "#{MAXIMUM_SIZE,jdbcType=BIGINT}, #{NODEGROUP_ID,jdbcType=BIGINT}, ",
+        "#{TABLESPACE_COMMENT,jdbcType=VARCHAR})"
     })
     int insert(Tablespaces record);
 
@@ -30,15 +30,15 @@ public interface TablespacesMapper {
         "from TABLESPACES"
     })
     @Results({
-        @Result(column="TABLESPACE_NAME", property="tablespaceName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ENGINE", property="engine", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLESPACE_TYPE", property="tablespaceType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="LOGFILE_GROUP_NAME", property="logfileGroupName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="EXTENT_SIZE", property="extentSize", jdbcType=JdbcType.BIGINT),
-        @Result(column="AUTOEXTEND_SIZE", property="autoextendSize", jdbcType=JdbcType.BIGINT),
-        @Result(column="MAXIMUM_SIZE", property="maximumSize", jdbcType=JdbcType.BIGINT),
-        @Result(column="NODEGROUP_ID", property="nodegroupId", jdbcType=JdbcType.BIGINT),
-        @Result(column="TABLESPACE_COMMENT", property="tablespaceComment", jdbcType=JdbcType.VARCHAR)
+        @Result(column="TABLESPACE_NAME", property="TABLESPACE_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ENGINE", property="ENGINE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLESPACE_TYPE", property="TABLESPACE_TYPE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="LOGFILE_GROUP_NAME", property="LOGFILE_GROUP_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="EXTENT_SIZE", property="EXTENT_SIZE", jdbcType=JdbcType.BIGINT),
+        @Result(column="AUTOEXTEND_SIZE", property="AUTOEXTEND_SIZE", jdbcType=JdbcType.BIGINT),
+        @Result(column="MAXIMUM_SIZE", property="MAXIMUM_SIZE", jdbcType=JdbcType.BIGINT),
+        @Result(column="NODEGROUP_ID", property="NODEGROUP_ID", jdbcType=JdbcType.BIGINT),
+        @Result(column="TABLESPACE_COMMENT", property="TABLESPACE_COMMENT", jdbcType=JdbcType.VARCHAR)
     })
     List<Tablespaces> selectAll();
 }

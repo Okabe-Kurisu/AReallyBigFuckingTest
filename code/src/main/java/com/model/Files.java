@@ -3,383 +3,383 @@ package com.model;
 import java.util.Date;
 
 public class Files {
-    private Long fileId;
+    private Long FILE_ID;
 
-    private String fileName;
+    private String FILE_NAME;
 
-    private String fileType;
+    private String FILE_TYPE;
 
-    private String tablespaceName;
+    private String TABLESPACE_NAME;
 
-    private String tableCatalog;
+    private String TABLE_CATALOG;
 
-    private String tableSchema;
+    private String TABLE_SCHEMA;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String logfileGroupName;
+    private String LOGFILE_GROUP_NAME;
 
-    private Long logfileGroupNumber;
+    private Long LOGFILE_GROUP_NUMBER;
 
-    private String engine;
+    private String ENGINE;
 
-    private String fulltextKeys;
+    private String FULLTEXT_KEYS;
 
-    private Long deletedRows;
+    private Long DELETED_ROWS;
 
-    private Long updateCount;
+    private Long UPDATE_COUNT;
 
-    private Long freeExtents;
+    private Long FREE_EXTENTS;
 
-    private Long totalExtents;
+    private Long TOTAL_EXTENTS;
 
-    private Long extentSize;
+    private Long EXTENT_SIZE;
 
-    private Long initialSize;
+    private Long INITIAL_SIZE;
 
-    private Long maximumSize;
+    private Long MAXIMUM_SIZE;
 
-    private Long autoextendSize;
+    private Long AUTOEXTEND_SIZE;
 
-    private Date creationTime;
+    private Date CREATION_TIME;
 
-    private Date lastUpdateTime;
+    private Date LAST_UPDATE_TIME;
 
-    private Date lastAccessTime;
+    private Date LAST_ACCESS_TIME;
 
-    private Long recoverTime;
+    private Long RECOVER_TIME;
 
-    private Long transactionCounter;
+    private Long TRANSACTION_COUNTER;
 
-    private Long version;
+    private Long VERSION;
 
-    private String rowFormat;
+    private String ROW_FORMAT;
 
-    private Long tableRows;
+    private Long TABLE_ROWS;
 
-    private Long avgRowLength;
+    private Long AVG_ROW_LENGTH;
 
-    private Long dataLength;
+    private Long DATA_LENGTH;
 
-    private Long maxDataLength;
+    private Long MAX_DATA_LENGTH;
 
-    private Long indexLength;
+    private Long INDEX_LENGTH;
 
-    private Long dataFree;
+    private Long DATA_FREE;
 
-    private Date createTime;
+    private Date CREATE_TIME;
 
-    private Date updateTime;
+    private Date UPDATE_TIME;
 
-    private Date checkTime;
+    private Date CHECK_TIME;
 
-    private Long checksum;
+    private Long CHECKSUM;
 
-    private String status;
+    private String STATUS;
 
-    private String extra;
+    private String EXTRA;
 
-    public Long getFileId() {
-        return fileId;
+    public Long getFILE_ID() {
+        return FILE_ID;
     }
 
-    public void setFileId(Long fileId) {
-        this.fileId = fileId;
+    public void setFILE_ID(Long FILE_ID) {
+        this.FILE_ID = FILE_ID;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFILE_NAME() {
+        return FILE_NAME;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName == null ? null : fileName.trim();
+    public void setFILE_NAME(String FILE_NAME) {
+        this.FILE_NAME = FILE_NAME == null ? null : FILE_NAME.trim();
     }
 
-    public String getFileType() {
-        return fileType;
+    public String getFILE_TYPE() {
+        return FILE_TYPE;
     }
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType == null ? null : fileType.trim();
+    public void setFILE_TYPE(String FILE_TYPE) {
+        this.FILE_TYPE = FILE_TYPE == null ? null : FILE_TYPE.trim();
     }
 
-    public String getTablespaceName() {
-        return tablespaceName;
+    public String getTABLESPACE_NAME() {
+        return TABLESPACE_NAME;
     }
 
-    public void setTablespaceName(String tablespaceName) {
-        this.tablespaceName = tablespaceName == null ? null : tablespaceName.trim();
+    public void setTABLESPACE_NAME(String TABLESPACE_NAME) {
+        this.TABLESPACE_NAME = TABLESPACE_NAME == null ? null : TABLESPACE_NAME.trim();
     }
 
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getTABLE_CATALOG() {
+        return TABLE_CATALOG;
     }
 
-    public void setTableCatalog(String tableCatalog) {
-        this.tableCatalog = tableCatalog == null ? null : tableCatalog.trim();
+    public void setTABLE_CATALOG(String TABLE_CATALOG) {
+        this.TABLE_CATALOG = TABLE_CATALOG == null ? null : TABLE_CATALOG.trim();
     }
 
-    public String getTableSchema() {
-        return tableSchema;
+    public String getTABLE_SCHEMA() {
+        return TABLE_SCHEMA;
     }
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema == null ? null : tableSchema.trim();
+    public void setTABLE_SCHEMA(String TABLE_SCHEMA) {
+        this.TABLE_SCHEMA = TABLE_SCHEMA == null ? null : TABLE_SCHEMA.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getLogfileGroupName() {
-        return logfileGroupName;
+    public String getLOGFILE_GROUP_NAME() {
+        return LOGFILE_GROUP_NAME;
     }
 
-    public void setLogfileGroupName(String logfileGroupName) {
-        this.logfileGroupName = logfileGroupName == null ? null : logfileGroupName.trim();
+    public void setLOGFILE_GROUP_NAME(String LOGFILE_GROUP_NAME) {
+        this.LOGFILE_GROUP_NAME = LOGFILE_GROUP_NAME == null ? null : LOGFILE_GROUP_NAME.trim();
     }
 
-    public Long getLogfileGroupNumber() {
-        return logfileGroupNumber;
+    public Long getLOGFILE_GROUP_NUMBER() {
+        return LOGFILE_GROUP_NUMBER;
     }
 
-    public void setLogfileGroupNumber(Long logfileGroupNumber) {
-        this.logfileGroupNumber = logfileGroupNumber;
+    public void setLOGFILE_GROUP_NUMBER(Long LOGFILE_GROUP_NUMBER) {
+        this.LOGFILE_GROUP_NUMBER = LOGFILE_GROUP_NUMBER;
     }
 
-    public String getEngine() {
-        return engine;
+    public String getENGINE() {
+        return ENGINE;
     }
 
-    public void setEngine(String engine) {
-        this.engine = engine == null ? null : engine.trim();
+    public void setENGINE(String ENGINE) {
+        this.ENGINE = ENGINE == null ? null : ENGINE.trim();
     }
 
-    public String getFulltextKeys() {
-        return fulltextKeys;
+    public String getFULLTEXT_KEYS() {
+        return FULLTEXT_KEYS;
     }
 
-    public void setFulltextKeys(String fulltextKeys) {
-        this.fulltextKeys = fulltextKeys == null ? null : fulltextKeys.trim();
+    public void setFULLTEXT_KEYS(String FULLTEXT_KEYS) {
+        this.FULLTEXT_KEYS = FULLTEXT_KEYS == null ? null : FULLTEXT_KEYS.trim();
     }
 
-    public Long getDeletedRows() {
-        return deletedRows;
+    public Long getDELETED_ROWS() {
+        return DELETED_ROWS;
     }
 
-    public void setDeletedRows(Long deletedRows) {
-        this.deletedRows = deletedRows;
+    public void setDELETED_ROWS(Long DELETED_ROWS) {
+        this.DELETED_ROWS = DELETED_ROWS;
     }
 
-    public Long getUpdateCount() {
-        return updateCount;
+    public Long getUPDATE_COUNT() {
+        return UPDATE_COUNT;
     }
 
-    public void setUpdateCount(Long updateCount) {
-        this.updateCount = updateCount;
+    public void setUPDATE_COUNT(Long UPDATE_COUNT) {
+        this.UPDATE_COUNT = UPDATE_COUNT;
     }
 
-    public Long getFreeExtents() {
-        return freeExtents;
+    public Long getFREE_EXTENTS() {
+        return FREE_EXTENTS;
     }
 
-    public void setFreeExtents(Long freeExtents) {
-        this.freeExtents = freeExtents;
+    public void setFREE_EXTENTS(Long FREE_EXTENTS) {
+        this.FREE_EXTENTS = FREE_EXTENTS;
     }
 
-    public Long getTotalExtents() {
-        return totalExtents;
+    public Long getTOTAL_EXTENTS() {
+        return TOTAL_EXTENTS;
     }
 
-    public void setTotalExtents(Long totalExtents) {
-        this.totalExtents = totalExtents;
+    public void setTOTAL_EXTENTS(Long TOTAL_EXTENTS) {
+        this.TOTAL_EXTENTS = TOTAL_EXTENTS;
     }
 
-    public Long getExtentSize() {
-        return extentSize;
+    public Long getEXTENT_SIZE() {
+        return EXTENT_SIZE;
     }
 
-    public void setExtentSize(Long extentSize) {
-        this.extentSize = extentSize;
+    public void setEXTENT_SIZE(Long EXTENT_SIZE) {
+        this.EXTENT_SIZE = EXTENT_SIZE;
     }
 
-    public Long getInitialSize() {
-        return initialSize;
+    public Long getINITIAL_SIZE() {
+        return INITIAL_SIZE;
     }
 
-    public void setInitialSize(Long initialSize) {
-        this.initialSize = initialSize;
+    public void setINITIAL_SIZE(Long INITIAL_SIZE) {
+        this.INITIAL_SIZE = INITIAL_SIZE;
     }
 
-    public Long getMaximumSize() {
-        return maximumSize;
+    public Long getMAXIMUM_SIZE() {
+        return MAXIMUM_SIZE;
     }
 
-    public void setMaximumSize(Long maximumSize) {
-        this.maximumSize = maximumSize;
+    public void setMAXIMUM_SIZE(Long MAXIMUM_SIZE) {
+        this.MAXIMUM_SIZE = MAXIMUM_SIZE;
     }
 
-    public Long getAutoextendSize() {
-        return autoextendSize;
+    public Long getAUTOEXTEND_SIZE() {
+        return AUTOEXTEND_SIZE;
     }
 
-    public void setAutoextendSize(Long autoextendSize) {
-        this.autoextendSize = autoextendSize;
+    public void setAUTOEXTEND_SIZE(Long AUTOEXTEND_SIZE) {
+        this.AUTOEXTEND_SIZE = AUTOEXTEND_SIZE;
     }
 
-    public Date getCreationTime() {
-        return creationTime;
+    public Date getCREATION_TIME() {
+        return CREATION_TIME;
     }
 
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
+    public void setCREATION_TIME(Date CREATION_TIME) {
+        this.CREATION_TIME = CREATION_TIME;
     }
 
-    public Date getLastUpdateTime() {
-        return lastUpdateTime;
+    public Date getLAST_UPDATE_TIME() {
+        return LAST_UPDATE_TIME;
     }
 
-    public void setLastUpdateTime(Date lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
+    public void setLAST_UPDATE_TIME(Date LAST_UPDATE_TIME) {
+        this.LAST_UPDATE_TIME = LAST_UPDATE_TIME;
     }
 
-    public Date getLastAccessTime() {
-        return lastAccessTime;
+    public Date getLAST_ACCESS_TIME() {
+        return LAST_ACCESS_TIME;
     }
 
-    public void setLastAccessTime(Date lastAccessTime) {
-        this.lastAccessTime = lastAccessTime;
+    public void setLAST_ACCESS_TIME(Date LAST_ACCESS_TIME) {
+        this.LAST_ACCESS_TIME = LAST_ACCESS_TIME;
     }
 
-    public Long getRecoverTime() {
-        return recoverTime;
+    public Long getRECOVER_TIME() {
+        return RECOVER_TIME;
     }
 
-    public void setRecoverTime(Long recoverTime) {
-        this.recoverTime = recoverTime;
+    public void setRECOVER_TIME(Long RECOVER_TIME) {
+        this.RECOVER_TIME = RECOVER_TIME;
     }
 
-    public Long getTransactionCounter() {
-        return transactionCounter;
+    public Long getTRANSACTION_COUNTER() {
+        return TRANSACTION_COUNTER;
     }
 
-    public void setTransactionCounter(Long transactionCounter) {
-        this.transactionCounter = transactionCounter;
+    public void setTRANSACTION_COUNTER(Long TRANSACTION_COUNTER) {
+        this.TRANSACTION_COUNTER = TRANSACTION_COUNTER;
     }
 
-    public Long getVersion() {
-        return version;
+    public Long getVERSION() {
+        return VERSION;
     }
 
-    public void setVersion(Long version) {
-        this.version = version;
+    public void setVERSION(Long VERSION) {
+        this.VERSION = VERSION;
     }
 
-    public String getRowFormat() {
-        return rowFormat;
+    public String getROW_FORMAT() {
+        return ROW_FORMAT;
     }
 
-    public void setRowFormat(String rowFormat) {
-        this.rowFormat = rowFormat == null ? null : rowFormat.trim();
+    public void setROW_FORMAT(String ROW_FORMAT) {
+        this.ROW_FORMAT = ROW_FORMAT == null ? null : ROW_FORMAT.trim();
     }
 
-    public Long getTableRows() {
-        return tableRows;
+    public Long getTABLE_ROWS() {
+        return TABLE_ROWS;
     }
 
-    public void setTableRows(Long tableRows) {
-        this.tableRows = tableRows;
+    public void setTABLE_ROWS(Long TABLE_ROWS) {
+        this.TABLE_ROWS = TABLE_ROWS;
     }
 
-    public Long getAvgRowLength() {
-        return avgRowLength;
+    public Long getAVG_ROW_LENGTH() {
+        return AVG_ROW_LENGTH;
     }
 
-    public void setAvgRowLength(Long avgRowLength) {
-        this.avgRowLength = avgRowLength;
+    public void setAVG_ROW_LENGTH(Long AVG_ROW_LENGTH) {
+        this.AVG_ROW_LENGTH = AVG_ROW_LENGTH;
     }
 
-    public Long getDataLength() {
-        return dataLength;
+    public Long getDATA_LENGTH() {
+        return DATA_LENGTH;
     }
 
-    public void setDataLength(Long dataLength) {
-        this.dataLength = dataLength;
+    public void setDATA_LENGTH(Long DATA_LENGTH) {
+        this.DATA_LENGTH = DATA_LENGTH;
     }
 
-    public Long getMaxDataLength() {
-        return maxDataLength;
+    public Long getMAX_DATA_LENGTH() {
+        return MAX_DATA_LENGTH;
     }
 
-    public void setMaxDataLength(Long maxDataLength) {
-        this.maxDataLength = maxDataLength;
+    public void setMAX_DATA_LENGTH(Long MAX_DATA_LENGTH) {
+        this.MAX_DATA_LENGTH = MAX_DATA_LENGTH;
     }
 
-    public Long getIndexLength() {
-        return indexLength;
+    public Long getINDEX_LENGTH() {
+        return INDEX_LENGTH;
     }
 
-    public void setIndexLength(Long indexLength) {
-        this.indexLength = indexLength;
+    public void setINDEX_LENGTH(Long INDEX_LENGTH) {
+        this.INDEX_LENGTH = INDEX_LENGTH;
     }
 
-    public Long getDataFree() {
-        return dataFree;
+    public Long getDATA_FREE() {
+        return DATA_FREE;
     }
 
-    public void setDataFree(Long dataFree) {
-        this.dataFree = dataFree;
+    public void setDATA_FREE(Long DATA_FREE) {
+        this.DATA_FREE = DATA_FREE;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCREATE_TIME() {
+        return CREATE_TIME;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCREATE_TIME(Date CREATE_TIME) {
+        this.CREATE_TIME = CREATE_TIME;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUPDATE_TIME() {
+        return UPDATE_TIME;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUPDATE_TIME(Date UPDATE_TIME) {
+        this.UPDATE_TIME = UPDATE_TIME;
     }
 
-    public Date getCheckTime() {
-        return checkTime;
+    public Date getCHECK_TIME() {
+        return CHECK_TIME;
     }
 
-    public void setCheckTime(Date checkTime) {
-        this.checkTime = checkTime;
+    public void setCHECK_TIME(Date CHECK_TIME) {
+        this.CHECK_TIME = CHECK_TIME;
     }
 
-    public Long getChecksum() {
-        return checksum;
+    public Long getCHECKSUM() {
+        return CHECKSUM;
     }
 
-    public void setChecksum(Long checksum) {
-        this.checksum = checksum;
+    public void setCHECKSUM(Long CHECKSUM) {
+        this.CHECKSUM = CHECKSUM;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSTATUS() {
+        return STATUS;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setSTATUS(String STATUS) {
+        this.STATUS = STATUS == null ? null : STATUS.trim();
     }
 
-    public String getExtra() {
-        return extra;
+    public String getEXTRA() {
+        return EXTRA;
     }
 
-    public void setExtra(String extra) {
-        this.extra = extra == null ? null : extra.trim();
+    public void setEXTRA(String EXTRA) {
+        this.EXTRA = EXTRA == null ? null : EXTRA.trim();
     }
 }

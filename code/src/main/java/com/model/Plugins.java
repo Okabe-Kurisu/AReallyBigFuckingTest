@@ -1,113 +1,113 @@
 package com.model;
 
 public class Plugins {
-    private String pluginName;
+    private String PLUGIN_NAME;
 
-    private String pluginVersion;
+    private String PLUGIN_VERSION;
 
-    private String pluginStatus;
+    private String PLUGIN_STATUS;
 
-    private String pluginType;
+    private String PLUGIN_TYPE;
 
-    private String pluginTypeVersion;
+    private String PLUGIN_TYPE_VERSION;
 
-    private String pluginLibrary;
+    private String PLUGIN_LIBRARY;
 
-    private String pluginLibraryVersion;
+    private String PLUGIN_LIBRARY_VERSION;
 
-    private String pluginAuthor;
+    private String PLUGIN_AUTHOR;
 
-    private String pluginLicense;
+    private String PLUGIN_LICENSE;
 
-    private String loadOption;
+    private String LOAD_OPTION;
 
-    private String pluginDescription;
+    private String PLUGIN_DESCRIPTION;
 
-    public String getPluginName() {
-        return pluginName;
+    public String getPLUGIN_NAME() {
+        return PLUGIN_NAME;
     }
 
-    public void setPluginName(String pluginName) {
-        this.pluginName = pluginName == null ? null : pluginName.trim();
+    public void setPLUGIN_NAME(String PLUGIN_NAME) {
+        this.PLUGIN_NAME = PLUGIN_NAME == null ? null : PLUGIN_NAME.trim();
     }
 
-    public String getPluginVersion() {
-        return pluginVersion;
+    public String getPLUGIN_VERSION() {
+        return PLUGIN_VERSION;
     }
 
-    public void setPluginVersion(String pluginVersion) {
-        this.pluginVersion = pluginVersion == null ? null : pluginVersion.trim();
+    public void setPLUGIN_VERSION(String PLUGIN_VERSION) {
+        this.PLUGIN_VERSION = PLUGIN_VERSION == null ? null : PLUGIN_VERSION.trim();
     }
 
-    public String getPluginStatus() {
-        return pluginStatus;
+    public String getPLUGIN_STATUS() {
+        return PLUGIN_STATUS;
     }
 
-    public void setPluginStatus(String pluginStatus) {
-        this.pluginStatus = pluginStatus == null ? null : pluginStatus.trim();
+    public void setPLUGIN_STATUS(String PLUGIN_STATUS) {
+        this.PLUGIN_STATUS = PLUGIN_STATUS == null ? null : PLUGIN_STATUS.trim();
     }
 
-    public String getPluginType() {
-        return pluginType;
+    public String getPLUGIN_TYPE() {
+        return PLUGIN_TYPE;
     }
 
-    public void setPluginType(String pluginType) {
-        this.pluginType = pluginType == null ? null : pluginType.trim();
+    public void setPLUGIN_TYPE(String PLUGIN_TYPE) {
+        this.PLUGIN_TYPE = PLUGIN_TYPE == null ? null : PLUGIN_TYPE.trim();
     }
 
-    public String getPluginTypeVersion() {
-        return pluginTypeVersion;
+    public String getPLUGIN_TYPE_VERSION() {
+        return PLUGIN_TYPE_VERSION;
     }
 
-    public void setPluginTypeVersion(String pluginTypeVersion) {
-        this.pluginTypeVersion = pluginTypeVersion == null ? null : pluginTypeVersion.trim();
+    public void setPLUGIN_TYPE_VERSION(String PLUGIN_TYPE_VERSION) {
+        this.PLUGIN_TYPE_VERSION = PLUGIN_TYPE_VERSION == null ? null : PLUGIN_TYPE_VERSION.trim();
     }
 
-    public String getPluginLibrary() {
-        return pluginLibrary;
+    public String getPLUGIN_LIBRARY() {
+        return PLUGIN_LIBRARY;
     }
 
-    public void setPluginLibrary(String pluginLibrary) {
-        this.pluginLibrary = pluginLibrary == null ? null : pluginLibrary.trim();
+    public void setPLUGIN_LIBRARY(String PLUGIN_LIBRARY) {
+        this.PLUGIN_LIBRARY = PLUGIN_LIBRARY == null ? null : PLUGIN_LIBRARY.trim();
     }
 
-    public String getPluginLibraryVersion() {
-        return pluginLibraryVersion;
+    public String getPLUGIN_LIBRARY_VERSION() {
+        return PLUGIN_LIBRARY_VERSION;
     }
 
-    public void setPluginLibraryVersion(String pluginLibraryVersion) {
-        this.pluginLibraryVersion = pluginLibraryVersion == null ? null : pluginLibraryVersion.trim();
+    public void setPLUGIN_LIBRARY_VERSION(String PLUGIN_LIBRARY_VERSION) {
+        this.PLUGIN_LIBRARY_VERSION = PLUGIN_LIBRARY_VERSION == null ? null : PLUGIN_LIBRARY_VERSION.trim();
     }
 
-    public String getPluginAuthor() {
-        return pluginAuthor;
+    public String getPLUGIN_AUTHOR() {
+        return PLUGIN_AUTHOR;
     }
 
-    public void setPluginAuthor(String pluginAuthor) {
-        this.pluginAuthor = pluginAuthor == null ? null : pluginAuthor.trim();
+    public void setPLUGIN_AUTHOR(String PLUGIN_AUTHOR) {
+        this.PLUGIN_AUTHOR = PLUGIN_AUTHOR == null ? null : PLUGIN_AUTHOR.trim();
     }
 
-    public String getPluginLicense() {
-        return pluginLicense;
+    public String getPLUGIN_LICENSE() {
+        return PLUGIN_LICENSE;
     }
 
-    public void setPluginLicense(String pluginLicense) {
-        this.pluginLicense = pluginLicense == null ? null : pluginLicense.trim();
+    public void setPLUGIN_LICENSE(String PLUGIN_LICENSE) {
+        this.PLUGIN_LICENSE = PLUGIN_LICENSE == null ? null : PLUGIN_LICENSE.trim();
     }
 
-    public String getLoadOption() {
-        return loadOption;
+    public String getLOAD_OPTION() {
+        return LOAD_OPTION;
     }
 
-    public void setLoadOption(String loadOption) {
-        this.loadOption = loadOption == null ? null : loadOption.trim();
+    public void setLOAD_OPTION(String LOAD_OPTION) {
+        this.LOAD_OPTION = LOAD_OPTION == null ? null : LOAD_OPTION.trim();
     }
 
-    public String getPluginDescription() {
-        return pluginDescription;
+    public String getPLUGIN_DESCRIPTION() {
+        return PLUGIN_DESCRIPTION;
     }
 
-    public void setPluginDescription(String pluginDescription) {
-        this.pluginDescription = pluginDescription == null ? null : pluginDescription.trim();
+    public void setPLUGIN_DESCRIPTION(String PLUGIN_DESCRIPTION) {
+        this.PLUGIN_DESCRIPTION = PLUGIN_DESCRIPTION == null ? null : PLUGIN_DESCRIPTION.trim();
     }
 }

@@ -12,8 +12,8 @@ public interface BlogDiscussMapper {
     @Insert({
         "insert into blog_discuss (bdid, blog_id, ",
         "discuss_id)",
-        "values (#{bdid,jdbcType=INTEGER}, #{blogId,jdbcType=INTEGER}, ",
-        "#{discussId,jdbcType=INTEGER})"
+        "values (#{bdid,jdbcType=INTEGER}, #{blog_id,jdbcType=INTEGER}, ",
+        "#{discuss_id,jdbcType=INTEGER})"
     })
     int insert(BlogDiscuss record);
 
@@ -24,8 +24,8 @@ public interface BlogDiscussMapper {
     })
     @Results({
         @Result(column="bdid", property="bdid", jdbcType=JdbcType.INTEGER),
-        @Result(column="blog_id", property="blogId", jdbcType=JdbcType.INTEGER),
-        @Result(column="discuss_id", property="discussId", jdbcType=JdbcType.INTEGER)
+        @Result(column="blog_id", property="blog_id", jdbcType=JdbcType.INTEGER),
+        @Result(column="discuss_id", property="discuss_id", jdbcType=JdbcType.INTEGER)
     })
     List<BlogDiscuss> selectAll();
 }

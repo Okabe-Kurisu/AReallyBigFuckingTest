@@ -11,7 +11,7 @@ import org.apache.ibatis.type.JdbcType;
 public interface GlobalVariablesMapper {
     @Insert({
         "insert into GLOBAL_VARIABLES (VARIABLE_NAME, VARIABLE_VALUE)",
-        "values (#{variableName,jdbcType=VARCHAR}, #{variableValue,jdbcType=VARCHAR})"
+        "values (#{VARIABLE_NAME,jdbcType=VARCHAR}, #{VARIABLE_VALUE,jdbcType=VARCHAR})"
     })
     int insert(GlobalVariables record);
 
@@ -21,8 +21,8 @@ public interface GlobalVariablesMapper {
         "from GLOBAL_VARIABLES"
     })
     @Results({
-        @Result(column="VARIABLE_NAME", property="variableName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="VARIABLE_VALUE", property="variableValue", jdbcType=JdbcType.VARCHAR)
+        @Result(column="VARIABLE_NAME", property="VARIABLE_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="VARIABLE_VALUE", property="VARIABLE_VALUE", jdbcType=JdbcType.VARCHAR)
     })
     List<GlobalVariables> selectAll();
 }

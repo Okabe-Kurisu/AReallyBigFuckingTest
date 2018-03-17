@@ -3,253 +3,253 @@ package com.model;
 import java.util.Date;
 
 public class Partitions {
-    private String tableCatalog;
+    private String TABLE_CATALOG;
 
-    private String tableSchema;
+    private String TABLE_SCHEMA;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String partitionName;
+    private String PARTITION_NAME;
 
-    private String subpartitionName;
+    private String SUBPARTITION_NAME;
 
-    private Long partitionOrdinalPosition;
+    private Long PARTITION_ORDINAL_POSITION;
 
-    private Long subpartitionOrdinalPosition;
+    private Long SUBPARTITION_ORDINAL_POSITION;
 
-    private String partitionMethod;
+    private String PARTITION_METHOD;
 
-    private String subpartitionMethod;
+    private String SUBPARTITION_METHOD;
 
-    private Long tableRows;
+    private Long TABLE_ROWS;
 
-    private Long avgRowLength;
+    private Long AVG_ROW_LENGTH;
 
-    private Long dataLength;
+    private Long DATA_LENGTH;
 
-    private Long maxDataLength;
+    private Long MAX_DATA_LENGTH;
 
-    private Long indexLength;
+    private Long INDEX_LENGTH;
 
-    private Long dataFree;
+    private Long DATA_FREE;
 
-    private Date createTime;
+    private Date CREATE_TIME;
 
-    private Date updateTime;
+    private Date UPDATE_TIME;
 
-    private Date checkTime;
+    private Date CHECK_TIME;
 
-    private Long checksum;
+    private Long CHECKSUM;
 
-    private String partitionComment;
+    private String PARTITION_COMMENT;
 
-    private String nodegroup;
+    private String NODEGROUP;
 
-    private String tablespaceName;
+    private String TABLESPACE_NAME;
 
-    private String partitionExpression;
+    private String PARTITION_EXPRESSION;
 
-    private String subpartitionExpression;
+    private String SUBPARTITION_EXPRESSION;
 
-    private String partitionDescription;
+    private String PARTITION_DESCRIPTION;
 
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getTABLE_CATALOG() {
+        return TABLE_CATALOG;
     }
 
-    public void setTableCatalog(String tableCatalog) {
-        this.tableCatalog = tableCatalog == null ? null : tableCatalog.trim();
+    public void setTABLE_CATALOG(String TABLE_CATALOG) {
+        this.TABLE_CATALOG = TABLE_CATALOG == null ? null : TABLE_CATALOG.trim();
     }
 
-    public String getTableSchema() {
-        return tableSchema;
+    public String getTABLE_SCHEMA() {
+        return TABLE_SCHEMA;
     }
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema == null ? null : tableSchema.trim();
+    public void setTABLE_SCHEMA(String TABLE_SCHEMA) {
+        this.TABLE_SCHEMA = TABLE_SCHEMA == null ? null : TABLE_SCHEMA.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getPartitionName() {
-        return partitionName;
+    public String getPARTITION_NAME() {
+        return PARTITION_NAME;
     }
 
-    public void setPartitionName(String partitionName) {
-        this.partitionName = partitionName == null ? null : partitionName.trim();
+    public void setPARTITION_NAME(String PARTITION_NAME) {
+        this.PARTITION_NAME = PARTITION_NAME == null ? null : PARTITION_NAME.trim();
     }
 
-    public String getSubpartitionName() {
-        return subpartitionName;
+    public String getSUBPARTITION_NAME() {
+        return SUBPARTITION_NAME;
     }
 
-    public void setSubpartitionName(String subpartitionName) {
-        this.subpartitionName = subpartitionName == null ? null : subpartitionName.trim();
+    public void setSUBPARTITION_NAME(String SUBPARTITION_NAME) {
+        this.SUBPARTITION_NAME = SUBPARTITION_NAME == null ? null : SUBPARTITION_NAME.trim();
     }
 
-    public Long getPartitionOrdinalPosition() {
-        return partitionOrdinalPosition;
+    public Long getPARTITION_ORDINAL_POSITION() {
+        return PARTITION_ORDINAL_POSITION;
     }
 
-    public void setPartitionOrdinalPosition(Long partitionOrdinalPosition) {
-        this.partitionOrdinalPosition = partitionOrdinalPosition;
+    public void setPARTITION_ORDINAL_POSITION(Long PARTITION_ORDINAL_POSITION) {
+        this.PARTITION_ORDINAL_POSITION = PARTITION_ORDINAL_POSITION;
     }
 
-    public Long getSubpartitionOrdinalPosition() {
-        return subpartitionOrdinalPosition;
+    public Long getSUBPARTITION_ORDINAL_POSITION() {
+        return SUBPARTITION_ORDINAL_POSITION;
     }
 
-    public void setSubpartitionOrdinalPosition(Long subpartitionOrdinalPosition) {
-        this.subpartitionOrdinalPosition = subpartitionOrdinalPosition;
+    public void setSUBPARTITION_ORDINAL_POSITION(Long SUBPARTITION_ORDINAL_POSITION) {
+        this.SUBPARTITION_ORDINAL_POSITION = SUBPARTITION_ORDINAL_POSITION;
     }
 
-    public String getPartitionMethod() {
-        return partitionMethod;
+    public String getPARTITION_METHOD() {
+        return PARTITION_METHOD;
     }
 
-    public void setPartitionMethod(String partitionMethod) {
-        this.partitionMethod = partitionMethod == null ? null : partitionMethod.trim();
+    public void setPARTITION_METHOD(String PARTITION_METHOD) {
+        this.PARTITION_METHOD = PARTITION_METHOD == null ? null : PARTITION_METHOD.trim();
     }
 
-    public String getSubpartitionMethod() {
-        return subpartitionMethod;
+    public String getSUBPARTITION_METHOD() {
+        return SUBPARTITION_METHOD;
     }
 
-    public void setSubpartitionMethod(String subpartitionMethod) {
-        this.subpartitionMethod = subpartitionMethod == null ? null : subpartitionMethod.trim();
+    public void setSUBPARTITION_METHOD(String SUBPARTITION_METHOD) {
+        this.SUBPARTITION_METHOD = SUBPARTITION_METHOD == null ? null : SUBPARTITION_METHOD.trim();
     }
 
-    public Long getTableRows() {
-        return tableRows;
+    public Long getTABLE_ROWS() {
+        return TABLE_ROWS;
     }
 
-    public void setTableRows(Long tableRows) {
-        this.tableRows = tableRows;
+    public void setTABLE_ROWS(Long TABLE_ROWS) {
+        this.TABLE_ROWS = TABLE_ROWS;
     }
 
-    public Long getAvgRowLength() {
-        return avgRowLength;
+    public Long getAVG_ROW_LENGTH() {
+        return AVG_ROW_LENGTH;
     }
 
-    public void setAvgRowLength(Long avgRowLength) {
-        this.avgRowLength = avgRowLength;
+    public void setAVG_ROW_LENGTH(Long AVG_ROW_LENGTH) {
+        this.AVG_ROW_LENGTH = AVG_ROW_LENGTH;
     }
 
-    public Long getDataLength() {
-        return dataLength;
+    public Long getDATA_LENGTH() {
+        return DATA_LENGTH;
     }
 
-    public void setDataLength(Long dataLength) {
-        this.dataLength = dataLength;
+    public void setDATA_LENGTH(Long DATA_LENGTH) {
+        this.DATA_LENGTH = DATA_LENGTH;
     }
 
-    public Long getMaxDataLength() {
-        return maxDataLength;
+    public Long getMAX_DATA_LENGTH() {
+        return MAX_DATA_LENGTH;
     }
 
-    public void setMaxDataLength(Long maxDataLength) {
-        this.maxDataLength = maxDataLength;
+    public void setMAX_DATA_LENGTH(Long MAX_DATA_LENGTH) {
+        this.MAX_DATA_LENGTH = MAX_DATA_LENGTH;
     }
 
-    public Long getIndexLength() {
-        return indexLength;
+    public Long getINDEX_LENGTH() {
+        return INDEX_LENGTH;
     }
 
-    public void setIndexLength(Long indexLength) {
-        this.indexLength = indexLength;
+    public void setINDEX_LENGTH(Long INDEX_LENGTH) {
+        this.INDEX_LENGTH = INDEX_LENGTH;
     }
 
-    public Long getDataFree() {
-        return dataFree;
+    public Long getDATA_FREE() {
+        return DATA_FREE;
     }
 
-    public void setDataFree(Long dataFree) {
-        this.dataFree = dataFree;
+    public void setDATA_FREE(Long DATA_FREE) {
+        this.DATA_FREE = DATA_FREE;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCREATE_TIME() {
+        return CREATE_TIME;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCREATE_TIME(Date CREATE_TIME) {
+        this.CREATE_TIME = CREATE_TIME;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUPDATE_TIME() {
+        return UPDATE_TIME;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUPDATE_TIME(Date UPDATE_TIME) {
+        this.UPDATE_TIME = UPDATE_TIME;
     }
 
-    public Date getCheckTime() {
-        return checkTime;
+    public Date getCHECK_TIME() {
+        return CHECK_TIME;
     }
 
-    public void setCheckTime(Date checkTime) {
-        this.checkTime = checkTime;
+    public void setCHECK_TIME(Date CHECK_TIME) {
+        this.CHECK_TIME = CHECK_TIME;
     }
 
-    public Long getChecksum() {
-        return checksum;
+    public Long getCHECKSUM() {
+        return CHECKSUM;
     }
 
-    public void setChecksum(Long checksum) {
-        this.checksum = checksum;
+    public void setCHECKSUM(Long CHECKSUM) {
+        this.CHECKSUM = CHECKSUM;
     }
 
-    public String getPartitionComment() {
-        return partitionComment;
+    public String getPARTITION_COMMENT() {
+        return PARTITION_COMMENT;
     }
 
-    public void setPartitionComment(String partitionComment) {
-        this.partitionComment = partitionComment == null ? null : partitionComment.trim();
+    public void setPARTITION_COMMENT(String PARTITION_COMMENT) {
+        this.PARTITION_COMMENT = PARTITION_COMMENT == null ? null : PARTITION_COMMENT.trim();
     }
 
-    public String getNodegroup() {
-        return nodegroup;
+    public String getNODEGROUP() {
+        return NODEGROUP;
     }
 
-    public void setNodegroup(String nodegroup) {
-        this.nodegroup = nodegroup == null ? null : nodegroup.trim();
+    public void setNODEGROUP(String NODEGROUP) {
+        this.NODEGROUP = NODEGROUP == null ? null : NODEGROUP.trim();
     }
 
-    public String getTablespaceName() {
-        return tablespaceName;
+    public String getTABLESPACE_NAME() {
+        return TABLESPACE_NAME;
     }
 
-    public void setTablespaceName(String tablespaceName) {
-        this.tablespaceName = tablespaceName == null ? null : tablespaceName.trim();
+    public void setTABLESPACE_NAME(String TABLESPACE_NAME) {
+        this.TABLESPACE_NAME = TABLESPACE_NAME == null ? null : TABLESPACE_NAME.trim();
     }
 
-    public String getPartitionExpression() {
-        return partitionExpression;
+    public String getPARTITION_EXPRESSION() {
+        return PARTITION_EXPRESSION;
     }
 
-    public void setPartitionExpression(String partitionExpression) {
-        this.partitionExpression = partitionExpression == null ? null : partitionExpression.trim();
+    public void setPARTITION_EXPRESSION(String PARTITION_EXPRESSION) {
+        this.PARTITION_EXPRESSION = PARTITION_EXPRESSION == null ? null : PARTITION_EXPRESSION.trim();
     }
 
-    public String getSubpartitionExpression() {
-        return subpartitionExpression;
+    public String getSUBPARTITION_EXPRESSION() {
+        return SUBPARTITION_EXPRESSION;
     }
 
-    public void setSubpartitionExpression(String subpartitionExpression) {
-        this.subpartitionExpression = subpartitionExpression == null ? null : subpartitionExpression.trim();
+    public void setSUBPARTITION_EXPRESSION(String SUBPARTITION_EXPRESSION) {
+        this.SUBPARTITION_EXPRESSION = SUBPARTITION_EXPRESSION == null ? null : SUBPARTITION_EXPRESSION.trim();
     }
 
-    public String getPartitionDescription() {
-        return partitionDescription;
+    public String getPARTITION_DESCRIPTION() {
+        return PARTITION_DESCRIPTION;
     }
 
-    public void setPartitionDescription(String partitionDescription) {
-        this.partitionDescription = partitionDescription == null ? null : partitionDescription.trim();
+    public void setPARTITION_DESCRIPTION(String PARTITION_DESCRIPTION) {
+        this.PARTITION_DESCRIPTION = PARTITION_DESCRIPTION == null ? null : PARTITION_DESCRIPTION.trim();
     }
 }

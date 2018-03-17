@@ -1,93 +1,93 @@
 package com.model;
 
 public class Tablespaces {
-    private String tablespaceName;
+    private String TABLESPACE_NAME;
 
-    private String engine;
+    private String ENGINE;
 
-    private String tablespaceType;
+    private String TABLESPACE_TYPE;
 
-    private String logfileGroupName;
+    private String LOGFILE_GROUP_NAME;
 
-    private Long extentSize;
+    private Long EXTENT_SIZE;
 
-    private Long autoextendSize;
+    private Long AUTOEXTEND_SIZE;
 
-    private Long maximumSize;
+    private Long MAXIMUM_SIZE;
 
-    private Long nodegroupId;
+    private Long NODEGROUP_ID;
 
-    private String tablespaceComment;
+    private String TABLESPACE_COMMENT;
 
-    public String getTablespaceName() {
-        return tablespaceName;
+    public String getTABLESPACE_NAME() {
+        return TABLESPACE_NAME;
     }
 
-    public void setTablespaceName(String tablespaceName) {
-        this.tablespaceName = tablespaceName == null ? null : tablespaceName.trim();
+    public void setTABLESPACE_NAME(String TABLESPACE_NAME) {
+        this.TABLESPACE_NAME = TABLESPACE_NAME == null ? null : TABLESPACE_NAME.trim();
     }
 
-    public String getEngine() {
-        return engine;
+    public String getENGINE() {
+        return ENGINE;
     }
 
-    public void setEngine(String engine) {
-        this.engine = engine == null ? null : engine.trim();
+    public void setENGINE(String ENGINE) {
+        this.ENGINE = ENGINE == null ? null : ENGINE.trim();
     }
 
-    public String getTablespaceType() {
-        return tablespaceType;
+    public String getTABLESPACE_TYPE() {
+        return TABLESPACE_TYPE;
     }
 
-    public void setTablespaceType(String tablespaceType) {
-        this.tablespaceType = tablespaceType == null ? null : tablespaceType.trim();
+    public void setTABLESPACE_TYPE(String TABLESPACE_TYPE) {
+        this.TABLESPACE_TYPE = TABLESPACE_TYPE == null ? null : TABLESPACE_TYPE.trim();
     }
 
-    public String getLogfileGroupName() {
-        return logfileGroupName;
+    public String getLOGFILE_GROUP_NAME() {
+        return LOGFILE_GROUP_NAME;
     }
 
-    public void setLogfileGroupName(String logfileGroupName) {
-        this.logfileGroupName = logfileGroupName == null ? null : logfileGroupName.trim();
+    public void setLOGFILE_GROUP_NAME(String LOGFILE_GROUP_NAME) {
+        this.LOGFILE_GROUP_NAME = LOGFILE_GROUP_NAME == null ? null : LOGFILE_GROUP_NAME.trim();
     }
 
-    public Long getExtentSize() {
-        return extentSize;
+    public Long getEXTENT_SIZE() {
+        return EXTENT_SIZE;
     }
 
-    public void setExtentSize(Long extentSize) {
-        this.extentSize = extentSize;
+    public void setEXTENT_SIZE(Long EXTENT_SIZE) {
+        this.EXTENT_SIZE = EXTENT_SIZE;
     }
 
-    public Long getAutoextendSize() {
-        return autoextendSize;
+    public Long getAUTOEXTEND_SIZE() {
+        return AUTOEXTEND_SIZE;
     }
 
-    public void setAutoextendSize(Long autoextendSize) {
-        this.autoextendSize = autoextendSize;
+    public void setAUTOEXTEND_SIZE(Long AUTOEXTEND_SIZE) {
+        this.AUTOEXTEND_SIZE = AUTOEXTEND_SIZE;
     }
 
-    public Long getMaximumSize() {
-        return maximumSize;
+    public Long getMAXIMUM_SIZE() {
+        return MAXIMUM_SIZE;
     }
 
-    public void setMaximumSize(Long maximumSize) {
-        this.maximumSize = maximumSize;
+    public void setMAXIMUM_SIZE(Long MAXIMUM_SIZE) {
+        this.MAXIMUM_SIZE = MAXIMUM_SIZE;
     }
 
-    public Long getNodegroupId() {
-        return nodegroupId;
+    public Long getNODEGROUP_ID() {
+        return NODEGROUP_ID;
     }
 
-    public void setNodegroupId(Long nodegroupId) {
-        this.nodegroupId = nodegroupId;
+    public void setNODEGROUP_ID(Long NODEGROUP_ID) {
+        this.NODEGROUP_ID = NODEGROUP_ID;
     }
 
-    public String getTablespaceComment() {
-        return tablespaceComment;
+    public String getTABLESPACE_COMMENT() {
+        return TABLESPACE_COMMENT;
     }
 
-    public void setTablespaceComment(String tablespaceComment) {
-        this.tablespaceComment = tablespaceComment == null ? null : tablespaceComment.trim();
+    public void setTABLESPACE_COMMENT(String TABLESPACE_COMMENT) {
+        this.TABLESPACE_COMMENT = TABLESPACE_COMMENT == null ? null : TABLESPACE_COMMENT.trim();
     }
 }

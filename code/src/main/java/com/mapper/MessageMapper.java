@@ -13,9 +13,9 @@ public interface MessageMapper {
         "insert into message (mid, user_id, ",
         "accpeter_id, date, ",
         "is_read, content)",
-        "values (#{mid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, ",
-        "#{accpeterId,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, ",
-        "#{isRead,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})"
+        "values (#{mid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
+        "#{accpeter_id,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, ",
+        "#{is_read,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})"
     })
     int insert(Message record);
 
@@ -26,10 +26,10 @@ public interface MessageMapper {
     })
     @Results({
         @Result(column="mid", property="mid", jdbcType=JdbcType.INTEGER),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="accpeter_id", property="accpeterId", jdbcType=JdbcType.INTEGER),
+        @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
+        @Result(column="accpeter_id", property="accpeter_id", jdbcType=JdbcType.INTEGER),
         @Result(column="date", property="date", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="is_read", property="isRead", jdbcType=JdbcType.BIT),
+        @Result(column="is_read", property="is_read", jdbcType=JdbcType.BIT),
         @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Message> selectAll();

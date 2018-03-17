@@ -3,303 +3,303 @@ package com.model;
 import java.util.Date;
 
 public class Routines {
-    private String specificName;
+    private String SPECIFIC_NAME;
 
-    private String routineCatalog;
+    private String ROUTINE_CATALOG;
 
-    private String routineSchema;
+    private String ROUTINE_SCHEMA;
 
-    private String routineName;
+    private String ROUTINE_NAME;
 
-    private String routineType;
+    private String ROUTINE_TYPE;
 
-    private String dataType;
+    private String DATA_TYPE;
 
-    private Integer characterMaximumLength;
+    private Integer CHARACTER_MAXIMUM_LENGTH;
 
-    private Integer characterOctetLength;
+    private Integer CHARACTER_OCTET_LENGTH;
 
-    private Integer numericPrecision;
+    private Integer NUMERIC_PRECISION;
 
-    private Integer numericScale;
+    private Integer NUMERIC_SCALE;
 
-    private String characterSetName;
+    private String CHARACTER_SET_NAME;
 
-    private String collationName;
+    private String COLLATION_NAME;
 
-    private String routineBody;
+    private String ROUTINE_BODY;
 
-    private String externalName;
+    private String EXTERNAL_NAME;
 
-    private String externalLanguage;
+    private String EXTERNAL_LANGUAGE;
 
-    private String parameterStyle;
+    private String PARAMETER_STYLE;
 
-    private String isDeterministic;
+    private String IS_DETERMINISTIC;
 
-    private String sqlDataAccess;
+    private String SQL_DATA_ACCESS;
 
-    private String sqlPath;
+    private String SQL_PATH;
 
-    private String securityType;
+    private String SECURITY_TYPE;
 
-    private Date created;
+    private Date CREATED;
 
-    private Date lastAltered;
+    private Date LAST_ALTERED;
 
-    private String sqlMode;
+    private String SQL_MODE;
 
-    private String definer;
+    private String DEFINER;
 
-    private String characterSetClient;
+    private String CHARACTER_SET_CLIENT;
 
-    private String collationConnection;
+    private String COLLATION_CONNECTION;
 
-    private String databaseCollation;
+    private String DATABASE_COLLATION;
 
-    private String dtdIdentifier;
+    private String DTD_IDENTIFIER;
 
-    private String routineDefinition;
+    private String ROUTINE_DEFINITION;
 
-    private String routineComment;
+    private String ROUTINE_COMMENT;
 
-    public String getSpecificName() {
-        return specificName;
+    public String getSPECIFIC_NAME() {
+        return SPECIFIC_NAME;
     }
 
-    public void setSpecificName(String specificName) {
-        this.specificName = specificName == null ? null : specificName.trim();
+    public void setSPECIFIC_NAME(String SPECIFIC_NAME) {
+        this.SPECIFIC_NAME = SPECIFIC_NAME == null ? null : SPECIFIC_NAME.trim();
     }
 
-    public String getRoutineCatalog() {
-        return routineCatalog;
+    public String getROUTINE_CATALOG() {
+        return ROUTINE_CATALOG;
     }
 
-    public void setRoutineCatalog(String routineCatalog) {
-        this.routineCatalog = routineCatalog == null ? null : routineCatalog.trim();
+    public void setROUTINE_CATALOG(String ROUTINE_CATALOG) {
+        this.ROUTINE_CATALOG = ROUTINE_CATALOG == null ? null : ROUTINE_CATALOG.trim();
     }
 
-    public String getRoutineSchema() {
-        return routineSchema;
+    public String getROUTINE_SCHEMA() {
+        return ROUTINE_SCHEMA;
     }
 
-    public void setRoutineSchema(String routineSchema) {
-        this.routineSchema = routineSchema == null ? null : routineSchema.trim();
+    public void setROUTINE_SCHEMA(String ROUTINE_SCHEMA) {
+        this.ROUTINE_SCHEMA = ROUTINE_SCHEMA == null ? null : ROUTINE_SCHEMA.trim();
     }
 
-    public String getRoutineName() {
-        return routineName;
+    public String getROUTINE_NAME() {
+        return ROUTINE_NAME;
     }
 
-    public void setRoutineName(String routineName) {
-        this.routineName = routineName == null ? null : routineName.trim();
+    public void setROUTINE_NAME(String ROUTINE_NAME) {
+        this.ROUTINE_NAME = ROUTINE_NAME == null ? null : ROUTINE_NAME.trim();
     }
 
-    public String getRoutineType() {
-        return routineType;
+    public String getROUTINE_TYPE() {
+        return ROUTINE_TYPE;
     }
 
-    public void setRoutineType(String routineType) {
-        this.routineType = routineType == null ? null : routineType.trim();
+    public void setROUTINE_TYPE(String ROUTINE_TYPE) {
+        this.ROUTINE_TYPE = ROUTINE_TYPE == null ? null : ROUTINE_TYPE.trim();
     }
 
-    public String getDataType() {
-        return dataType;
+    public String getDATA_TYPE() {
+        return DATA_TYPE;
     }
 
-    public void setDataType(String dataType) {
-        this.dataType = dataType == null ? null : dataType.trim();
+    public void setDATA_TYPE(String DATA_TYPE) {
+        this.DATA_TYPE = DATA_TYPE == null ? null : DATA_TYPE.trim();
     }
 
-    public Integer getCharacterMaximumLength() {
-        return characterMaximumLength;
+    public Integer getCHARACTER_MAXIMUM_LENGTH() {
+        return CHARACTER_MAXIMUM_LENGTH;
     }
 
-    public void setCharacterMaximumLength(Integer characterMaximumLength) {
-        this.characterMaximumLength = characterMaximumLength;
+    public void setCHARACTER_MAXIMUM_LENGTH(Integer CHARACTER_MAXIMUM_LENGTH) {
+        this.CHARACTER_MAXIMUM_LENGTH = CHARACTER_MAXIMUM_LENGTH;
     }
 
-    public Integer getCharacterOctetLength() {
-        return characterOctetLength;
+    public Integer getCHARACTER_OCTET_LENGTH() {
+        return CHARACTER_OCTET_LENGTH;
     }
 
-    public void setCharacterOctetLength(Integer characterOctetLength) {
-        this.characterOctetLength = characterOctetLength;
+    public void setCHARACTER_OCTET_LENGTH(Integer CHARACTER_OCTET_LENGTH) {
+        this.CHARACTER_OCTET_LENGTH = CHARACTER_OCTET_LENGTH;
     }
 
-    public Integer getNumericPrecision() {
-        return numericPrecision;
+    public Integer getNUMERIC_PRECISION() {
+        return NUMERIC_PRECISION;
     }
 
-    public void setNumericPrecision(Integer numericPrecision) {
-        this.numericPrecision = numericPrecision;
+    public void setNUMERIC_PRECISION(Integer NUMERIC_PRECISION) {
+        this.NUMERIC_PRECISION = NUMERIC_PRECISION;
     }
 
-    public Integer getNumericScale() {
-        return numericScale;
+    public Integer getNUMERIC_SCALE() {
+        return NUMERIC_SCALE;
     }
 
-    public void setNumericScale(Integer numericScale) {
-        this.numericScale = numericScale;
+    public void setNUMERIC_SCALE(Integer NUMERIC_SCALE) {
+        this.NUMERIC_SCALE = NUMERIC_SCALE;
     }
 
-    public String getCharacterSetName() {
-        return characterSetName;
+    public String getCHARACTER_SET_NAME() {
+        return CHARACTER_SET_NAME;
     }
 
-    public void setCharacterSetName(String characterSetName) {
-        this.characterSetName = characterSetName == null ? null : characterSetName.trim();
+    public void setCHARACTER_SET_NAME(String CHARACTER_SET_NAME) {
+        this.CHARACTER_SET_NAME = CHARACTER_SET_NAME == null ? null : CHARACTER_SET_NAME.trim();
     }
 
-    public String getCollationName() {
-        return collationName;
+    public String getCOLLATION_NAME() {
+        return COLLATION_NAME;
     }
 
-    public void setCollationName(String collationName) {
-        this.collationName = collationName == null ? null : collationName.trim();
+    public void setCOLLATION_NAME(String COLLATION_NAME) {
+        this.COLLATION_NAME = COLLATION_NAME == null ? null : COLLATION_NAME.trim();
     }
 
-    public String getRoutineBody() {
-        return routineBody;
+    public String getROUTINE_BODY() {
+        return ROUTINE_BODY;
     }
 
-    public void setRoutineBody(String routineBody) {
-        this.routineBody = routineBody == null ? null : routineBody.trim();
+    public void setROUTINE_BODY(String ROUTINE_BODY) {
+        this.ROUTINE_BODY = ROUTINE_BODY == null ? null : ROUTINE_BODY.trim();
     }
 
-    public String getExternalName() {
-        return externalName;
+    public String getEXTERNAL_NAME() {
+        return EXTERNAL_NAME;
     }
 
-    public void setExternalName(String externalName) {
-        this.externalName = externalName == null ? null : externalName.trim();
+    public void setEXTERNAL_NAME(String EXTERNAL_NAME) {
+        this.EXTERNAL_NAME = EXTERNAL_NAME == null ? null : EXTERNAL_NAME.trim();
     }
 
-    public String getExternalLanguage() {
-        return externalLanguage;
+    public String getEXTERNAL_LANGUAGE() {
+        return EXTERNAL_LANGUAGE;
     }
 
-    public void setExternalLanguage(String externalLanguage) {
-        this.externalLanguage = externalLanguage == null ? null : externalLanguage.trim();
+    public void setEXTERNAL_LANGUAGE(String EXTERNAL_LANGUAGE) {
+        this.EXTERNAL_LANGUAGE = EXTERNAL_LANGUAGE == null ? null : EXTERNAL_LANGUAGE.trim();
     }
 
-    public String getParameterStyle() {
-        return parameterStyle;
+    public String getPARAMETER_STYLE() {
+        return PARAMETER_STYLE;
     }
 
-    public void setParameterStyle(String parameterStyle) {
-        this.parameterStyle = parameterStyle == null ? null : parameterStyle.trim();
+    public void setPARAMETER_STYLE(String PARAMETER_STYLE) {
+        this.PARAMETER_STYLE = PARAMETER_STYLE == null ? null : PARAMETER_STYLE.trim();
     }
 
-    public String getIsDeterministic() {
-        return isDeterministic;
+    public String getIS_DETERMINISTIC() {
+        return IS_DETERMINISTIC;
     }
 
-    public void setIsDeterministic(String isDeterministic) {
-        this.isDeterministic = isDeterministic == null ? null : isDeterministic.trim();
+    public void setIS_DETERMINISTIC(String IS_DETERMINISTIC) {
+        this.IS_DETERMINISTIC = IS_DETERMINISTIC == null ? null : IS_DETERMINISTIC.trim();
     }
 
-    public String getSqlDataAccess() {
-        return sqlDataAccess;
+    public String getSQL_DATA_ACCESS() {
+        return SQL_DATA_ACCESS;
     }
 
-    public void setSqlDataAccess(String sqlDataAccess) {
-        this.sqlDataAccess = sqlDataAccess == null ? null : sqlDataAccess.trim();
+    public void setSQL_DATA_ACCESS(String SQL_DATA_ACCESS) {
+        this.SQL_DATA_ACCESS = SQL_DATA_ACCESS == null ? null : SQL_DATA_ACCESS.trim();
     }
 
-    public String getSqlPath() {
-        return sqlPath;
+    public String getSQL_PATH() {
+        return SQL_PATH;
     }
 
-    public void setSqlPath(String sqlPath) {
-        this.sqlPath = sqlPath == null ? null : sqlPath.trim();
+    public void setSQL_PATH(String SQL_PATH) {
+        this.SQL_PATH = SQL_PATH == null ? null : SQL_PATH.trim();
     }
 
-    public String getSecurityType() {
-        return securityType;
+    public String getSECURITY_TYPE() {
+        return SECURITY_TYPE;
     }
 
-    public void setSecurityType(String securityType) {
-        this.securityType = securityType == null ? null : securityType.trim();
+    public void setSECURITY_TYPE(String SECURITY_TYPE) {
+        this.SECURITY_TYPE = SECURITY_TYPE == null ? null : SECURITY_TYPE.trim();
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getCREATED() {
+        return CREATED;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCREATED(Date CREATED) {
+        this.CREATED = CREATED;
     }
 
-    public Date getLastAltered() {
-        return lastAltered;
+    public Date getLAST_ALTERED() {
+        return LAST_ALTERED;
     }
 
-    public void setLastAltered(Date lastAltered) {
-        this.lastAltered = lastAltered;
+    public void setLAST_ALTERED(Date LAST_ALTERED) {
+        this.LAST_ALTERED = LAST_ALTERED;
     }
 
-    public String getSqlMode() {
-        return sqlMode;
+    public String getSQL_MODE() {
+        return SQL_MODE;
     }
 
-    public void setSqlMode(String sqlMode) {
-        this.sqlMode = sqlMode == null ? null : sqlMode.trim();
+    public void setSQL_MODE(String SQL_MODE) {
+        this.SQL_MODE = SQL_MODE == null ? null : SQL_MODE.trim();
     }
 
-    public String getDefiner() {
-        return definer;
+    public String getDEFINER() {
+        return DEFINER;
     }
 
-    public void setDefiner(String definer) {
-        this.definer = definer == null ? null : definer.trim();
+    public void setDEFINER(String DEFINER) {
+        this.DEFINER = DEFINER == null ? null : DEFINER.trim();
     }
 
-    public String getCharacterSetClient() {
-        return characterSetClient;
+    public String getCHARACTER_SET_CLIENT() {
+        return CHARACTER_SET_CLIENT;
     }
 
-    public void setCharacterSetClient(String characterSetClient) {
-        this.characterSetClient = characterSetClient == null ? null : characterSetClient.trim();
+    public void setCHARACTER_SET_CLIENT(String CHARACTER_SET_CLIENT) {
+        this.CHARACTER_SET_CLIENT = CHARACTER_SET_CLIENT == null ? null : CHARACTER_SET_CLIENT.trim();
     }
 
-    public String getCollationConnection() {
-        return collationConnection;
+    public String getCOLLATION_CONNECTION() {
+        return COLLATION_CONNECTION;
     }
 
-    public void setCollationConnection(String collationConnection) {
-        this.collationConnection = collationConnection == null ? null : collationConnection.trim();
+    public void setCOLLATION_CONNECTION(String COLLATION_CONNECTION) {
+        this.COLLATION_CONNECTION = COLLATION_CONNECTION == null ? null : COLLATION_CONNECTION.trim();
     }
 
-    public String getDatabaseCollation() {
-        return databaseCollation;
+    public String getDATABASE_COLLATION() {
+        return DATABASE_COLLATION;
     }
 
-    public void setDatabaseCollation(String databaseCollation) {
-        this.databaseCollation = databaseCollation == null ? null : databaseCollation.trim();
+    public void setDATABASE_COLLATION(String DATABASE_COLLATION) {
+        this.DATABASE_COLLATION = DATABASE_COLLATION == null ? null : DATABASE_COLLATION.trim();
     }
 
-    public String getDtdIdentifier() {
-        return dtdIdentifier;
+    public String getDTD_IDENTIFIER() {
+        return DTD_IDENTIFIER;
     }
 
-    public void setDtdIdentifier(String dtdIdentifier) {
-        this.dtdIdentifier = dtdIdentifier == null ? null : dtdIdentifier.trim();
+    public void setDTD_IDENTIFIER(String DTD_IDENTIFIER) {
+        this.DTD_IDENTIFIER = DTD_IDENTIFIER == null ? null : DTD_IDENTIFIER.trim();
     }
 
-    public String getRoutineDefinition() {
-        return routineDefinition;
+    public String getROUTINE_DEFINITION() {
+        return ROUTINE_DEFINITION;
     }
 
-    public void setRoutineDefinition(String routineDefinition) {
-        this.routineDefinition = routineDefinition == null ? null : routineDefinition.trim();
+    public void setROUTINE_DEFINITION(String ROUTINE_DEFINITION) {
+        this.ROUTINE_DEFINITION = ROUTINE_DEFINITION == null ? null : ROUTINE_DEFINITION.trim();
     }
 
-    public String getRoutineComment() {
-        return routineComment;
+    public String getROUTINE_COMMENT() {
+        return ROUTINE_COMMENT;
     }
 
-    public void setRoutineComment(String routineComment) {
-        this.routineComment = routineComment == null ? null : routineComment.trim();
+    public void setROUTINE_COMMENT(String ROUTINE_COMMENT) {
+        this.ROUTINE_COMMENT = ROUTINE_COMMENT == null ? null : ROUTINE_COMMENT.trim();
     }
 }

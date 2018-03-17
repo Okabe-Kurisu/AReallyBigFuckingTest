@@ -5,7 +5,7 @@ import java.util.Date;
 public class SearchLog {
     private Integer slid;
 
-    private Integer userId;
+    private Integer user_id;
 
     private String content;
 
@@ -19,12 +19,12 @@ public class SearchLog {
         this.slid = slid;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getContent() {

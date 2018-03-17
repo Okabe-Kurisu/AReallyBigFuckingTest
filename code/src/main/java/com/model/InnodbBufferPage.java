@@ -1,203 +1,203 @@
 package com.model;
 
 public class InnodbBufferPage {
-    private Long poolId;
+    private Long POOL_ID;
 
-    private Long blockId;
+    private Long BLOCK_ID;
 
-    private Long space;
+    private Long SPACE;
 
-    private Long pageNumber;
+    private Long PAGE_NUMBER;
 
-    private String pageType;
+    private String PAGE_TYPE;
 
-    private Long flushType;
+    private Long FLUSH_TYPE;
 
-    private Long fixCount;
+    private Long FIX_COUNT;
 
-    private String isHashed;
+    private String IS_HASHED;
 
-    private Long newestModification;
+    private Long NEWEST_MODIFICATION;
 
-    private Long oldestModification;
+    private Long OLDEST_MODIFICATION;
 
-    private Long accessTime;
+    private Long ACCESS_TIME;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String indexName;
+    private String INDEX_NAME;
 
-    private Long numberRecords;
+    private Long NUMBER_RECORDS;
 
-    private Long dataSize;
+    private Long DATA_SIZE;
 
-    private Long compressedSize;
+    private Long COMPRESSED_SIZE;
 
-    private String pageState;
+    private String PAGE_STATE;
 
-    private String ioFix;
+    private String IO_FIX;
 
-    private String isOld;
+    private String IS_OLD;
 
-    private Long freePageClock;
+    private Long FREE_PAGE_CLOCK;
 
-    public Long getPoolId() {
-        return poolId;
+    public Long getPOOL_ID() {
+        return POOL_ID;
     }
 
-    public void setPoolId(Long poolId) {
-        this.poolId = poolId;
+    public void setPOOL_ID(Long POOL_ID) {
+        this.POOL_ID = POOL_ID;
     }
 
-    public Long getBlockId() {
-        return blockId;
+    public Long getBLOCK_ID() {
+        return BLOCK_ID;
     }
 
-    public void setBlockId(Long blockId) {
-        this.blockId = blockId;
+    public void setBLOCK_ID(Long BLOCK_ID) {
+        this.BLOCK_ID = BLOCK_ID;
     }
 
-    public Long getSpace() {
-        return space;
+    public Long getSPACE() {
+        return SPACE;
     }
 
-    public void setSpace(Long space) {
-        this.space = space;
+    public void setSPACE(Long SPACE) {
+        this.SPACE = SPACE;
     }
 
-    public Long getPageNumber() {
-        return pageNumber;
+    public Long getPAGE_NUMBER() {
+        return PAGE_NUMBER;
     }
 
-    public void setPageNumber(Long pageNumber) {
-        this.pageNumber = pageNumber;
+    public void setPAGE_NUMBER(Long PAGE_NUMBER) {
+        this.PAGE_NUMBER = PAGE_NUMBER;
     }
 
-    public String getPageType() {
-        return pageType;
+    public String getPAGE_TYPE() {
+        return PAGE_TYPE;
     }
 
-    public void setPageType(String pageType) {
-        this.pageType = pageType == null ? null : pageType.trim();
+    public void setPAGE_TYPE(String PAGE_TYPE) {
+        this.PAGE_TYPE = PAGE_TYPE == null ? null : PAGE_TYPE.trim();
     }
 
-    public Long getFlushType() {
-        return flushType;
+    public Long getFLUSH_TYPE() {
+        return FLUSH_TYPE;
     }
 
-    public void setFlushType(Long flushType) {
-        this.flushType = flushType;
+    public void setFLUSH_TYPE(Long FLUSH_TYPE) {
+        this.FLUSH_TYPE = FLUSH_TYPE;
     }
 
-    public Long getFixCount() {
-        return fixCount;
+    public Long getFIX_COUNT() {
+        return FIX_COUNT;
     }
 
-    public void setFixCount(Long fixCount) {
-        this.fixCount = fixCount;
+    public void setFIX_COUNT(Long FIX_COUNT) {
+        this.FIX_COUNT = FIX_COUNT;
     }
 
-    public String getIsHashed() {
-        return isHashed;
+    public String getIS_HASHED() {
+        return IS_HASHED;
     }
 
-    public void setIsHashed(String isHashed) {
-        this.isHashed = isHashed == null ? null : isHashed.trim();
+    public void setIS_HASHED(String IS_HASHED) {
+        this.IS_HASHED = IS_HASHED == null ? null : IS_HASHED.trim();
     }
 
-    public Long getNewestModification() {
-        return newestModification;
+    public Long getNEWEST_MODIFICATION() {
+        return NEWEST_MODIFICATION;
     }
 
-    public void setNewestModification(Long newestModification) {
-        this.newestModification = newestModification;
+    public void setNEWEST_MODIFICATION(Long NEWEST_MODIFICATION) {
+        this.NEWEST_MODIFICATION = NEWEST_MODIFICATION;
     }
 
-    public Long getOldestModification() {
-        return oldestModification;
+    public Long getOLDEST_MODIFICATION() {
+        return OLDEST_MODIFICATION;
     }
 
-    public void setOldestModification(Long oldestModification) {
-        this.oldestModification = oldestModification;
+    public void setOLDEST_MODIFICATION(Long OLDEST_MODIFICATION) {
+        this.OLDEST_MODIFICATION = OLDEST_MODIFICATION;
     }
 
-    public Long getAccessTime() {
-        return accessTime;
+    public Long getACCESS_TIME() {
+        return ACCESS_TIME;
     }
 
-    public void setAccessTime(Long accessTime) {
-        this.accessTime = accessTime;
+    public void setACCESS_TIME(Long ACCESS_TIME) {
+        this.ACCESS_TIME = ACCESS_TIME;
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getIndexName() {
-        return indexName;
+    public String getINDEX_NAME() {
+        return INDEX_NAME;
     }
 
-    public void setIndexName(String indexName) {
-        this.indexName = indexName == null ? null : indexName.trim();
+    public void setINDEX_NAME(String INDEX_NAME) {
+        this.INDEX_NAME = INDEX_NAME == null ? null : INDEX_NAME.trim();
     }
 
-    public Long getNumberRecords() {
-        return numberRecords;
+    public Long getNUMBER_RECORDS() {
+        return NUMBER_RECORDS;
     }
 
-    public void setNumberRecords(Long numberRecords) {
-        this.numberRecords = numberRecords;
+    public void setNUMBER_RECORDS(Long NUMBER_RECORDS) {
+        this.NUMBER_RECORDS = NUMBER_RECORDS;
     }
 
-    public Long getDataSize() {
-        return dataSize;
+    public Long getDATA_SIZE() {
+        return DATA_SIZE;
     }
 
-    public void setDataSize(Long dataSize) {
-        this.dataSize = dataSize;
+    public void setDATA_SIZE(Long DATA_SIZE) {
+        this.DATA_SIZE = DATA_SIZE;
     }
 
-    public Long getCompressedSize() {
-        return compressedSize;
+    public Long getCOMPRESSED_SIZE() {
+        return COMPRESSED_SIZE;
     }
 
-    public void setCompressedSize(Long compressedSize) {
-        this.compressedSize = compressedSize;
+    public void setCOMPRESSED_SIZE(Long COMPRESSED_SIZE) {
+        this.COMPRESSED_SIZE = COMPRESSED_SIZE;
     }
 
-    public String getPageState() {
-        return pageState;
+    public String getPAGE_STATE() {
+        return PAGE_STATE;
     }
 
-    public void setPageState(String pageState) {
-        this.pageState = pageState == null ? null : pageState.trim();
+    public void setPAGE_STATE(String PAGE_STATE) {
+        this.PAGE_STATE = PAGE_STATE == null ? null : PAGE_STATE.trim();
     }
 
-    public String getIoFix() {
-        return ioFix;
+    public String getIO_FIX() {
+        return IO_FIX;
     }
 
-    public void setIoFix(String ioFix) {
-        this.ioFix = ioFix == null ? null : ioFix.trim();
+    public void setIO_FIX(String IO_FIX) {
+        this.IO_FIX = IO_FIX == null ? null : IO_FIX.trim();
     }
 
-    public String getIsOld() {
-        return isOld;
+    public String getIS_OLD() {
+        return IS_OLD;
     }
 
-    public void setIsOld(String isOld) {
-        this.isOld = isOld == null ? null : isOld.trim();
+    public void setIS_OLD(String IS_OLD) {
+        this.IS_OLD = IS_OLD == null ? null : IS_OLD.trim();
     }
 
-    public Long getFreePageClock() {
-        return freePageClock;
+    public Long getFREE_PAGE_CLOCK() {
+        return FREE_PAGE_CLOCK;
     }
 
-    public void setFreePageClock(Long freePageClock) {
-        this.freePageClock = freePageClock;
+    public void setFREE_PAGE_CLOCK(Long FREE_PAGE_CLOCK) {
+        this.FREE_PAGE_CLOCK = FREE_PAGE_CLOCK;
     }
 }

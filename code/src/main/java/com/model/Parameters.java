@@ -1,153 +1,153 @@
 package com.model;
 
 public class Parameters {
-    private String specificCatalog;
+    private String SPECIFIC_CATALOG;
 
-    private String specificSchema;
+    private String SPECIFIC_SCHEMA;
 
-    private String specificName;
+    private String SPECIFIC_NAME;
 
-    private Integer ordinalPosition;
+    private Integer ORDINAL_POSITION;
 
-    private String parameterMode;
+    private String PARAMETER_MODE;
 
-    private String parameterName;
+    private String PARAMETER_NAME;
 
-    private String dataType;
+    private String DATA_TYPE;
 
-    private Integer characterMaximumLength;
+    private Integer CHARACTER_MAXIMUM_LENGTH;
 
-    private Integer characterOctetLength;
+    private Integer CHARACTER_OCTET_LENGTH;
 
-    private Integer numericPrecision;
+    private Integer NUMERIC_PRECISION;
 
-    private Integer numericScale;
+    private Integer NUMERIC_SCALE;
 
-    private String characterSetName;
+    private String CHARACTER_SET_NAME;
 
-    private String collationName;
+    private String COLLATION_NAME;
 
-    private String routineType;
+    private String ROUTINE_TYPE;
 
-    private String dtdIdentifier;
+    private String DTD_IDENTIFIER;
 
-    public String getSpecificCatalog() {
-        return specificCatalog;
+    public String getSPECIFIC_CATALOG() {
+        return SPECIFIC_CATALOG;
     }
 
-    public void setSpecificCatalog(String specificCatalog) {
-        this.specificCatalog = specificCatalog == null ? null : specificCatalog.trim();
+    public void setSPECIFIC_CATALOG(String SPECIFIC_CATALOG) {
+        this.SPECIFIC_CATALOG = SPECIFIC_CATALOG == null ? null : SPECIFIC_CATALOG.trim();
     }
 
-    public String getSpecificSchema() {
-        return specificSchema;
+    public String getSPECIFIC_SCHEMA() {
+        return SPECIFIC_SCHEMA;
     }
 
-    public void setSpecificSchema(String specificSchema) {
-        this.specificSchema = specificSchema == null ? null : specificSchema.trim();
+    public void setSPECIFIC_SCHEMA(String SPECIFIC_SCHEMA) {
+        this.SPECIFIC_SCHEMA = SPECIFIC_SCHEMA == null ? null : SPECIFIC_SCHEMA.trim();
     }
 
-    public String getSpecificName() {
-        return specificName;
+    public String getSPECIFIC_NAME() {
+        return SPECIFIC_NAME;
     }
 
-    public void setSpecificName(String specificName) {
-        this.specificName = specificName == null ? null : specificName.trim();
+    public void setSPECIFIC_NAME(String SPECIFIC_NAME) {
+        this.SPECIFIC_NAME = SPECIFIC_NAME == null ? null : SPECIFIC_NAME.trim();
     }
 
-    public Integer getOrdinalPosition() {
-        return ordinalPosition;
+    public Integer getORDINAL_POSITION() {
+        return ORDINAL_POSITION;
     }
 
-    public void setOrdinalPosition(Integer ordinalPosition) {
-        this.ordinalPosition = ordinalPosition;
+    public void setORDINAL_POSITION(Integer ORDINAL_POSITION) {
+        this.ORDINAL_POSITION = ORDINAL_POSITION;
     }
 
-    public String getParameterMode() {
-        return parameterMode;
+    public String getPARAMETER_MODE() {
+        return PARAMETER_MODE;
     }
 
-    public void setParameterMode(String parameterMode) {
-        this.parameterMode = parameterMode == null ? null : parameterMode.trim();
+    public void setPARAMETER_MODE(String PARAMETER_MODE) {
+        this.PARAMETER_MODE = PARAMETER_MODE == null ? null : PARAMETER_MODE.trim();
     }
 
-    public String getParameterName() {
-        return parameterName;
+    public String getPARAMETER_NAME() {
+        return PARAMETER_NAME;
     }
 
-    public void setParameterName(String parameterName) {
-        this.parameterName = parameterName == null ? null : parameterName.trim();
+    public void setPARAMETER_NAME(String PARAMETER_NAME) {
+        this.PARAMETER_NAME = PARAMETER_NAME == null ? null : PARAMETER_NAME.trim();
     }
 
-    public String getDataType() {
-        return dataType;
+    public String getDATA_TYPE() {
+        return DATA_TYPE;
     }
 
-    public void setDataType(String dataType) {
-        this.dataType = dataType == null ? null : dataType.trim();
+    public void setDATA_TYPE(String DATA_TYPE) {
+        this.DATA_TYPE = DATA_TYPE == null ? null : DATA_TYPE.trim();
     }
 
-    public Integer getCharacterMaximumLength() {
-        return characterMaximumLength;
+    public Integer getCHARACTER_MAXIMUM_LENGTH() {
+        return CHARACTER_MAXIMUM_LENGTH;
     }
 
-    public void setCharacterMaximumLength(Integer characterMaximumLength) {
-        this.characterMaximumLength = characterMaximumLength;
+    public void setCHARACTER_MAXIMUM_LENGTH(Integer CHARACTER_MAXIMUM_LENGTH) {
+        this.CHARACTER_MAXIMUM_LENGTH = CHARACTER_MAXIMUM_LENGTH;
     }
 
-    public Integer getCharacterOctetLength() {
-        return characterOctetLength;
+    public Integer getCHARACTER_OCTET_LENGTH() {
+        return CHARACTER_OCTET_LENGTH;
     }
 
-    public void setCharacterOctetLength(Integer characterOctetLength) {
-        this.characterOctetLength = characterOctetLength;
+    public void setCHARACTER_OCTET_LENGTH(Integer CHARACTER_OCTET_LENGTH) {
+        this.CHARACTER_OCTET_LENGTH = CHARACTER_OCTET_LENGTH;
     }
 
-    public Integer getNumericPrecision() {
-        return numericPrecision;
+    public Integer getNUMERIC_PRECISION() {
+        return NUMERIC_PRECISION;
     }
 
-    public void setNumericPrecision(Integer numericPrecision) {
-        this.numericPrecision = numericPrecision;
+    public void setNUMERIC_PRECISION(Integer NUMERIC_PRECISION) {
+        this.NUMERIC_PRECISION = NUMERIC_PRECISION;
     }
 
-    public Integer getNumericScale() {
-        return numericScale;
+    public Integer getNUMERIC_SCALE() {
+        return NUMERIC_SCALE;
     }
 
-    public void setNumericScale(Integer numericScale) {
-        this.numericScale = numericScale;
+    public void setNUMERIC_SCALE(Integer NUMERIC_SCALE) {
+        this.NUMERIC_SCALE = NUMERIC_SCALE;
     }
 
-    public String getCharacterSetName() {
-        return characterSetName;
+    public String getCHARACTER_SET_NAME() {
+        return CHARACTER_SET_NAME;
     }
 
-    public void setCharacterSetName(String characterSetName) {
-        this.characterSetName = characterSetName == null ? null : characterSetName.trim();
+    public void setCHARACTER_SET_NAME(String CHARACTER_SET_NAME) {
+        this.CHARACTER_SET_NAME = CHARACTER_SET_NAME == null ? null : CHARACTER_SET_NAME.trim();
     }
 
-    public String getCollationName() {
-        return collationName;
+    public String getCOLLATION_NAME() {
+        return COLLATION_NAME;
     }
 
-    public void setCollationName(String collationName) {
-        this.collationName = collationName == null ? null : collationName.trim();
+    public void setCOLLATION_NAME(String COLLATION_NAME) {
+        this.COLLATION_NAME = COLLATION_NAME == null ? null : COLLATION_NAME.trim();
     }
 
-    public String getRoutineType() {
-        return routineType;
+    public String getROUTINE_TYPE() {
+        return ROUTINE_TYPE;
     }
 
-    public void setRoutineType(String routineType) {
-        this.routineType = routineType == null ? null : routineType.trim();
+    public void setROUTINE_TYPE(String ROUTINE_TYPE) {
+        this.ROUTINE_TYPE = ROUTINE_TYPE == null ? null : ROUTINE_TYPE.trim();
     }
 
-    public String getDtdIdentifier() {
-        return dtdIdentifier;
+    public String getDTD_IDENTIFIER() {
+        return DTD_IDENTIFIER;
     }
 
-    public void setDtdIdentifier(String dtdIdentifier) {
-        this.dtdIdentifier = dtdIdentifier == null ? null : dtdIdentifier.trim();
+    public void setDTD_IDENTIFIER(String DTD_IDENTIFIER) {
+        this.DTD_IDENTIFIER = DTD_IDENTIFIER == null ? null : DTD_IDENTIFIER.trim();
     }
 }

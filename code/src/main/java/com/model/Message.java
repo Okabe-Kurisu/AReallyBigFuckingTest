@@ -5,13 +5,13 @@ import java.util.Date;
 public class Message {
     private Integer mid;
 
-    private Integer userId;
+    private Integer user_id;
 
-    private Integer accpeterId;
+    private Integer accpeter_id;
 
     private Date date;
 
-    private Boolean isRead;
+    private Boolean is_read;
 
     private String content;
 
@@ -23,20 +23,20 @@ public class Message {
         this.mid = mid;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public Integer getAccpeterId() {
-        return accpeterId;
+    public Integer getAccpeter_id() {
+        return accpeter_id;
     }
 
-    public void setAccpeterId(Integer accpeterId) {
-        this.accpeterId = accpeterId;
+    public void setAccpeter_id(Integer accpeter_id) {
+        this.accpeter_id = accpeter_id;
     }
 
     public Date getDate() {
@@ -47,12 +47,12 @@ public class Message {
         this.date = date;
     }
 
-    public Boolean getIsRead() {
-        return isRead;
+    public Boolean getIs_read() {
+        return is_read;
     }
 
-    public void setIsRead(Boolean isRead) {
-        this.isRead = isRead;
+    public void setIs_read(Boolean is_read) {
+        this.is_read = is_read;
     }
 
     public String getContent() {

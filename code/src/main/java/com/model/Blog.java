@@ -5,17 +5,17 @@ import java.util.Date;
 public class Blog {
     private Integer bid;
 
-    private Integer userId;
+    private Integer user_id;
 
     private String content;
 
-    private Date releaseTime;
+    private Date release_time;
 
-    private Boolean type;
+    private Integer type;
 
-    private Integer commentOn;
+    private Integer comment_on;
 
-    private Boolean alive;
+    private Integer visibility;
 
     private String multimedia;
 
@@ -27,12 +27,12 @@ public class Blog {
         this.bid = bid;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getContent() {
@@ -43,36 +43,36 @@ public class Blog {
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getReleaseTime() {
-        return releaseTime;
+    public Date getRelease_time() {
+        return release_time;
     }
 
-    public void setReleaseTime(Date releaseTime) {
-        this.releaseTime = releaseTime;
+    public void setRelease_time(Date release_time) {
+        this.release_time = release_time;
     }
 
-    public Boolean getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public Integer getCommentOn() {
-        return commentOn;
+    public Integer getComment_on() {
+        return comment_on;
     }
 
-    public void setCommentOn(Integer commentOn) {
-        this.commentOn = commentOn;
+    public void setComment_on(Integer comment_on) {
+        this.comment_on = comment_on;
     }
 
-    public Boolean getAlive() {
-        return alive;
+    public Integer getVisibility() {
+        return visibility;
     }
 
-    public void setAlive(Boolean alive) {
-        this.alive = alive;
+    public void setVisibility(Integer visibility) {
+        this.visibility = visibility;
     }
 
     public String getMultimedia() {

@@ -13,9 +13,9 @@ public interface SchemaPrivilegesMapper {
         "insert into SCHEMA_PRIVILEGES (GRANTEE, TABLE_CATALOG, ",
         "TABLE_SCHEMA, PRIVILEGE_TYPE, ",
         "IS_GRANTABLE)",
-        "values (#{grantee,jdbcType=VARCHAR}, #{tableCatalog,jdbcType=VARCHAR}, ",
-        "#{tableSchema,jdbcType=VARCHAR}, #{privilegeType,jdbcType=VARCHAR}, ",
-        "#{isGrantable,jdbcType=VARCHAR})"
+        "values (#{GRANTEE,jdbcType=VARCHAR}, #{TABLE_CATALOG,jdbcType=VARCHAR}, ",
+        "#{TABLE_SCHEMA,jdbcType=VARCHAR}, #{PRIVILEGE_TYPE,jdbcType=VARCHAR}, ",
+        "#{IS_GRANTABLE,jdbcType=VARCHAR})"
     })
     int insert(SchemaPrivileges record);
 
@@ -25,11 +25,11 @@ public interface SchemaPrivilegesMapper {
         "from SCHEMA_PRIVILEGES"
     })
     @Results({
-        @Result(column="GRANTEE", property="grantee", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_CATALOG", property="tableCatalog", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_SCHEMA", property="tableSchema", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PRIVILEGE_TYPE", property="privilegeType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="IS_GRANTABLE", property="isGrantable", jdbcType=JdbcType.VARCHAR)
+        @Result(column="GRANTEE", property="GRANTEE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_CATALOG", property="TABLE_CATALOG", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_SCHEMA", property="TABLE_SCHEMA", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PRIVILEGE_TYPE", property="PRIVILEGE_TYPE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IS_GRANTABLE", property="IS_GRANTABLE", jdbcType=JdbcType.VARCHAR)
     })
     List<SchemaPrivileges> selectAll();
 }

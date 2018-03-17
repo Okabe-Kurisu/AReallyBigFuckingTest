@@ -13,9 +13,9 @@ public class User {
 
     private Boolean sex;
 
-    private Byte age;
+    private Integer age;
 
-    private Boolean isNs;
+    private Boolean is_ns;
 
     private String motto;
 
@@ -23,7 +23,7 @@ public class User {
 
     private String background;
 
-    private Date isBan;
+    private Date is_ban;
 
     private Boolean alive;
 
@@ -67,20 +67,20 @@ public class User {
         this.sex = sex;
     }
 
-    public Byte getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Byte age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public Boolean getIsNs() {
-        return isNs;
+    public Boolean getIs_ns() {
+        return is_ns;
     }
 
-    public void setIsNs(Boolean isNs) {
-        this.isNs = isNs;
+    public void setIs_ns(Boolean is_ns) {
+        this.is_ns = is_ns;
     }
 
     public String getMotto() {
@@ -107,12 +107,12 @@ public class User {
         this.background = background == null ? null : background.trim();
     }
 
-    public Date getIsBan() {
-        return isBan;
+    public Date getIs_ban() {
+        return is_ban;
     }
 
-    public void setIsBan(Date isBan) {
-        this.isBan = isBan;
+    public void setIs_ban(Date is_ban) {
+        this.is_ban = is_ban;
     }
 
     public Boolean getAlive() {

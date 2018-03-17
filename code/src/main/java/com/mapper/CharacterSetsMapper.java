@@ -12,8 +12,8 @@ public interface CharacterSetsMapper {
     @Insert({
         "insert into CHARACTER_SETS (CHARACTER_SET_NAME, DEFAULT_COLLATE_NAME, ",
         "DESCRIPTION, MAXLEN)",
-        "values (#{characterSetName,jdbcType=VARCHAR}, #{defaultCollateName,jdbcType=VARCHAR}, ",
-        "#{description,jdbcType=VARCHAR}, #{maxlen,jdbcType=BIGINT})"
+        "values (#{CHARACTER_SET_NAME,jdbcType=VARCHAR}, #{DEFAULT_COLLATE_NAME,jdbcType=VARCHAR}, ",
+        "#{DESCRIPTION,jdbcType=VARCHAR}, #{MAXLEN,jdbcType=BIGINT})"
     })
     int insert(CharacterSets record);
 
@@ -23,10 +23,10 @@ public interface CharacterSetsMapper {
         "from CHARACTER_SETS"
     })
     @Results({
-        @Result(column="CHARACTER_SET_NAME", property="characterSetName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DEFAULT_COLLATE_NAME", property="defaultCollateName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DESCRIPTION", property="description", jdbcType=JdbcType.VARCHAR),
-        @Result(column="MAXLEN", property="maxlen", jdbcType=JdbcType.BIGINT)
+        @Result(column="CHARACTER_SET_NAME", property="CHARACTER_SET_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DEFAULT_COLLATE_NAME", property="DEFAULT_COLLATE_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DESCRIPTION", property="DESCRIPTION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="MAXLEN", property="MAXLEN", jdbcType=JdbcType.BIGINT)
     })
     List<CharacterSets> selectAll();
 }

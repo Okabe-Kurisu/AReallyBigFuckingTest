@@ -3,183 +3,183 @@ package com.model;
 import java.math.BigDecimal;
 
 public class Profiling {
-    private Integer queryId;
+    private Integer QUERY_ID;
 
-    private Integer seq;
+    private Integer SEQ;
 
-    private String state;
+    private String STATE;
 
-    private BigDecimal duration;
+    private BigDecimal DURATION;
 
-    private BigDecimal cpuUser;
+    private BigDecimal CPU_USER;
 
-    private BigDecimal cpuSystem;
+    private BigDecimal CPU_SYSTEM;
 
-    private Integer contextVoluntary;
+    private Integer CONTEXT_VOLUNTARY;
 
-    private Integer contextInvoluntary;
+    private Integer CONTEXT_INVOLUNTARY;
 
-    private Integer blockOpsIn;
+    private Integer BLOCK_OPS_IN;
 
-    private Integer blockOpsOut;
+    private Integer BLOCK_OPS_OUT;
 
-    private Integer messagesSent;
+    private Integer MESSAGES_SENT;
 
-    private Integer messagesReceived;
+    private Integer MESSAGES_RECEIVED;
 
-    private Integer pageFaultsMajor;
+    private Integer PAGE_FAULTS_MAJOR;
 
-    private Integer pageFaultsMinor;
+    private Integer PAGE_FAULTS_MINOR;
 
-    private Integer swaps;
+    private Integer SWAPS;
 
-    private String sourceFunction;
+    private String SOURCE_FUNCTION;
 
-    private String sourceFile;
+    private String SOURCE_FILE;
 
-    private Integer sourceLine;
+    private Integer SOURCE_LINE;
 
-    public Integer getQueryId() {
-        return queryId;
+    public Integer getQUERY_ID() {
+        return QUERY_ID;
     }
 
-    public void setQueryId(Integer queryId) {
-        this.queryId = queryId;
+    public void setQUERY_ID(Integer QUERY_ID) {
+        this.QUERY_ID = QUERY_ID;
     }
 
-    public Integer getSeq() {
-        return seq;
+    public Integer getSEQ() {
+        return SEQ;
     }
 
-    public void setSeq(Integer seq) {
-        this.seq = seq;
+    public void setSEQ(Integer SEQ) {
+        this.SEQ = SEQ;
     }
 
-    public String getState() {
-        return state;
+    public String getSTATE() {
+        return STATE;
     }
 
-    public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+    public void setSTATE(String STATE) {
+        this.STATE = STATE == null ? null : STATE.trim();
     }
 
-    public BigDecimal getDuration() {
-        return duration;
+    public BigDecimal getDURATION() {
+        return DURATION;
     }
 
-    public void setDuration(BigDecimal duration) {
-        this.duration = duration;
+    public void setDURATION(BigDecimal DURATION) {
+        this.DURATION = DURATION;
     }
 
-    public BigDecimal getCpuUser() {
-        return cpuUser;
+    public BigDecimal getCPU_USER() {
+        return CPU_USER;
     }
 
-    public void setCpuUser(BigDecimal cpuUser) {
-        this.cpuUser = cpuUser;
+    public void setCPU_USER(BigDecimal CPU_USER) {
+        this.CPU_USER = CPU_USER;
     }
 
-    public BigDecimal getCpuSystem() {
-        return cpuSystem;
+    public BigDecimal getCPU_SYSTEM() {
+        return CPU_SYSTEM;
     }
 
-    public void setCpuSystem(BigDecimal cpuSystem) {
-        this.cpuSystem = cpuSystem;
+    public void setCPU_SYSTEM(BigDecimal CPU_SYSTEM) {
+        this.CPU_SYSTEM = CPU_SYSTEM;
     }
 
-    public Integer getContextVoluntary() {
-        return contextVoluntary;
+    public Integer getCONTEXT_VOLUNTARY() {
+        return CONTEXT_VOLUNTARY;
     }
 
-    public void setContextVoluntary(Integer contextVoluntary) {
-        this.contextVoluntary = contextVoluntary;
+    public void setCONTEXT_VOLUNTARY(Integer CONTEXT_VOLUNTARY) {
+        this.CONTEXT_VOLUNTARY = CONTEXT_VOLUNTARY;
     }
 
-    public Integer getContextInvoluntary() {
-        return contextInvoluntary;
+    public Integer getCONTEXT_INVOLUNTARY() {
+        return CONTEXT_INVOLUNTARY;
     }
 
-    public void setContextInvoluntary(Integer contextInvoluntary) {
-        this.contextInvoluntary = contextInvoluntary;
+    public void setCONTEXT_INVOLUNTARY(Integer CONTEXT_INVOLUNTARY) {
+        this.CONTEXT_INVOLUNTARY = CONTEXT_INVOLUNTARY;
     }
 
-    public Integer getBlockOpsIn() {
-        return blockOpsIn;
+    public Integer getBLOCK_OPS_IN() {
+        return BLOCK_OPS_IN;
     }
 
-    public void setBlockOpsIn(Integer blockOpsIn) {
-        this.blockOpsIn = blockOpsIn;
+    public void setBLOCK_OPS_IN(Integer BLOCK_OPS_IN) {
+        this.BLOCK_OPS_IN = BLOCK_OPS_IN;
     }
 
-    public Integer getBlockOpsOut() {
-        return blockOpsOut;
+    public Integer getBLOCK_OPS_OUT() {
+        return BLOCK_OPS_OUT;
     }
 
-    public void setBlockOpsOut(Integer blockOpsOut) {
-        this.blockOpsOut = blockOpsOut;
+    public void setBLOCK_OPS_OUT(Integer BLOCK_OPS_OUT) {
+        this.BLOCK_OPS_OUT = BLOCK_OPS_OUT;
     }
 
-    public Integer getMessagesSent() {
-        return messagesSent;
+    public Integer getMESSAGES_SENT() {
+        return MESSAGES_SENT;
     }
 
-    public void setMessagesSent(Integer messagesSent) {
-        this.messagesSent = messagesSent;
+    public void setMESSAGES_SENT(Integer MESSAGES_SENT) {
+        this.MESSAGES_SENT = MESSAGES_SENT;
     }
 
-    public Integer getMessagesReceived() {
-        return messagesReceived;
+    public Integer getMESSAGES_RECEIVED() {
+        return MESSAGES_RECEIVED;
     }
 
-    public void setMessagesReceived(Integer messagesReceived) {
-        this.messagesReceived = messagesReceived;
+    public void setMESSAGES_RECEIVED(Integer MESSAGES_RECEIVED) {
+        this.MESSAGES_RECEIVED = MESSAGES_RECEIVED;
     }
 
-    public Integer getPageFaultsMajor() {
-        return pageFaultsMajor;
+    public Integer getPAGE_FAULTS_MAJOR() {
+        return PAGE_FAULTS_MAJOR;
     }
 
-    public void setPageFaultsMajor(Integer pageFaultsMajor) {
-        this.pageFaultsMajor = pageFaultsMajor;
+    public void setPAGE_FAULTS_MAJOR(Integer PAGE_FAULTS_MAJOR) {
+        this.PAGE_FAULTS_MAJOR = PAGE_FAULTS_MAJOR;
     }
 
-    public Integer getPageFaultsMinor() {
-        return pageFaultsMinor;
+    public Integer getPAGE_FAULTS_MINOR() {
+        return PAGE_FAULTS_MINOR;
     }
 
-    public void setPageFaultsMinor(Integer pageFaultsMinor) {
-        this.pageFaultsMinor = pageFaultsMinor;
+    public void setPAGE_FAULTS_MINOR(Integer PAGE_FAULTS_MINOR) {
+        this.PAGE_FAULTS_MINOR = PAGE_FAULTS_MINOR;
     }
 
-    public Integer getSwaps() {
-        return swaps;
+    public Integer getSWAPS() {
+        return SWAPS;
     }
 
-    public void setSwaps(Integer swaps) {
-        this.swaps = swaps;
+    public void setSWAPS(Integer SWAPS) {
+        this.SWAPS = SWAPS;
     }
 
-    public String getSourceFunction() {
-        return sourceFunction;
+    public String getSOURCE_FUNCTION() {
+        return SOURCE_FUNCTION;
     }
 
-    public void setSourceFunction(String sourceFunction) {
-        this.sourceFunction = sourceFunction == null ? null : sourceFunction.trim();
+    public void setSOURCE_FUNCTION(String SOURCE_FUNCTION) {
+        this.SOURCE_FUNCTION = SOURCE_FUNCTION == null ? null : SOURCE_FUNCTION.trim();
     }
 
-    public String getSourceFile() {
-        return sourceFile;
+    public String getSOURCE_FILE() {
+        return SOURCE_FILE;
     }
 
-    public void setSourceFile(String sourceFile) {
-        this.sourceFile = sourceFile == null ? null : sourceFile.trim();
+    public void setSOURCE_FILE(String SOURCE_FILE) {
+        this.SOURCE_FILE = SOURCE_FILE == null ? null : SOURCE_FILE.trim();
     }
 
-    public Integer getSourceLine() {
-        return sourceLine;
+    public Integer getSOURCE_LINE() {
+        return SOURCE_LINE;
     }
 
-    public void setSourceLine(Integer sourceLine) {
-        this.sourceLine = sourceLine;
+    public void setSOURCE_LINE(Integer SOURCE_LINE) {
+        this.SOURCE_LINE = SOURCE_LINE;
     }
 }

@@ -13,7 +13,7 @@ public interface DiscussMapper {
         "insert into discuss (did, name, ",
         "user_id, detail)",
         "values (#{did,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{userId,jdbcType=INTEGER}, #{detail,jdbcType=VARCHAR})"
+        "#{user_id,jdbcType=INTEGER}, #{detail,jdbcType=VARCHAR})"
     })
     int insert(Discuss record);
 
@@ -25,7 +25,7 @@ public interface DiscussMapper {
     @Results({
         @Result(column="did", property="did", jdbcType=JdbcType.INTEGER),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
+        @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="detail", property="detail", jdbcType=JdbcType.VARCHAR)
     })
     List<Discuss> selectAll();

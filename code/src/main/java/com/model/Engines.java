@@ -1,63 +1,63 @@
 package com.model;
 
 public class Engines {
-    private String engine;
+    private String ENGINE;
 
-    private String support;
+    private String SUPPORT;
 
-    private String comment;
+    private String COMMENT;
 
-    private String transactions;
+    private String TRANSACTIONS;
 
-    private String xa;
+    private String XA;
 
-    private String savepoints;
+    private String SAVEPOINTS;
 
-    public String getEngine() {
-        return engine;
+    public String getENGINE() {
+        return ENGINE;
     }
 
-    public void setEngine(String engine) {
-        this.engine = engine == null ? null : engine.trim();
+    public void setENGINE(String ENGINE) {
+        this.ENGINE = ENGINE == null ? null : ENGINE.trim();
     }
 
-    public String getSupport() {
-        return support;
+    public String getSUPPORT() {
+        return SUPPORT;
     }
 
-    public void setSupport(String support) {
-        this.support = support == null ? null : support.trim();
+    public void setSUPPORT(String SUPPORT) {
+        this.SUPPORT = SUPPORT == null ? null : SUPPORT.trim();
     }
 
-    public String getComment() {
-        return comment;
+    public String getCOMMENT() {
+        return COMMENT;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
+    public void setCOMMENT(String COMMENT) {
+        this.COMMENT = COMMENT == null ? null : COMMENT.trim();
     }
 
-    public String getTransactions() {
-        return transactions;
+    public String getTRANSACTIONS() {
+        return TRANSACTIONS;
     }
 
-    public void setTransactions(String transactions) {
-        this.transactions = transactions == null ? null : transactions.trim();
+    public void setTRANSACTIONS(String TRANSACTIONS) {
+        this.TRANSACTIONS = TRANSACTIONS == null ? null : TRANSACTIONS.trim();
     }
 
-    public String getXa() {
-        return xa;
+    public String getXA() {
+        return XA;
     }
 
-    public void setXa(String xa) {
-        this.xa = xa == null ? null : xa.trim();
+    public void setXA(String XA) {
+        this.XA = XA == null ? null : XA.trim();
     }
 
-    public String getSavepoints() {
-        return savepoints;
+    public String getSAVEPOINTS() {
+        return SAVEPOINTS;
     }
 
-    public void setSavepoints(String savepoints) {
-        this.savepoints = savepoints == null ? null : savepoints.trim();
+    public void setSAVEPOINTS(String SAVEPOINTS) {
+        this.SAVEPOINTS = SAVEPOINTS == null ? null : SAVEPOINTS.trim();
     }
 }

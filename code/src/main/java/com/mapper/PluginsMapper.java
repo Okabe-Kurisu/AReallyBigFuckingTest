@@ -16,12 +16,12 @@ public interface PluginsMapper {
         "PLUGIN_LIBRARY_VERSION, PLUGIN_AUTHOR, ",
         "PLUGIN_LICENSE, LOAD_OPTION, ",
         "PLUGIN_DESCRIPTION)",
-        "values (#{pluginName,jdbcType=VARCHAR}, #{pluginVersion,jdbcType=VARCHAR}, ",
-        "#{pluginStatus,jdbcType=VARCHAR}, #{pluginType,jdbcType=VARCHAR}, ",
-        "#{pluginTypeVersion,jdbcType=VARCHAR}, #{pluginLibrary,jdbcType=VARCHAR}, ",
-        "#{pluginLibraryVersion,jdbcType=VARCHAR}, #{pluginAuthor,jdbcType=VARCHAR}, ",
-        "#{pluginLicense,jdbcType=VARCHAR}, #{loadOption,jdbcType=VARCHAR}, ",
-        "#{pluginDescription,jdbcType=LONGVARCHAR})"
+        "values (#{PLUGIN_NAME,jdbcType=VARCHAR}, #{PLUGIN_VERSION,jdbcType=VARCHAR}, ",
+        "#{PLUGIN_STATUS,jdbcType=VARCHAR}, #{PLUGIN_TYPE,jdbcType=VARCHAR}, ",
+        "#{PLUGIN_TYPE_VERSION,jdbcType=VARCHAR}, #{PLUGIN_LIBRARY,jdbcType=VARCHAR}, ",
+        "#{PLUGIN_LIBRARY_VERSION,jdbcType=VARCHAR}, #{PLUGIN_AUTHOR,jdbcType=VARCHAR}, ",
+        "#{PLUGIN_LICENSE,jdbcType=VARCHAR}, #{LOAD_OPTION,jdbcType=VARCHAR}, ",
+        "#{PLUGIN_DESCRIPTION,jdbcType=LONGVARCHAR})"
     })
     int insert(Plugins record);
 
@@ -33,17 +33,17 @@ public interface PluginsMapper {
         "from PLUGINS"
     })
     @Results({
-        @Result(column="PLUGIN_NAME", property="pluginName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_VERSION", property="pluginVersion", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_STATUS", property="pluginStatus", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_TYPE", property="pluginType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_TYPE_VERSION", property="pluginTypeVersion", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_LIBRARY", property="pluginLibrary", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_LIBRARY_VERSION", property="pluginLibraryVersion", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_AUTHOR", property="pluginAuthor", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_LICENSE", property="pluginLicense", jdbcType=JdbcType.VARCHAR),
-        @Result(column="LOAD_OPTION", property="loadOption", jdbcType=JdbcType.VARCHAR),
-        @Result(column="PLUGIN_DESCRIPTION", property="pluginDescription", jdbcType=JdbcType.LONGVARCHAR)
+        @Result(column="PLUGIN_NAME", property="PLUGIN_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_VERSION", property="PLUGIN_VERSION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_STATUS", property="PLUGIN_STATUS", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_TYPE", property="PLUGIN_TYPE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_TYPE_VERSION", property="PLUGIN_TYPE_VERSION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_LIBRARY", property="PLUGIN_LIBRARY", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_LIBRARY_VERSION", property="PLUGIN_LIBRARY_VERSION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_AUTHOR", property="PLUGIN_AUTHOR", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_LICENSE", property="PLUGIN_LICENSE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="LOAD_OPTION", property="LOAD_OPTION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PLUGIN_DESCRIPTION", property="PLUGIN_DESCRIPTION", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Plugins> selectAll();
 }

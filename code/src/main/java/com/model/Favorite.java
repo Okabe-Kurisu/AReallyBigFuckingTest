@@ -3,9 +3,9 @@ package com.model;
 public class Favorite {
     private Integer fid;
 
-    private Integer userId;
+    private Integer user_id;
 
-    private Integer blogId;
+    private Integer blog_id;
 
     public Integer getFid() {
         return fid;
@@ -15,19 +15,19 @@ public class Favorite {
         this.fid = fid;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public Integer getBlogId() {
-        return blogId;
+    public Integer getBlog_id() {
+        return blog_id;
     }
 
-    public void setBlogId(Integer blogId) {
-        this.blogId = blogId;
+    public void setBlog_id(Integer blog_id) {
+        this.blog_id = blog_id;
     }
 }

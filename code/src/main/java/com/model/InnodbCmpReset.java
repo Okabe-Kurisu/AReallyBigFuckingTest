@@ -1,63 +1,63 @@
 package com.model;
 
 public class InnodbCmpReset {
-    private Integer pageSize;
+    private Integer page_size;
 
-    private Integer compressOps;
+    private Integer compress_ops;
 
-    private Integer compressOpsOk;
+    private Integer compress_ops_ok;
 
-    private Integer compressTime;
+    private Integer compress_time;
 
-    private Integer uncompressOps;
+    private Integer uncompress_ops;
 
-    private Integer uncompressTime;
+    private Integer uncompress_time;
 
-    public Integer getPageSize() {
-        return pageSize;
+    public Integer getPage_size() {
+        return page_size;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setPage_size(Integer page_size) {
+        this.page_size = page_size;
     }
 
-    public Integer getCompressOps() {
-        return compressOps;
+    public Integer getCompress_ops() {
+        return compress_ops;
     }
 
-    public void setCompressOps(Integer compressOps) {
-        this.compressOps = compressOps;
+    public void setCompress_ops(Integer compress_ops) {
+        this.compress_ops = compress_ops;
     }
 
-    public Integer getCompressOpsOk() {
-        return compressOpsOk;
+    public Integer getCompress_ops_ok() {
+        return compress_ops_ok;
     }
 
-    public void setCompressOpsOk(Integer compressOpsOk) {
-        this.compressOpsOk = compressOpsOk;
+    public void setCompress_ops_ok(Integer compress_ops_ok) {
+        this.compress_ops_ok = compress_ops_ok;
     }
 
-    public Integer getCompressTime() {
-        return compressTime;
+    public Integer getCompress_time() {
+        return compress_time;
     }
 
-    public void setCompressTime(Integer compressTime) {
-        this.compressTime = compressTime;
+    public void setCompress_time(Integer compress_time) {
+        this.compress_time = compress_time;
     }
 
-    public Integer getUncompressOps() {
-        return uncompressOps;
+    public Integer getUncompress_ops() {
+        return uncompress_ops;
     }
 
-    public void setUncompressOps(Integer uncompressOps) {
-        this.uncompressOps = uncompressOps;
+    public void setUncompress_ops(Integer uncompress_ops) {
+        this.uncompress_ops = uncompress_ops;
     }
 
-    public Integer getUncompressTime() {
-        return uncompressTime;
+    public Integer getUncompress_time() {
+        return uncompress_time;
     }
 
-    public void setUncompressTime(Integer uncompressTime) {
-        this.uncompressTime = uncompressTime;
+    public void setUncompress_time(Integer uncompress_time) {
+        this.uncompress_time = uncompress_time;
     }
 }

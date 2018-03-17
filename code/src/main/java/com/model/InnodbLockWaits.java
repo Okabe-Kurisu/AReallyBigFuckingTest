@@ -1,43 +1,43 @@
 package com.model;
 
 public class InnodbLockWaits {
-    private String requestingTrxId;
+    private String requesting_trx_id;
 
-    private String requestedLockId;
+    private String requested_lock_id;
 
-    private String blockingTrxId;
+    private String blocking_trx_id;
 
-    private String blockingLockId;
+    private String blocking_lock_id;
 
-    public String getRequestingTrxId() {
-        return requestingTrxId;
+    public String getRequesting_trx_id() {
+        return requesting_trx_id;
     }
 
-    public void setRequestingTrxId(String requestingTrxId) {
-        this.requestingTrxId = requestingTrxId == null ? null : requestingTrxId.trim();
+    public void setRequesting_trx_id(String requesting_trx_id) {
+        this.requesting_trx_id = requesting_trx_id == null ? null : requesting_trx_id.trim();
     }
 
-    public String getRequestedLockId() {
-        return requestedLockId;
+    public String getRequested_lock_id() {
+        return requested_lock_id;
     }
 
-    public void setRequestedLockId(String requestedLockId) {
-        this.requestedLockId = requestedLockId == null ? null : requestedLockId.trim();
+    public void setRequested_lock_id(String requested_lock_id) {
+        this.requested_lock_id = requested_lock_id == null ? null : requested_lock_id.trim();
     }
 
-    public String getBlockingTrxId() {
-        return blockingTrxId;
+    public String getBlocking_trx_id() {
+        return blocking_trx_id;
     }
 
-    public void setBlockingTrxId(String blockingTrxId) {
-        this.blockingTrxId = blockingTrxId == null ? null : blockingTrxId.trim();
+    public void setBlocking_trx_id(String blocking_trx_id) {
+        this.blocking_trx_id = blocking_trx_id == null ? null : blocking_trx_id.trim();
     }
 
-    public String getBlockingLockId() {
-        return blockingLockId;
+    public String getBlocking_lock_id() {
+        return blocking_lock_id;
     }
 
-    public void setBlockingLockId(String blockingLockId) {
-        this.blockingLockId = blockingLockId == null ? null : blockingLockId.trim();
+    public void setBlocking_lock_id(String blocking_lock_id) {
+        this.blocking_lock_id = blocking_lock_id == null ? null : blocking_lock_id.trim();
     }
 }

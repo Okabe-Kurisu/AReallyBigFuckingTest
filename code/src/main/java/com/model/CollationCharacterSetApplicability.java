@@ -1,23 +1,23 @@
 package com.model;
 
 public class CollationCharacterSetApplicability {
-    private String collationName;
+    private String COLLATION_NAME;
 
-    private String characterSetName;
+    private String CHARACTER_SET_NAME;
 
-    public String getCollationName() {
-        return collationName;
+    public String getCOLLATION_NAME() {
+        return COLLATION_NAME;
     }
 
-    public void setCollationName(String collationName) {
-        this.collationName = collationName == null ? null : collationName.trim();
+    public void setCOLLATION_NAME(String COLLATION_NAME) {
+        this.COLLATION_NAME = COLLATION_NAME == null ? null : COLLATION_NAME.trim();
     }
 
-    public String getCharacterSetName() {
-        return characterSetName;
+    public String getCHARACTER_SET_NAME() {
+        return CHARACTER_SET_NAME;
     }
 
-    public void setCharacterSetName(String characterSetName) {
-        this.characterSetName = characterSetName == null ? null : characterSetName.trim();
+    public void setCHARACTER_SET_NAME(String CHARACTER_SET_NAME) {
+        this.CHARACTER_SET_NAME = CHARACTER_SET_NAME == null ? null : CHARACTER_SET_NAME.trim();
     }
 }

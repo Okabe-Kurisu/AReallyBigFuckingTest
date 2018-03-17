@@ -12,8 +12,8 @@ public interface FavoriteMapper {
     @Insert({
         "insert into favorite (fid, user_id, ",
         "blog_id)",
-        "values (#{fid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, ",
-        "#{blogId,jdbcType=INTEGER})"
+        "values (#{fid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
+        "#{blog_id,jdbcType=INTEGER})"
     })
     int insert(Favorite record);
 
@@ -24,8 +24,8 @@ public interface FavoriteMapper {
     })
     @Results({
         @Result(column="fid", property="fid", jdbcType=JdbcType.INTEGER),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="blog_id", property="blogId", jdbcType=JdbcType.INTEGER)
+        @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
+        @Result(column="blog_id", property="blog_id", jdbcType=JdbcType.INTEGER)
     })
     List<Favorite> selectAll();
 }

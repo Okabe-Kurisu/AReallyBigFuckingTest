@@ -13,9 +13,9 @@ public interface InnodbCmpmemMapper {
         "insert into INNODB_CMPMEM (page_size, buffer_pool_instance, ",
         "pages_used, pages_free, ",
         "relocation_ops, relocation_time)",
-        "values (#{pageSize,jdbcType=INTEGER}, #{bufferPoolInstance,jdbcType=INTEGER}, ",
-        "#{pagesUsed,jdbcType=INTEGER}, #{pagesFree,jdbcType=INTEGER}, ",
-        "#{relocationOps,jdbcType=BIGINT}, #{relocationTime,jdbcType=INTEGER})"
+        "values (#{page_size,jdbcType=INTEGER}, #{buffer_pool_instance,jdbcType=INTEGER}, ",
+        "#{pages_used,jdbcType=INTEGER}, #{pages_free,jdbcType=INTEGER}, ",
+        "#{relocation_ops,jdbcType=BIGINT}, #{relocation_time,jdbcType=INTEGER})"
     })
     int insert(InnodbCmpmem record);
 
@@ -25,12 +25,12 @@ public interface InnodbCmpmemMapper {
         "from INNODB_CMPMEM"
     })
     @Results({
-        @Result(column="page_size", property="pageSize", jdbcType=JdbcType.INTEGER),
-        @Result(column="buffer_pool_instance", property="bufferPoolInstance", jdbcType=JdbcType.INTEGER),
-        @Result(column="pages_used", property="pagesUsed", jdbcType=JdbcType.INTEGER),
-        @Result(column="pages_free", property="pagesFree", jdbcType=JdbcType.INTEGER),
-        @Result(column="relocation_ops", property="relocationOps", jdbcType=JdbcType.BIGINT),
-        @Result(column="relocation_time", property="relocationTime", jdbcType=JdbcType.INTEGER)
+        @Result(column="page_size", property="page_size", jdbcType=JdbcType.INTEGER),
+        @Result(column="buffer_pool_instance", property="buffer_pool_instance", jdbcType=JdbcType.INTEGER),
+        @Result(column="pages_used", property="pages_used", jdbcType=JdbcType.INTEGER),
+        @Result(column="pages_free", property="pages_free", jdbcType=JdbcType.INTEGER),
+        @Result(column="relocation_ops", property="relocation_ops", jdbcType=JdbcType.BIGINT),
+        @Result(column="relocation_time", property="relocation_time", jdbcType=JdbcType.INTEGER)
     })
     List<InnodbCmpmem> selectAll();
 }

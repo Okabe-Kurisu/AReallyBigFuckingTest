@@ -12,28 +12,28 @@ public interface BlogMapper {
     @Insert({
         "insert into blog (bid, user_id, ",
         "content, release_time, ",
-        "type, comment_on, alive, ",
-        "multimedia)",
-        "values (#{bid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, ",
-        "#{content,jdbcType=VARCHAR}, #{releaseTime,jdbcType=TIMESTAMP}, ",
-        "#{type,jdbcType=BIT}, #{commentOn,jdbcType=INTEGER}, #{alive,jdbcType=BIT}, ",
-        "#{multimedia,jdbcType=LONGVARCHAR})"
+        "type, comment_on, ",
+        "visibility, multimedia)",
+        "values (#{bid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
+        "#{content,jdbcType=VARCHAR}, #{release_time,jdbcType=TIMESTAMP}, ",
+        "#{type,jdbcType=INTEGER}, #{comment_on,jdbcType=INTEGER}, ",
+        "#{visibility,jdbcType=INTEGER}, #{multimedia,jdbcType=LONGVARCHAR})"
     })
     int insert(Blog record);
 
     @Select({
         "select",
-        "bid, user_id, content, release_time, type, comment_on, alive, multimedia",
+        "bid, user_id, content, release_time, type, comment_on, visibility, multimedia",
         "from blog"
     })
     @Results({
         @Result(column="bid", property="bid", jdbcType=JdbcType.INTEGER),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
+        @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="content", property="content", jdbcType=JdbcType.VARCHAR),
-        @Result(column="release_time", property="releaseTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="type", property="type", jdbcType=JdbcType.BIT),
-        @Result(column="comment_on", property="commentOn", jdbcType=JdbcType.INTEGER),
-        @Result(column="alive", property="alive", jdbcType=JdbcType.BIT),
+        @Result(column="release_time", property="release_time", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
+        @Result(column="comment_on", property="comment_on", jdbcType=JdbcType.INTEGER),
+        @Result(column="visibility", property="visibility", jdbcType=JdbcType.INTEGER),
         @Result(column="multimedia", property="multimedia", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Blog> selectAll();

@@ -3,223 +3,223 @@ package com.model;
 import java.util.Date;
 
 public class InnodbTrx {
-    private String trxId;
+    private String trx_id;
 
-    private String trxState;
+    private String trx_state;
 
-    private Date trxStarted;
+    private Date trx_started;
 
-    private String trxRequestedLockId;
+    private String trx_requested_lock_id;
 
-    private Date trxWaitStarted;
+    private Date trx_wait_started;
 
-    private Long trxWeight;
+    private Long trx_weight;
 
-    private Long trxMysqlThreadId;
+    private Long trx_mysql_thread_id;
 
-    private String trxQuery;
+    private String trx_query;
 
-    private String trxOperationState;
+    private String trx_operation_state;
 
-    private Long trxTablesInUse;
+    private Long trx_tables_in_use;
 
-    private Long trxTablesLocked;
+    private Long trx_tables_locked;
 
-    private Long trxLockStructs;
+    private Long trx_lock_structs;
 
-    private Long trxLockMemoryBytes;
+    private Long trx_lock_memory_bytes;
 
-    private Long trxRowsLocked;
+    private Long trx_rows_locked;
 
-    private Long trxRowsModified;
+    private Long trx_rows_modified;
 
-    private Long trxConcurrencyTickets;
+    private Long trx_concurrency_tickets;
 
-    private String trxIsolationLevel;
+    private String trx_isolation_level;
 
-    private Integer trxUniqueChecks;
+    private Integer trx_unique_checks;
 
-    private Integer trxForeignKeyChecks;
+    private Integer trx_foreign_key_checks;
 
-    private String trxLastForeignKeyError;
+    private String trx_last_foreign_key_error;
 
-    private Integer trxAdaptiveHashLatched;
+    private Integer trx_adaptive_hash_latched;
 
-    private Long trxAdaptiveHashTimeout;
+    private Long trx_adaptive_hash_timeout;
 
-    public String getTrxId() {
-        return trxId;
+    public String getTrx_id() {
+        return trx_id;
     }
 
-    public void setTrxId(String trxId) {
-        this.trxId = trxId == null ? null : trxId.trim();
+    public void setTrx_id(String trx_id) {
+        this.trx_id = trx_id == null ? null : trx_id.trim();
     }
 
-    public String getTrxState() {
-        return trxState;
+    public String getTrx_state() {
+        return trx_state;
     }
 
-    public void setTrxState(String trxState) {
-        this.trxState = trxState == null ? null : trxState.trim();
+    public void setTrx_state(String trx_state) {
+        this.trx_state = trx_state == null ? null : trx_state.trim();
     }
 
-    public Date getTrxStarted() {
-        return trxStarted;
+    public Date getTrx_started() {
+        return trx_started;
     }
 
-    public void setTrxStarted(Date trxStarted) {
-        this.trxStarted = trxStarted;
+    public void setTrx_started(Date trx_started) {
+        this.trx_started = trx_started;
     }
 
-    public String getTrxRequestedLockId() {
-        return trxRequestedLockId;
+    public String getTrx_requested_lock_id() {
+        return trx_requested_lock_id;
     }
 
-    public void setTrxRequestedLockId(String trxRequestedLockId) {
-        this.trxRequestedLockId = trxRequestedLockId == null ? null : trxRequestedLockId.trim();
+    public void setTrx_requested_lock_id(String trx_requested_lock_id) {
+        this.trx_requested_lock_id = trx_requested_lock_id == null ? null : trx_requested_lock_id.trim();
     }
 
-    public Date getTrxWaitStarted() {
-        return trxWaitStarted;
+    public Date getTrx_wait_started() {
+        return trx_wait_started;
     }
 
-    public void setTrxWaitStarted(Date trxWaitStarted) {
-        this.trxWaitStarted = trxWaitStarted;
+    public void setTrx_wait_started(Date trx_wait_started) {
+        this.trx_wait_started = trx_wait_started;
     }
 
-    public Long getTrxWeight() {
-        return trxWeight;
+    public Long getTrx_weight() {
+        return trx_weight;
     }
 
-    public void setTrxWeight(Long trxWeight) {
-        this.trxWeight = trxWeight;
+    public void setTrx_weight(Long trx_weight) {
+        this.trx_weight = trx_weight;
     }
 
-    public Long getTrxMysqlThreadId() {
-        return trxMysqlThreadId;
+    public Long getTrx_mysql_thread_id() {
+        return trx_mysql_thread_id;
     }
 
-    public void setTrxMysqlThreadId(Long trxMysqlThreadId) {
-        this.trxMysqlThreadId = trxMysqlThreadId;
+    public void setTrx_mysql_thread_id(Long trx_mysql_thread_id) {
+        this.trx_mysql_thread_id = trx_mysql_thread_id;
     }
 
-    public String getTrxQuery() {
-        return trxQuery;
+    public String getTrx_query() {
+        return trx_query;
     }
 
-    public void setTrxQuery(String trxQuery) {
-        this.trxQuery = trxQuery == null ? null : trxQuery.trim();
+    public void setTrx_query(String trx_query) {
+        this.trx_query = trx_query == null ? null : trx_query.trim();
     }
 
-    public String getTrxOperationState() {
-        return trxOperationState;
+    public String getTrx_operation_state() {
+        return trx_operation_state;
     }
 
-    public void setTrxOperationState(String trxOperationState) {
-        this.trxOperationState = trxOperationState == null ? null : trxOperationState.trim();
+    public void setTrx_operation_state(String trx_operation_state) {
+        this.trx_operation_state = trx_operation_state == null ? null : trx_operation_state.trim();
     }
 
-    public Long getTrxTablesInUse() {
-        return trxTablesInUse;
+    public Long getTrx_tables_in_use() {
+        return trx_tables_in_use;
     }
 
-    public void setTrxTablesInUse(Long trxTablesInUse) {
-        this.trxTablesInUse = trxTablesInUse;
+    public void setTrx_tables_in_use(Long trx_tables_in_use) {
+        this.trx_tables_in_use = trx_tables_in_use;
     }
 
-    public Long getTrxTablesLocked() {
-        return trxTablesLocked;
+    public Long getTrx_tables_locked() {
+        return trx_tables_locked;
     }
 
-    public void setTrxTablesLocked(Long trxTablesLocked) {
-        this.trxTablesLocked = trxTablesLocked;
+    public void setTrx_tables_locked(Long trx_tables_locked) {
+        this.trx_tables_locked = trx_tables_locked;
     }
 
-    public Long getTrxLockStructs() {
-        return trxLockStructs;
+    public Long getTrx_lock_structs() {
+        return trx_lock_structs;
     }
 
-    public void setTrxLockStructs(Long trxLockStructs) {
-        this.trxLockStructs = trxLockStructs;
+    public void setTrx_lock_structs(Long trx_lock_structs) {
+        this.trx_lock_structs = trx_lock_structs;
     }
 
-    public Long getTrxLockMemoryBytes() {
-        return trxLockMemoryBytes;
+    public Long getTrx_lock_memory_bytes() {
+        return trx_lock_memory_bytes;
     }
 
-    public void setTrxLockMemoryBytes(Long trxLockMemoryBytes) {
-        this.trxLockMemoryBytes = trxLockMemoryBytes;
+    public void setTrx_lock_memory_bytes(Long trx_lock_memory_bytes) {
+        this.trx_lock_memory_bytes = trx_lock_memory_bytes;
     }
 
-    public Long getTrxRowsLocked() {
-        return trxRowsLocked;
+    public Long getTrx_rows_locked() {
+        return trx_rows_locked;
     }
 
-    public void setTrxRowsLocked(Long trxRowsLocked) {
-        this.trxRowsLocked = trxRowsLocked;
+    public void setTrx_rows_locked(Long trx_rows_locked) {
+        this.trx_rows_locked = trx_rows_locked;
     }
 
-    public Long getTrxRowsModified() {
-        return trxRowsModified;
+    public Long getTrx_rows_modified() {
+        return trx_rows_modified;
     }
 
-    public void setTrxRowsModified(Long trxRowsModified) {
-        this.trxRowsModified = trxRowsModified;
+    public void setTrx_rows_modified(Long trx_rows_modified) {
+        this.trx_rows_modified = trx_rows_modified;
     }
 
-    public Long getTrxConcurrencyTickets() {
-        return trxConcurrencyTickets;
+    public Long getTrx_concurrency_tickets() {
+        return trx_concurrency_tickets;
     }
 
-    public void setTrxConcurrencyTickets(Long trxConcurrencyTickets) {
-        this.trxConcurrencyTickets = trxConcurrencyTickets;
+    public void setTrx_concurrency_tickets(Long trx_concurrency_tickets) {
+        this.trx_concurrency_tickets = trx_concurrency_tickets;
     }
 
-    public String getTrxIsolationLevel() {
-        return trxIsolationLevel;
+    public String getTrx_isolation_level() {
+        return trx_isolation_level;
     }
 
-    public void setTrxIsolationLevel(String trxIsolationLevel) {
-        this.trxIsolationLevel = trxIsolationLevel == null ? null : trxIsolationLevel.trim();
+    public void setTrx_isolation_level(String trx_isolation_level) {
+        this.trx_isolation_level = trx_isolation_level == null ? null : trx_isolation_level.trim();
     }
 
-    public Integer getTrxUniqueChecks() {
-        return trxUniqueChecks;
+    public Integer getTrx_unique_checks() {
+        return trx_unique_checks;
     }
 
-    public void setTrxUniqueChecks(Integer trxUniqueChecks) {
-        this.trxUniqueChecks = trxUniqueChecks;
+    public void setTrx_unique_checks(Integer trx_unique_checks) {
+        this.trx_unique_checks = trx_unique_checks;
     }
 
-    public Integer getTrxForeignKeyChecks() {
-        return trxForeignKeyChecks;
+    public Integer getTrx_foreign_key_checks() {
+        return trx_foreign_key_checks;
     }
 
-    public void setTrxForeignKeyChecks(Integer trxForeignKeyChecks) {
-        this.trxForeignKeyChecks = trxForeignKeyChecks;
+    public void setTrx_foreign_key_checks(Integer trx_foreign_key_checks) {
+        this.trx_foreign_key_checks = trx_foreign_key_checks;
     }
 
-    public String getTrxLastForeignKeyError() {
-        return trxLastForeignKeyError;
+    public String getTrx_last_foreign_key_error() {
+        return trx_last_foreign_key_error;
     }
 
-    public void setTrxLastForeignKeyError(String trxLastForeignKeyError) {
-        this.trxLastForeignKeyError = trxLastForeignKeyError == null ? null : trxLastForeignKeyError.trim();
+    public void setTrx_last_foreign_key_error(String trx_last_foreign_key_error) {
+        this.trx_last_foreign_key_error = trx_last_foreign_key_error == null ? null : trx_last_foreign_key_error.trim();
     }
 
-    public Integer getTrxAdaptiveHashLatched() {
-        return trxAdaptiveHashLatched;
+    public Integer getTrx_adaptive_hash_latched() {
+        return trx_adaptive_hash_latched;
     }
 
-    public void setTrxAdaptiveHashLatched(Integer trxAdaptiveHashLatched) {
-        this.trxAdaptiveHashLatched = trxAdaptiveHashLatched;
+    public void setTrx_adaptive_hash_latched(Integer trx_adaptive_hash_latched) {
+        this.trx_adaptive_hash_latched = trx_adaptive_hash_latched;
     }
 
-    public Long getTrxAdaptiveHashTimeout() {
-        return trxAdaptiveHashTimeout;
+    public Long getTrx_adaptive_hash_timeout() {
+        return trx_adaptive_hash_timeout;
     }
 
-    public void setTrxAdaptiveHashTimeout(Long trxAdaptiveHashTimeout) {
-        this.trxAdaptiveHashTimeout = trxAdaptiveHashTimeout;
+    public void setTrx_adaptive_hash_timeout(Long trx_adaptive_hash_timeout) {
+        this.trx_adaptive_hash_timeout = trx_adaptive_hash_timeout;
     }
 }

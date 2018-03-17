@@ -5,7 +5,7 @@ public class Discuss {
 
     private String name;
 
-    private Integer userId;
+    private Integer user_id;
 
     private String detail;
 
@@ -25,12 +25,12 @@ public class Discuss {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getDetail() {

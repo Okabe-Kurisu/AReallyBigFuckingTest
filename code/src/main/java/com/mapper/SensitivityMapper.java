@@ -12,7 +12,7 @@ public interface SensitivityMapper {
     @Insert({
         "insert into sensitivity (sid, blog_id, ",
         "type, details)",
-        "values (#{sid,jdbcType=INTEGER}, #{blogId,jdbcType=INTEGER}, ",
+        "values (#{sid,jdbcType=INTEGER}, #{blog_id,jdbcType=INTEGER}, ",
         "#{type,jdbcType=INTEGER}, #{details,jdbcType=VARCHAR})"
     })
     int insert(Sensitivity record);
@@ -24,7 +24,7 @@ public interface SensitivityMapper {
     })
     @Results({
         @Result(column="sid", property="sid", jdbcType=JdbcType.INTEGER),
-        @Result(column="blog_id", property="blogId", jdbcType=JdbcType.INTEGER),
+        @Result(column="blog_id", property="blog_id", jdbcType=JdbcType.INTEGER),
         @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="details", property="details", jdbcType=JdbcType.VARCHAR)
     })

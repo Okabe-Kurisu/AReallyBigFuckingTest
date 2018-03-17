@@ -12,8 +12,8 @@ public interface ThumbUpMapper {
     @Insert({
         "insert into thumb_up (tuid, user_id, ",
         "blog_id, date)",
-        "values (#{tuid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, ",
-        "#{blogId,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP})"
+        "values (#{tuid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
+        "#{blog_id,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP})"
     })
     int insert(ThumbUp record);
 
@@ -24,8 +24,8 @@ public interface ThumbUpMapper {
     })
     @Results({
         @Result(column="tuid", property="tuid", jdbcType=JdbcType.INTEGER),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="blog_id", property="blogId", jdbcType=JdbcType.INTEGER),
+        @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
+        @Result(column="blog_id", property="blog_id", jdbcType=JdbcType.INTEGER),
         @Result(column="date", property="date", jdbcType=JdbcType.TIMESTAMP)
     })
     List<ThumbUp> selectAll();

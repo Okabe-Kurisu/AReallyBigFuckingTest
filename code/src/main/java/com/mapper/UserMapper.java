@@ -17,9 +17,9 @@ public interface UserMapper {
         "is_ban, alive)",
         "values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, ",
         "#{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
-        "#{sex,jdbcType=BIT}, #{age,jdbcType=TINYINT}, #{isNs,jdbcType=BIT}, ",
+        "#{sex,jdbcType=BIT}, #{age,jdbcType=INTEGER}, #{is_ns,jdbcType=BIT}, ",
         "#{motto,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{background,jdbcType=VARCHAR}, ",
-        "#{isBan,jdbcType=TIMESTAMP}, #{alive,jdbcType=BIT})"
+        "#{is_ban,jdbcType=TIMESTAMP}, #{alive,jdbcType=BIT})"
     })
     int insert(User record);
 
@@ -35,12 +35,12 @@ public interface UserMapper {
         @Result(column="nickname", property="nickname", jdbcType=JdbcType.VARCHAR),
         @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
         @Result(column="sex", property="sex", jdbcType=JdbcType.BIT),
-        @Result(column="age", property="age", jdbcType=JdbcType.TINYINT),
-        @Result(column="is_ns", property="isNs", jdbcType=JdbcType.BIT),
+        @Result(column="age", property="age", jdbcType=JdbcType.INTEGER),
+        @Result(column="is_ns", property="is_ns", jdbcType=JdbcType.BIT),
         @Result(column="motto", property="motto", jdbcType=JdbcType.VARCHAR),
         @Result(column="avatar", property="avatar", jdbcType=JdbcType.VARCHAR),
         @Result(column="background", property="background", jdbcType=JdbcType.VARCHAR),
-        @Result(column="is_ban", property="isBan", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="is_ban", property="is_ban", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="alive", property="alive", jdbcType=JdbcType.BIT)
     })
     List<User> selectAll();

@@ -3,213 +3,213 @@ package com.model;
 import java.util.Date;
 
 public class Tables {
-    private String tableCatalog;
+    private String TABLE_CATALOG;
 
-    private String tableSchema;
+    private String TABLE_SCHEMA;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String tableType;
+    private String TABLE_TYPE;
 
-    private String engine;
+    private String ENGINE;
 
-    private Long version;
+    private Long VERSION;
 
-    private String rowFormat;
+    private String ROW_FORMAT;
 
-    private Long tableRows;
+    private Long TABLE_ROWS;
 
-    private Long avgRowLength;
+    private Long AVG_ROW_LENGTH;
 
-    private Long dataLength;
+    private Long DATA_LENGTH;
 
-    private Long maxDataLength;
+    private Long MAX_DATA_LENGTH;
 
-    private Long indexLength;
+    private Long INDEX_LENGTH;
 
-    private Long dataFree;
+    private Long DATA_FREE;
 
-    private Long autoIncrement;
+    private Long AUTO_INCREMENT;
 
-    private Date createTime;
+    private Date CREATE_TIME;
 
-    private Date updateTime;
+    private Date UPDATE_TIME;
 
-    private Date checkTime;
+    private Date CHECK_TIME;
 
-    private String tableCollation;
+    private String TABLE_COLLATION;
 
-    private Long checksum;
+    private Long CHECKSUM;
 
-    private String createOptions;
+    private String CREATE_OPTIONS;
 
-    private String tableComment;
+    private String TABLE_COMMENT;
 
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getTABLE_CATALOG() {
+        return TABLE_CATALOG;
     }
 
-    public void setTableCatalog(String tableCatalog) {
-        this.tableCatalog = tableCatalog == null ? null : tableCatalog.trim();
+    public void setTABLE_CATALOG(String TABLE_CATALOG) {
+        this.TABLE_CATALOG = TABLE_CATALOG == null ? null : TABLE_CATALOG.trim();
     }
 
-    public String getTableSchema() {
-        return tableSchema;
+    public String getTABLE_SCHEMA() {
+        return TABLE_SCHEMA;
     }
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema == null ? null : tableSchema.trim();
+    public void setTABLE_SCHEMA(String TABLE_SCHEMA) {
+        this.TABLE_SCHEMA = TABLE_SCHEMA == null ? null : TABLE_SCHEMA.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getTableType() {
-        return tableType;
+    public String getTABLE_TYPE() {
+        return TABLE_TYPE;
     }
 
-    public void setTableType(String tableType) {
-        this.tableType = tableType == null ? null : tableType.trim();
+    public void setTABLE_TYPE(String TABLE_TYPE) {
+        this.TABLE_TYPE = TABLE_TYPE == null ? null : TABLE_TYPE.trim();
     }
 
-    public String getEngine() {
-        return engine;
+    public String getENGINE() {
+        return ENGINE;
     }
 
-    public void setEngine(String engine) {
-        this.engine = engine == null ? null : engine.trim();
+    public void setENGINE(String ENGINE) {
+        this.ENGINE = ENGINE == null ? null : ENGINE.trim();
     }
 
-    public Long getVersion() {
-        return version;
+    public Long getVERSION() {
+        return VERSION;
     }
 
-    public void setVersion(Long version) {
-        this.version = version;
+    public void setVERSION(Long VERSION) {
+        this.VERSION = VERSION;
     }
 
-    public String getRowFormat() {
-        return rowFormat;
+    public String getROW_FORMAT() {
+        return ROW_FORMAT;
     }
 
-    public void setRowFormat(String rowFormat) {
-        this.rowFormat = rowFormat == null ? null : rowFormat.trim();
+    public void setROW_FORMAT(String ROW_FORMAT) {
+        this.ROW_FORMAT = ROW_FORMAT == null ? null : ROW_FORMAT.trim();
     }
 
-    public Long getTableRows() {
-        return tableRows;
+    public Long getTABLE_ROWS() {
+        return TABLE_ROWS;
     }
 
-    public void setTableRows(Long tableRows) {
-        this.tableRows = tableRows;
+    public void setTABLE_ROWS(Long TABLE_ROWS) {
+        this.TABLE_ROWS = TABLE_ROWS;
     }
 
-    public Long getAvgRowLength() {
-        return avgRowLength;
+    public Long getAVG_ROW_LENGTH() {
+        return AVG_ROW_LENGTH;
     }
 
-    public void setAvgRowLength(Long avgRowLength) {
-        this.avgRowLength = avgRowLength;
+    public void setAVG_ROW_LENGTH(Long AVG_ROW_LENGTH) {
+        this.AVG_ROW_LENGTH = AVG_ROW_LENGTH;
     }
 
-    public Long getDataLength() {
-        return dataLength;
+    public Long getDATA_LENGTH() {
+        return DATA_LENGTH;
     }
 
-    public void setDataLength(Long dataLength) {
-        this.dataLength = dataLength;
+    public void setDATA_LENGTH(Long DATA_LENGTH) {
+        this.DATA_LENGTH = DATA_LENGTH;
     }
 
-    public Long getMaxDataLength() {
-        return maxDataLength;
+    public Long getMAX_DATA_LENGTH() {
+        return MAX_DATA_LENGTH;
     }
 
-    public void setMaxDataLength(Long maxDataLength) {
-        this.maxDataLength = maxDataLength;
+    public void setMAX_DATA_LENGTH(Long MAX_DATA_LENGTH) {
+        this.MAX_DATA_LENGTH = MAX_DATA_LENGTH;
     }
 
-    public Long getIndexLength() {
-        return indexLength;
+    public Long getINDEX_LENGTH() {
+        return INDEX_LENGTH;
     }
 
-    public void setIndexLength(Long indexLength) {
-        this.indexLength = indexLength;
+    public void setINDEX_LENGTH(Long INDEX_LENGTH) {
+        this.INDEX_LENGTH = INDEX_LENGTH;
     }
 
-    public Long getDataFree() {
-        return dataFree;
+    public Long getDATA_FREE() {
+        return DATA_FREE;
     }
 
-    public void setDataFree(Long dataFree) {
-        this.dataFree = dataFree;
+    public void setDATA_FREE(Long DATA_FREE) {
+        this.DATA_FREE = DATA_FREE;
     }
 
-    public Long getAutoIncrement() {
-        return autoIncrement;
+    public Long getAUTO_INCREMENT() {
+        return AUTO_INCREMENT;
     }
 
-    public void setAutoIncrement(Long autoIncrement) {
-        this.autoIncrement = autoIncrement;
+    public void setAUTO_INCREMENT(Long AUTO_INCREMENT) {
+        this.AUTO_INCREMENT = AUTO_INCREMENT;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCREATE_TIME() {
+        return CREATE_TIME;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCREATE_TIME(Date CREATE_TIME) {
+        this.CREATE_TIME = CREATE_TIME;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUPDATE_TIME() {
+        return UPDATE_TIME;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUPDATE_TIME(Date UPDATE_TIME) {
+        this.UPDATE_TIME = UPDATE_TIME;
     }
 
-    public Date getCheckTime() {
-        return checkTime;
+    public Date getCHECK_TIME() {
+        return CHECK_TIME;
     }
 
-    public void setCheckTime(Date checkTime) {
-        this.checkTime = checkTime;
+    public void setCHECK_TIME(Date CHECK_TIME) {
+        this.CHECK_TIME = CHECK_TIME;
     }
 
-    public String getTableCollation() {
-        return tableCollation;
+    public String getTABLE_COLLATION() {
+        return TABLE_COLLATION;
     }
 
-    public void setTableCollation(String tableCollation) {
-        this.tableCollation = tableCollation == null ? null : tableCollation.trim();
+    public void setTABLE_COLLATION(String TABLE_COLLATION) {
+        this.TABLE_COLLATION = TABLE_COLLATION == null ? null : TABLE_COLLATION.trim();
     }
 
-    public Long getChecksum() {
-        return checksum;
+    public Long getCHECKSUM() {
+        return CHECKSUM;
     }
 
-    public void setChecksum(Long checksum) {
-        this.checksum = checksum;
+    public void setCHECKSUM(Long CHECKSUM) {
+        this.CHECKSUM = CHECKSUM;
     }
 
-    public String getCreateOptions() {
-        return createOptions;
+    public String getCREATE_OPTIONS() {
+        return CREATE_OPTIONS;
     }
 
-    public void setCreateOptions(String createOptions) {
-        this.createOptions = createOptions == null ? null : createOptions.trim();
+    public void setCREATE_OPTIONS(String CREATE_OPTIONS) {
+        this.CREATE_OPTIONS = CREATE_OPTIONS == null ? null : CREATE_OPTIONS.trim();
     }
 
-    public String getTableComment() {
-        return tableComment;
+    public String getTABLE_COMMENT() {
+        return TABLE_COMMENT;
     }
 
-    public void setTableComment(String tableComment) {
-        this.tableComment = tableComment == null ? null : tableComment.trim();
+    public void setTABLE_COMMENT(String TABLE_COMMENT) {
+        this.TABLE_COMMENT = TABLE_COMMENT == null ? null : TABLE_COMMENT.trim();
     }
 }

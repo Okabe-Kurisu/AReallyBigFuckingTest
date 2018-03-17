@@ -1,53 +1,53 @@
 package com.model;
 
 public class Schemata {
-    private String catalogName;
+    private String CATALOG_NAME;
 
-    private String schemaName;
+    private String SCHEMA_NAME;
 
-    private String defaultCharacterSetName;
+    private String DEFAULT_CHARACTER_SET_NAME;
 
-    private String defaultCollationName;
+    private String DEFAULT_COLLATION_NAME;
 
-    private String sqlPath;
+    private String SQL_PATH;
 
-    public String getCatalogName() {
-        return catalogName;
+    public String getCATALOG_NAME() {
+        return CATALOG_NAME;
     }
 
-    public void setCatalogName(String catalogName) {
-        this.catalogName = catalogName == null ? null : catalogName.trim();
+    public void setCATALOG_NAME(String CATALOG_NAME) {
+        this.CATALOG_NAME = CATALOG_NAME == null ? null : CATALOG_NAME.trim();
     }
 
-    public String getSchemaName() {
-        return schemaName;
+    public String getSCHEMA_NAME() {
+        return SCHEMA_NAME;
     }
 
-    public void setSchemaName(String schemaName) {
-        this.schemaName = schemaName == null ? null : schemaName.trim();
+    public void setSCHEMA_NAME(String SCHEMA_NAME) {
+        this.SCHEMA_NAME = SCHEMA_NAME == null ? null : SCHEMA_NAME.trim();
     }
 
-    public String getDefaultCharacterSetName() {
-        return defaultCharacterSetName;
+    public String getDEFAULT_CHARACTER_SET_NAME() {
+        return DEFAULT_CHARACTER_SET_NAME;
     }
 
-    public void setDefaultCharacterSetName(String defaultCharacterSetName) {
-        this.defaultCharacterSetName = defaultCharacterSetName == null ? null : defaultCharacterSetName.trim();
+    public void setDEFAULT_CHARACTER_SET_NAME(String DEFAULT_CHARACTER_SET_NAME) {
+        this.DEFAULT_CHARACTER_SET_NAME = DEFAULT_CHARACTER_SET_NAME == null ? null : DEFAULT_CHARACTER_SET_NAME.trim();
     }
 
-    public String getDefaultCollationName() {
-        return defaultCollationName;
+    public String getDEFAULT_COLLATION_NAME() {
+        return DEFAULT_COLLATION_NAME;
     }
 
-    public void setDefaultCollationName(String defaultCollationName) {
-        this.defaultCollationName = defaultCollationName == null ? null : defaultCollationName.trim();
+    public void setDEFAULT_COLLATION_NAME(String DEFAULT_COLLATION_NAME) {
+        this.DEFAULT_COLLATION_NAME = DEFAULT_COLLATION_NAME == null ? null : DEFAULT_COLLATION_NAME.trim();
     }
 
-    public String getSqlPath() {
-        return sqlPath;
+    public String getSQL_PATH() {
+        return SQL_PATH;
     }
 
-    public void setSqlPath(String sqlPath) {
-        this.sqlPath = sqlPath == null ? null : sqlPath.trim();
+    public void setSQL_PATH(String SQL_PATH) {
+        this.SQL_PATH = SQL_PATH == null ? null : SQL_PATH.trim();
     }
 }

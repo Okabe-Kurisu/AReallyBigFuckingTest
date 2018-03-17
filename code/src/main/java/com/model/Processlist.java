@@ -1,83 +1,83 @@
 package com.model;
 
 public class Processlist {
-    private Long id;
+    private Long ID;
 
-    private String user;
+    private String USER;
 
-    private String host;
+    private String HOST;
 
-    private String db;
+    private String DB;
 
-    private String command;
+    private String COMMAND;
 
-    private Integer time;
+    private Integer TIME;
 
-    private String state;
+    private String STATE;
 
-    private String info;
+    private String INFO;
 
-    public Long getId() {
-        return id;
+    public Long getID() {
+        return ID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
-    public String getUser() {
-        return user;
+    public String getUSER() {
+        return USER;
     }
 
-    public void setUser(String user) {
-        this.user = user == null ? null : user.trim();
+    public void setUSER(String USER) {
+        this.USER = USER == null ? null : USER.trim();
     }
 
-    public String getHost() {
-        return host;
+    public String getHOST() {
+        return HOST;
     }
 
-    public void setHost(String host) {
-        this.host = host == null ? null : host.trim();
+    public void setHOST(String HOST) {
+        this.HOST = HOST == null ? null : HOST.trim();
     }
 
-    public String getDb() {
-        return db;
+    public String getDB() {
+        return DB;
     }
 
-    public void setDb(String db) {
-        this.db = db == null ? null : db.trim();
+    public void setDB(String DB) {
+        this.DB = DB == null ? null : DB.trim();
     }
 
-    public String getCommand() {
-        return command;
+    public String getCOMMAND() {
+        return COMMAND;
     }
 
-    public void setCommand(String command) {
-        this.command = command == null ? null : command.trim();
+    public void setCOMMAND(String COMMAND) {
+        this.COMMAND = COMMAND == null ? null : COMMAND.trim();
     }
 
-    public Integer getTime() {
-        return time;
+    public Integer getTIME() {
+        return TIME;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
+    public void setTIME(Integer TIME) {
+        this.TIME = TIME;
     }
 
-    public String getState() {
-        return state;
+    public String getSTATE() {
+        return STATE;
     }
 
-    public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+    public void setSTATE(String STATE) {
+        this.STATE = STATE == null ? null : STATE.trim();
     }
 
-    public String getInfo() {
-        return info;
+    public String getINFO() {
+        return INFO;
     }
 
-    public void setInfo(String info) {
-        this.info = info == null ? null : info.trim();
+    public void setINFO(String INFO) {
+        this.INFO = INFO == null ? null : INFO.trim();
     }
 }

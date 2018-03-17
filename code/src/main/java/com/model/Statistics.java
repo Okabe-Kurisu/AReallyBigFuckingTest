@@ -1,163 +1,163 @@
 package com.model;
 
 public class Statistics {
-    private String tableCatalog;
+    private String TABLE_CATALOG;
 
-    private String tableSchema;
+    private String TABLE_SCHEMA;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private Long nonUnique;
+    private Long NON_UNIQUE;
 
-    private String indexSchema;
+    private String INDEX_SCHEMA;
 
-    private String indexName;
+    private String INDEX_NAME;
 
-    private Long seqInIndex;
+    private Long SEQ_IN_INDEX;
 
-    private String columnName;
+    private String COLUMN_NAME;
 
-    private String collation;
+    private String COLLATION;
 
-    private Long cardinality;
+    private Long CARDINALITY;
 
-    private Long subPart;
+    private Long SUB_PART;
 
-    private String packed;
+    private String PACKED;
 
-    private String nullable;
+    private String NULLABLE;
 
-    private String indexType;
+    private String INDEX_TYPE;
 
-    private String comment;
+    private String COMMENT;
 
-    private String indexComment;
+    private String INDEX_COMMENT;
 
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getTABLE_CATALOG() {
+        return TABLE_CATALOG;
     }
 
-    public void setTableCatalog(String tableCatalog) {
-        this.tableCatalog = tableCatalog == null ? null : tableCatalog.trim();
+    public void setTABLE_CATALOG(String TABLE_CATALOG) {
+        this.TABLE_CATALOG = TABLE_CATALOG == null ? null : TABLE_CATALOG.trim();
     }
 
-    public String getTableSchema() {
-        return tableSchema;
+    public String getTABLE_SCHEMA() {
+        return TABLE_SCHEMA;
     }
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema == null ? null : tableSchema.trim();
+    public void setTABLE_SCHEMA(String TABLE_SCHEMA) {
+        this.TABLE_SCHEMA = TABLE_SCHEMA == null ? null : TABLE_SCHEMA.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public Long getNonUnique() {
-        return nonUnique;
+    public Long getNON_UNIQUE() {
+        return NON_UNIQUE;
     }
 
-    public void setNonUnique(Long nonUnique) {
-        this.nonUnique = nonUnique;
+    public void setNON_UNIQUE(Long NON_UNIQUE) {
+        this.NON_UNIQUE = NON_UNIQUE;
     }
 
-    public String getIndexSchema() {
-        return indexSchema;
+    public String getINDEX_SCHEMA() {
+        return INDEX_SCHEMA;
     }
 
-    public void setIndexSchema(String indexSchema) {
-        this.indexSchema = indexSchema == null ? null : indexSchema.trim();
+    public void setINDEX_SCHEMA(String INDEX_SCHEMA) {
+        this.INDEX_SCHEMA = INDEX_SCHEMA == null ? null : INDEX_SCHEMA.trim();
     }
 
-    public String getIndexName() {
-        return indexName;
+    public String getINDEX_NAME() {
+        return INDEX_NAME;
     }
 
-    public void setIndexName(String indexName) {
-        this.indexName = indexName == null ? null : indexName.trim();
+    public void setINDEX_NAME(String INDEX_NAME) {
+        this.INDEX_NAME = INDEX_NAME == null ? null : INDEX_NAME.trim();
     }
 
-    public Long getSeqInIndex() {
-        return seqInIndex;
+    public Long getSEQ_IN_INDEX() {
+        return SEQ_IN_INDEX;
     }
 
-    public void setSeqInIndex(Long seqInIndex) {
-        this.seqInIndex = seqInIndex;
+    public void setSEQ_IN_INDEX(Long SEQ_IN_INDEX) {
+        this.SEQ_IN_INDEX = SEQ_IN_INDEX;
     }
 
-    public String getColumnName() {
-        return columnName;
+    public String getCOLUMN_NAME() {
+        return COLUMN_NAME;
     }
 
-    public void setColumnName(String columnName) {
-        this.columnName = columnName == null ? null : columnName.trim();
+    public void setCOLUMN_NAME(String COLUMN_NAME) {
+        this.COLUMN_NAME = COLUMN_NAME == null ? null : COLUMN_NAME.trim();
     }
 
-    public String getCollation() {
-        return collation;
+    public String getCOLLATION() {
+        return COLLATION;
     }
 
-    public void setCollation(String collation) {
-        this.collation = collation == null ? null : collation.trim();
+    public void setCOLLATION(String COLLATION) {
+        this.COLLATION = COLLATION == null ? null : COLLATION.trim();
     }
 
-    public Long getCardinality() {
-        return cardinality;
+    public Long getCARDINALITY() {
+        return CARDINALITY;
     }
 
-    public void setCardinality(Long cardinality) {
-        this.cardinality = cardinality;
+    public void setCARDINALITY(Long CARDINALITY) {
+        this.CARDINALITY = CARDINALITY;
     }
 
-    public Long getSubPart() {
-        return subPart;
+    public Long getSUB_PART() {
+        return SUB_PART;
     }
 
-    public void setSubPart(Long subPart) {
-        this.subPart = subPart;
+    public void setSUB_PART(Long SUB_PART) {
+        this.SUB_PART = SUB_PART;
     }
 
-    public String getPacked() {
-        return packed;
+    public String getPACKED() {
+        return PACKED;
     }
 
-    public void setPacked(String packed) {
-        this.packed = packed == null ? null : packed.trim();
+    public void setPACKED(String PACKED) {
+        this.PACKED = PACKED == null ? null : PACKED.trim();
     }
 
-    public String getNullable() {
-        return nullable;
+    public String getNULLABLE() {
+        return NULLABLE;
     }
 
-    public void setNullable(String nullable) {
-        this.nullable = nullable == null ? null : nullable.trim();
+    public void setNULLABLE(String NULLABLE) {
+        this.NULLABLE = NULLABLE == null ? null : NULLABLE.trim();
     }
 
-    public String getIndexType() {
-        return indexType;
+    public String getINDEX_TYPE() {
+        return INDEX_TYPE;
     }
 
-    public void setIndexType(String indexType) {
-        this.indexType = indexType == null ? null : indexType.trim();
+    public void setINDEX_TYPE(String INDEX_TYPE) {
+        this.INDEX_TYPE = INDEX_TYPE == null ? null : INDEX_TYPE.trim();
     }
 
-    public String getComment() {
-        return comment;
+    public String getCOMMENT() {
+        return COMMENT;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
+    public void setCOMMENT(String COMMENT) {
+        this.COMMENT = COMMENT == null ? null : COMMENT.trim();
     }
 
-    public String getIndexComment() {
-        return indexComment;
+    public String getINDEX_COMMENT() {
+        return INDEX_COMMENT;
     }
 
-    public void setIndexComment(String indexComment) {
-        this.indexComment = indexComment == null ? null : indexComment.trim();
+    public void setINDEX_COMMENT(String INDEX_COMMENT) {
+        this.INDEX_COMMENT = INDEX_COMMENT == null ? null : INDEX_COMMENT.trim();
     }
 }

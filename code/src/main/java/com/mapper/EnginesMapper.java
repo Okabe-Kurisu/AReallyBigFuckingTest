@@ -13,9 +13,9 @@ public interface EnginesMapper {
         "insert into ENGINES (ENGINE, SUPPORT, ",
         "COMMENT, TRANSACTIONS, ",
         "XA, SAVEPOINTS)",
-        "values (#{engine,jdbcType=VARCHAR}, #{support,jdbcType=VARCHAR}, ",
-        "#{comment,jdbcType=VARCHAR}, #{transactions,jdbcType=VARCHAR}, ",
-        "#{xa,jdbcType=VARCHAR}, #{savepoints,jdbcType=VARCHAR})"
+        "values (#{ENGINE,jdbcType=VARCHAR}, #{SUPPORT,jdbcType=VARCHAR}, ",
+        "#{COMMENT,jdbcType=VARCHAR}, #{TRANSACTIONS,jdbcType=VARCHAR}, ",
+        "#{XA,jdbcType=VARCHAR}, #{SAVEPOINTS,jdbcType=VARCHAR})"
     })
     int insert(Engines record);
 
@@ -25,12 +25,12 @@ public interface EnginesMapper {
         "from ENGINES"
     })
     @Results({
-        @Result(column="ENGINE", property="engine", jdbcType=JdbcType.VARCHAR),
-        @Result(column="SUPPORT", property="support", jdbcType=JdbcType.VARCHAR),
-        @Result(column="COMMENT", property="comment", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TRANSACTIONS", property="transactions", jdbcType=JdbcType.VARCHAR),
-        @Result(column="XA", property="xa", jdbcType=JdbcType.VARCHAR),
-        @Result(column="SAVEPOINTS", property="savepoints", jdbcType=JdbcType.VARCHAR)
+        @Result(column="ENGINE", property="ENGINE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SUPPORT", property="SUPPORT", jdbcType=JdbcType.VARCHAR),
+        @Result(column="COMMENT", property="COMMENT", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TRANSACTIONS", property="TRANSACTIONS", jdbcType=JdbcType.VARCHAR),
+        @Result(column="XA", property="XA", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SAVEPOINTS", property="SAVEPOINTS", jdbcType=JdbcType.VARCHAR)
     })
     List<Engines> selectAll();
 }

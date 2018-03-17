@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="config.properties"></properties>
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.model.Blog" alias="Blog"/>
+        <typeAlias type="com.model.BlogDiscuss" alias="BlogDiscuss"/>
+        <typeAlias type="com.model.CallAt" alias="CallAt"/>
+        <typeAlias type="com.model.Discuss" alias="Discuss"/>
+        <typeAlias type="com.model.Favorite" alias="Favorite"/>
+        <typeAlias type="com.model.Follow" alias="Follow"/>
+        <typeAlias type="com.model.Message" alias="Message"/>
+        <typeAlias type="com.model.SearchLog" alias="SearchLog"/>
+        <typeAlias type="com.model.Sensitivity" alias="Sensitivity"/>
+        <typeAlias type="com.model.ThumbUp" alias="ThumbUp"/>
+        <typeAlias type="com.model.User" alias="User"/>
+    </typeAliases>
+    <environments default="Sever">
+        <environment id="Sever">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <mappers>
+        <package name="com.mapper"/>
+    </mappers>
+</configuration>

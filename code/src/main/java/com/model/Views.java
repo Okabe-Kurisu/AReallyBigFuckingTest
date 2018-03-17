@@ -1,103 +1,103 @@
 package com.model;
 
 public class Views {
-    private String tableCatalog;
+    private String TABLE_CATALOG;
 
-    private String tableSchema;
+    private String TABLE_SCHEMA;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String checkOption;
+    private String CHECK_OPTION;
 
-    private String isUpdatable;
+    private String IS_UPDATABLE;
 
-    private String definer;
+    private String DEFINER;
 
-    private String securityType;
+    private String SECURITY_TYPE;
 
-    private String characterSetClient;
+    private String CHARACTER_SET_CLIENT;
 
-    private String collationConnection;
+    private String COLLATION_CONNECTION;
 
-    private String viewDefinition;
+    private String VIEW_DEFINITION;
 
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getTABLE_CATALOG() {
+        return TABLE_CATALOG;
     }
 
-    public void setTableCatalog(String tableCatalog) {
-        this.tableCatalog = tableCatalog == null ? null : tableCatalog.trim();
+    public void setTABLE_CATALOG(String TABLE_CATALOG) {
+        this.TABLE_CATALOG = TABLE_CATALOG == null ? null : TABLE_CATALOG.trim();
     }
 
-    public String getTableSchema() {
-        return tableSchema;
+    public String getTABLE_SCHEMA() {
+        return TABLE_SCHEMA;
     }
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema == null ? null : tableSchema.trim();
+    public void setTABLE_SCHEMA(String TABLE_SCHEMA) {
+        this.TABLE_SCHEMA = TABLE_SCHEMA == null ? null : TABLE_SCHEMA.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getCheckOption() {
-        return checkOption;
+    public String getCHECK_OPTION() {
+        return CHECK_OPTION;
     }
 
-    public void setCheckOption(String checkOption) {
-        this.checkOption = checkOption == null ? null : checkOption.trim();
+    public void setCHECK_OPTION(String CHECK_OPTION) {
+        this.CHECK_OPTION = CHECK_OPTION == null ? null : CHECK_OPTION.trim();
     }
 
-    public String getIsUpdatable() {
-        return isUpdatable;
+    public String getIS_UPDATABLE() {
+        return IS_UPDATABLE;
     }
 
-    public void setIsUpdatable(String isUpdatable) {
-        this.isUpdatable = isUpdatable == null ? null : isUpdatable.trim();
+    public void setIS_UPDATABLE(String IS_UPDATABLE) {
+        this.IS_UPDATABLE = IS_UPDATABLE == null ? null : IS_UPDATABLE.trim();
     }
 
-    public String getDefiner() {
-        return definer;
+    public String getDEFINER() {
+        return DEFINER;
     }
 
-    public void setDefiner(String definer) {
-        this.definer = definer == null ? null : definer.trim();
+    public void setDEFINER(String DEFINER) {
+        this.DEFINER = DEFINER == null ? null : DEFINER.trim();
     }
 
-    public String getSecurityType() {
-        return securityType;
+    public String getSECURITY_TYPE() {
+        return SECURITY_TYPE;
     }
 
-    public void setSecurityType(String securityType) {
-        this.securityType = securityType == null ? null : securityType.trim();
+    public void setSECURITY_TYPE(String SECURITY_TYPE) {
+        this.SECURITY_TYPE = SECURITY_TYPE == null ? null : SECURITY_TYPE.trim();
     }
 
-    public String getCharacterSetClient() {
-        return characterSetClient;
+    public String getCHARACTER_SET_CLIENT() {
+        return CHARACTER_SET_CLIENT;
     }
 
-    public void setCharacterSetClient(String characterSetClient) {
-        this.characterSetClient = characterSetClient == null ? null : characterSetClient.trim();
+    public void setCHARACTER_SET_CLIENT(String CHARACTER_SET_CLIENT) {
+        this.CHARACTER_SET_CLIENT = CHARACTER_SET_CLIENT == null ? null : CHARACTER_SET_CLIENT.trim();
     }
 
-    public String getCollationConnection() {
-        return collationConnection;
+    public String getCOLLATION_CONNECTION() {
+        return COLLATION_CONNECTION;
     }
 
-    public void setCollationConnection(String collationConnection) {
-        this.collationConnection = collationConnection == null ? null : collationConnection.trim();
+    public void setCOLLATION_CONNECTION(String COLLATION_CONNECTION) {
+        this.COLLATION_CONNECTION = COLLATION_CONNECTION == null ? null : COLLATION_CONNECTION.trim();
     }
 
-    public String getViewDefinition() {
-        return viewDefinition;
+    public String getVIEW_DEFINITION() {
+        return VIEW_DEFINITION;
     }
 
-    public void setViewDefinition(String viewDefinition) {
-        this.viewDefinition = viewDefinition == null ? null : viewDefinition.trim();
+    public void setVIEW_DEFINITION(String VIEW_DEFINITION) {
+        this.VIEW_DEFINITION = VIEW_DEFINITION == null ? null : VIEW_DEFINITION.trim();
     }
 }

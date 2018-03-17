@@ -3,243 +3,243 @@ package com.model;
 import java.util.Date;
 
 public class Events {
-    private String eventCatalog;
+    private String EVENT_CATALOG;
 
-    private String eventSchema;
+    private String EVENT_SCHEMA;
 
-    private String eventName;
+    private String EVENT_NAME;
 
-    private String definer;
+    private String DEFINER;
 
-    private String timeZone;
+    private String TIME_ZONE;
 
-    private String eventBody;
+    private String EVENT_BODY;
 
-    private String eventType;
+    private String EVENT_TYPE;
 
-    private Date executeAt;
+    private Date EXECUTE_AT;
 
-    private String intervalValue;
+    private String INTERVAL_VALUE;
 
-    private String intervalField;
+    private String INTERVAL_FIELD;
 
-    private String sqlMode;
+    private String SQL_MODE;
 
-    private Date starts;
+    private Date STARTS;
 
-    private Date ends;
+    private Date ENDS;
 
-    private String status;
+    private String STATUS;
 
-    private String onCompletion;
+    private String ON_COMPLETION;
 
-    private Date created;
+    private Date CREATED;
 
-    private Date lastAltered;
+    private Date LAST_ALTERED;
 
-    private Date lastExecuted;
+    private Date LAST_EXECUTED;
 
-    private String eventComment;
+    private String EVENT_COMMENT;
 
-    private Long originator;
+    private Long ORIGINATOR;
 
-    private String characterSetClient;
+    private String CHARACTER_SET_CLIENT;
 
-    private String collationConnection;
+    private String COLLATION_CONNECTION;
 
-    private String databaseCollation;
+    private String DATABASE_COLLATION;
 
-    private String eventDefinition;
+    private String EVENT_DEFINITION;
 
-    public String getEventCatalog() {
-        return eventCatalog;
+    public String getEVENT_CATALOG() {
+        return EVENT_CATALOG;
     }
 
-    public void setEventCatalog(String eventCatalog) {
-        this.eventCatalog = eventCatalog == null ? null : eventCatalog.trim();
+    public void setEVENT_CATALOG(String EVENT_CATALOG) {
+        this.EVENT_CATALOG = EVENT_CATALOG == null ? null : EVENT_CATALOG.trim();
     }
 
-    public String getEventSchema() {
-        return eventSchema;
+    public String getEVENT_SCHEMA() {
+        return EVENT_SCHEMA;
     }
 
-    public void setEventSchema(String eventSchema) {
-        this.eventSchema = eventSchema == null ? null : eventSchema.trim();
+    public void setEVENT_SCHEMA(String EVENT_SCHEMA) {
+        this.EVENT_SCHEMA = EVENT_SCHEMA == null ? null : EVENT_SCHEMA.trim();
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getEVENT_NAME() {
+        return EVENT_NAME;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName == null ? null : eventName.trim();
+    public void setEVENT_NAME(String EVENT_NAME) {
+        this.EVENT_NAME = EVENT_NAME == null ? null : EVENT_NAME.trim();
     }
 
-    public String getDefiner() {
-        return definer;
+    public String getDEFINER() {
+        return DEFINER;
     }
 
-    public void setDefiner(String definer) {
-        this.definer = definer == null ? null : definer.trim();
+    public void setDEFINER(String DEFINER) {
+        this.DEFINER = DEFINER == null ? null : DEFINER.trim();
     }
 
-    public String getTimeZone() {
-        return timeZone;
+    public String getTIME_ZONE() {
+        return TIME_ZONE;
     }
 
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone == null ? null : timeZone.trim();
+    public void setTIME_ZONE(String TIME_ZONE) {
+        this.TIME_ZONE = TIME_ZONE == null ? null : TIME_ZONE.trim();
     }
 
-    public String getEventBody() {
-        return eventBody;
+    public String getEVENT_BODY() {
+        return EVENT_BODY;
     }
 
-    public void setEventBody(String eventBody) {
-        this.eventBody = eventBody == null ? null : eventBody.trim();
+    public void setEVENT_BODY(String EVENT_BODY) {
+        this.EVENT_BODY = EVENT_BODY == null ? null : EVENT_BODY.trim();
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getEVENT_TYPE() {
+        return EVENT_TYPE;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType == null ? null : eventType.trim();
+    public void setEVENT_TYPE(String EVENT_TYPE) {
+        this.EVENT_TYPE = EVENT_TYPE == null ? null : EVENT_TYPE.trim();
     }
 
-    public Date getExecuteAt() {
-        return executeAt;
+    public Date getEXECUTE_AT() {
+        return EXECUTE_AT;
     }
 
-    public void setExecuteAt(Date executeAt) {
-        this.executeAt = executeAt;
+    public void setEXECUTE_AT(Date EXECUTE_AT) {
+        this.EXECUTE_AT = EXECUTE_AT;
     }
 
-    public String getIntervalValue() {
-        return intervalValue;
+    public String getINTERVAL_VALUE() {
+        return INTERVAL_VALUE;
     }
 
-    public void setIntervalValue(String intervalValue) {
-        this.intervalValue = intervalValue == null ? null : intervalValue.trim();
+    public void setINTERVAL_VALUE(String INTERVAL_VALUE) {
+        this.INTERVAL_VALUE = INTERVAL_VALUE == null ? null : INTERVAL_VALUE.trim();
     }
 
-    public String getIntervalField() {
-        return intervalField;
+    public String getINTERVAL_FIELD() {
+        return INTERVAL_FIELD;
     }
 
-    public void setIntervalField(String intervalField) {
-        this.intervalField = intervalField == null ? null : intervalField.trim();
+    public void setINTERVAL_FIELD(String INTERVAL_FIELD) {
+        this.INTERVAL_FIELD = INTERVAL_FIELD == null ? null : INTERVAL_FIELD.trim();
     }
 
-    public String getSqlMode() {
-        return sqlMode;
+    public String getSQL_MODE() {
+        return SQL_MODE;
     }
 
-    public void setSqlMode(String sqlMode) {
-        this.sqlMode = sqlMode == null ? null : sqlMode.trim();
+    public void setSQL_MODE(String SQL_MODE) {
+        this.SQL_MODE = SQL_MODE == null ? null : SQL_MODE.trim();
     }
 
-    public Date getStarts() {
-        return starts;
+    public Date getSTARTS() {
+        return STARTS;
     }
 
-    public void setStarts(Date starts) {
-        this.starts = starts;
+    public void setSTARTS(Date STARTS) {
+        this.STARTS = STARTS;
     }
 
-    public Date getEnds() {
-        return ends;
+    public Date getENDS() {
+        return ENDS;
     }
 
-    public void setEnds(Date ends) {
-        this.ends = ends;
+    public void setENDS(Date ENDS) {
+        this.ENDS = ENDS;
     }
 
-    public String getStatus() {
-        return status;
+    public String getSTATUS() {
+        return STATUS;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setSTATUS(String STATUS) {
+        this.STATUS = STATUS == null ? null : STATUS.trim();
     }
 
-    public String getOnCompletion() {
-        return onCompletion;
+    public String getON_COMPLETION() {
+        return ON_COMPLETION;
     }
 
-    public void setOnCompletion(String onCompletion) {
-        this.onCompletion = onCompletion == null ? null : onCompletion.trim();
+    public void setON_COMPLETION(String ON_COMPLETION) {
+        this.ON_COMPLETION = ON_COMPLETION == null ? null : ON_COMPLETION.trim();
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getCREATED() {
+        return CREATED;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCREATED(Date CREATED) {
+        this.CREATED = CREATED;
     }
 
-    public Date getLastAltered() {
-        return lastAltered;
+    public Date getLAST_ALTERED() {
+        return LAST_ALTERED;
     }
 
-    public void setLastAltered(Date lastAltered) {
-        this.lastAltered = lastAltered;
+    public void setLAST_ALTERED(Date LAST_ALTERED) {
+        this.LAST_ALTERED = LAST_ALTERED;
     }
 
-    public Date getLastExecuted() {
-        return lastExecuted;
+    public Date getLAST_EXECUTED() {
+        return LAST_EXECUTED;
     }
 
-    public void setLastExecuted(Date lastExecuted) {
-        this.lastExecuted = lastExecuted;
+    public void setLAST_EXECUTED(Date LAST_EXECUTED) {
+        this.LAST_EXECUTED = LAST_EXECUTED;
     }
 
-    public String getEventComment() {
-        return eventComment;
+    public String getEVENT_COMMENT() {
+        return EVENT_COMMENT;
     }
 
-    public void setEventComment(String eventComment) {
-        this.eventComment = eventComment == null ? null : eventComment.trim();
+    public void setEVENT_COMMENT(String EVENT_COMMENT) {
+        this.EVENT_COMMENT = EVENT_COMMENT == null ? null : EVENT_COMMENT.trim();
     }
 
-    public Long getOriginator() {
-        return originator;
+    public Long getORIGINATOR() {
+        return ORIGINATOR;
     }
 
-    public void setOriginator(Long originator) {
-        this.originator = originator;
+    public void setORIGINATOR(Long ORIGINATOR) {
+        this.ORIGINATOR = ORIGINATOR;
     }
 
-    public String getCharacterSetClient() {
-        return characterSetClient;
+    public String getCHARACTER_SET_CLIENT() {
+        return CHARACTER_SET_CLIENT;
     }
 
-    public void setCharacterSetClient(String characterSetClient) {
-        this.characterSetClient = characterSetClient == null ? null : characterSetClient.trim();
+    public void setCHARACTER_SET_CLIENT(String CHARACTER_SET_CLIENT) {
+        this.CHARACTER_SET_CLIENT = CHARACTER_SET_CLIENT == null ? null : CHARACTER_SET_CLIENT.trim();
     }
 
-    public String getCollationConnection() {
-        return collationConnection;
+    public String getCOLLATION_CONNECTION() {
+        return COLLATION_CONNECTION;
     }
 
-    public void setCollationConnection(String collationConnection) {
-        this.collationConnection = collationConnection == null ? null : collationConnection.trim();
+    public void setCOLLATION_CONNECTION(String COLLATION_CONNECTION) {
+        this.COLLATION_CONNECTION = COLLATION_CONNECTION == null ? null : COLLATION_CONNECTION.trim();
     }
 
-    public String getDatabaseCollation() {
-        return databaseCollation;
+    public String getDATABASE_COLLATION() {
+        return DATABASE_COLLATION;
     }
 
-    public void setDatabaseCollation(String databaseCollation) {
-        this.databaseCollation = databaseCollation == null ? null : databaseCollation.trim();
+    public void setDATABASE_COLLATION(String DATABASE_COLLATION) {
+        this.DATABASE_COLLATION = DATABASE_COLLATION == null ? null : DATABASE_COLLATION.trim();
     }
 
-    public String getEventDefinition() {
-        return eventDefinition;
+    public String getEVENT_DEFINITION() {
+        return EVENT_DEFINITION;
     }
 
-    public void setEventDefinition(String eventDefinition) {
-        this.eventDefinition = eventDefinition == null ? null : eventDefinition.trim();
+    public void setEVENT_DEFINITION(String EVENT_DEFINITION) {
+        this.EVENT_DEFINITION = EVENT_DEFINITION == null ? null : EVENT_DEFINITION.trim();
     }
 }

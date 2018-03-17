@@ -1,23 +1,23 @@
 package com.model;
 
 public class GlobalVariables {
-    private String variableName;
+    private String VARIABLE_NAME;
 
-    private String variableValue;
+    private String VARIABLE_VALUE;
 
-    public String getVariableName() {
-        return variableName;
+    public String getVARIABLE_NAME() {
+        return VARIABLE_NAME;
     }
 
-    public void setVariableName(String variableName) {
-        this.variableName = variableName == null ? null : variableName.trim();
+    public void setVARIABLE_NAME(String VARIABLE_NAME) {
+        this.VARIABLE_NAME = VARIABLE_NAME == null ? null : VARIABLE_NAME.trim();
     }
 
-    public String getVariableValue() {
-        return variableValue;
+    public String getVARIABLE_VALUE() {
+        return VARIABLE_VALUE;
     }
 
-    public void setVariableValue(String variableValue) {
-        this.variableValue = variableValue == null ? null : variableValue.trim();
+    public void setVARIABLE_VALUE(String VARIABLE_VALUE) {
+        this.VARIABLE_VALUE = VARIABLE_VALUE == null ? null : VARIABLE_VALUE.trim();
     }
 }

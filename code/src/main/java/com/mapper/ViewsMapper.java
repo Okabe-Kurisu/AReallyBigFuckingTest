@@ -15,11 +15,11 @@ public interface ViewsMapper {
         "IS_UPDATABLE, DEFINER, ",
         "SECURITY_TYPE, CHARACTER_SET_CLIENT, ",
         "COLLATION_CONNECTION, VIEW_DEFINITION)",
-        "values (#{tableCatalog,jdbcType=VARCHAR}, #{tableSchema,jdbcType=VARCHAR}, ",
-        "#{tableName,jdbcType=VARCHAR}, #{checkOption,jdbcType=VARCHAR}, ",
-        "#{isUpdatable,jdbcType=VARCHAR}, #{definer,jdbcType=VARCHAR}, ",
-        "#{securityType,jdbcType=VARCHAR}, #{characterSetClient,jdbcType=VARCHAR}, ",
-        "#{collationConnection,jdbcType=VARCHAR}, #{viewDefinition,jdbcType=LONGVARCHAR})"
+        "values (#{TABLE_CATALOG,jdbcType=VARCHAR}, #{TABLE_SCHEMA,jdbcType=VARCHAR}, ",
+        "#{TABLE_NAME,jdbcType=VARCHAR}, #{CHECK_OPTION,jdbcType=VARCHAR}, ",
+        "#{IS_UPDATABLE,jdbcType=VARCHAR}, #{DEFINER,jdbcType=VARCHAR}, ",
+        "#{SECURITY_TYPE,jdbcType=VARCHAR}, #{CHARACTER_SET_CLIENT,jdbcType=VARCHAR}, ",
+        "#{COLLATION_CONNECTION,jdbcType=VARCHAR}, #{VIEW_DEFINITION,jdbcType=LONGVARCHAR})"
     })
     int insert(Views record);
 
@@ -30,16 +30,16 @@ public interface ViewsMapper {
         "from VIEWS"
     })
     @Results({
-        @Result(column="TABLE_CATALOG", property="tableCatalog", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_SCHEMA", property="tableSchema", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_NAME", property="tableName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="CHECK_OPTION", property="checkOption", jdbcType=JdbcType.VARCHAR),
-        @Result(column="IS_UPDATABLE", property="isUpdatable", jdbcType=JdbcType.VARCHAR),
-        @Result(column="DEFINER", property="definer", jdbcType=JdbcType.VARCHAR),
-        @Result(column="SECURITY_TYPE", property="securityType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="CHARACTER_SET_CLIENT", property="characterSetClient", jdbcType=JdbcType.VARCHAR),
-        @Result(column="COLLATION_CONNECTION", property="collationConnection", jdbcType=JdbcType.VARCHAR),
-        @Result(column="VIEW_DEFINITION", property="viewDefinition", jdbcType=JdbcType.LONGVARCHAR)
+        @Result(column="TABLE_CATALOG", property="TABLE_CATALOG", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_SCHEMA", property="TABLE_SCHEMA", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_NAME", property="TABLE_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CHECK_OPTION", property="CHECK_OPTION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="IS_UPDATABLE", property="IS_UPDATABLE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="DEFINER", property="DEFINER", jdbcType=JdbcType.VARCHAR),
+        @Result(column="SECURITY_TYPE", property="SECURITY_TYPE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CHARACTER_SET_CLIENT", property="CHARACTER_SET_CLIENT", jdbcType=JdbcType.VARCHAR),
+        @Result(column="COLLATION_CONNECTION", property="COLLATION_CONNECTION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="VIEW_DEFINITION", property="VIEW_DEFINITION", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Views> selectAll();
 }

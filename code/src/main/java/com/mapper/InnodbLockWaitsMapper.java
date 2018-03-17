@@ -12,8 +12,8 @@ public interface InnodbLockWaitsMapper {
     @Insert({
         "insert into INNODB_LOCK_WAITS (requesting_trx_id, requested_lock_id, ",
         "blocking_trx_id, blocking_lock_id)",
-        "values (#{requestingTrxId,jdbcType=VARCHAR}, #{requestedLockId,jdbcType=VARCHAR}, ",
-        "#{blockingTrxId,jdbcType=VARCHAR}, #{blockingLockId,jdbcType=VARCHAR})"
+        "values (#{requesting_trx_id,jdbcType=VARCHAR}, #{requested_lock_id,jdbcType=VARCHAR}, ",
+        "#{blocking_trx_id,jdbcType=VARCHAR}, #{blocking_lock_id,jdbcType=VARCHAR})"
     })
     int insert(InnodbLockWaits record);
 
@@ -23,10 +23,10 @@ public interface InnodbLockWaitsMapper {
         "from INNODB_LOCK_WAITS"
     })
     @Results({
-        @Result(column="requesting_trx_id", property="requestingTrxId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="requested_lock_id", property="requestedLockId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="blocking_trx_id", property="blockingTrxId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="blocking_lock_id", property="blockingLockId", jdbcType=JdbcType.VARCHAR)
+        @Result(column="requesting_trx_id", property="requesting_trx_id", jdbcType=JdbcType.VARCHAR),
+        @Result(column="requested_lock_id", property="requested_lock_id", jdbcType=JdbcType.VARCHAR),
+        @Result(column="blocking_trx_id", property="blocking_trx_id", jdbcType=JdbcType.VARCHAR),
+        @Result(column="blocking_lock_id", property="blocking_lock_id", jdbcType=JdbcType.VARCHAR)
     })
     List<InnodbLockWaits> selectAll();
 }

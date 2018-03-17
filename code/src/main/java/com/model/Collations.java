@@ -1,63 +1,63 @@
 package com.model;
 
 public class Collations {
-    private String collationName;
+    private String COLLATION_NAME;
 
-    private String characterSetName;
+    private String CHARACTER_SET_NAME;
 
-    private Long id;
+    private Long ID;
 
-    private String isDefault;
+    private String IS_DEFAULT;
 
-    private String isCompiled;
+    private String IS_COMPILED;
 
-    private Long sortlen;
+    private Long SORTLEN;
 
-    public String getCollationName() {
-        return collationName;
+    public String getCOLLATION_NAME() {
+        return COLLATION_NAME;
     }
 
-    public void setCollationName(String collationName) {
-        this.collationName = collationName == null ? null : collationName.trim();
+    public void setCOLLATION_NAME(String COLLATION_NAME) {
+        this.COLLATION_NAME = COLLATION_NAME == null ? null : COLLATION_NAME.trim();
     }
 
-    public String getCharacterSetName() {
-        return characterSetName;
+    public String getCHARACTER_SET_NAME() {
+        return CHARACTER_SET_NAME;
     }
 
-    public void setCharacterSetName(String characterSetName) {
-        this.characterSetName = characterSetName == null ? null : characterSetName.trim();
+    public void setCHARACTER_SET_NAME(String CHARACTER_SET_NAME) {
+        this.CHARACTER_SET_NAME = CHARACTER_SET_NAME == null ? null : CHARACTER_SET_NAME.trim();
     }
 
-    public Long getId() {
-        return id;
+    public Long getID() {
+        return ID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
-    public String getIsDefault() {
-        return isDefault;
+    public String getIS_DEFAULT() {
+        return IS_DEFAULT;
     }
 
-    public void setIsDefault(String isDefault) {
-        this.isDefault = isDefault == null ? null : isDefault.trim();
+    public void setIS_DEFAULT(String IS_DEFAULT) {
+        this.IS_DEFAULT = IS_DEFAULT == null ? null : IS_DEFAULT.trim();
     }
 
-    public String getIsCompiled() {
-        return isCompiled;
+    public String getIS_COMPILED() {
+        return IS_COMPILED;
     }
 
-    public void setIsCompiled(String isCompiled) {
-        this.isCompiled = isCompiled == null ? null : isCompiled.trim();
+    public void setIS_COMPILED(String IS_COMPILED) {
+        this.IS_COMPILED = IS_COMPILED == null ? null : IS_COMPILED.trim();
     }
 
-    public Long getSortlen() {
-        return sortlen;
+    public Long getSORTLEN() {
+        return SORTLEN;
     }
 
-    public void setSortlen(Long sortlen) {
-        this.sortlen = sortlen;
+    public void setSORTLEN(Long SORTLEN) {
+        this.SORTLEN = SORTLEN;
     }
 }

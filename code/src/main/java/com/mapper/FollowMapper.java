@@ -12,8 +12,8 @@ public interface FollowMapper {
     @Insert({
         "insert into follow (fid, user_id, ",
         "type, followed_id)",
-        "values (#{fid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, ",
-        "#{type,jdbcType=BIT}, #{followedId,jdbcType=INTEGER})"
+        "values (#{fid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
+        "#{type,jdbcType=INTEGER}, #{followed_id,jdbcType=INTEGER})"
     })
     int insert(Follow record);
 
@@ -24,9 +24,9 @@ public interface FollowMapper {
     })
     @Results({
         @Result(column="fid", property="fid", jdbcType=JdbcType.INTEGER),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="type", property="type", jdbcType=JdbcType.BIT),
-        @Result(column="followed_id", property="followedId", jdbcType=JdbcType.INTEGER)
+        @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
+        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
+        @Result(column="followed_id", property="followed_id", jdbcType=JdbcType.INTEGER)
     })
     List<Follow> selectAll();
 }

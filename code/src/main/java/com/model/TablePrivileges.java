@@ -1,63 +1,63 @@
 package com.model;
 
 public class TablePrivileges {
-    private String grantee;
+    private String GRANTEE;
 
-    private String tableCatalog;
+    private String TABLE_CATALOG;
 
-    private String tableSchema;
+    private String TABLE_SCHEMA;
 
-    private String tableName;
+    private String TABLE_NAME;
 
-    private String privilegeType;
+    private String PRIVILEGE_TYPE;
 
-    private String isGrantable;
+    private String IS_GRANTABLE;
 
-    public String getGrantee() {
-        return grantee;
+    public String getGRANTEE() {
+        return GRANTEE;
     }
 
-    public void setGrantee(String grantee) {
-        this.grantee = grantee == null ? null : grantee.trim();
+    public void setGRANTEE(String GRANTEE) {
+        this.GRANTEE = GRANTEE == null ? null : GRANTEE.trim();
     }
 
-    public String getTableCatalog() {
-        return tableCatalog;
+    public String getTABLE_CATALOG() {
+        return TABLE_CATALOG;
     }
 
-    public void setTableCatalog(String tableCatalog) {
-        this.tableCatalog = tableCatalog == null ? null : tableCatalog.trim();
+    public void setTABLE_CATALOG(String TABLE_CATALOG) {
+        this.TABLE_CATALOG = TABLE_CATALOG == null ? null : TABLE_CATALOG.trim();
     }
 
-    public String getTableSchema() {
-        return tableSchema;
+    public String getTABLE_SCHEMA() {
+        return TABLE_SCHEMA;
     }
 
-    public void setTableSchema(String tableSchema) {
-        this.tableSchema = tableSchema == null ? null : tableSchema.trim();
+    public void setTABLE_SCHEMA(String TABLE_SCHEMA) {
+        this.TABLE_SCHEMA = TABLE_SCHEMA == null ? null : TABLE_SCHEMA.trim();
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getTABLE_NAME() {
+        return TABLE_NAME;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName == null ? null : tableName.trim();
+    public void setTABLE_NAME(String TABLE_NAME) {
+        this.TABLE_NAME = TABLE_NAME == null ? null : TABLE_NAME.trim();
     }
 
-    public String getPrivilegeType() {
-        return privilegeType;
+    public String getPRIVILEGE_TYPE() {
+        return PRIVILEGE_TYPE;
     }
 
-    public void setPrivilegeType(String privilegeType) {
-        this.privilegeType = privilegeType == null ? null : privilegeType.trim();
+    public void setPRIVILEGE_TYPE(String PRIVILEGE_TYPE) {
+        this.PRIVILEGE_TYPE = PRIVILEGE_TYPE == null ? null : PRIVILEGE_TYPE.trim();
     }
 
-    public String getIsGrantable() {
-        return isGrantable;
+    public String getIS_GRANTABLE() {
+        return IS_GRANTABLE;
     }
 
-    public void setIsGrantable(String isGrantable) {
-        this.isGrantable = isGrantable == null ? null : isGrantable.trim();
+    public void setIS_GRANTABLE(String IS_GRANTABLE) {
+        this.IS_GRANTABLE = IS_GRANTABLE == null ? null : IS_GRANTABLE.trim();
     }
 }

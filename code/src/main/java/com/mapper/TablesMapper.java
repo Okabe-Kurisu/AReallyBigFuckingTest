@@ -21,17 +21,17 @@ public interface TablesMapper {
         "CHECK_TIME, TABLE_COLLATION, ",
         "CHECKSUM, CREATE_OPTIONS, ",
         "TABLE_COMMENT)",
-        "values (#{tableCatalog,jdbcType=VARCHAR}, #{tableSchema,jdbcType=VARCHAR}, ",
-        "#{tableName,jdbcType=VARCHAR}, #{tableType,jdbcType=VARCHAR}, ",
-        "#{engine,jdbcType=VARCHAR}, #{version,jdbcType=BIGINT}, ",
-        "#{rowFormat,jdbcType=VARCHAR}, #{tableRows,jdbcType=BIGINT}, ",
-        "#{avgRowLength,jdbcType=BIGINT}, #{dataLength,jdbcType=BIGINT}, ",
-        "#{maxDataLength,jdbcType=BIGINT}, #{indexLength,jdbcType=BIGINT}, ",
-        "#{dataFree,jdbcType=BIGINT}, #{autoIncrement,jdbcType=BIGINT}, ",
-        "#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, ",
-        "#{checkTime,jdbcType=TIMESTAMP}, #{tableCollation,jdbcType=VARCHAR}, ",
-        "#{checksum,jdbcType=BIGINT}, #{createOptions,jdbcType=VARCHAR}, ",
-        "#{tableComment,jdbcType=VARCHAR})"
+        "values (#{TABLE_CATALOG,jdbcType=VARCHAR}, #{TABLE_SCHEMA,jdbcType=VARCHAR}, ",
+        "#{TABLE_NAME,jdbcType=VARCHAR}, #{TABLE_TYPE,jdbcType=VARCHAR}, ",
+        "#{ENGINE,jdbcType=VARCHAR}, #{VERSION,jdbcType=BIGINT}, ",
+        "#{ROW_FORMAT,jdbcType=VARCHAR}, #{TABLE_ROWS,jdbcType=BIGINT}, ",
+        "#{AVG_ROW_LENGTH,jdbcType=BIGINT}, #{DATA_LENGTH,jdbcType=BIGINT}, ",
+        "#{MAX_DATA_LENGTH,jdbcType=BIGINT}, #{INDEX_LENGTH,jdbcType=BIGINT}, ",
+        "#{DATA_FREE,jdbcType=BIGINT}, #{AUTO_INCREMENT,jdbcType=BIGINT}, ",
+        "#{CREATE_TIME,jdbcType=TIMESTAMP}, #{UPDATE_TIME,jdbcType=TIMESTAMP}, ",
+        "#{CHECK_TIME,jdbcType=TIMESTAMP}, #{TABLE_COLLATION,jdbcType=VARCHAR}, ",
+        "#{CHECKSUM,jdbcType=BIGINT}, #{CREATE_OPTIONS,jdbcType=VARCHAR}, ",
+        "#{TABLE_COMMENT,jdbcType=VARCHAR})"
     })
     int insert(Tables record);
 
@@ -44,27 +44,27 @@ public interface TablesMapper {
         "from TABLES"
     })
     @Results({
-        @Result(column="TABLE_CATALOG", property="tableCatalog", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_SCHEMA", property="tableSchema", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_NAME", property="tableName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_TYPE", property="tableType", jdbcType=JdbcType.VARCHAR),
-        @Result(column="ENGINE", property="engine", jdbcType=JdbcType.VARCHAR),
-        @Result(column="VERSION", property="version", jdbcType=JdbcType.BIGINT),
-        @Result(column="ROW_FORMAT", property="rowFormat", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_ROWS", property="tableRows", jdbcType=JdbcType.BIGINT),
-        @Result(column="AVG_ROW_LENGTH", property="avgRowLength", jdbcType=JdbcType.BIGINT),
-        @Result(column="DATA_LENGTH", property="dataLength", jdbcType=JdbcType.BIGINT),
-        @Result(column="MAX_DATA_LENGTH", property="maxDataLength", jdbcType=JdbcType.BIGINT),
-        @Result(column="INDEX_LENGTH", property="indexLength", jdbcType=JdbcType.BIGINT),
-        @Result(column="DATA_FREE", property="dataFree", jdbcType=JdbcType.BIGINT),
-        @Result(column="AUTO_INCREMENT", property="autoIncrement", jdbcType=JdbcType.BIGINT),
-        @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="UPDATE_TIME", property="updateTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="CHECK_TIME", property="checkTime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="TABLE_COLLATION", property="tableCollation", jdbcType=JdbcType.VARCHAR),
-        @Result(column="CHECKSUM", property="checksum", jdbcType=JdbcType.BIGINT),
-        @Result(column="CREATE_OPTIONS", property="createOptions", jdbcType=JdbcType.VARCHAR),
-        @Result(column="TABLE_COMMENT", property="tableComment", jdbcType=JdbcType.VARCHAR)
+        @Result(column="TABLE_CATALOG", property="TABLE_CATALOG", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_SCHEMA", property="TABLE_SCHEMA", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_NAME", property="TABLE_NAME", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_TYPE", property="TABLE_TYPE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="ENGINE", property="ENGINE", jdbcType=JdbcType.VARCHAR),
+        @Result(column="VERSION", property="VERSION", jdbcType=JdbcType.BIGINT),
+        @Result(column="ROW_FORMAT", property="ROW_FORMAT", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_ROWS", property="TABLE_ROWS", jdbcType=JdbcType.BIGINT),
+        @Result(column="AVG_ROW_LENGTH", property="AVG_ROW_LENGTH", jdbcType=JdbcType.BIGINT),
+        @Result(column="DATA_LENGTH", property="DATA_LENGTH", jdbcType=JdbcType.BIGINT),
+        @Result(column="MAX_DATA_LENGTH", property="MAX_DATA_LENGTH", jdbcType=JdbcType.BIGINT),
+        @Result(column="INDEX_LENGTH", property="INDEX_LENGTH", jdbcType=JdbcType.BIGINT),
+        @Result(column="DATA_FREE", property="DATA_FREE", jdbcType=JdbcType.BIGINT),
+        @Result(column="AUTO_INCREMENT", property="AUTO_INCREMENT", jdbcType=JdbcType.BIGINT),
+        @Result(column="CREATE_TIME", property="CREATE_TIME", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="UPDATE_TIME", property="UPDATE_TIME", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="CHECK_TIME", property="CHECK_TIME", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="TABLE_COLLATION", property="TABLE_COLLATION", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CHECKSUM", property="CHECKSUM", jdbcType=JdbcType.BIGINT),
+        @Result(column="CREATE_OPTIONS", property="CREATE_OPTIONS", jdbcType=JdbcType.VARCHAR),
+        @Result(column="TABLE_COMMENT", property="TABLE_COMMENT", jdbcType=JdbcType.VARCHAR)
     })
     List<Tables> selectAll();
 }

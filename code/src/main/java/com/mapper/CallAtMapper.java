@@ -12,8 +12,8 @@ public interface CallAtMapper {
     @Insert({
         "insert into call_at (cid, user_id, ",
         "blog_id, date)",
-        "values (#{cid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, ",
-        "#{blogId,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP})"
+        "values (#{cid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
+        "#{blog_id,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP})"
     })
     int insert(CallAt record);
 
@@ -24,8 +24,8 @@ public interface CallAtMapper {
     })
     @Results({
         @Result(column="cid", property="cid", jdbcType=JdbcType.INTEGER),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="blog_id", property="blogId", jdbcType=JdbcType.INTEGER),
+        @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
+        @Result(column="blog_id", property="blog_id", jdbcType=JdbcType.INTEGER),
         @Result(column="date", property="date", jdbcType=JdbcType.TIMESTAMP)
     })
     List<CallAt> selectAll();

@@ -63,7 +63,7 @@
     <column id="20" parent="4" name="type">
       <Position>6</Position>
       <Comment>微博类别（0为普通微博，1为转发微博，2为评论微博</Comment>
-      <DataType>tinyint(4)|0</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="21" parent="4" name="comment_on">
@@ -76,7 +76,7 @@
     <column id="22" parent="4" name="visibility">
       <Position>8</Position>
       <Comment>可见性（0为公开，1为仅自己可见，2为被删除，仅网监可见</Comment>
-      <DataType>tinyint(4)|0</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
@@ -224,7 +224,7 @@
     <column id="54" parent="9" name="type">
       <Position>3</Position>
       <Comment>0代表关注的话题，1是话题</Comment>
-      <DataType>tinyint(1)|0</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
@@ -431,35 +431,30 @@
     </column>
     <column id="97" parent="14" name="age">
       <Position>6</Position>
-      <Comment>最大值不能过127</Comment>
-      <DataType>tinyint(3) unsigned|0</DataType>
+      <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="98" parent="14" name="is_ns">
       <Position>7</Position>
       <Comment>0为一般用户，1为网监</Comment>
       <DataType>tinyint(1)|0</DataType>
-      <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="99" parent="14" name="motto">
       <Position>8</Position>
       <Comment>用户签名档</Comment>
       <DataType>varchar(50)|0</DataType>
-      <NotNull>1</NotNull>
       <DefaultExpression>&apos;这位用户很懒呢&apos;</DefaultExpression>
     </column>
     <column id="100" parent="14" name="avatar">
       <Position>9</Position>
       <Comment>用户头像文件名</Comment>
       <DataType>varchar(50)|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="101" parent="14" name="background">
       <Position>10</Position>
       <Comment>用户背景图片文件名</Comment>
       <DataType>varchar(50)|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="102" parent="14" name="is_ban">
       <Position>11</Position>
@@ -472,7 +467,6 @@
       <Position>12</Position>
       <Comment>0代表正常使用，1代表删除账户</Comment>
       <DataType>tinyint(1)|0</DataType>
-      <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <index id="104" parent="14" name="motto">

@@ -3,9 +3,9 @@ package com.model;
 public class BlogDiscuss {
     private Integer bdid;
 
-    private Integer blogId;
+    private Integer blog_id;
 
-    private Integer discussId;
+    private Integer discuss_id;
 
     public Integer getBdid() {
         return bdid;
@@ -15,19 +15,19 @@ public class BlogDiscuss {
         this.bdid = bdid;
     }
 
-    public Integer getBlogId() {
-        return blogId;
+    public Integer getBlog_id() {
+        return blog_id;
     }
 
-    public void setBlogId(Integer blogId) {
-        this.blogId = blogId;
+    public void setBlog_id(Integer blog_id) {
+        this.blog_id = blog_id;
     }
 
-    public Integer getDiscussId() {
-        return discussId;
+    public Integer getDiscuss_id() {
+        return discuss_id;
     }
 
-    public void setDiscussId(Integer discussId) {
-        this.discussId = discussId;
+    public void setDiscuss_id(Integer discuss_id) {
+        this.discuss_id = discuss_id;
     }
 }

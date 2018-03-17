@@ -3,11 +3,11 @@ package com.model;
 public class Follow {
     private Integer fid;
 
-    private Integer userId;
+    private Integer user_id;
 
-    private Boolean type;
+    private Integer type;
 
-    private Integer followedId;
+    private Integer followed_id;
 
     public Integer getFid() {
         return fid;
@@ -17,27 +17,27 @@ public class Follow {
         this.fid = fid;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public Boolean getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public Integer getFollowedId() {
-        return followedId;
+    public Integer getFollowed_id() {
+        return followed_id;
     }
 
-    public void setFollowedId(Integer followedId) {
-        this.followedId = followedId;
+    public void setFollowed_id(Integer followed_id) {
+        this.followed_id = followed_id;
     }
 }
