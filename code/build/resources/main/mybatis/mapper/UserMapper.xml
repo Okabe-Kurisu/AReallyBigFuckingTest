@@ -10,7 +10,10 @@
         SELECT * FROM user
     </select>
 
-    <insert id="signup">
+    <insert id="signup" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
+        -- useGeneratedKeys="true" 表示给主键设置自增长
+        -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
+        -- parameterType="com.chenzhou.mybatis.User" 这个属性指向传递的参数实体类
         INSERT INTO user (username, nickname, password, sex, age, is_ns, motto, avatar, background)
         VALUES (#{username}, #{nickname}, #{password}, #{sex}, #{age}, #{is_ns}, #{motto}, #{avatar}, #{background})
     </insert>

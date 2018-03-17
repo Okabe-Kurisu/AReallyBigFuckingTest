@@ -10,10 +10,12 @@ import java.util.List;
  * Created by Amadeus on 2018/3/15.
  */
 public class UserDao {
-    public static void signup(User user){
+    public static int signup(User user){
         SqlSession sqlSession = MybatisTool.getSqlSession();
         sqlSession.insert("weibo/UserMapper.signup", user);
+        sqlSession.commit();
         sqlSession.close();
+        return user.getUid();
     }
 
     public static List<User> getAllUser(){
@@ -23,18 +25,18 @@ public class UserDao {
         return users;
     }
 
-//    public static void testSignup(){
+//    public static int testSignup(){
 //        User user = new User();
 //        user.setNickname("超级鹳狸猿");
 //        user.setUsername("admin");
 //        user.setPassword("admin");
 //        user.setAge(0);
 //        user.setSex(Boolean.FALSE);
-//        signup(user);
+//        return signup(user);
 //    }
-//
+
 //    public static void main(String[] args) {
-//        testSignup();
+//        System.out.println(testSignup()+" ");
 ////        List users = getAllUser();
 ////        for (Object u:
 ////             users) {
