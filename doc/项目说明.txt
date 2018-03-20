@@ -19,6 +19,7 @@ Params：需要提供的参数
 Method:使用的网络方法，通常有post，get，以及post&get三种
 Return:返回类型以及内容
 
+何佳伟
 
 Function Name:signIn
 Describe:注册方法，将提交的参数存储到用户表中,觉得能力有余的话加密密码的存储
@@ -78,14 +79,6 @@ Return:json：{code:200,msg:设置成功}
 			{code:101,msg:"图片大小超出限制"}
 			{code:102,msg:"参数错误"}
 
-Function Name:searchUser
-Describe:搜索用户，通过得到关键字，分页页数，分页容量进行搜索
-Namespace:/
-Params：keyword, pageNum, pageCap(分页容量，即一页展示pageCap个数据)
-Method:post
-Return:jsonlist:{user.uid,user.nickname,user.avatar,user.motto,follerNum(粉丝数量，在follow表里面select count就出来了),folledNum(关注数量)}
-或者{code:101,msg:"当前用户不存在"}
-
 Function Name:follow
 Describe:关注用户，往关注表里面加一行
 Namespace:user
@@ -108,6 +101,8 @@ Namespace:user
 Params：userid
 Method:post
 Return:json:{code:200,msg:"清空成功"}
+
+赖冠宏
 
 Function Name:submitBlog
 Describe:发布微博，就是发布微博
@@ -132,9 +127,9 @@ Method:post
 Return:json:{code:200,msg:"修改成功"}
 
 Function Name:comment
-Describe:评论微博，和发布差不多，但是没有可见性和发布时间这两个属性
+Describe:评论微博，和发布差不多，不需要可见性和发布时间这两个属性
 Namespace:blog
-Params：blogid, content
+Params：blogid(目标微博的微博id), content
 Method:post
 Return:json:{code:200,msg:"评论成功"}
 
@@ -152,15 +147,54 @@ Params：userid(目标用户id),blogid(含有at的微博的id)
 Method:post
 Return:json:{code:200,msg:"成功"}后面都懒得写了，200就是各种成功
 
-Function Name:searchBlog
-Describe:搜索微博，
+Function Name:forwardBlog
+Describe:转发微博,和评论微博差不多
 Namespace:blog
-Params：keyword,userid(可选项，登陆了就传上去)
+Params：userid,content,blogid(目标微博的微博id)
+Method:post
+Return:{code:200,msg:"成功"}
+
+Function Name:forwordBlog
+Describe:收藏微博
+Namespace:blog
+Params：blogid,userid
+Method:post
+Return:{code:200,msg:"成功"}
+
+Function Name:tipoffBlog
+Describe:举报,添加到sensitivity表
+Namespace:blog
+Params：userid,blogid,details(用户填写的举报内容,可以为空)
 Method:
 Return:
 
-Function Name:
-Describe:
+范中旭
+
+Function Name:searchUser
+Describe:搜索用户，通过得到的关键字，分页页数，分页容量以及是否alive进行搜索
+Namespace:/
+Params：keyword, pageNum, pageCap(分页容量，即一页展示pageCap个数据)
+Method:post
+Return:jsonlist:
+{code:200,msg:'成功',data:{user,follerNum(粉丝数量，在follow表里面select count就出来了),folledNum(关注数量)}}
+或者{code:101,msg:"当前用户不存在"}
+
+Function Name:searchBlog
+Describe:搜索微博，首先要得到当前的时间戳，然后获取blog中 release_time字段中小于目前时间戳,且visibility和type都为0的微博。当然这个搜索也要分页
+Namespace:/
+Params：keyword,userid(可选项，登陆了就传上去), pageNum, pageCap
+Method:post
+Return:jsonlist:{code:200,msg:"成功",data:{(这是联合二表的查询，具体百度下如何映射实体类)blog,以及对应的user}}
+
+Function Name:getFollowBlog
+Describe:得到关注用户的微博
+Namespace:\
+Params：userid
+Method:post
+Return:jsonlist:{code:200,msg:"成功",data:{blog,以及对应的user}}
+
+Function Name:getHotspot
+Describe:得到热门微博
 Namespace:
 Params：
 Method:
@@ -383,3 +417,86 @@ Params：
 Method:
 Return:
 
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
+
+Function Name:
+Describe:
+Namespace:
+Params：
+Method:
+Return:
