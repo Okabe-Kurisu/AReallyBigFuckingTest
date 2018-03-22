@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo/BlogMapper">
+    <select id="queryThumbUpCount" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM thumb_up WHERE
+--      如果传进来的是用户就返回用户的点赞数
+        <if test="uid != null">user_id = #{uid}</if>
+--      如果传进来是博客就返回博客的点赞数
+        <if test="bid != null">blog_id = #{bid}</if>
+    </select>
+
+    <select id="queryCommentCount" resultType="int" parameterType="int">
+        SELECT COUNT(*) FROM blog WHERE
+        <if test="bid != null">comment_on = #{bid}</if>
+    </select>
+</mapper>
