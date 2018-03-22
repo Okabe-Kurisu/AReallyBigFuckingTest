@@ -194,18 +194,18 @@ Method:post
 Return:jsonlist:{code:200,msg:"成功",data:{blog,以及对应的user}}
 
 Function Name:getHotspot
-Describe:得到热门微博
-Namespace:
-Params：
-Method:
-Return:
+Describe:得到热门微博,先获取一天内全部微博,然后使用一个打分标准针对微博的转发数,点赞数,评论数进行打分排序,然后按照先后顺序分页返回
+Namespace:\
+Params：none
+Method:post
+Return:jsonlist:{code:200,msg:"成功",data:{blog,以及对应的user}}
 
-Function Name:
-Describe:
-Namespace:
-Params：
-Method:
-Return:
+Function Name:getUserBlog
+Describe:得到用户的微博,就是点进别人主页应该显示的东西
+Namespace:\
+Params：userid(目标用户id)
+Method:post
+Return:jsonlist:{code:200,msg:"成功",data:{blog,以及对应的user}}
 
 Function Name:
 Describe:

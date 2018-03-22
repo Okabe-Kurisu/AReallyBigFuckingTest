@@ -11,22 +11,26 @@ import org.apache.ibatis.type.JdbcType;
 public interface DiscussMapper {
     @Insert({
         "insert into discuss (did, name, ",
-        "user_id, detail)",
+        "user_id, detail, ",
+        "start_time, end_time)",
         "values (#{did,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{user_id,jdbcType=INTEGER}, #{detail,jdbcType=VARCHAR})"
+        "#{user_id,jdbcType=INTEGER}, #{detail,jdbcType=VARCHAR}, ",
+        "#{start_time,jdbcType=TIMESTAMP}, #{end_time,jdbcType=TIMESTAMP})"
     })
     int insert(Discuss record);
 
     @Select({
         "select",
-        "did, name, user_id, detail",
+        "did, name, user_id, detail, start_time, end_time",
         "from discuss"
     })
     @Results({
         @Result(column="did", property="did", jdbcType=JdbcType.INTEGER),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
-        @Result(column="detail", property="detail", jdbcType=JdbcType.VARCHAR)
+        @Result(column="detail", property="detail", jdbcType=JdbcType.VARCHAR),
+        @Result(column="start_time", property="start_time", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="end_time", property="end_time", jdbcType=JdbcType.TIMESTAMP)
     })
     List<Discuss> selectAll();
 }

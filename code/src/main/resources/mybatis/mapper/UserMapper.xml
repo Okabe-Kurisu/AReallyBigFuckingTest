@@ -6,11 +6,11 @@
 <mapper namespace="weibo/UserMapper">   <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
     <!-- 对象映射，可以不写 -->
     <!-- 查询功能，resultType 设置返回值类型 -->
-    <select id="getAllUser" resultType="User">  <!-- 书写 SQL 语句 -->
+    <select id="selectAllUser" resultType="User">  <!-- 书写 SQL 语句 -->
         SELECT * FROM user
     </select>
 
-    <insert id="signup" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
         -- useGeneratedKeys="true" 表示给主键设置自增长
         -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
         -- parameterType="com.chenzhou.mybatis.User" 这个属性指向传递的参数实体类

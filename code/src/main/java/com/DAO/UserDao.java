@@ -12,17 +12,24 @@ import java.util.List;
 public class UserDao {
     public static int signup(User user){
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        sqlSession.insert("weibo/UserMapper.signup", user);
-        sqlSession.commit();
-        sqlSession.close();
+        try {
+            sqlSession.insert("weibo/UserMapper.insertUser", user);
+            sqlSession.commit();
+        }finally {
+            sqlSession.close();
+        }
         return user.getUid();
     }
 
     public static List<User> getAllUser(){
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        List<User> users = sqlSession.selectList("weibo/UserMapper.getAllUser");
-        sqlSession.close();
-        return users;
+        List<User> userList = null;
+        try {
+            userList = sqlSession.selectList("weibo/UserMapper.selectAllUser");
+        }finally {
+            sqlSession.close();
+        }
+        return userList;
     }
 
 //    public static int testSignup(){
@@ -34,9 +41,10 @@ public class UserDao {
 //        user.setSex(Boolean.FALSE);
 //        return signup(user);
 //    }
-
+//
 //    public static void main(String[] args) {
 //        System.out.println(testSignup()+" ");
+//
 ////        List users = getAllUser();
 ////        for (Object u:
 ////             users) {
