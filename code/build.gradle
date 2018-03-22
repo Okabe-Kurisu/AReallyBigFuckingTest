@@ -21,6 +21,9 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    compile group: 'org.apache.struts', name: 'struts2-json-plugin', version: '2.5.5'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
+
 }
 
 

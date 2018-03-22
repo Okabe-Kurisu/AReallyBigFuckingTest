@@ -122,4 +122,22 @@ public class User {
     public void setAlive(Boolean alive) {
         this.alive = alive;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", sex=" + sex +
+                ", age=" + age +
+                ", is_ns=" + is_ns +
+                ", motto='" + motto + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", background='" + background + '\'' +
+                ", is_ban=" + is_ban +
+                ", alive=" + alive +
+                '}';
+    }
 }

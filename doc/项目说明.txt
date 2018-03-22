@@ -177,7 +177,7 @@ Params：keyword, pageNum, pageCap(分页容量，即一页展示pageCap个数�
 Method:post
 Return:jsonlist:
 {code:200,msg:'成功',data:{user,follerNum(粉丝数量，在follow表里面select count就出来了),folledNum(关注数量)}}
-或者{code:101,msg:"当前用户不存在"}
+或者{code:500,msg:"系统异常"}
 
 Function Name:searchBlog
 Describe:搜索微博，首先要得到当前的时间戳，然后获取blog中 release_time字段中小于目前时间戳,且visibility和type都为0的微博。当然这个搜索也要分页
