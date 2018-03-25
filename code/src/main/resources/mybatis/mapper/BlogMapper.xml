@@ -15,5 +15,8 @@
         SELECT COUNT(*) FROM blog WHERE
         <if test="bid != null">comment_on = #{bid}</if>
     </select>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 951a3f9fbbdc851694e34449518008b0d15ca64a
 </mapper>

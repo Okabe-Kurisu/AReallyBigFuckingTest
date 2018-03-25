@@ -17,27 +17,27 @@
           <element id="dir-copy" path="$PROJECT_DIR$/out/production/resources" />
         </element>
         <element id="directory" name="lib">
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.struts/struts2-convention-plugin/2.5.5/3e0874f6b8895742ff1bc9b2eb09effe6a387e70/struts2-convention-plugin-2.5.5.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.struts/struts2-json-plugin/2.5.5/572f7ff5749bc62d6ecb8c5e913f4259554e3b9/struts2-json-plugin-2.5.5.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.struts/struts2-core/2.5.5/2b69bbf84234f178870031e4e088d21d81bae7cf/struts2-core-2.5.5.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/6.0.6/1d19b184dbc596008cc71c83596f051c3ec4097f/mysql-connector-java-6.0.6.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.2/3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf/gson-2.8.2.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/tk.mybatis/mapper/3.5.3/dd528c2dc6e3c1e146428caa9f968f7670cb1fc8/mapper-3.5.3.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mybatis.generator/mybatis-generator-core/1.3.6/30bc7da4943314e6d5a1068217024bac6924484b/mybatis-generator-core-1.3.6.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mybatis/mybatis/3.4.6/a77a546f679533837f6c6a75c034b669f3ce6a2f/mybatis-3.4.6.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.10.0/c90b597163cd28ab6d9687edd53db601b6ea75a1/log4j-core-2.10.0.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.10.0/fec5797a55b786184a537abd39c3fa1449d752d6/log4j-api-2.10.0.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/4.0.0/60200affc2fe0165136ed3690faf00b66aed581a/javax.servlet-api-4.0.0.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.freemarker/freemarker/2.3.23/cd143cd8c02a9f838e3cb75a6dfe133750437f6d/freemarker-2.3.23.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/ognl/ognl/3.1.10/f0b5388b0de908867f2c714ccd589301a15e3b2f/ognl-3.1.10.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-fileupload/commons-fileupload/1.3.2/5d7491ed6ebd02b6a8d2305f8e6b7fe5dbd95f72/commons-fileupload-1.3.2.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.4/5fe28b9518e58819180a43a850fbc0dd24b7c050/commons-lang3-3.4.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/5.1/25d8a575034dd9cfcb375a39b5334f0ba9c8474e/asm-commons-5.1.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/5.1/87b38c12a0ea645791ead9d3e74ae5268d1d6c34/asm-tree-5.1.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.1/5ef31c4fe953b1fd00b8a88fa1d6820e8785bb45/asm-5.1.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.persistence/persistence-api/1.0/5725f57873e05e068803e2bf9d5a8ea3740ffec5/persistence-api-1.0.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.javassist/javassist/3.20.0-GA/a9cbcdfb7e9f86fbc74d3afae65f2248bfbf82a0/javassist-3.20.0-GA.jar" />
+          <element id="library" level="project" name="Gradle: org.apache.struts:struts2-convention-plugin:2.5.5" />
+          <element id="library" level="project" name="Gradle: org.apache.struts:struts2-json-plugin:2.5.5" />
+          <element id="library" level="project" name="Gradle: org.apache.struts:struts2-core:2.5.5" />
+          <element id="library" level="project" name="Gradle: mysql:mysql-connector-java:6.0.6" />
+          <element id="library" level="project" name="Gradle: com.google.code.gson:gson:2.8.2" />
+          <element id="library" level="project" name="Gradle: tk.mybatis:mapper:3.5.3" />
+          <element id="library" level="project" name="Gradle: org.mybatis.generator:mybatis-generator-core:1.3.6" />
+          <element id="library" level="project" name="Gradle: org.mybatis:mybatis:3.4.6" />
+          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-core:2.10.0" />
+          <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-api:2.10.0" />
+          <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:4.0.0" />
+          <element id="library" level="project" name="Gradle: org.freemarker:freemarker:2.3.23" />
+          <element id="library" level="project" name="Gradle: ognl:ognl:3.1.10" />
+          <element id="library" level="project" name="Gradle: commons-fileupload:commons-fileupload:1.3.2" />
+          <element id="library" level="project" name="Gradle: commons-io:commons-io:2.4" />
+          <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.4" />
+          <element id="library" level="project" name="Gradle: org.ow2.asm:asm-commons:5.1" />
+          <element id="library" level="project" name="Gradle: org.ow2.asm:asm-tree:5.1" />
+          <element id="library" level="project" name="Gradle: org.ow2.asm:asm:5.1" />
+          <element id="library" level="project" name="Gradle: javax.persistence:persistence-api:1.0" />
+          <element id="library" level="project" name="Gradle: org.javassist:javassist:3.20.0-GA" />
         </element>
       </element>
     </root>
