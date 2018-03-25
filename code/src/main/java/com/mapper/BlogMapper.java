@@ -15,7 +15,7 @@ public interface BlogMapper {
         "type, comment_on, ",
         "visibility, multimedia)",
         "values (#{bid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
-        "#{content,jdbcType=VARCHAR}, #{release_time,jdbcType=TIMESTAMP}, ",
+        "#{content,jdbcType=VARCHAR}, #{release_time,jdbcType=INTEGER}, ",
         "#{type,jdbcType=INTEGER}, #{comment_on,jdbcType=INTEGER}, ",
         "#{visibility,jdbcType=INTEGER}, #{multimedia,jdbcType=LONGVARCHAR})"
     })
@@ -30,7 +30,7 @@ public interface BlogMapper {
         @Result(column="bid", property="bid", jdbcType=JdbcType.INTEGER),
         @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="content", property="content", jdbcType=JdbcType.VARCHAR),
-        @Result(column="release_time", property="release_time", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="release_time", property="release_time", jdbcType=JdbcType.INTEGER),
         @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
         @Result(column="comment_on", property="comment_on", jdbcType=JdbcType.INTEGER),
         @Result(column="visibility", property="visibility", jdbcType=JdbcType.INTEGER),

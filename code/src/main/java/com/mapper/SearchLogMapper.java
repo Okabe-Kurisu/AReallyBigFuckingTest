@@ -13,7 +13,7 @@ public interface SearchLogMapper {
         "insert into search_log (slid, user_id, ",
         "content, date)",
         "values (#{slid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
-        "#{content,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP})"
+        "#{content,jdbcType=VARCHAR}, #{date,jdbcType=INTEGER})"
     })
     int insert(SearchLog record);
 
@@ -26,7 +26,7 @@ public interface SearchLogMapper {
         @Result(column="slid", property="slid", jdbcType=JdbcType.INTEGER),
         @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="content", property="content", jdbcType=JdbcType.VARCHAR),
-        @Result(column="date", property="date", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="date", property="date", jdbcType=JdbcType.INTEGER)
     })
     List<SearchLog> selectAll();
 }

@@ -41,5 +41,6 @@
 
     <mappers>
         <mapper resource="mybatis/mapper/UserMapper.xml"/>
+        <mapper resource="mybatis/mapper/BlogMapper.xml"/>
     </mappers>
 </configuration>

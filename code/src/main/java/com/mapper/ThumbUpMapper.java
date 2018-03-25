@@ -13,7 +13,7 @@ public interface ThumbUpMapper {
         "insert into thumb_up (tuid, user_id, ",
         "blog_id, date)",
         "values (#{tuid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
-        "#{blog_id,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP})"
+        "#{blog_id,jdbcType=INTEGER}, #{date,jdbcType=INTEGER})"
     })
     int insert(ThumbUp record);
 
@@ -26,7 +26,7 @@ public interface ThumbUpMapper {
         @Result(column="tuid", property="tuid", jdbcType=JdbcType.INTEGER),
         @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="blog_id", property="blog_id", jdbcType=JdbcType.INTEGER),
-        @Result(column="date", property="date", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="date", property="date", jdbcType=JdbcType.INTEGER)
     })
     List<ThumbUp> selectAll();
 }

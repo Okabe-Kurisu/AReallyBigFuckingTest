@@ -1,7 +1,5 @@
 package com.model;
 
-import java.util.Date;
-
 public class Message {
     private Integer mid;
 
@@ -9,7 +7,7 @@ public class Message {
 
     private Integer accpeter_id;
 
-    private Date date;
+    private Integer date;
 
     private Boolean is_read;
 
@@ -39,11 +37,11 @@ public class Message {
         this.accpeter_id = accpeter_id;
     }
 
-    public Date getDate() {
+    public Integer getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 

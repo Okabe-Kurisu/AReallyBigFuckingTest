@@ -14,7 +14,7 @@ public interface MessageMapper {
         "accpeter_id, date, ",
         "is_read, content)",
         "values (#{mid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
-        "#{accpeter_id,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}, ",
+        "#{accpeter_id,jdbcType=INTEGER}, #{date,jdbcType=INTEGER}, ",
         "#{is_read,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})"
     })
     int insert(Message record);
@@ -28,7 +28,7 @@ public interface MessageMapper {
         @Result(column="mid", property="mid", jdbcType=JdbcType.INTEGER),
         @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="accpeter_id", property="accpeter_id", jdbcType=JdbcType.INTEGER),
-        @Result(column="date", property="date", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="date", property="date", jdbcType=JdbcType.INTEGER),
         @Result(column="is_read", property="is_read", jdbcType=JdbcType.BIT),
         @Result(column="content", property="content", jdbcType=JdbcType.LONGVARCHAR)
     })

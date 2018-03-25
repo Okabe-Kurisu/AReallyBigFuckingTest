@@ -1,7 +1,5 @@
 package com.model;
 
-import java.util.Date;
-
 public class SearchLog {
     private Integer slid;
 
@@ -9,7 +7,7 @@ public class SearchLog {
 
     private String content;
 
-    private Date date;
+    private Integer date;
 
     public Integer getSlid() {
         return slid;
@@ -35,11 +33,11 @@ public class SearchLog {
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getDate() {
+    public Integer getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 }

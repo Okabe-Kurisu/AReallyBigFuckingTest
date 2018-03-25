@@ -1,7 +1,5 @@
 package com.model;
 
-import java.util.Date;
-
 public class Discuss {
     private Integer did;
 
@@ -11,9 +9,9 @@ public class Discuss {
 
     private String detail;
 
-    private Date start_time;
+    private Integer start_time;
 
-    private Date end_time;
+    private Integer end_time;
 
     public Integer getDid() {
         return did;
@@ -47,19 +45,19 @@ public class Discuss {
         this.detail = detail == null ? null : detail.trim();
     }
 
-    public Date getStart_time() {
+    public Integer getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(Date start_time) {
+    public void setStart_time(Integer start_time) {
         this.start_time = start_time;
     }
 
-    public Date getEnd_time() {
+    public Integer getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(Date end_time) {
+    public void setEnd_time(Integer end_time) {
         this.end_time = end_time;
     }
 }

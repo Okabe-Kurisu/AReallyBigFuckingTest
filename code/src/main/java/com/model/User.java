@@ -1,7 +1,5 @@
 package com.model;
 
-import java.util.Date;
-
 public class User {
     private Integer uid;
 
@@ -23,7 +21,7 @@ public class User {
 
     private String background;
 
-    private Date is_ban;
+    private Integer is_ban;
 
     private Boolean alive;
 
@@ -107,11 +105,11 @@ public class User {
         this.background = background == null ? null : background.trim();
     }
 
-    public Date getIs_ban() {
+    public Integer getIs_ban() {
         return is_ban;
     }
 
-    public void setIs_ban(Date is_ban) {
+    public void setIs_ban(Integer is_ban) {
         this.is_ban = is_ban;
     }
 
@@ -121,23 +119,5 @@ public class User {
 
     public void setAlive(Boolean alive) {
         this.alive = alive;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", username='" + username + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", password='" + password + '\'' +
-                ", sex=" + sex +
-                ", age=" + age +
-                ", is_ns=" + is_ns +
-                ", motto='" + motto + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", background='" + background + '\'' +
-                ", is_ban=" + is_ban +
-                ", alive=" + alive +
-                '}';
     }
 }

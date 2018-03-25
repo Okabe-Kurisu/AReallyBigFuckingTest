@@ -1,7 +1,5 @@
 package com.model;
 
-import java.util.Date;
-
 public class Blog {
     private Integer bid;
 
@@ -9,7 +7,7 @@ public class Blog {
 
     private String content;
 
-    private Date release_time;
+    private Integer release_time;
 
     private Integer type;
 
@@ -43,11 +41,11 @@ public class Blog {
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getRelease_time() {
+    public Integer getRelease_time() {
         return release_time;
     }
 
-    public void setRelease_time(Date release_time) {
+    public void setRelease_time(Integer release_time) {
         this.release_time = release_time;
     }
 

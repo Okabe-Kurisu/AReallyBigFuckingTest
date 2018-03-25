@@ -19,7 +19,7 @@ public interface UserMapper {
         "#{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{sex,jdbcType=BIT}, #{age,jdbcType=INTEGER}, #{is_ns,jdbcType=BIT}, ",
         "#{motto,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{background,jdbcType=VARCHAR}, ",
-        "#{is_ban,jdbcType=TIMESTAMP}, #{alive,jdbcType=BIT})"
+        "#{is_ban,jdbcType=INTEGER}, #{alive,jdbcType=BIT})"
     })
     int insert(User record);
 
@@ -40,7 +40,7 @@ public interface UserMapper {
         @Result(column="motto", property="motto", jdbcType=JdbcType.VARCHAR),
         @Result(column="avatar", property="avatar", jdbcType=JdbcType.VARCHAR),
         @Result(column="background", property="background", jdbcType=JdbcType.VARCHAR),
-        @Result(column="is_ban", property="is_ban", jdbcType=JdbcType.TIMESTAMP),
+        @Result(column="is_ban", property="is_ban", jdbcType=JdbcType.INTEGER),
         @Result(column="alive", property="alive", jdbcType=JdbcType.BIT)
     })
     List<User> selectAll();

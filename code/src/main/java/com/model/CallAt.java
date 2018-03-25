@@ -1,7 +1,5 @@
 package com.model;
 
-import java.util.Date;
-
 public class CallAt {
     private Integer cid;
 
@@ -9,7 +7,7 @@ public class CallAt {
 
     private Integer blog_id;
 
-    private Date date;
+    private Integer date;
 
     public Integer getCid() {
         return cid;
@@ -35,11 +33,11 @@ public class CallAt {
         this.blog_id = blog_id;
     }
 
-    public Date getDate() {
+    public Integer getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 }

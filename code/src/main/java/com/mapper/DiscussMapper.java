@@ -15,7 +15,7 @@ public interface DiscussMapper {
         "start_time, end_time)",
         "values (#{did,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
         "#{user_id,jdbcType=INTEGER}, #{detail,jdbcType=VARCHAR}, ",
-        "#{start_time,jdbcType=TIMESTAMP}, #{end_time,jdbcType=TIMESTAMP})"
+        "#{start_time,jdbcType=INTEGER}, #{end_time,jdbcType=INTEGER})"
     })
     int insert(Discuss record);
 
@@ -29,8 +29,8 @@ public interface DiscussMapper {
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="detail", property="detail", jdbcType=JdbcType.VARCHAR),
-        @Result(column="start_time", property="start_time", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="end_time", property="end_time", jdbcType=JdbcType.TIMESTAMP)
+        @Result(column="start_time", property="start_time", jdbcType=JdbcType.INTEGER),
+        @Result(column="end_time", property="end_time", jdbcType=JdbcType.INTEGER)
     })
     List<Discuss> selectAll();
 }

@@ -5,9 +5,9 @@
 <mapper namespace="weibo/BlogMapper">
     <select id="queryThumbUpCount" resultType="int" parameterType="int">
         SELECT COUNT(*) FROM thumb_up WHERE
---      如果传进来的是用户就返回用户的点赞数
+        -- 如果传进来的是用户就返回用户的点赞数
         <if test="uid != null">user_id = #{uid}</if>
---      如果传进来是博客就返回博客的点赞数
+        -- 如果传进来是博客就返回博客的点赞数
         <if test="bid != null">blog_id = #{bid}</if>
     </select>
 
@@ -15,8 +15,22 @@
         SELECT COUNT(*) FROM blog WHERE
         <if test="bid != null">comment_on = #{bid}</if>
     </select>
-<<<<<<< HEAD
 
-=======
->>>>>>> 951a3f9fbbdc851694e34449518008b0d15ca64a
+    <!-- 搜索博客 -->
+    <select id="selectBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+        SELECT *
+        FROM blog,user
+        WHERE
+        blog.user_id=user.uid AND
+        (blog.content LIKE "%"#{keyword}"%") AND
+        blog.release_time &lt; #{nowtime} AND
+        blog.visibility=0 AND blog.type=0
+        LIMIT #{startNum},#{endNum}
+    </select>
+
+    <!-- 插入搜索记录 -->
+    <select id="insertSearchBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+        INSERT INTO search_log(user_id,content,date)
+        VALUES(#{userid},#{keyword},#{nowtime})
+    </select>
 </mapper>
