@@ -69,79 +69,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="UserAtion.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UserAtion.java">
+      <file leaf-file-name="项目说明.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../doc/项目说明.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="74" column="5" lean-forward="false" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
-              <folding>
-                <element signature="method#searchUser#0;class#UserAtion#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="130">
+              <caret line="175" column="54" lean-forward="true" selection-start-line="175" selection-start-column="54" selection-end-line="175" selection-end-column="54" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlogAction.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BlogAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="65" column="30" lean-forward="true" selection-start-line="65" selection-start-column="30" selection-end-line="65" selection-end-column="30" />
+            <state relative-caret-position="327">
+              <caret line="134" column="0" lean-forward="true" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2655#2656#0" expanded="true" />
-                <element signature="e#2685#2686#0" expanded="true" />
-                <element signature="e#2731#2732#0" expanded="true" />
-                <element signature="e#2769#2770#0" expanded="true" />
-                <element signature="e#2868#2869#0" expanded="true" />
-                <element signature="e#2906#2907#0" expanded="true" />
+                <element signature="method#searchBlog#0;class#BlogAction#0" expanded="false" />
+                <element signature="method#getFollowBlog#0;class#BlogAction#0" expanded="false" />
+                <element signature="method#getUserBlog#0;class#BlogAction#0" expanded="false" />
+                <element signature="e#6063#6064#0" expanded="true" />
+                <element signature="e#6101#6102#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlogDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
+      <file leaf-file-name="PowerfulTools.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/PowerfulTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="31" column="64" lean-forward="false" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="64" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="275">
+              <caret line="23" column="33" lean-forward="false" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlogMapper.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BlogMapper.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="806">
-              <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+            <state relative-caret-position="381">
+              <caret line="48" column="42" lean-forward="true" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
               <folding>
-                <marker date="1521985121663" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
-                <marker date="1521985121663" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
-                <marker date="1521985121663" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
-                <marker date="1521985121663" expanded="true" signature="1183:1275" ph="INSERT INTO search_log... " />
+                <element signature="e#950#954#0" expanded="true" />
+                <element signature="e#2233#2237#0" expanded="true" />
+                <marker date="1522067162499" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+                <marker date="1522067162499" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+                <marker date="1522067162499" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
+                <marker date="1522067162499" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
+                <marker date="1522067162499" expanded="true" signature="1401:1525" ph="SELECT * FRO... blog" />
+                <marker date="1522067162499" expanded="true" signature="1401:1534" ph="SELECT * FRO... blog" />
+                <marker date="1522067162499" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
+                <marker date="1522067162499" expanded="true" signature="1726:2259" ph="SELECT * FRO... blog" />
+                <marker date="1522067162499" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
+                <marker date="1522067162499" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
+                <marker date="1522067162499" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
+                <marker date="1522067162499" expanded="true" signature="2400:2600" ph="SELECT * FRO... user" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MybatisTool.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/MybatisTool.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/UserDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -462,12 +447,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/action/UserAtion.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/mybatis/mybatisConfig.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/action/UserAtion.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tool/ResultFormater.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/tool/PowerfulTools.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/action/BlogAction.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml" />
       </list>
     </option>
   </component>
@@ -485,10 +473,10 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="491" />
-    <option name="y" value="21" />
-    <option name="width" value="1400" />
-    <option name="height" value="990" />
+    <option name="x" value="-23" />
+    <option name="y" value="172" />
+    <option name="width" value="1942" />
+    <option name="height" value="1102" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -505,6 +493,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -512,20 +504,93 @@
               <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
               <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="action" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="DAO" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="tool" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mybatis" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mybatis" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -758,12 +823,16 @@
       <option name="presentableId" value="Default" />
       <updated>1521975977259</updated>
       <workItem from="1521975986674" duration="3495000" />
-      <workItem from="1521980070248" duration="4462000" />
+      <workItem from="1521980070248" duration="4896000" />
+      <workItem from="1522033252325" duration="846000" />
+      <workItem from="1522034899836" duration="1222000" />
+      <workItem from="1522044718179" duration="6918000" />
+      <workItem from="1522053822277" duration="8783000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7957000" />
+    <option name="totallyTimeSpent" value="26160000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -786,9 +855,9 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39447513" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42983425" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18958333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18958333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -815,13 +884,267 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../doc/项目说明.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4004">
+          <caret line="154" column="5" lean-forward="true" selection-start-line="154" selection-start-column="5" selection-end-line="154" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#searchBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getFollowBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getUserBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="e#6063#6064#0" expanded="true" />
+            <element signature="e#6101#6102#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1222">
+          <caret line="51" column="34" lean-forward="true" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1274">
+          <caret line="49" column="35" lean-forward="true" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+          <folding>
+            <element signature="e#950#954#0" expanded="true" />
+            <element signature="e#2233#2237#0" expanded="true" />
+            <marker date="1522067162499" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+            <marker date="1522067162499" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
+            <marker date="1522067162499" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
+            <marker date="1522067162499" expanded="true" signature="1401:1525" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1534" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1726:2259" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="2400:2600" ph="SELECT * FRO... user" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../doc/项目说明.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2600">
+          <caret line="100" column="45" lean-forward="true" selection-start-line="100" selection-start-column="45" selection-end-line="100" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#searchBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getFollowBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getUserBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="e#6063#6064#0" expanded="true" />
+            <element signature="e#6101#6102#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1092">
+          <caret line="42" column="76" lean-forward="false" selection-start-line="42" selection-start-column="63" selection-end-line="42" selection-end-column="76" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1014">
+          <caret line="39" column="22" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="22" />
+          <folding>
+            <element signature="e#950#954#0" expanded="true" />
+            <element signature="e#2233#2237#0" expanded="true" />
+            <marker date="1522067162499" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+            <marker date="1522067162499" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
+            <marker date="1522067162499" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
+            <marker date="1522067162499" expanded="true" signature="1401:1525" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1534" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1726:2259" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="2400:2600" ph="SELECT * FRO... user" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UserAtion.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="676">
           <caret line="74" column="5" lean-forward="false" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="31" column="64" lean-forward="false" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="64" />
           <folding>
-            <element signature="method#searchUser#0;class#UserAtion#0" expanded="false" />
+            <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+          <folding>
+            <element signature="e#950#954#0" expanded="true" />
+            <element signature="e#2233#2237#0" expanded="true" />
+            <marker date="1522067162499" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+            <marker date="1522067162499" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
+            <marker date="1522067162499" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
+            <marker date="1522067162499" expanded="true" signature="1401:1525" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1534" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1726:2259" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="2400:2600" ph="SELECT * FRO... user" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/MybatisTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="988">
+          <caret line="38" column="49" lean-forward="true" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#searchBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getFollowBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getUserBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="e#6063#6064#0" expanded="true" />
+            <element signature="e#6101#6102#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UserAtion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="74" column="5" lean-forward="false" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="31" column="64" lean-forward="false" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+          <folding>
+            <element signature="e#950#954#0" expanded="true" />
+            <element signature="e#2233#2237#0" expanded="true" />
+            <marker date="1522067162499" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+            <marker date="1522067162499" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
+            <marker date="1522067162499" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
+            <marker date="1522067162499" expanded="true" signature="1401:1525" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1534" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1726:2259" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="2400:2600" ph="SELECT * FRO... user" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/MybatisTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1690">
+          <caret line="65" column="30" lean-forward="true" selection-start-line="65" selection-start-column="30" selection-end-line="65" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#searchBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getFollowBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getUserBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="e#6063#6064#0" expanded="true" />
+            <element signature="e#6101#6102#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UserAtion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="74" column="5" lean-forward="false" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -829,14 +1152,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1521715634159" expanded="true" signature="382:403" ph="SELECT * FRO... discuss" />
-            <marker date="1521715634159" expanded="true" signature="504:559" ph="SELECT * FRO... discuss" />
-            <marker date="1521715634159" expanded="true" signature="660:873" ph="SELECT * FRO... discuss" />
-            <marker date="1521715634159" expanded="true" signature="982:1579" ph="SELECT b.bid... blog_discuss" />
-            <marker date="1521715634159" expanded="true" signature="1881:1999" ph="INSERT INTO discuss... " />
-            <marker date="1521715634159" expanded="true" signature="2121:2505" ph="UPDATE discuss... " />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -855,10 +1170,20 @@
         <state relative-caret-position="650">
           <caret line="25" column="45" lean-forward="true" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
           <folding>
-            <marker date="1521985121663" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
-            <marker date="1521985121663" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
-            <marker date="1521985121663" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
-            <marker date="1521985121663" expanded="true" signature="1183:1275" ph="INSERT INTO search_log... " />
+            <element signature="e#950#954#0" expanded="true" />
+            <element signature="e#2233#2237#0" expanded="true" />
+            <marker date="1522067162499" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+            <marker date="1522067162499" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
+            <marker date="1522067162499" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
+            <marker date="1522067162499" expanded="true" signature="1401:1525" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1534" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1726:2259" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="2400:2600" ph="SELECT * FRO... user" />
           </folding>
         </state>
       </provider>
@@ -867,13 +1192,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="754">
           <caret line="29" column="35" lean-forward="true" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="35" />
-          <folding>
-            <marker date="1521974092211" expanded="true" signature="373:391" ph="SELECT * FRO... user" />
-            <marker date="1521974092211" expanded="true" signature="682:890" ph="INSERT INTO user... " />
-            <marker date="1521974092211" expanded="true" signature="1018:1393" ph="SELECT u.*, user" />
-            <marker date="1521974092211" expanded="true" signature="1047:1120" ph="SELECT COUNT... follow" />
-            <marker date="1521974092211" expanded="true" signature="1145:1214" ph="SELECT COUNT... follow" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -881,7 +1199,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4732">
           <caret line="182" column="81" lean-forward="false" selection-start-line="182" selection-start-column="59" selection-end-line="182" selection-end-column="81" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -891,12 +1208,11 @@
           <caret line="59" column="47" lean-forward="true" selection-start-line="59" selection-start-column="47" selection-end-line="59" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2655#2656#0" expanded="true" />
-            <element signature="e#2685#2686#0" expanded="true" />
-            <element signature="e#2731#2732#0" expanded="true" />
-            <element signature="e#2769#2770#0" expanded="true" />
-            <element signature="e#2868#2869#0" expanded="true" />
-            <element signature="e#2906#2907#0" expanded="true" />
+            <element signature="method#searchBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getFollowBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getUserBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="e#6063#6064#0" expanded="true" />
+            <element signature="e#6101#6102#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -908,25 +1224,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="754">
-          <caret line="29" column="35" lean-forward="false" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="35" />
-          <folding>
-            <marker date="1521974092211" expanded="true" signature="373:391" ph="SELECT * FRO... user" />
-            <marker date="1521974092211" expanded="true" signature="682:890" ph="INSERT INTO user... " />
-            <marker date="1521974092211" expanded="true" signature="1018:1393" ph="SELECT u.*, user" />
-            <marker date="1521974092211" expanded="true" signature="1047:1120" ph="SELECT COUNT... follow" />
-            <marker date="1521974092211" expanded="true" signature="1145:1214" ph="SELECT COUNT... follow" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="78">
           <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -934,23 +1235,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="31" column="17" lean-forward="false" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../doc/项目说明.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="161" column="26" lean-forward="true" selection-start-line="161" selection-start-column="26" selection-end-line="161" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/ResultFormater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -958,7 +1242,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
           <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -966,6 +1249,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/DiscussMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="61" column="25" lean-forward="true" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mybatisConfig.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="45" column="16" lean-forward="false" selection-start-line="45" selection-start-column="16" selection-end-line="45" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/MybatisTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -978,90 +1282,96 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/DiscussMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="61" column="25" lean-forward="true" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
-          <folding>
-            <marker date="1521715634159" expanded="true" signature="382:403" ph="SELECT * FRO... discuss" />
-            <marker date="1521715634159" expanded="true" signature="504:559" ph="SELECT * FRO... discuss" />
-            <marker date="1521715634159" expanded="true" signature="660:873" ph="SELECT * FRO... discuss" />
-            <marker date="1521715634159" expanded="true" signature="982:1579" ph="SELECT b.bid... blog_discuss" />
-            <marker date="1521715634159" expanded="true" signature="1881:1999" ph="INSERT INTO discuss... " />
-            <marker date="1521715634159" expanded="true" signature="2121:2505" ph="UPDATE discuss... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mybatisConfig.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="45" column="16" lean-forward="false" selection-start-line="45" selection-start-column="16" selection-end-line="45" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/UserDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
+        <state relative-caret-position="-806">
           <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/MybatisTool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="31" column="64" lean-forward="false" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="64" />
+        <state relative-caret-position="-99">
+          <caret line="52" column="13" lean-forward="true" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="806">
-          <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
-          <folding>
-            <marker date="1521985121663" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
-            <marker date="1521985121663" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
-            <marker date="1521985121663" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
-            <marker date="1521985121663" expanded="true" signature="1183:1275" ph="INSERT INTO search_log... " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UserAtion.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="74" column="5" lean-forward="false" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
+        <state relative-caret-position="-593">
+          <caret line="52" column="47" lean-forward="true" selection-start-line="52" selection-start-column="47" selection-end-line="52" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/UserMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="29" column="35" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="29" selection-end-column="35" />
           <folding>
-            <element signature="method#searchUser#0;class#UserAtion#0" expanded="false" />
+            <marker date="1521974092211" expanded="true" signature="373:391" ph="SELECT * FRO... user" />
+            <marker date="1521974092211" expanded="true" signature="682:890" ph="INSERT INTO user... " />
+            <marker date="1521974092211" expanded="true" signature="1018:1393" ph="SELECT u.*, user" />
+            <marker date="1521974092211" expanded="true" signature="1047:1120" ph="SELECT COUNT... follow" />
+            <marker date="1521974092211" expanded="true" signature="1145:1214" ph="SELECT COUNT... follow" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/PowerfulTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="23" column="33" lean-forward="false" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="65" column="30" lean-forward="true" selection-start-line="65" selection-start-column="30" selection-end-line="65" selection-end-column="30" />
+        <state relative-caret-position="327">
+          <caret line="134" column="0" lean-forward="true" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2655#2656#0" expanded="true" />
-            <element signature="e#2685#2686#0" expanded="true" />
-            <element signature="e#2731#2732#0" expanded="true" />
-            <element signature="e#2769#2770#0" expanded="true" />
-            <element signature="e#2868#2869#0" expanded="true" />
-            <element signature="e#2906#2907#0" expanded="true" />
+            <element signature="method#searchBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getFollowBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="method#getUserBlog#0;class#BlogAction#0" expanded="false" />
+            <element signature="e#6063#6064#0" expanded="true" />
+            <element signature="e#6101#6102#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../doc/项目说明.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="175" column="54" lean-forward="true" selection-start-line="175" selection-start-column="54" selection-end-line="175" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="48" column="42" lean-forward="true" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
+          <folding>
+            <element signature="e#950#954#0" expanded="true" />
+            <element signature="e#2233#2237#0" expanded="true" />
+            <marker date="1522067162499" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+            <marker date="1522067162499" expanded="true" signature="795:1047" ph="SELECT u.*, user" />
+            <marker date="1522067162499" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
+            <marker date="1522067162499" expanded="true" signature="1401:1525" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1534" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1726:2259" ph="SELECT * FRO... blog" />
+            <marker date="1522067162499" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
+            <marker date="1522067162499" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
+            <marker date="1522067162499" expanded="true" signature="2400:2600" ph="SELECT * FRO... user" />
           </folding>
         </state>
       </provider>

@@ -25,7 +25,7 @@ public class BlogDao {
         return blogList;
     }
 
-    public static void insertSearchBlog(Map<String, Object> map){
+    public static void insertSearchBlog(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {
@@ -34,5 +34,38 @@ public class BlogDao {
         } finally {
             sqlSession.close();
         }
+    }
+
+    public static List<Map> getFollowBlogByUserid(Map<String, Object> map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getFollowBlogByUserid", map);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
+    public static List<Map> getTodayHostBlog(Map<String, Object> map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getTodayHostBlog", map);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
+    public static List<Map> getUserBlog(Map<String, Object> map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getUserBlogByUserid", map);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
     }
 }

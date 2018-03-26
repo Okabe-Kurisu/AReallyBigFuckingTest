@@ -4,7 +4,7 @@ import com.DAO.UserDao;
 import com.google.gson.Gson;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
-import com.tool.ResultFormater;
+import com.tool.PowerfulTools;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -49,6 +49,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
             map.put("keyword", keyword);
 
             // 计算分页 开始项和结束项
+            if (null == page || "".equals(page)) page = "1";
             int pageN = Integer.parseInt(page);
             int pageC = Integer.parseInt(pageCap);
 
@@ -59,14 +60,14 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
             map.put("endNum", endNum);
             List userList = UserDao.getUserByKeyword(map);
 
-            resultMap = ResultFormater.format("200", "成功", userList);
+            resultMap = PowerfulTools.format("200", "成功", userList);
 
             Gson gson = new Gson();
             message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
-            resultMap = ResultFormater.format("500", "系统异常", null);
+            resultMap = PowerfulTools.format("500", "系统异常", null);
 
             Gson gson = new Gson();
             message = gson.toJson(resultMap);
