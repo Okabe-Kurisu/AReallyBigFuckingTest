@@ -62,9 +62,17 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+code/build/
+code/out/
 code/.idea/
 code/.gradle/
 >>>>>>> 139be594c58cffee5a21e7c1fda0d2b13404c1b0
 >>>>>>> origin/master
 doc/~$$数据库.~vsdx
 doc/~$功能列表.xlsx
+code/build/resources/main/mybatis/config.properties
+code/build/resources/main/mybatis/mapper/UserMapper.xml
+code/build/resources/test/config.properties
+code/build/resources/main/mybatis/config.properties
+code/build/resources/test/mybatisConfig.xml
+code/.idea/workspace.xml
