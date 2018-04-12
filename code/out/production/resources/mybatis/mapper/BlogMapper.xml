@@ -29,8 +29,44 @@
     </select>
 
     <!-- 插入搜索记录 -->
-    <select id="insertSearchBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+    <insert id="insertSearchBlog" parameterType="Map">  <!-- 书写 SQL 语句 -->
         INSERT INTO search_log(user_id,content,date)
         VALUES(#{userid},#{keyword},#{nowtime})
+    </insert>
+
+    <!-- 搜索关注者的微博 -->
+    <select id="getFollowBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+        SELECT *
+        FROM blog
+        LEFT JOIN follow
+        ON follow.followed_id=blog.user_id
+        WHERE follow.user_id=#{userid}
+        AND blog.type=0
+        AND blog.visibility=0
+    </select>
+
+    <!-- 得到今日热点微博 -->
+    <select id="getTodayHostBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+        SELECT u.*,b.*,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=1) AS reshareNum,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM user u,blog b
+        WHERE u.uid=b.user_id
+        AND b.type=0
+        AND b.visibility=0
+        AND FROM_UNIXTIME(b.release_time, '%Y-%c-%d')=DATE_FORMAT(NOW(),'%Y-%c-%d')
+        AND b.release_time &lt; UNIX_TIMESTAMP(NOW())
+    </select>
+
+    <!-- 得到指定用户微博 -->
+    <select id="getUserBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+        SELECT *
+        FROM user,blog
+        WHERE user.uid=blog.user_id
+        AND user.uid=#{userid}
+        AND type=0
+        AND (visibility=0 OR visibility=1)
+        ORDER BY blog.release_time DESC
     </select>
 </mapper>
