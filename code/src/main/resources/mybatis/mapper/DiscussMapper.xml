@@ -16,17 +16,23 @@
         WHERE did = #{id}
     </select>
 
+    <select id="quickQueryDiscuss" parameterType="String" resultType="Discuss">
+        SELECT *
+        FROM discuss
+        WHERE name LIKE "%"#{key}"%"
+        LIMIT 0,5
+    </select>
+
     <select id="selectDiscussLike" parameterType="Map" resultType="Discuss">
         SELECT *
         FROM discuss
         WHERE name LIKE "%"#{key}"%"
         OR detail LIKE "%"#{key}"%"
-        <if test="page == null">LIMIT 0,10</if>
-        <if test="page != null">LIMIT 10*#{page}-10,10*#{page}</if>
+        LIMIT #{startNum},#{endNum}
     </select>
     
-    <select id="selectBlogInDiscuss" parameterMap="Map" resultType="Weibo">
-        SELECT b.bid AS bid, b.user_id AS  uid, d.discuss_id AS did, u.nickname AS nickname, u.avatar AS avatar, u.motto AS motto, b.content AS content
+    <select id="selectBlogInDiscuss" parameterMap="Map" resultType="Map">
+        SELECT *
         FROM blog_discuss d
         LEFT JOIN blog b
         ON d.blog_id = b.bid
@@ -38,11 +44,10 @@
             OR u.nickname LIKE "%"#{key}"%"
         </if>
         GROUP BY d.blog_id
-        <if test="page == null">LIMIT 0,10</if>
-        <if test="page != null">LIMIT 10*#{page}-10,10*#{page}</if>
+        LIMIT #{startNum},#{endNum}
     </select>
 
-    <insert id="insertDiscuss" parameterType="Discuss" useGeneratedKeys="true" keyProperty="did">
+    <insert id="insertDiscuss" parameterType="Map" useGeneratedKeys="true" keyProperty="did">
         -- useGeneratedKeys="true" 表示给主键设置自增长
         -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
         -- parameterType="com.chenzhou.mybatis.User" 这个属性指向传递的参数实体类
@@ -54,10 +59,10 @@
         UPDATE discuss
         <set>
             <if test="name != null">name = #{name},</if>
-            <if test="user_id != null">name = #{user_id},</if>
-            <if test="detail != null">name = #{detail},</if>
-            <if test="start_time != null">name = #{start_time},</if>
-            <if test="end_time != null">name = #{end_time},</if>
+            <if test="user_id != null">user_id = #{user_id},</if>
+            <if test="detail != null">detail = #{detail},</if>
+            <if test="start_time != null">start_time = #{start_time},</if>
+            <if test="end_time != null">end_time = #{end_time},</if>
         </set>
         WHERE did = #{id}
     </update>

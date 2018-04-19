@@ -13,6 +13,13 @@ public class PowerfulTools {
         return resultMap;
     }
 
+    public static Map<String, Object> format(String code, String msg) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("code", code);
+        resultMap.put("msg", msg);
+        return resultMap;
+    }
+
     /* 热门微博评估（排序）算法 */
     public static float HotBlogSort(Object likeNum, Object reshareNum, Object commentNum) {
         float ln = Float.parseFloat(String.valueOf(likeNum));
