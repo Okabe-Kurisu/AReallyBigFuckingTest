@@ -1,11 +1,13 @@
 package com.action;
 
 import com.DAO.BlogDao;
+import com.annotations.Authority;
 import com.google.gson.Gson;
 import com.model.Blog;
 import com.model.ThumbUp;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
+import com.tool.SensitivewordFilter;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -23,7 +25,7 @@ import java.util.*;
  **/
 
 @Namespace("/blog")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     HttpServletRequest request;
@@ -33,8 +35,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "submitBlog", results = {
             @Result(name = "succsee", type = "json", params = {"root", "message"})
     })
+    @Authority("")
     public String submitBlog() {//提交微博
         Blog blog = new Blog();
+        SensitivewordFilter filter = new SensitivewordFilter();
         Map<String, Object> resultMap;
         String release_time, multimedia, content;
         int user_id, visibility;
@@ -45,6 +49,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         visibility = Integer.parseInt(request.getParameter("visibility"));
         multimedia = request.getParameter("multimedia");
         try {
+            Set<String> set = filter.getSensitiveWord(content, 1);
+            if(set.size()>0){
+
+            }
             if (release_time == null) {
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
             } else {
@@ -84,6 +92,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "setBlog", results = {
             @Result(name = "succsee", type = "json", params = {"root", "message"})
     })
+    @Authority("")
     public String setBlog() {//修改微博
         Blog blog = new Blog();
         Map<String, Object> resultMap;
@@ -136,6 +145,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "delBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
+    @Authority("")
     public String delBlog() {
         int bid;
         Map<String, Object> resultMap;
@@ -159,6 +169,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "submitBlog", results = {
             @Result(name = "succsee", type = "json", params = {"root", "message"})
     })
+    @Authority("")
     public String commit() {//评论微博
         Blog blog = new Blog();
         Map<String, Object> resultMap;
@@ -204,6 +215,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "thumbUp", results = {
             @Result(name = "succsee", type = "json", params = {"root", "message"})
     })
+    @Authority("")
     public String thumbUp() {//点赞微博
         ThumbUp thumbup = new ThumbUp();
         Map<String, Object> resultMap;

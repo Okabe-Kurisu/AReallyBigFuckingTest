@@ -70,7 +70,7 @@
         ORDER BY blog.release_time DESC
     </select>
 
-<<<<<<< HEAD
+
     <!-- 发布博客-->
     <insert id="submitBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
         INSERT INTO blog(user_id,content,multimedia,release_time,type,comment_on,visibility)
@@ -137,6 +137,11 @@
         INSERT INTO call_at(user_id,blog_id,date)
         VALUE (#{user_id},#{blog_id},#{date})
     </insert>
-=======
->>>>>>> 9818510793c72089fbdc367199e31b03dc7077cf
+
+    <!-- 转发微博-->
+    <select id="forwordBlog" parameterType="int" resultType="Blog">
+        SELECT *
+        FROM Blog
+        WHERE bid=#{_parameter}
+    </select>
 </mapper>
