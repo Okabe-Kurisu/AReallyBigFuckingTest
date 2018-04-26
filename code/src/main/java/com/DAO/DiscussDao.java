@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by Amadeus on 2018/3/21.
  */
 public class DiscussDao {
-    public static List<Discuss> selectAllDiscuss(){
+    public static List<Discuss> selectAllDiscuss() {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Discuss> discussList;
         try {
@@ -22,65 +22,66 @@ public class DiscussDao {
         return discussList;
     }
 
-    public static Discuss selectDiscussById(int did){
+    public static Discuss selectDiscussById(int did) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         Discuss discuss;
         try {
             discuss = sqlSession.selectOne("weibo/DiscussMapper.selectDiscussById", did);
-        }finally {
+        } finally {
             sqlSession.close();
         }
         return discuss;
     }
 
-    public static List<Discuss> quickQueryDiscuss(String key){
+    public static List<Discuss> quickQueryDiscuss(String key) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Discuss> discussList;
         try {
             discussList = sqlSession.selectList("weibo/DiscussMapper.quickQueryDiscuss", key);
-        }finally {
+        } finally {
             sqlSession.close();
         }
         return discussList;
     }
 
-    public static List<Discuss> selectDiscussLike(Map map){
+    public static List<Discuss> selectDiscussLike(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Discuss> discussList;
         try {
             discussList = sqlSession.selectList("weibo/DiscussMapper.selectDiscussLike", map);
-        }finally {
+        } finally {
             sqlSession.close();
         }
         return discussList;
     }
 
-    public static List<Map> selectBlogInDiscuss(Map map){
+    public static List<Map> selectBlogInDiscuss(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> BlogList;
-        try{
+        try {
             BlogList = sqlSession.selectList("weibo/DiscussMapper.selectBlogInDiscuss", map);
-        }finally {
+        } finally {
             sqlSession.close();
         }
         return BlogList;
     }
 
-    public static Integer insertDiscuss(Map map){
+    public static Integer insertDiscuss(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        try{
-            sqlSession.insert("weibo/DiscussMapper.insertDiscuss", map);
-        }finally {
+        int discussId;
+        try {
+            discussId = sqlSession.insert("weibo/DiscussMapper.insertDiscuss", map);
+        } finally {
             sqlSession.close();
         }
-        return discuss.getDid();
+        return discussId;
     }
 
-    public static Integer updateDiscuss(Discuss discuss){
+    public static Integer updateDiscuss(Discuss discuss) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        try{
+        try {
             sqlSession.update("weibo/DiscussMapper.updateDiscuss", discuss);
-        }finally {
+        } finally {
             sqlSession.close();
         }
         return discuss.getDid();
