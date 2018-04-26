@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo/SensitivityMapper">
+    <!-- 查看被举报的微博-->
+    <select id="getReportedBlog"  resultType="Map">
+        SELECT *
+        FROM sensitivity as s
+        JOIN blog as b
+        ON s.blog_id = b.bid
+    </select>
+    <!--封禁账号通过id-->
+    <update id="banByUserId" parameterType="Map">
+          UPDATE user
+          SET is_ban=#{timestamp}
+          WHERE user.uid = #{uid}
+    </update>
+    <!--解封账号通过id-->
+    <update id="OpenByUserId" parameterType="Map">
+        UPDATE user
+        SET is_ban=0
+        WHERE user.uid = #{userid}
+    </update>
+</mapper>

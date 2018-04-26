@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo/MessageMapper">
+   <!--用户发送私信-->
+    <insert id="sendMassage" parameterType="Map">
+        INSERT INTO message (user_id,accpeter_id,content,date)
+        VALUES(#{uid},#{aid},#{content},#{date})
+    </insert>
+    <!--用户获得私信发送者-->
+    <select id="getSendMassageUserid" parameterType="Map" resultType="Map">
+        select distinct uid, username is_read from user,(SELECT * from message) as message1
+        where user.uid=message1.user_id and message1.accpeter_id=#{uid}
+        order by date desc
+    </select>
+    <!--通过发送者和接收者的id查看私信-->
+    <select id="getMassageUseridAndAccpeter" parameterType="Map" resultType="Map">
+        select * FROM message
+        where accpeter_id=#{uid} and user_id=#{sid}
+        order by date asc
+    </select>
+    <!--标志已读-->
+    <update id="yesRead">
+       UPDATE message set is_read=1 where
+       user_id =#{sid} and accpeter_id =#{uid}
+
+    </update>
+</mapper>

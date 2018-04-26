@@ -1,6 +1,7 @@
 package com.action;
 
 import com.DAO.DiscussDao;
+import com.annotations.Authority;
 import com.google.gson.Gson;
 import com.model.Discuss;
 import com.tool.PowerfulTools;
@@ -21,7 +22,7 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
  * Created by Amadeus on 2018/4/12.
  */
 @Namespace("/discuss")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 public class DiscussAction {
     HttpServletRequest request;
     String message;
@@ -29,7 +30,7 @@ public class DiscussAction {
     @Action(value = "selectAllDiscuss", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    public String selectAllDiscuss(){
+    public String selectAllDiscuss() {
         Map<String, Object> resultMap;
         try {
             // 调用Dao层 获取数据
@@ -54,7 +55,7 @@ public class DiscussAction {
     @Action(value = "quickQueryDiscuss", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    public String quickQueryDiscuss(){
+    public String quickQueryDiscuss() {
         Map<String, Object> resultMap;
         String key;
         try {
@@ -81,7 +82,7 @@ public class DiscussAction {
     @Action(value = "searchDiscuss", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    public String searchDiscuss(){
+    public String searchDiscuss() {
         String keyword, page, pageCap;
         Map<String, Object> resultMap;
         String key;
@@ -121,7 +122,7 @@ public class DiscussAction {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
     public String getBlogInDiscuss() {
-        String key,did;
+        String key, did;
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
         try {
@@ -155,7 +156,8 @@ public class DiscussAction {
     @Action(value = "submitDiscuss", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    public String submitDiscuss(){
+    @Authority("")
+    public String submitDiscuss() {
         String name, user_id, detail;
         int start_time;
         Map<String, Object> resultMap;
@@ -164,13 +166,13 @@ public class DiscussAction {
             name = request.getParameter("name");
             user_id = request.getParameter("user_id");
             detail = request.getParameter("detail");
-            start_time = (int) System.currentTimeMillis()/1000;
-            map.put("name",name);
-            map.put("user_id",user_id);
-            map.put("detail",detail);
-            map.put("start_time",start_time);
+            start_time = (int) System.currentTimeMillis() / 1000;
+            map.put("name", name);
+            map.put("user_id", user_id);
+            map.put("detail", detail);
+            map.put("start_time", start_time);
             // 调用Dao层 获取数据
-            if(DiscussDao.insertDiscuss(map) == null) {
+            if (DiscussDao.insertDiscuss(map) == null) {
                 throw new Exception("插入失败");
             }
             resultMap = PowerfulTools.format("200", "成功");
@@ -189,11 +191,12 @@ public class DiscussAction {
         }
         return SUCCESS;
     }
+
     @Action(value = "updateDiscuss", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    public String updateDiscuss(){
-        String name, user_id, detail, start_time,end_time,did;
+    public String updateDiscuss() {
+        String name, user_id, detail, start_time, end_time, did;
         Map<String, Object> resultMap;
         Discuss discuss = new Discuss();
         try {
@@ -209,7 +212,7 @@ public class DiscussAction {
             discuss.setUser_id(Integer.parseInt(user_id));
             discuss.setStart_time(Integer.parseInt(start_time));
             discuss.setEnd_time(Integer.parseInt(end_time));
-            if(DiscussDao.updateDiscuss(discuss) == null) {
+            if (DiscussDao.updateDiscuss(discuss) == null) {
                 throw new Exception("插入失败");
             }
             resultMap = PowerfulTools.format("200", "成功");
