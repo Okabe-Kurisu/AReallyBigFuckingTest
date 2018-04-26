@@ -2,6 +2,8 @@ package com.action;
 
 import com.DAO.BlogDao;
 import com.google.gson.Gson;
+import com.model.Blog;
+import com.model.ThumbUp;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
 import org.apache.struts2.convention.annotation.Action;
@@ -28,6 +30,208 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     String message;
 
+    @Action(value = "submitBlog", results = {
+            @Result(name = "succsee", type = "json", params = {"root", "message"})
+    })
+    public String submitBlog() {//提交微博
+        Blog blog = new Blog();
+        Map<String, Object> resultMap;
+        String release_time, multimedia, content;
+        int user_id, visibility;
+        //从前端获取
+        user_id = Integer.parseInt(request.getParameter("user_id"));
+        content = request.getParameter("content");
+        release_time = request.getParameter("release_time");
+        visibility = Integer.parseInt(request.getParameter("visibility"));
+        multimedia = request.getParameter("multimedia");
+        try {
+            if (release_time == null) {
+                blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
+            } else {
+                blog.setRelease_time(Integer.parseInt(release_time));
+            }
+
+            if (multimedia == null) {
+                blog.setMultimedia("");
+            } else {
+                blog.setMultimedia(multimedia);
+            }
+            blog.setUser_id(user_id);
+            blog.setContent(content);
+            blog.setVisibility(visibility);
+
+            //后台添加
+            blog.setComment_on(0);
+            blog.setType(0);
+
+            BlogDao.insertBlog(blog);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "发布成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "setBlog", results = {
+            @Result(name = "succsee", type = "json", params = {"root", "message"})
+    })
+    public String setBlog() {//修改微博
+        Blog blog = new Blog();
+        Map<String, Object> resultMap;
+        String release_time, multimedia, content;
+        int bid, visibility;
+        //从前端获取
+        bid = Integer.parseInt(request.getParameter("bid"));
+        content = request.getParameter("content");
+        release_time = request.getParameter("release_time");
+        multimedia = request.getParameter("multimedia");
+        visibility = Integer.parseInt(request.getParameter("visibility"));
+        try {
+            if (release_time == null) {
+                blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
+            } else {
+                blog.setRelease_time(Integer.parseInt(release_time));
+            }
+
+            if (multimedia == null) {
+                blog.setMultimedia("");
+            } else {
+                blog.setMultimedia(multimedia);
+            }
+            blog.setBid(bid);
+            blog.setContent(content);
+            blog.setVisibility(visibility);
+
+
+            //后台添加
+            blog.setComment_on(0);
+            blog.setType(0);
+
+            BlogDao.setBlog(blog);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "修改成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "delBlog", results = {
+            @Result(name = "success", type = "json", params = {"root", "message"})
+    })
+    public String delBlog() {
+        int bid;
+        Map<String, Object> resultMap;
+        bid = Integer.parseInt(request.getParameter("bid"));
+        try {
+            BlogDao.delBlog(bid);
+            resultMap = PowerfulTools.format("200", "删除成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "submitBlog", results = {
+            @Result(name = "succsee", type = "json", params = {"root", "message"})
+    })
+    public String commit() {//评论微博
+        Blog blog = new Blog();
+        Map<String, Object> resultMap;
+        String multimedia, content;
+        int user_id, bid;
+        //从前端获取
+        user_id = Integer.parseInt(request.getParameter("user_id"));
+        bid = Integer.parseInt(request.getParameter("bid"));
+        content = request.getParameter("content");
+        multimedia = request.getParameter("multimedia");
+        try {
+            if (multimedia == null) {
+                blog.setMultimedia("");
+            } else {
+                blog.setMultimedia(multimedia);
+            }
+            blog.setUser_id(user_id);
+            blog.setContent(content);
+            blog.setComment_on(bid);
+
+            //后台添加
+            blog.setVisibility(0);
+            blog.setType(2);
+            blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
+
+            BlogDao.commit(blog);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "评论成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "thumbUp", results = {
+            @Result(name = "succsee", type = "json", params = {"root", "message"})
+    })
+    public String thumbUp() {//点赞微博
+        ThumbUp thumbup = new ThumbUp();
+        Map<String, Object> resultMap;
+        int user_id, bid;
+        //从前端获取
+        user_id = Integer.parseInt(request.getParameter("user_id"));
+        bid = Integer.parseInt(request.getParameter("bid"));
+        try {
+            thumbup.setUser_id(user_id);
+            thumbup.setBlog_id(bid);
+            //后台添加
+            thumbup.setDate((int) (System.currentTimeMillis() / 1000));
+            BlogDao.thumbUp(thumbup);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "点赞成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "点赞失败", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
 
     @Action(value = "searchBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})

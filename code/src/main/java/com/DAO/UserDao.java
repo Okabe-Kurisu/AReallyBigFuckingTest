@@ -1,5 +1,6 @@
 package com.DAO;
 
+import com.model.CallAt;
 import com.model.User;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
@@ -32,6 +33,27 @@ public class UserDao {
             sqlSession.close();
         }
         return userList;
+    }
+
+    public static List<User> getFiveUser(String nickname) {//at用户前模糊查询获得五个用户
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<User> userList = null;
+        try {
+            userList = sqlSession.selectList("weibo/BlogMapper.getFiveUser",nickname);
+        } finally {
+            sqlSession.close();
+        }
+        return userList;
+    }
+
+    public static int addAtUser(CallAt user) {//at用户添加到表
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+           sqlSession.insert("weibo/BlogMapper.atUser",user);
+        } finally {
+            sqlSession.close();
+        }
+        return user.getCid();
     }
 
     public static List<Map> getUserByKeyword(Map<String, Object> map) {

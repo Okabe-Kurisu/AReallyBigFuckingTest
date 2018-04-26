@@ -73,7 +73,7 @@ public class DiscussDao {
         }finally {
             sqlSession.close();
         }
-        return discuss.getDid();
+        return 0;
     }
 
     public static Integer updateDiscuss(Discuss discuss){

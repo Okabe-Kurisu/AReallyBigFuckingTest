@@ -1,5 +1,7 @@
 package com.DAO;
 
+import com.model.Blog;
+import com.model.ThumbUp;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
 
@@ -14,7 +16,71 @@ import java.util.Map;
  **/
 
 public class BlogDao {
-    public static List<Map> getBlogByKeyword(Map<String, Object> map) {
+//发布微博
+    public static int insertBlog(Blog blog){
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return blog.getBid();
+    }
+
+    //删除微博
+    public static void delBlog(int bid){
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/BlogMapper.delBlog", bid);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    //修改微博
+    public static void setBlog(Blog blog){
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/BlogMapper.setBlog", blog);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    //发布微博
+    public static int commit(Blog blog) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/BlogMapper.commit", blog);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return blog.getBid();
+    }
+
+    //点赞微博
+    public static void thumbUp(ThumbUp thumb) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList=sqlSession.selectList("weibo/BlogMapper.checkThumbUp", thumb);
+            if(blogList.isEmpty()){
+                sqlSession.insert("weibo/BlogMapper.addThumbUp",thumb);
+            }
+            else{
+                sqlSession.delete("weibo/BlogMapper.delThumbUp",blogList.get(0));
+            }
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+        public static List<Map> getBlogByKeyword(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {

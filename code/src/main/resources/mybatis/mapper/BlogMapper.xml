@@ -69,4 +69,71 @@
         AND (visibility=0 OR visibility=1)
         ORDER BY blog.release_time DESC
     </select>
+
+    <!-- 发布博客-->
+    <insert id="submitBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
+        INSERT INTO blog(user_id,content,multimedia,release_time,type,comment_on,visibility)
+        VALUE (#{user_id},#{content},#{multimedia},#{release_time},#{type},#{comment_on},#{visibility})
+    </insert>
+
+    <!-- 删除微博-->
+    <update id="delBlog" parameterType="int">
+        UPDATE blog
+        SET visibility=2
+        WHERE
+        bid=#{bid}
+    </update>
+
+    <!-- 修改微博-->
+    <update id="setBlog" parameterType="blog">
+        UPDATE blog
+        SET content=#{content},
+        release_time=#{release_time},
+        multimedia=#{multimedia},
+        visibility=#{visibility}
+        WHERE
+        bid=#{bid}
+    </update>
+
+    <!-- 发布博客评论-->
+    <insert id="commit" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
+        INSERT INTO blog(user_id,content,multimedia,release_time,type,comment_on,visibility)
+        VALUE (#{user_id},#{content},#{multimedia},#{release_time},#{type},#{comment_on},#{visibility})
+    </insert>
+
+    <!-- 点赞微博-->
+    <select id="checkThumbUp" parameterType="ThumbUp" resultType="Map">
+        SELECT tuid
+        FROM thumb_up
+        WHERE
+        user_id=#{user_id}
+        AND
+        blog_id=#{blog_id}
+    </select>
+
+    <insert id="addThumbUp" parameterType="ThumbUp" useGeneratedKeys="true" keyProperty="tuid">
+        INSERT INTO thumb_up(user_id,blog_id,date)
+        VALUE (#{user_id},#{blog_id},#{date})
+    </insert>
+
+    <delete id="delThumbUp" parameterType="int">
+        DELETE FROM thumb_up WHERE tuid=#{tuid}
+    </delete>
+
+    <!-- @用户-->
+    <select id="getFiveUser" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE
+        <if test="#{_parameter}!=null">
+            user.nickname LIKE "%"#{_parameter}"%"
+        </if>
+        limit 5
+
+    </select>
+    
+    <insert id="atUser" parameterType="CallAt" useGeneratedKeys="true" keyProperty="cid">
+        INSERT INTO call_at(user_id,blog_id,date)
+        VALUE (#{user_id},#{blog_id},#{date})
+    </insert>
 </mapper>
