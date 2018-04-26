@@ -74,11 +74,8 @@ public class DiscussDao {
         } finally {
             sqlSession.close();
         }
-<<<<<<< HEAD
-        return 0;
-=======
+
         return discussId;
->>>>>>> 9818510793c72089fbdc367199e31b03dc7077cf
     }
 
     public static Integer updateDiscuss(Discuss discuss) {

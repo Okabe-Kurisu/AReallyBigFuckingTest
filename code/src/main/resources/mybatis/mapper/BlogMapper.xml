@@ -139,9 +139,21 @@
     </insert>
 
     <!-- 转发微博-->
-    <select id="forwordBlog" parameterType="int" resultType="Blog">
-        SELECT *
-        FROM Blog
-        WHERE bid=#{_parameter}
+    <select id="forwardBlog" parameterType="int" resultType="Blog">
+        SELECT bid, user_id, content, release_time, type, comment_on, visibility, multimedia
+        FROM blog
+        WHERE bid=#{bid}
     </select>
+
+
+    <!-- 收藏微博-->
+    <insert id="collectBlog" parameterType="Favorite" useGeneratedKeys="true" keyProperty="fid">
+        INSERT INTO favorite(user_id,blog_id)
+        VALUE (#{user_id},#{blog_id})
+    </insert>
+    <!-- 举报微博-->
+    <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
+        INSERT INTO sensitivity(blog_id,type,details)
+        VALUE (#{blog_id},#{type},#{details})
+    </insert>
 </mapper>

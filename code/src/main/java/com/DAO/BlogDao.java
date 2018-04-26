@@ -1,6 +1,9 @@
 package com.DAO;
 
+import com.google.gson.Gson;
 import com.model.Blog;
+import com.model.Favorite;
+import com.model.Sensitivity;
 import com.model.ThumbUp;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
@@ -50,7 +53,7 @@ public class BlogDao {
         }
     }
 
-    //发布微博
+    //发布评论
     public static int commit(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
@@ -78,6 +81,51 @@ public class BlogDao {
         } finally {
             sqlSession.close();
         }
+    }
+
+    //转发微博
+    public static void forwordBlog(int bid,int user_id) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        Blog blog=new Blog();
+        try {
+            blog=sqlSession.selectOne("weibo/BlogMapper.forwardBlog", bid);
+            sqlSession.commit();
+            if(blog.getUser_id()!=user_id){
+                blog.setUser_id(user_id);
+                blog.setType(1);
+                blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
+                sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
+                sqlSession.commit();
+            }
+            else{}
+        } finally {
+            sqlSession.close();
+        }
+
+    }
+
+    //收藏微博
+    public static int collectBlog(Favorite blog) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/BlogMapper.collectBlog", blog);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return blog.getFid();
+    }
+
+    //举报微博
+    public static int reportBlog(Sensitivity blog) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/BlogMapper.reportBlog", blog);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return blog.getSid();
     }
 
         public static List<Map> getBlogByKeyword(Map<String, Object> map) {

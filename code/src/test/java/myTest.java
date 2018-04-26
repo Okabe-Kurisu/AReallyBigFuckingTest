@@ -1,9 +1,6 @@
 import com.DAO.BlogDao;
 import com.DAO.UserDao;
-import com.model.Blog;
-import com.model.CallAt;
-import com.model.ThumbUp;
-import com.model.User;
+import com.model.*;
 
 import java.util.List;
 
@@ -32,11 +29,20 @@ public class myTest {
 //             ) {
 //            System.out.print(user.getNickname());
 //        }
-        CallAt user=new CallAt();
-        user.setUser_id(5);
-        user.setBlog_id(5);
-        user.setDate((int) (System.currentTimeMillis() / 1000));
-            UserDao.addAtUser(user);
+//        CallAt user=new CallAt();
+////        user.setUser_id(5);
+////        user.setBlog_id(5);
+////        user.setDate((int) (System.currentTimeMillis() / 1000));
+////            UserDao.addAtUser(user);
+        Sensitivity Sensitivity_blog = new Sensitivity();
+        Favorite Favorite_blog = new Favorite();
+        Sensitivity_blog.setType(0);
+        Sensitivity_blog.setDetails("色情");
+        Sensitivity_blog.setBlog_id(18);
+        BlogDao.reportBlog(Sensitivity_blog);
+        Favorite_blog.setBlog_id(17);
+        Favorite_blog.setUser_id(3);
+        BlogDao.collectBlog(Favorite_blog);
 
     }
 }

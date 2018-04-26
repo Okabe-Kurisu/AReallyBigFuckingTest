@@ -4,6 +4,8 @@ import com.DAO.BlogDao;
 import com.annotations.Authority;
 import com.google.gson.Gson;
 import com.model.Blog;
+import com.model.Favorite;
+import com.model.Sensitivity;
 import com.model.ThumbUp;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
@@ -50,9 +52,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         multimedia = request.getParameter("multimedia");
         try {
             Set<String> set = filter.getSensitiveWord(content, 1);
-            if(set.size()>0){
 
-            }
             if (release_time == null) {
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
             } else {
@@ -72,7 +72,14 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             blog.setComment_on(0);
             blog.setType(0);
 
-            BlogDao.insertBlog(blog);
+            int bid=BlogDao.insertBlog(blog);
+            if(set.size()>0){
+                Sensitivity Sensitivity_blog=new Sensitivity();
+                Sensitivity_blog.setBlog_id(bid);
+                Sensitivity_blog.setDetails("");
+                Sensitivity_blog.setType(0);
+                BlogDao.reportBlog(Sensitivity_blog);
+            }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "发布成功", null);
 
@@ -245,6 +252,35 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
+    @Action(value = "collectBlog", results = {
+            @Result(name = "succsee", type = "json", params = {"root", "message"})
+    })
+    @Authority("")
+    public String forwardBlog() {//转发微博
+        Blog blog = new Blog();
+        Map<String, Object> resultMap;
+        int user_id, bid;
+        //从前端获取
+        user_id = Integer.parseInt(request.getParameter("user_id"));
+        bid = Integer.parseInt(request.getParameter("bid"));
+
+        try {
+           BlogDao.forwordBlog(bid,user_id);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "转发成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "转发失败", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
     @Action(value = "searchBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
@@ -295,6 +331,78 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         }
         return SUCCESS;
     }
+
+    @Action(value = "collectBlog", results = {
+            @Result(name = "succsee", type = "json", params = {"root", "message"})
+    })
+    @Authority("")
+    public String collectBlog() {//收藏微博
+        Favorite Favorite_blog = new Favorite();
+        Map<String, Object> resultMap;
+        int user_id, bid;
+        //从前端获取
+        user_id = Integer.parseInt(request.getParameter("user_id"));
+        bid = Integer.parseInt(request.getParameter("bid"));
+
+        try {
+            Favorite_blog.setUser_id(user_id);
+            Favorite_blog.setBlog_id(bid);
+            BlogDao.collectBlog(Favorite_blog);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "收藏成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "收藏失败", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "reportBlog", results = {
+            @Result(name = "succsee", type = "json", params = {"root", "message"})
+    })
+    @Authority("")
+    public String reportBlog() {//举报微博
+        Sensitivity Sensitivity_blog = new Sensitivity();
+        Map<String, Object> resultMap;
+        String details;
+        int bid;
+        //从前端获取
+        bid = Integer.parseInt(request.getParameter("bid"));
+        details = request.getParameter("details");
+        try {
+            if (details == null) {
+                Sensitivity_blog.setDetails("");
+            } else {
+                Sensitivity_blog.setDetails(details);
+            }
+            Sensitivity_blog.setBlog_id(bid);
+            Sensitivity_blog.setType(0);
+
+            BlogDao.reportBlog(Sensitivity_blog);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "举报成功", null);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("101", "举报失败", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+
 
 
     @Action(value = "getFollowBlog", results = {
