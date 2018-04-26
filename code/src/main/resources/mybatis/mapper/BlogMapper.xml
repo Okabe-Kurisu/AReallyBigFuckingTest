@@ -69,4 +69,5 @@
         AND (visibility=0 OR visibility=1)
         ORDER BY blog.release_time DESC
     </select>
+
 </mapper>
