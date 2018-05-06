@@ -1,0 +1,15 @@
+.user-cover{
+	position: relative;
+    	height: 100px;
+    	background-repeat: no-repeat;
+    	background-size:cover;
+}
+
+.user-cover-avater{
+    	height: 70px;
+    	width: : 70px;
+}
+
+.search-bar{
+	width: : 200px;
+}
