@@ -4,6 +4,7 @@ import com.model.Discuss;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,14 +79,41 @@ public class DiscussDao {
         return discussId;
     }
 
-    public static Integer updateDiscuss(Discuss discuss) {
+    public static Integer updateDiscuss(int userId, Discuss discuss) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-            sqlSession.update("weibo/DiscussMapper.updateDiscuss", discuss);
+            // 先判断当前用户是否有权限更改
+            if (judgeUserDiscuss(userId, discuss.getDid())) {
+                sqlSession.update("weibo/DiscussMapper.updateDiscuss", discuss);
+            } else {// 如果当前用户无权更改
+                return 0;
+            }
         } finally {
             sqlSession.close();
         }
         return discuss.getDid();
+    }
+
+    // 判断指定话题是否是当前用户建立的
+    public static boolean judgeUserDiscuss(int userId, int discussId) {
+        List<Discuss> discussList;
+        // 构建参数
+        Map<String, Integer> param = new HashMap<>();
+        param.put("userid", userId);
+        param.put("did", discussId);
+
+        boolean result = false;
+
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            discussList = sqlSession.selectList("weibo/DiscussMapper.judgeUserDiscuss", param);
+            if (discussList != null && discussList.size() != 0) result = true;
+            else result = false;
+        } finally {
+            sqlSession.close();
+            result = false;
+        }
+        return result;
     }
 
 }

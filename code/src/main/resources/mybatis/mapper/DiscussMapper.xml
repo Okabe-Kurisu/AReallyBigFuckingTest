@@ -7,19 +7,23 @@
     <!-- 对象映射，可以不写 -->
     <!-- 查询功能，resultType 设置返回值类型 -->
     <select id="selectAllDiscuss" resultType="Discuss">  <!-- 书写 SQL 语句 -->
-        SELECT * FROM discuss
+        SELECT *
+        FROM discuss
+        WHERE visibility=#{visibility}
     </select>
 
     <select id="selectDiscussById" parameterType="int" resultType="Discuss">
         SELECT *
         FROM discuss
         WHERE did = #{id}
+        AND visibility=#{visibility}
     </select>
 
     <select id="quickQueryDiscuss" parameterType="String" resultType="Discuss">
         SELECT *
         FROM discuss
         WHERE name LIKE "%"#{key}"%"
+        AND visibility=#{visibility}
         LIMIT 0,5
     </select>
 
@@ -30,7 +34,15 @@
         OR detail LIKE "%"#{key}"%"
         LIMIT #{startNum},#{endNum}
     </select>
-    
+
+    <!-- 判断指定话题是否是当前用户建立的 -->
+    <select id="judgeUserDiscuss" parameterMap="Map" resultType="Map">
+        SELECT *
+        FROM discuss d
+        WHERE did=#{did}
+        AND user_id=#{userid}
+    </select>
+
     <select id="selectBlogInDiscuss" parameterMap="Map" resultType="Map">
         SELECT *
         FROM blog_discuss d
@@ -47,26 +59,26 @@
         LIMIT #{startNum},#{endNum}
     </select>
 
+    <!-- 建立话题（话题名不能重复） -->
     <insert id="insertDiscuss" parameterType="Map" useGeneratedKeys="true" keyProperty="did">
-        -- useGeneratedKeys="true" 表示给主键设置自增长
-        -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
-        -- parameterType="com.chenzhou.mybatis.User" 这个属性指向传递的参数实体类
         INSERT INTO discuss (name, user_id, detail, start_time)
-        VALUES (#{name}, #{user_id}, #{detail}, #{start_time})
+        SELECT #{name}, #{user_id}, #{detail}, #{start_time} FROM DUAL
+        WHERE NOT EXISTS(SELECT did FROM discuss WHERE name=#{name});
     </insert>
 
     <update id="updateDiscuss" parameterType="Discuss" useGeneratedKeys="true" keyProperty="did">
         UPDATE discuss
+        SET
         <set>
             <if test="name != null">name = #{name},</if>
             <if test="user_id != null">user_id = #{user_id},</if>
             <if test="detail != null">detail = #{detail},</if>
             <if test="start_time != null">start_time = #{start_time},</if>
             <if test="end_time != null">end_time = #{end_time},</if>
+            <if test="is_edit != null">is_edit = #{is_edit},</if>
+            <if test="release_time != null">release_time = #{release_time},</if>
+            <if test="visibility != null">visibility = #{visibility}</if>
         </set>
         WHERE did = #{id}
     </update>
-
-
-
 </mapper>

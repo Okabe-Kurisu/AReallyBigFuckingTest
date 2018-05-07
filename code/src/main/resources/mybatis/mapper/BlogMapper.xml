@@ -132,7 +132,7 @@
         limit 5
 
     </select>
-    
+
     <insert id="atUser" parameterType="CallAt" useGeneratedKeys="true" keyProperty="cid">
         INSERT INTO call_at(user_id,blog_id,date)
         VALUE (#{user_id},#{blog_id},#{date})
@@ -155,5 +155,11 @@
     <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
         INSERT INTO sensitivity(blog_id,type,details)
         VALUE (#{blog_id},#{type},#{details})
+    </insert>
+
+    <!-- 向blog_discuss插入记录 -->
+    <insert id="blogDiscuss" parameterType="BlogDiscuss" useGeneratedKeys="true" keyProperty="bdid">
+        INSERT INTO blog_discuss(blog_id,discuss_id,user_id)
+        VALUE (#{blog_id},#{discuss_id},#{user_id})
     </insert>
 </mapper>
