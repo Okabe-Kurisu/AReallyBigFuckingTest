@@ -55,6 +55,12 @@ $(".commit-toggle").click(function commitToggle(argument){
 	inst.toggle(".commit")
 })
 
+$(".me").on("click", function me(argument){
+	var commitPanel = $(".userinfo");
+	var inst = new mdui.Collapse(commitPanel, accordion = true);
+	inst.toggle("#userinfo");
+})
+
 function addBlog(blog) {
 }
 function addCommit(Commit) {

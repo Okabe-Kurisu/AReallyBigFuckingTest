@@ -20,8 +20,39 @@
 					</div>
 				</div>
 				<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '数据统计', delay: 100}"><i class="mdui-icon material-icons">bubble_chart</i></a>
-				<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '我', delay: 100}"><i class="mdui-icon material-icons">person_outline</i></a>
+				<a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5" mdui-tooltip="{content: '登陆', delay: 100}"><i class="mdui-icon material-icons">open_in_new</i></a>
+				<a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5 me" mdui-tooltip="{content: '我', delay: 100}"><i class="mdui-icon material-icons">person_outline</i></a>
 			</div>
+			<div class="mdui-collapse userinfo">
+				<div class="mdui-collapse-item " id="userinfo">
+					 <div class="mdui-collapse-item-header"></div>
+					<div class="mdui-card mdui-float-right mdui-collapse-item-body" >
+						<div class="mdui-card-header  mdui-center " >
+							<img class="mdui-card-header-avatar  mdui-center" src="./img/avatar.jpg"/>
+							<div class="mdui-card-header-title mdui-center">默认用户</div>
+							<div class="mdui-card-header-subtitle mdui-center">一个普通的默认用户</div>
+						</div>
+						<div class="mdui-card-content ">
+							<ul class="mdui-list mdui-list-dense">
+								<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+									<div class="mdui-list-item-content">@我的</div>
+								</li>
+								<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+									<div class="mdui-list-item-content">评论我的</div>
+								</li>
+								<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+									<div class="mdui-list-item-content">私信</div>
+								</li>
+							</ul>
+						</div>
+						<div class="mdui-card-actions">
+							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme mdui-float-right"><i class="mdui-icon material-icons">open_in_new</i>退出</button>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
 		</header>
 		<div class="mdui-container-fluid">
 			<div class="mdui-col-row">
@@ -47,7 +78,7 @@
 							<div class="mdui-card-header-title">默认用户</div>
 							<div class="mdui-card-header-subtitle">一个普通的默认用户</div>
 							<!-- 时间戳生成发博时间 -->
-							<div class="mdui-card-menu">
+							<div class="mdui-card-menu  mdui-text-color-grey-500">
 								<p>1分钟前</p>
 							</div>
 						</div>
@@ -134,7 +165,8 @@
 				<div class="mdui-col-xs-3 mdui-m-t-1">
 					<div class="mdui-card">
 						<!-- 用户背景图片 和头像-->
-						<div class="user-cover mdui-valign mdui-center mdui-clearfix" style="background-image: url(./img/background.jpg);">
+						<div class="mdui-card-media">
+							<img src="./img/background.jpg">
 							<img class="mdui-img-circle mdui-valign mdui-center user-cover-avatar" src="./img/avatar.jpg"/>
 						</div>
 						
@@ -202,6 +234,20 @@
 						<button class="mdui-btn mdui-ripple report-send mdui-color-teal">确认</button>
 					</div>
 				</div>
+				<!-- @人dialog -->
+				<div class="mdui-dialog callat-dialog">
+					<div class="mdui-dialog-title">@你想提到的人</div>
+					<div class="mdui-dialog-content report-content">
+						<div class="mdui-textfield mdui-textfield-floating-label">
+							<label class="mdui-textfield-label">用户昵称</label>
+							<input type="text" class="mdui-textfield-input" maxlength="7"/>
+						</div>
+					</div>
+					<div class="mdui-dialog-actions">
+						<button class="mdui-btn mdui-ripple report-cancel mdui-color-red">取消</button>
+						<button class="mdui-btn mdui-ripple report-send mdui-color-teal">确认</button>
+					</div>
+				</div>
 				<!-- 博客模版 -->
 				<div class="template mdui-hidden">
 					<div class="mdui-card mdui-m-t-1" blog-id="0">
@@ -210,8 +256,7 @@
 							<div class="mdui-card-header-title blog-name"></div>
 							<div class="mdui-card-header-subtitle blog-motto"></div>
 							<!-- 时间戳生成发博时间 -->
-							<div class="mdui-card-menu blog-date">
-								<p></p>
+							<div class="mdui-card-menu blog-date mdui-text-color-grey-500">
 							</div>
 						</div>
 						<!-- 发布了带有多媒体的博客就加上这个 -->
