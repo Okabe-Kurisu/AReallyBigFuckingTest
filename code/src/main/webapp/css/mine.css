@@ -5,11 +5,15 @@
     	background-size:cover;
 }
 
-.user-cover-avater{
+.user-cover-avatar{
     	height: 70px;
-    	width: : 70px;
+    	width:  70px;
 }
 
 .search-bar{
-	width: : 200px;
+	width:  200px;
+}
+
+.report-content{
+	height: 250px;
 }
