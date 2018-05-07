@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>首页</title>
+		<title>Fake 微博-个人页面</title>
 		<link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
 		<link rel="stylesheet" type="text/css" href="./css/mine.css">
 	</head>
@@ -23,9 +23,10 @@
 				<a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5" mdui-tooltip="{content: '登陆', delay: 100}"><i class="mdui-icon material-icons">open_in_new</i></a>
 				<a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5 me" mdui-tooltip="{content: '我', delay: 100}"><i class="mdui-icon material-icons">person_outline</i></a>
 			</div>
+			<!-- 登陆后的个人信息弹框 -->
 			<div class="mdui-collapse userinfo">
 				<div class="mdui-collapse-item " id="userinfo">
-					 <div class="mdui-collapse-item-header"></div>
+					<div class="mdui-collapse-item-header"></div>
 					<div class="mdui-card mdui-float-right mdui-collapse-item-body" >
 						<div class="mdui-card-header  mdui-center " >
 							<img class="mdui-card-header-avatar  mdui-center" src="./img/avatar.jpg"/>
@@ -165,9 +166,11 @@
 				<div class="mdui-col-xs-3 mdui-m-t-1">
 					<div class="mdui-card">
 						<!-- 用户背景图片 和头像-->
-						<div class="mdui-card-media">
+						<div class="mdui-card-media mdui-center">
 							<img src="./img/background.jpg">
-							<img class="mdui-img-circle mdui-valign mdui-center user-cover-avatar" src="./img/avatar.jpg"/>
+							<div class="mdui-card-media-covered mdui-card-media-covered-transparent mdui-card-media-covered-top mdui-valign  user-cover">
+								<img class="mdui-img-circle user-cover-avatar mdui-center" src="./img/avatar.jpg"/>
+							</div>
 						</div>
 						
 						<!-- 关注粉丝数之类的 -->

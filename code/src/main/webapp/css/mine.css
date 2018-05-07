@@ -1,13 +1,10 @@
 .user-cover{
-	position: relative;
-    	height: 100px;
-    	background-repeat: no-repeat;
-    	background-size:cover;
+	bottom: 0!important;
 }
 
 .user-cover-avatar{
-    	height: 70px;
-    	width:  70px;
+    	height: 70px!important;
+    	width:  70px!important;
 }
 
 .search-bar{
