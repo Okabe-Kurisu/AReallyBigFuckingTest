@@ -1,10 +1,7 @@
 package com.DAO;
 
 import com.google.gson.Gson;
-import com.model.Blog;
-import com.model.Favorite;
-import com.model.Sensitivity;
-import com.model.ThumbUp;
+import com.model.*;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
 
@@ -19,8 +16,8 @@ import java.util.Map;
  **/
 
 public class BlogDao {
-//发布微博
-    public static int insertBlog(Blog blog){
+    //发布微博
+    public static int insertBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
             sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
@@ -32,7 +29,7 @@ public class BlogDao {
     }
 
     //删除微博
-    public static void delBlog(int bid){
+    public static void delBlog(int bid) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
             sqlSession.insert("weibo/BlogMapper.delBlog", bid);
@@ -43,7 +40,7 @@ public class BlogDao {
     }
 
     //修改微博
-    public static void setBlog(Blog blog){
+    public static void setBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
             sqlSession.insert("weibo/BlogMapper.setBlog", blog);
@@ -70,12 +67,11 @@ public class BlogDao {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {
-            blogList=sqlSession.selectList("weibo/BlogMapper.checkThumbUp", thumb);
-            if(blogList.isEmpty()){
-                sqlSession.insert("weibo/BlogMapper.addThumbUp",thumb);
-            }
-            else{
-                sqlSession.delete("weibo/BlogMapper.delThumbUp",blogList.get(0));
+            blogList = sqlSession.selectList("weibo/BlogMapper.checkThumbUp", thumb);
+            if (blogList.isEmpty()) {
+                sqlSession.insert("weibo/BlogMapper.addThumbUp", thumb);
+            } else {
+                sqlSession.delete("weibo/BlogMapper.delThumbUp", blogList.get(0));
             }
             sqlSession.commit();
         } finally {
@@ -84,20 +80,20 @@ public class BlogDao {
     }
 
     //转发微博
-    public static void forwordBlog(int bid,int user_id) {
+    public static void forwordBlog(int bid, int user_id) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        Blog blog=new Blog();
+        Blog blog = new Blog();
         try {
-            blog=sqlSession.selectOne("weibo/BlogMapper.forwardBlog", bid);
+            blog = sqlSession.selectOne("weibo/BlogMapper.forwardBlog", bid);
             sqlSession.commit();
-            if(blog.getUser_id()!=user_id){
+            if (blog.getUser_id() != user_id) {
                 blog.setUser_id(user_id);
                 blog.setType(1);
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
                 sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
                 sqlSession.commit();
+            } else {
             }
-            else{}
         } finally {
             sqlSession.close();
         }
@@ -128,7 +124,7 @@ public class BlogDao {
         return blog.getSid();
     }
 
-        public static List<Map> getBlogByKeyword(Map<String, Object> map) {
+    public static List<Map> getBlogByKeyword(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {
@@ -181,6 +177,17 @@ public class BlogDao {
             sqlSession.close();
         }
         return blogList;
+    }
+
+    // 插入blog_discuss  （在某个话题下发布微博，需要在该表插入一条关联记录）
+    public static void insertBlogDiscuss(BlogDiscuss blogDiscuss) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getUserBlogByUserid", blogDiscuss);
+        } finally {
+            sqlSession.close();
+        }
     }
 
 }

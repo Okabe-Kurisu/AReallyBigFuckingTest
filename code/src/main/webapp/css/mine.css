@@ -1,0 +1,31 @@
+.user-cover{
+	bottom: 0!important;
+}
+
+.user-cover-avatar{
+    	height: 100px!important;
+    	width:  100px!important;
+}
+
+.search-bar{
+	width:  200px!important;
+}
+
+.image-zone{
+	width:  400px!important;
+	height:   300px!important;
+	background-image: url('../img/imgZone.gif')
+}
+
+
+.callat-content{
+	height:  400px!important;
+}
+
+.discuss-content{
+	height:  385px!important;
+}
+
+.report-content{
+	height: 250px!important;
+}

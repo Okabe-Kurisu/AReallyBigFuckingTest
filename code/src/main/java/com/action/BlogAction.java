@@ -173,7 +173,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "submitBlog", results = {
+    @Action(value = "commitBlog", results = {
             @Result(name = "succsee", type = "json", params = {"root", "message"})
     })
     @Authority("")
@@ -252,7 +252,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "collectBlog", results = {
+    @Action(value = "forwardBlog", results = {
             @Result(name = "succsee", type = "json", params = {"root", "message"})
     })
     @Authority("")
