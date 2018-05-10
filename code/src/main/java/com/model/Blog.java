@@ -15,6 +15,14 @@ public class Blog {
 
     private Integer visibility;
 
+    private Integer is_edit;
+
+    private String ip_address;
+
+    private String browser_sign;
+
+    private Integer is_showName;
+
     private String multimedia;
 
     public Integer getBid() {
@@ -71,6 +79,38 @@ public class Blog {
 
     public void setVisibility(Integer visibility) {
         this.visibility = visibility;
+    }
+
+    public Integer getIs_edit() {
+        return is_edit;
+    }
+
+    public void setIs_edit(Integer is_edit) {
+        this.is_edit = is_edit;
+    }
+
+    public String getIp_address() {
+        return ip_address;
+    }
+
+    public void setIp_address(String ip_address) {
+        this.ip_address = ip_address == null ? null : ip_address.trim();
+    }
+
+    public String getBrowser_sign() {
+        return browser_sign;
+    }
+
+    public void setBrowser_sign(String browser_sign) {
+        this.browser_sign = browser_sign == null ? null : browser_sign.trim();
+    }
+
+    public Integer getIs_showName() {
+        return is_showName;
+    }
+
+    public void setIs_showName(Integer is_showName) {
+        this.is_showName = is_showName;
     }
 
     public String getMultimedia() {

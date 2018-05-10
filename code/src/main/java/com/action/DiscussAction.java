@@ -31,7 +31,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     private Discuss discuss;
 
     private HttpServletRequest request;
-    
+
     private String message;
 
     @Action(value = "selectAllDiscuss", results = {
@@ -67,6 +67,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
         String key;
         try {
             key = request.getParameter("keyword");
+            key = '%' + key + '%';
             // 调用Dao层 获取数据
             List<Discuss> discussList = DiscussDao.quickQueryDiscuss(key);
 
@@ -95,6 +96,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
         String key;
         try {
             key = request.getParameter("keyword");
+            key = '%' + key + '%';
             Map<String, Object> map = new HashMap<>();
             page = request.getParameter("page");
             pageCap = request.getParameter("pageCap");
@@ -129,17 +131,33 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
     public String getBlogInDiscuss() {
-        String key, did;
+        String key, did, page, pageCap;
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> resultMap;
         try {
             // 获得参数
             key = request.getParameter("keyword");
+            if (key != null) key = '%' + key + '%';
             did = request.getParameter("did");
+
+            page = request.getParameter("page");
+            pageCap = request.getParameter("pageCap");
+
+            // 计算分页 开始项和结束项
+            if (null == page || "".equals(page)) page = "1";
+            int pageN = Integer.parseInt(page);
+            if (null == pageCap || "".equals(pageCap)) pageCap = "5";
+            int pageC = Integer.parseInt(pageCap);
+
+            int startNum = (pageN - 1) * pageC;
+            int endNum = pageN * pageC;
+
 
             // 封装参数
             map.put("key", key);
             map.put("did", did);
+            map.put("startNum", startNum);
+            map.put("endNum", endNum);
 
             // 调用Dao层 获取数据
             List blogList = DiscussDao.selectBlogInDiscuss(map);

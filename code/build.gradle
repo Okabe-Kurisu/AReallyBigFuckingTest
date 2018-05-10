@@ -23,6 +23,8 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
     compile group: 'org.apache.struts', name: 'struts2-json-plugin', version: '2.5.5'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
+//    分词器
+    compile group: 'org.apdplat', name: 'word', version: '1.3.1'
 
 }
 

@@ -9,6 +9,8 @@ public class CallAt {
 
     private Integer date;
 
+    private Integer at_userid;
+
     public Integer getCid() {
         return cid;
     }
@@ -39,5 +41,13 @@ public class CallAt {
 
     public void setDate(Integer date) {
         this.date = date;
+    }
+
+    public Integer getAt_userid() {
+        return at_userid;
+    }
+
+    public void setAt_userid(Integer at_userid) {
+        this.at_userid = at_userid;
     }
 }

@@ -7,6 +7,8 @@ public class BlogDiscuss {
 
     private Integer discuss_id;
 
+    private Integer user_id;
+
     public Integer getBdid() {
         return bdid;
     }
@@ -29,5 +31,13 @@ public class BlogDiscuss {
 
     public void setDiscuss_id(Integer discuss_id) {
         this.discuss_id = discuss_id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 }
