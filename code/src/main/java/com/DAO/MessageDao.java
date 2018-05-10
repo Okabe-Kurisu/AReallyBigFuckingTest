@@ -13,6 +13,7 @@ public class MessageDao {
             List<Map> blogList = null;
             try {
                 blogList = sqlSession.selectList("weibo/MessageMapper.sendMassage",map);
+                sqlSession.commit();
             } finally {
                 sqlSession.close();
             }
@@ -42,6 +43,7 @@ public class MessageDao {
         List<Map> blogList = null;
         try {
             blogList = sqlSession.selectList("weibo/MessageMapper.yesRead",map);
+            sqlSession.commit();
         } finally {
             sqlSession.close();
         }
