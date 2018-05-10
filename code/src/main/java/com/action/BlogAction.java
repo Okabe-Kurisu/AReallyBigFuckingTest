@@ -37,19 +37,20 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "submitBlog", results = {
             @Result(name = "succsee", type = "json", params = {"root", "message"})
     })
-    @Authority("")
+    //@Authority("")
     public String submitBlog() {//提交微博
         Blog blog = new Blog();
         SensitivewordFilter filter = new SensitivewordFilter();
         Map<String, Object> resultMap;
         String release_time, multimedia, content;
-        int user_id, visibility;
+        int user_id, visibility,is_showName;
         //从前端获取
         user_id = Integer.parseInt(request.getParameter("user_id"));
         content = request.getParameter("content");
         release_time = request.getParameter("release_time");
         visibility = Integer.parseInt(request.getParameter("visibility"));
         multimedia = request.getParameter("multimedia");
+        is_showName=Integer.parseInt(request.getParameter("is_showName"));
         try {
             Set<String> set = filter.getSensitiveWord(content, 1);
 
@@ -69,6 +70,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             blog.setVisibility(visibility);
 
             //后台添加
+            String userAgent = request.getHeader("user-agent");//获取浏览器信息
+            String ip = request.getHeader("X-Forwarded-For");//获取IP地址
             blog.setComment_on(0);
             blog.setType(0);
 
