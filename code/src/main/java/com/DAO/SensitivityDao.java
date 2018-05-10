@@ -22,6 +22,7 @@ public class SensitivityDao {
         List<Map> blogList = null;
         try {
             blogList = sqlSession.selectList("weibo/SensitivityMapper.banByUserId", map);
+            sqlSession.commit();
         } finally {
             sqlSession.close();
         }
@@ -32,6 +33,7 @@ public class SensitivityDao {
         List<Map> blogList = null;
         try {
             blogList = sqlSession.selectList("weibo/SensitivityMapper.OpenByUserId", map);
+            sqlSession.commit();
         } finally {
             sqlSession.close();
         }
