@@ -78,10 +78,10 @@
         WHERE user.uid = #{userid}
     </select>
     <insert id="submitBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
-        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, brower_sign, is_showName)
+        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, browser_sign, is_showName)
             VALUE
             (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility}, #{is_edit},
-                         #{ip_address}, #{brower_sign}, #{is_showName})
+                         #{ip_address}, #{browser_sign}, #{is_showName})
     </insert>
 
     <!-- 删除微博 查用户 -->
@@ -169,8 +169,8 @@
     </insert>
     <!-- 举报微博 不能重复举报 验证账号 -->
     <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
-        INSERT INTO sensitivity (blog_id, type, details)
-            VALUE (#{blog_id}, #{type}, #{details})
+        INSERT INTO sensitivity (blog_id, type, details,time)
+            VALUE (#{blog_id}, #{type}, #{details},#{time})
     </insert>
 
     <!-- 向blog_discuss插入记录 -->

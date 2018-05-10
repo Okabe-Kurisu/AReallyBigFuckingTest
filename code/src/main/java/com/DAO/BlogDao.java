@@ -20,6 +20,7 @@ public class BlogDao {
     public static int insertBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
+            blog.setIp_address("");
             sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
             sqlSession.commit();
         } finally {
