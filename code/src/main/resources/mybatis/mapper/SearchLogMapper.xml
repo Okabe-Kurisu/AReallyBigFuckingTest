@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="weibo/SearchLogMapper">
+    <!--用户获得私信发送者-->
+    <select id="getSendMassageUserid" parameterType="Map" resultType="Map">
+        select distinct uid, username is_read from user,(SELECT * from message) as message1
+        where user.uid=message1.user_id and message1.accpeter_id=#{uid}
+        order by date desc
+    </select>
+</mapper>

@@ -44,5 +44,7 @@
         <mapper resource="mybatis/mapper/BlogMapper.xml"/>
         <mapper resource="mybatis/mapper/SensitivityMapper.xml"/>
         <mapper resource="mybatis/mapper/MessageMapper.xml"/>
+        <mapper resource="mybatis/mapper/DiscussMapper.xml"/>
+        <mapper resource="mybatis/mapper/SearchLogMapper.xml"/>
     </mappers>
 </configuration>
