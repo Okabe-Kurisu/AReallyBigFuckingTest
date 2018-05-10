@@ -9,6 +9,10 @@ public class SearchLog {
 
     private Integer date;
 
+    private String ip_address;
+
+    private String browser_sign;
+
     public Integer getSlid() {
         return slid;
     }
@@ -39,5 +43,21 @@ public class SearchLog {
 
     public void setDate(Integer date) {
         this.date = date;
+    }
+
+    public String getIp_address() {
+        return ip_address;
+    }
+
+    public void setIp_address(String ip_address) {
+        this.ip_address = ip_address == null ? null : ip_address.trim();
+    }
+
+    public String getBrowser_sign() {
+        return browser_sign;
+    }
+
+    public void setBrowser_sign(String browser_sign) {
+        this.browser_sign = browser_sign == null ? null : browser_sign.trim();
     }
 }

@@ -9,6 +9,8 @@ public class ThumbUp {
 
     private Integer date;
 
+    private Integer t_id;
+
     public Integer getTuid() {
         return tuid;
     }
@@ -39,5 +41,13 @@ public class ThumbUp {
 
     public void setDate(Integer date) {
         this.date = date;
+    }
+
+    public Integer getT_id() {
+        return t_id;
+    }
+
+    public void setT_id(Integer t_id) {
+        this.t_id = t_id;
     }
 }

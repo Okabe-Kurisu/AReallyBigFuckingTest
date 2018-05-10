@@ -9,6 +9,10 @@ public class Follow {
 
     private Integer followed_id;
 
+    private Integer time;
+
+    private Integer visibility;
+
     public Integer getFid() {
         return fid;
     }
@@ -39,5 +43,21 @@ public class Follow {
 
     public void setFollowed_id(Integer followed_id) {
         this.followed_id = followed_id;
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
+
+    public Integer getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Integer visibility) {
+        this.visibility = visibility;
     }
 }

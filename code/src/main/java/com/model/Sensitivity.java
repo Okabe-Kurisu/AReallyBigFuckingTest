@@ -9,6 +9,12 @@ public class Sensitivity {
 
     private String details;
 
+    private Integer user_id;
+
+    private Integer time;
+
+    private Integer visibility;
+
     public Integer getSid() {
         return sid;
     }
@@ -39,5 +45,29 @@ public class Sensitivity {
 
     public void setDetails(String details) {
         this.details = details == null ? null : details.trim();
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
+
+    public Integer getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Integer visibility) {
+        this.visibility = visibility;
     }
 }

@@ -11,22 +11,23 @@ import org.apache.ibatis.type.JdbcType;
 public interface CallAtMapper {
     @Insert({
         "insert into call_at (cid, user_id, ",
-        "blog_id, date)",
+        "blog_id, date, at_userid)",
         "values (#{cid,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, ",
-        "#{blog_id,jdbcType=INTEGER}, #{date,jdbcType=INTEGER})"
+        "#{blog_id,jdbcType=INTEGER}, #{date,jdbcType=INTEGER}, #{at_userid,jdbcType=INTEGER})"
     })
     int insert(CallAt record);
 
     @Select({
         "select",
-        "cid, user_id, blog_id, date",
+        "cid, user_id, blog_id, date, at_userid",
         "from call_at"
     })
     @Results({
         @Result(column="cid", property="cid", jdbcType=JdbcType.INTEGER),
         @Result(column="user_id", property="user_id", jdbcType=JdbcType.INTEGER),
         @Result(column="blog_id", property="blog_id", jdbcType=JdbcType.INTEGER),
-        @Result(column="date", property="date", jdbcType=JdbcType.INTEGER)
+        @Result(column="date", property="date", jdbcType=JdbcType.INTEGER),
+        @Result(column="at_userid", property="at_userid", jdbcType=JdbcType.INTEGER)
     })
     List<CallAt> selectAll();
 }

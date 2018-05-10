@@ -13,6 +13,12 @@ public class Discuss {
 
     private Integer end_time;
 
+    private Integer visibility;
+
+    private Integer release_time;
+
+    private Integer is_edit;
+
     public Integer getDid() {
         return did;
     }
@@ -59,5 +65,29 @@ public class Discuss {
 
     public void setEnd_time(Integer end_time) {
         this.end_time = end_time;
+    }
+
+    public Integer getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Integer visibility) {
+        this.visibility = visibility;
+    }
+
+    public Integer getRelease_time() {
+        return release_time;
+    }
+
+    public void setRelease_time(Integer release_time) {
+        this.release_time = release_time;
+    }
+
+    public Integer getIs_edit() {
+        return is_edit;
+    }
+
+    public void setIs_edit(Integer is_edit) {
+        this.is_edit = is_edit;
     }
 }

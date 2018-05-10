@@ -7,11 +7,15 @@ public class Message {
 
     private Integer accpeter_id;
 
+    private String content;
+
     private Integer date;
 
-    private Boolean is_read;
+    private Integer is_read;
 
-    private String content;
+    private Integer is_showName;
+
+    private Integer read_time;
 
     public Integer getMid() {
         return mid;
@@ -37,6 +41,14 @@ public class Message {
         this.accpeter_id = accpeter_id;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
     public Integer getDate() {
         return date;
     }
@@ -45,19 +57,27 @@ public class Message {
         this.date = date;
     }
 
-    public Boolean getIs_read() {
+    public Integer getIs_read() {
         return is_read;
     }
 
-    public void setIs_read(Boolean is_read) {
+    public void setIs_read(Integer is_read) {
         this.is_read = is_read;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getIs_showName() {
+        return is_showName;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setIs_showName(Integer is_showName) {
+        this.is_showName = is_showName;
+    }
+
+    public Integer getRead_time() {
+        return read_time;
+    }
+
+    public void setRead_time(Integer read_time) {
+        this.read_time = read_time;
     }
 }
