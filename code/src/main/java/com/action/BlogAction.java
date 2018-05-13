@@ -47,7 +47,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         //从前端获取
         user_id = Integer.parseInt(request.getParameter("user_id"));
         content = request.getParameter("content");
-        release_time = request.getParameter("release_time");
+        release_time = request.getParameter("release_ti me");
         visibility = Integer.parseInt(request.getParameter("visibility"));
         multimedia = request.getParameter("multimedia");
         try {

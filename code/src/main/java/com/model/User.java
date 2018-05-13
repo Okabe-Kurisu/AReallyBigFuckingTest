@@ -9,7 +9,7 @@ public class User {
 
     private String password;
 
-    private Boolean sex;
+    private Integer sex;
 
     private Integer age;
 
@@ -23,7 +23,15 @@ public class User {
 
     private Integer is_ban;
 
-    private Boolean alive;
+    private Integer alive;
+
+    private String ip_address;
+
+    private Integer last_logtime;
+
+    private String browser_sign;
+
+    private Integer weight;
 
     public Integer getUid() {
         return uid;
@@ -57,11 +65,11 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
-    public Boolean getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
@@ -113,11 +121,43 @@ public class User {
         this.is_ban = is_ban;
     }
 
-    public Boolean getAlive() {
+    public Integer getAlive() {
         return alive;
     }
 
-    public void setAlive(Boolean alive) {
+    public void setAlive(Integer alive) {
         this.alive = alive;
+    }
+
+    public String getIp_address() {
+        return ip_address;
+    }
+
+    public void setIp_address(String ip_address) {
+        this.ip_address = ip_address == null ? null : ip_address.trim();
+    }
+
+    public Integer getLast_logtime() {
+        return last_logtime;
+    }
+
+    public void setLast_logtime(Integer last_logtime) {
+        this.last_logtime = last_logtime;
+    }
+
+    public String getBrowser_sign() {
+        return browser_sign;
+    }
+
+    public void setBrowser_sign(String browser_sign) {
+        this.browser_sign = browser_sign == null ? null : browser_sign.trim();
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 }

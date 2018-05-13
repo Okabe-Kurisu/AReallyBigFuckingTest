@@ -156,4 +156,11 @@
         INSERT INTO sensitivity(blog_id,type,details)
         VALUE (#{blog_id},#{type},#{details})
     </insert>
+    <!--用户注销，微博不可见-->
+    <update id="userLeave" parameterType="int">
+        UPDATE blog
+        SET visibility = 1
+        WHERE
+        user_id=#{uid}
+    </update>
 </mapper>

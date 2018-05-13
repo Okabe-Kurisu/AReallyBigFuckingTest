@@ -2,6 +2,8 @@ import com.DAO.BlogDao;
 import com.DAO.UserDao;
 import com.model.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class myTest {
@@ -34,7 +36,7 @@ public class myTest {
 ////        user.setBlog_id(5);
 ////        user.setDate((int) (System.currentTimeMillis() / 1000));
 ////            UserDao.addAtUser(user);
-        Sensitivity Sensitivity_blog = new Sensitivity();
+       /* Sensitivity Sensitivity_blog = new Sensitivity();
         Favorite Favorite_blog = new Favorite();
         Sensitivity_blog.setType(0);
         Sensitivity_blog.setDetails("色情");
@@ -42,7 +44,23 @@ public class myTest {
         BlogDao.reportBlog(Sensitivity_blog);
         Favorite_blog.setBlog_id(17);
         Favorite_blog.setUser_id(3);
-        BlogDao.collectBlog(Favorite_blog);
-
+        BlogDao.collectBlog(Favorite_blog);*/
+        // UserDao.checkusername("aaaa");
+       /* User user = new User();
+        user.setUid(233);
+        user.setUsername("t333");
+        user.setIs_ban(0);
+        user.setNickname("xiugai");
+        user.setPassword("11111");
+        user.setSex(0);
+        user.setAge(12);
+        user.setLast_logtime(2222);
+        user.setIp_address("qweqwe");
+        user.setBrowser_sign("asdasdf");
+        System.out.println("aaaaaa"+UserDao.updateUuser(user)+"aaaaaaa");*/
+       /* UserDao.userLeave(4);*/
+        User user = new User();
+        user.setUid(3);
+        UserDao.initUser(user);
     }
 }
