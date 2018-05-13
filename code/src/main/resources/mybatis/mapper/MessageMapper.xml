@@ -5,8 +5,8 @@
 <mapper namespace="weibo/MessageMapper">
    <!--用户发送私信-->
     <insert id="sendMassage" parameterType="Map">
-        INSERT INTO message (user_id,accpeter_id,content,date)
-        VALUES(#{uid},#{aid},#{content},#{date})
+        INSERT INTO message (user_id,accpeter_id,content,date,is_showName)
+        VALUES(#{uid},#{aid},#{content},#{date},#{is_showName})
     </insert>
     <!--用户获得私信发送者-->
     <select id="getSendMassageUserid" parameterType="Map" resultType="Map">
@@ -17,13 +17,15 @@
     <!--通过发送者和接收者的id查看私信-->
     <select id="getMassageUseridAndAccpeter" parameterType="Map" resultType="Map">
         select * FROM message
-        where accpeter_id=#{uid} and user_id=#{sid}
+        where accpeter_id=#{uid} and user_id=#{sid} and is_showName=#{is_showName}
         order by date asc
     </select>
     <!--标志已读-->
-    <update id="yesRead">
-       UPDATE message set is_read=1 where
+    <update id="yesRead" parameterType="Map">
+       UPDATE message
+       set is_read=1 ,read_time = #{idate}
+       where
        user_id =#{sid} and accpeter_id =#{uid}
-
     </update>
+    <!---->
 </mapper>

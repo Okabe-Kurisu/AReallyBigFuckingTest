@@ -45,11 +45,11 @@ public class LoginInterceptor extends AbstractInterceptor {
                 return Action.LOGIN;
             } else {   //已登录，继续后续流程
                 System.err.println("进入拦截器：已登录");
-                return invocation.invoke();
+                return invocation.invoke().toString();
             }
         } else {
             System.err.println("进入拦截器：没有使用注解");
-            return invocation.invoke();
+            return invocation.invoke().toString();
         }
     }
 

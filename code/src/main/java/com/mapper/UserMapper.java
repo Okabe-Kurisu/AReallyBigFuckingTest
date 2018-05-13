@@ -15,22 +15,34 @@ public interface UserMapper {
         "sex, age, is_ns, ",
         "motto, avatar, background, ",
         "is_ban, alive, ip_address, ",
+<<<<<<< HEAD
         "last_logtime, browser_sign, ",
         "weight)",
+=======
+        "last_logtime, browser_sign)",
+>>>>>>> caaed01e1927c86f7145c77284e2dba40ab8e89b
         "values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, ",
         "#{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
         "#{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{is_ns,jdbcType=BIT}, ",
         "#{motto,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{background,jdbcType=VARCHAR}, ",
         "#{is_ban,jdbcType=INTEGER}, #{alive,jdbcType=INTEGER}, #{ip_address,jdbcType=VARCHAR}, ",
+<<<<<<< HEAD
         "#{last_logtime,jdbcType=INTEGER}, #{browser_sign,jdbcType=VARCHAR}, ",
         "#{weight,jdbcType=INTEGER})"
+=======
+        "#{last_logtime,jdbcType=INTEGER}, #{browser_sign,jdbcType=VARCHAR})"
+>>>>>>> caaed01e1927c86f7145c77284e2dba40ab8e89b
     })
     int insert(User record);
 
     @Select({
         "select",
         "uid, username, nickname, password, sex, age, is_ns, motto, avatar, background, ",
+<<<<<<< HEAD
         "is_ban, alive, ip_address, last_logtime, browser_sign, weight",
+=======
+        "is_ban, alive, ip_address, last_logtime, browser_sign",
+>>>>>>> caaed01e1927c86f7145c77284e2dba40ab8e89b
         "from user"
     })
     @Results({
@@ -48,8 +60,12 @@ public interface UserMapper {
         @Result(column="alive", property="alive", jdbcType=JdbcType.INTEGER),
         @Result(column="ip_address", property="ip_address", jdbcType=JdbcType.VARCHAR),
         @Result(column="last_logtime", property="last_logtime", jdbcType=JdbcType.INTEGER),
+<<<<<<< HEAD
         @Result(column="browser_sign", property="browser_sign", jdbcType=JdbcType.VARCHAR),
         @Result(column="weight", property="weight", jdbcType=JdbcType.INTEGER)
+=======
+        @Result(column="browser_sign", property="browser_sign", jdbcType=JdbcType.VARCHAR)
+>>>>>>> caaed01e1927c86f7145c77284e2dba40ab8e89b
     })
     List<User> selectAll();
 }

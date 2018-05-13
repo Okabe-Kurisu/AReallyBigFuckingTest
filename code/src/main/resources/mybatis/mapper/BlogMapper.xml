@@ -71,35 +71,42 @@
     </select>
 
 
-    <!-- 发布博客-->
+    <!-- 发布博客 -->
+    <select id="checkAdmin" parameterType="int" resultType="int">
+        SELECT user.is_ban
+        FROM user
+        WHERE user.uid = #{userid}
+    </select>
     <insert id="submitBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
-        INSERT INTO blog(user_id,content,multimedia,release_time,type,comment_on,visibility)
-        VALUE (#{user_id},#{content},#{multimedia},#{release_time},#{type},#{comment_on},#{visibility})
+        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, brower_sign, is_showName)
+            VALUE
+            (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility}, #{is_edit},
+                         #{ip_address}, #{brower_sign}, #{is_showName})
     </insert>
 
-    <!-- 删除微博-->
+    <!-- 删除微博 查用户 -->
     <update id="delBlog" parameterType="int">
         UPDATE blog
-        SET visibility=2
+        SET visibility = 2
         WHERE
-        bid=#{bid}
+            bid = #{bid}
     </update>
 
-    <!-- 修改微博-->
+    <!-- 修改微博 用户被封不能改 一天修改微博次数限制-->
     <update id="setBlog" parameterType="blog">
         UPDATE blog
-        SET content=#{content},
-        release_time=#{release_time},
-        multimedia=#{multimedia},
-        visibility=#{visibility}
+        SET content      = #{content},
+            release_time = #{release_time},
+            multimedia   = #{multimedia},
+            visibility   = #{visibility}
         WHERE
-        bid=#{bid}
+            bid = #{bid}
     </update>
 
-    <!-- 发布博客评论-->
+    <!-- 发布博客评论 查用户是否登录和被封  -->
     <insert id="commit" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
-        INSERT INTO blog(user_id,content,multimedia,release_time,type,comment_on,visibility)
-        VALUE (#{user_id},#{content},#{multimedia},#{release_time},#{type},#{comment_on},#{visibility})
+        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility)
+            VALUE (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility})
     </insert>
 
     <!-- 点赞微博-->
@@ -107,18 +114,19 @@
         SELECT tuid
         FROM thumb_up
         WHERE
-        user_id=#{user_id}
-        AND
-        blog_id=#{blog_id}
+            user_id = #{user_id}
+            AND
+            blog_id = #{blog_id}
     </select>
 
     <insert id="addThumbUp" parameterType="ThumbUp" useGeneratedKeys="true" keyProperty="tuid">
-        INSERT INTO thumb_up(user_id,blog_id,date)
-        VALUE (#{user_id},#{blog_id},#{date})
+        INSERT INTO thumb_up (user_id, blog_id, date)
+            VALUE (#{user_id}, #{blog_id}, #{date})
     </insert>
 
     <delete id="delThumbUp" parameterType="int">
-        DELETE FROM thumb_up WHERE tuid=#{tuid}
+        DELETE FROM thumb_up
+        WHERE tuid = #{tuid}
     </delete>
 
     <!-- @用户-->
@@ -132,29 +140,43 @@
         limit 5
 
     </select>
-    
+
     <insert id="atUser" parameterType="CallAt" useGeneratedKeys="true" keyProperty="cid">
-        INSERT INTO call_at(user_id,blog_id,date)
-        VALUE (#{user_id},#{blog_id},#{date})
+        INSERT INTO call_at (user_id, blog_id, date)
+            VALUE (#{user_id}, #{blog_id}, #{date})
     </insert>
 
-    <!-- 转发微博-->
+    <!-- 转发微博 只能转发一次，再点击就取消-->
     <select id="forwardBlog" parameterType="int" resultType="Blog">
-        SELECT bid, user_id, content, release_time, type, comment_on, visibility, multimedia
+        SELECT
+            bid,
+            user_id,
+            content,
+            release_time,
+            type,
+            comment_on,
+            visibility,
+            multimedia
         FROM blog
-        WHERE bid=#{bid}
+        WHERE bid = #{bid}
     </select>
 
 
-    <!-- 收藏微博-->
+    <!-- 收藏微博 是否已经收藏 收藏微博是否被举报-->
     <insert id="collectBlog" parameterType="Favorite" useGeneratedKeys="true" keyProperty="fid">
-        INSERT INTO favorite(user_id,blog_id)
-        VALUE (#{user_id},#{blog_id})
+        INSERT INTO favorite (user_id, blog_id)
+            VALUE (#{user_id}, #{blog_id})
     </insert>
-    <!-- 举报微博-->
+    <!-- 举报微博 不能重复举报 验证账号 -->
     <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
-        INSERT INTO sensitivity(blog_id,type,details)
-        VALUE (#{blog_id},#{type},#{details})
+        INSERT INTO sensitivity (blog_id, type, details)
+            VALUE (#{blog_id}, #{type}, #{details})
+    </insert>
+
+    <!-- 向blog_discuss插入记录 -->
+    <insert id="blogDiscuss" parameterType="BlogDiscuss" useGeneratedKeys="true" keyProperty="bdid">
+        INSERT INTO blog_discuss (blog_id, discuss_id, user_id)
+            VALUE (#{blog_id}, #{discuss_id}, #{user_id})
     </insert>
     <!--用户注销，微博不可见-->
     <update id="userLeave" parameterType="int">

@@ -23,7 +23,7 @@
 
         <!-- 这里对应拦截器中return Action.LOGIN对应的页面-->
         <global-results>
-            <result name="login">index.jsp</result>
+            <result name="login">/auth.html</result>
         </global-results>
     </package>
 
