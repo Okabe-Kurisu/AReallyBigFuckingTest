@@ -81,9 +81,6 @@ public class SensitiveWordInit {
 				String txt = null;
 				while((txt = bufferedReader.readLine()) != null){    //读取文件，将文件内容放入到set中
 					set.add(txt);
-					System.out.println(txt=="三级片");
-					System.out.println(txt+"三级片");
-					System.out.println(txt.length() + "--" + "三级片".length());
 				}
 			}
 			else{         //不存在抛出异常信息
