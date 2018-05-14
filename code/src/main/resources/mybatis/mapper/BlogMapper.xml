@@ -181,6 +181,7 @@
         INSERT INTO blog_discuss (blog_id, discuss_id, user_id)
             VALUE (#{blog_id}, #{discuss_id}, #{user_id})
     </insert>
+<<<<<<< HEAD
 
     <!--收集最近正在讨论的微博-->
     <select id="nowTimeHot" parameterType="Map" resultType="Map">
@@ -195,4 +196,13 @@
         AND bc.type > 0
         AND bc.release_time > (unix_timestamp() - 3600)
     </select>
+=======
+    <!--用户注销，微博不可见-->
+    <update id="userLeave" parameterType="int">
+        UPDATE blog
+        SET visibility = 1
+        WHERE
+        user_id=#{uid}
+    </update>
+>>>>>>> 1fb43666c2ae8e677fca7edff8735b3e7ea5beab
 </mapper>

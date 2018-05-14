@@ -1,7 +1,9 @@
 package com.DAO;
 
 import com.model.CallAt;
+import com.model.Follow;
 import com.model.User;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
 
@@ -13,6 +15,59 @@ import java.util.Map;
  * Created by Amadeus on 2018/3/15.
  */
 public class UserDao {
+    public static Integer updateUuser(User user) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        System.out.println(user);
+        try {
+            sqlSession.update("weibo/UserMapper.updateUser", user);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return user.getUid();
+    }
+    public static int userLeave(int uid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.update("weibo/UserMapper.userLeave",uid);
+            sqlSession.update("weibo/BlogMapper.userLeave",uid);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return uid;
+    }
+    public static int follow(Follow follow) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/UserMapper.follow",follow);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return 0;
+    }
+    public static int unfollow(Follow follow) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/UserMapper.unfollow",follow);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return 0;
+    }
+    public static int initUser(User user) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        System.out.println(user);
+        try {
+            sqlSession.insert("weibo/UserMapper.initUser",user);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return 0;
+    }
     public static int signup(User user) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
@@ -22,6 +77,42 @@ public class UserDao {
             sqlSession.close();
         }
         return user.getUid();
+    }
+    public static User checkPassword(String username) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+
+        User user = new User();
+        try {
+            user = sqlSession.selectOne("weibo/UserMapper.checkPassword", username);
+            sqlSession.commit();
+
+        } finally {
+            sqlSession.close();
+        }
+        return user;
+    }
+    public static User checkusername(String username) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        System.out.println(username);
+        User user = new User();
+        try {
+            user = sqlSession.selectOne("weibo/UserMapper.checkusername", username);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return user;
+    }
+    public static User checknickname(String nickname) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        User user = new User();
+        try {
+            user =  sqlSession.selectOne("weibo/UserMapper.checknickname", nickname);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return user;
     }
 
     public static List<Map> getAllUser() {
