@@ -220,7 +220,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
         username = request.getParameter("username");
-        password = request.getParameter("nickname");
+        password = request.getParameter("password");
         try {
             if (UserDao.checkusername(username) == null) {
                 resultMap = PowerfulTools.format("101", "登录失败，该用户名不存在", map);
