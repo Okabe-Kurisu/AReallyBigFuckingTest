@@ -6,27 +6,117 @@
 <mapper namespace="weibo/UserMapper">   <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
     <!-- 对象映射，可以不写 -->
     <!-- 查询功能，resultType 设置返回值类型 -->
-    <select id="selectAllUser" resultType="User">  <!-- 书写 SQL 语句 -->
-        SELECT * FROM user
+    <select id="selectAllUser" resultType="Map">  <!-- 书写 SQL 语句 -->
+        SELECT *,
+        (SELECT COUNT(f.fid) FROM follow as f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
+        (SELECT COUNT(tu.tuid)
+        FROM thumb_up AS tu
+        JOIN blog AS b
+        ON tu.blog_id = b.bid
+        WHERE b.user_id = u.uid) AS likeNum,
+        (SELECT COUNT(b.bid)
+        FROM blog AS b
+        JOIN blog AS b2
+        ON b.comment_on = b2.bid
+        WHERE u.uid = b.user_id) AS forwardNum
+        FROM user AS u
+        WHERE u.alive = 0 AND u.last_logtime > 0
+        ORDER BY u.weight, u.last_logtime
     </select>
-
+    <select id="checkusername" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE username = #{username}
+    </select>
+    <select id="checkPassword" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE username = #{username}
+    </select>
+    <select id="checknickname" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE nickname = #{nickname}
+    </select>
     <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
         -- useGeneratedKeys="true" 表示给主键设置自增长
         -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
         -- parameterType="com.chenzhou.mybatis.User" 这个属性指向传递的参数实体类
-        INSERT INTO user (username, nickname, password, sex, age, is_ns, motto, avatar, background)
-        VALUES (#{username}, #{nickname}, #{password}, #{sex}, #{age}, #{is_ns}, #{motto}, #{avatar}, #{background})
+        INSERT INTO user (username, nickname, password, sex, age, is_ban, ip_address, last_logtime, browser_sign)
+        VALUES (#{username}, #{nickname}, #{password}, #{sex}, #{age}, #{is_ban}, #{ip_address}, #{last_logtime},
+                #{browser_sign})
     </insert>
 
     <!-- 用户查询 -->
     <select id="selectUser" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT
         u.*,
-        (SELECT COUNT(f.fid) FROM follow as f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
-        (SELECT COUNT(f.fid) FROM follow as f WHERE u.uid=f.user_id AND type=0) AS folledNum
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND type=0) AS folledNum
         FROM user AS u
-        WHERE u.alive = 0 AND
-        (u.nickname LIKE "%"#{keyword}"%" OR u.motto LIKE "%"#{keyword}"%")
-        LIMIT #{startNum},#{endNum}
+        WHERE u.alive = 0
+        <if test="keyword != null">
+          AND(u.nickname LIKE "%"#{keyword}"%" OR u.motto LIKE "%"#{keyword}"%")
+        </if>
+        <if test="start != null">
+            LIMIT #{startNum},#{endNum}
+        </if>
     </select>
+
+    <!--得到用户总被点赞数-->
+    <select id="getLikedNumByUid" parameterType="int" resultType="int">
+        SELECT COUNT(tu.tuid)
+        FROM thumb_up AS tu
+        JOIN blog b
+        ON tu.blog_id = b.bid
+        WHERE b.user_id = #{uid}
+    </select>
+
+    <!-- 设置权重 -->
+    <update id="setWeight">
+        UPDATE user
+        SET weight = #{weight}
+        WHERE
+        uid = #{uid}
+    </update>
+
+    <!--用户修改-->
+    <update id="updateUser" parameterType="User">
+
+        UPDATE user
+        SET username = #{username},
+        nickname = #{nickname},
+        password = #{password},
+        sex = #{sex},
+        is_ban = #{is_ban},
+        ip_address = #{ip_address},
+        last_logtime = #{last_logtime},
+        browser_sign = #{browser_sign}
+        WHERE
+        uid=#{uid}
+
+
+    </update>
+    <update id="userLeave" parameterType="int">
+        UPDATE user
+        SET alive = 1
+        WHERE
+        uid=#{uid}
+    </update>
+    <insert id="follow" parameterType="Follow">
+        -- useGeneratedKeys="true" 表示给主键设置自增长
+        -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
+        -- parameterType="com.chenzhou.mybatis.User" 这个属性指向传递的参数实体类
+        INSERT INTO follow (user_id, type, followed_id, time, visibility)
+        VALUES (#{user_id}, #{type}, #{followed_id}, #{time}, #{visibility})
+    </insert>
+    <delete id="unfollow" parameterType="Follow">
+        DELETE FROM follow WHERE user_id=#{user_id} AND followed_id=followed_id
+    </delete>
+    <update id="initUser" parameterType="User">
+        UPDATE blog
+        SET visibility = 2
+        WHERE
+        user_id=#{uid}
+    </update>
 </mapper>

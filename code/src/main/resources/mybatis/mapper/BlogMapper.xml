@@ -61,7 +61,10 @@
 
     <!-- 得到指定用户微博 -->
     <select id="getUserBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT *
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=1) AS reshareNum,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM user,blog
         WHERE user.uid=blog.user_id
         AND user.uid=#{userid}
@@ -178,4 +181,25 @@
         INSERT INTO blog_discuss (blog_id, discuss_id, user_id)
             VALUE (#{blog_id}, #{discuss_id}, #{user_id})
     </insert>
+
+    <!--收集最近正在讨论的微博-->
+    <select id="nowTimeHot" parameterType="Map" resultType="Map">
+     SELECT *
+        FROM thumb_up as tu
+        RIGHT JOIN blog AS bc
+        ON 1=1
+        JOIN blog AS b
+        ON b.bid = tu.blog_id
+        WHERE
+        tu.date > (unix_timestamp() - 3600)
+        AND bc.type > 0
+        AND bc.release_time > (unix_timestamp() - 3600)
+    </select>
+    <!--用户注销，微博不可见-->
+    <update id="userLeave" parameterType="int">
+        UPDATE blog
+        SET visibility = 1
+        WHERE
+        user_id=#{uid}
+    </update>
 </mapper>
