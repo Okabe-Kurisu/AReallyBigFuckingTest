@@ -71,7 +71,6 @@
         ON tu.blog_id = b.bid
         WHERE b.user_id = #{uid}
     </select>
-<<<<<<< HEAD
 
     <!-- 设置权重 -->
     <update id="setWeight">
@@ -81,7 +80,6 @@
         uid = #{uid}
     </update>
 
-=======
     <!--用户修改-->
     <update id="updateUser" parameterType="User">
 
@@ -121,5 +119,4 @@
         WHERE
         user_id=#{uid}
     </update>
->>>>>>> 1fb43666c2ae8e677fca7edff8735b3e7ea5beab
 </mapper>

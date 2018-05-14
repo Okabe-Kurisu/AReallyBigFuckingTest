@@ -130,9 +130,4 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {
         this.request = request;
     }
-public static void main(String[] arge){
-        int ub = (int)(System.currentTimeMillis()/1000);
-    System.out.print(ub);
-
-}
 }
