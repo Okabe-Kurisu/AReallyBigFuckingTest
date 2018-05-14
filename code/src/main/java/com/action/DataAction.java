@@ -24,10 +24,9 @@ public class DataAction extends ActionSupport implements ServletRequestAware {
 
 
 
-    @Action(value = "DataTool")
+    @Action(value = "hotspot")
     public String getHotspot() {
         Map<String, Object> map = new HashMap();
-
         try {
             resultMap = PowerfulTools.format("200", "成功", DataTool.loadRtn(DataTool.Type.HotSPot.getPath()));
         } catch (NullPointerException ne) {

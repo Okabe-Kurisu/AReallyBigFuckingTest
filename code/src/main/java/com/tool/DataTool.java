@@ -56,8 +56,10 @@ public class DataTool {
     public void saveRtn(List<String> temp, String filename){
         BufferedWriter bw = null;
         try {
+            String encoding = "UTF-8";
             File file = new File(new URI(DataTool.class.getResource(filename).toString()));
-            bw=new BufferedWriter(new FileWriter(file));
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), encoding));
+            System.out.println(file.toString());
             for(int i=0;i<temp.size();i++){
                 bw.write(temp.get(i));
                 bw.newLine();
