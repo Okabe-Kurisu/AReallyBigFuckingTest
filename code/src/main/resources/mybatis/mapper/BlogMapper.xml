@@ -61,7 +61,10 @@
 
     <!-- 得到指定用户微博 -->
     <select id="getUserBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT *
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=1) AS reshareNum,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM user,blog
         WHERE user.uid=blog.user_id
         AND user.uid=#{userid}
@@ -78,10 +81,10 @@
         WHERE user.uid = #{userid}
     </select>
     <insert id="submitBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
-        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, brower_sign, is_showName)
+        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, browser_sign, is_showName)
             VALUE
             (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility}, #{is_edit},
-                         #{ip_address}, #{brower_sign}, #{is_showName})
+                         #{ip_address}, #{browser_sign}, #{is_showName})
     </insert>
 
     <!-- 删除微博 查用户 -->
@@ -169,8 +172,8 @@
     </insert>
     <!-- 举报微博 不能重复举报 验证账号 -->
     <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
-        INSERT INTO sensitivity (blog_id, type, details)
-            VALUE (#{blog_id}, #{type}, #{details})
+        INSERT INTO sensitivity (blog_id, type, details,time)
+            VALUE (#{blog_id}, #{type}, #{details},#{time})
     </insert>
 
     <!-- 向blog_discuss插入记录 -->
@@ -178,6 +181,20 @@
         INSERT INTO blog_discuss (blog_id, discuss_id, user_id)
             VALUE (#{blog_id}, #{discuss_id}, #{user_id})
     </insert>
+
+    <!--收集最近正在讨论的微博-->
+    <select id="nowTimeHot" parameterType="Map" resultType="Map">
+     SELECT *
+        FROM thumb_up as tu
+        RIGHT JOIN blog AS bc
+        ON 1=1
+        JOIN blog AS b
+        ON b.bid = tu.blog_id
+        WHERE
+        tu.date > (unix_timestamp() - 3600)
+        AND bc.type > 0
+        AND bc.release_time > (unix_timestamp() - 3600)
+    </select>
     <!--用户注销，微博不可见-->
     <update id="userLeave" parameterType="int">
         UPDATE blog

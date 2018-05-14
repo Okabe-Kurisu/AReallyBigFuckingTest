@@ -1,7 +1,7 @@
 package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.tool.HotSpot;
+import com.tool.DataTool;
 import com.tool.PowerfulTools;
 import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -24,13 +24,11 @@ public class DataAction extends ActionSupport implements ServletRequestAware {
 
 
 
-    @Action(value = "getHotSpot")
-
-    public String getHS() {
+    @Action(value = "hotspot")
+    public String getHotspot() {
         Map<String, Object> map = new HashMap();
-
         try {
-            resultMap = PowerfulTools.format("200", "成功", HotSpot.loadRtn());
+            resultMap = PowerfulTools.format("200", "成功", DataTool.loadRtn(DataTool.Type.HotSPot.getPath()));
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);

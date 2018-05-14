@@ -115,9 +115,9 @@ public class UserDao {
         return user;
     }
 
-    public static List<User> getAllUser() {
+    public static List<Map> getAllUser() {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        List<User> userList = null;
+        List<Map> userList = null;
         try {
             userList = sqlSession.selectList("weibo/UserMapper.selectAllUser");
         } finally {
@@ -140,11 +140,20 @@ public class UserDao {
     public static int addAtUser(CallAt user) {//at用户添加到表
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-           sqlSession.insert("weibo/BlogMapper.atUser",user);
+            sqlSession.insert("weibo/BlogMapper.atUser",user);
         } finally {
             sqlSession.close();
         }
         return user.getCid();
+    }
+
+    public static void setWeight(Map map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/UserMapper.setWeight",map);
+        } finally {
+            sqlSession.close();
+        }
     }
 
     public static List<Map> getUserByKeyword(Map<String, Object> map) {

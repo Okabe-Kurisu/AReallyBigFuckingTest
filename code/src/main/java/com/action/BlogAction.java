@@ -68,12 +68,17 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             blog.setUser_id(user_id);
             blog.setContent(content);
             blog.setVisibility(visibility);
-
+            blog.setIs_showName(is_showName);
             //后台添加
             String userAgent = request.getHeader("user-agent");//获取浏览器信息
             String ip = request.getHeader("X-Forwarded-For");//获取IP地址
+            blog.setBrowser_sign(userAgent);
+            System.out.print("------------------user_id:"+user_id);
+            System.out.print("------------------ip address:"+ip);
+            blog.setIp_address(ip);
             blog.setComment_on(0);
             blog.setType(0);
+            blog.setIs_edit(0);
 
             int bid=BlogDao.insertBlog(blog);
             if(set.size()>0){
@@ -81,6 +86,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 Sensitivity_blog.setBlog_id(bid);
                 Sensitivity_blog.setDetails("");
                 Sensitivity_blog.setType(0);
+                Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
             }
             // 封装响应数据

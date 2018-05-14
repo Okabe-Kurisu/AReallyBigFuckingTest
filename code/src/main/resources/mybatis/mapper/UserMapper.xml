@@ -6,8 +6,22 @@
 <mapper namespace="weibo/UserMapper">   <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
     <!-- 对象映射，可以不写 -->
     <!-- 查询功能，resultType 设置返回值类型 -->
-    <select id="selectAllUser" resultType="User">  <!-- 书写 SQL 语句 -->
-        SELECT * FROM user
+    <select id="selectAllUser" resultType="Map">  <!-- 书写 SQL 语句 -->
+        SELECT *,
+        (SELECT COUNT(f.fid) FROM follow as f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
+        (SELECT COUNT(tu.tuid)
+        FROM thumb_up AS tu
+        JOIN blog AS b
+        ON tu.blog_id = b.bid
+        WHERE b.user_id = u.uid) AS likeNum,
+        (SELECT COUNT(b.bid)
+        FROM blog AS b
+        JOIN blog AS b2
+        ON b.comment_on = b2.bid
+        WHERE u.uid = b.user_id) AS forwardNum
+        FROM user AS u
+        WHERE u.alive = 0 AND u.last_logtime > 0
+        ORDER BY u.weight, u.last_logtime
     </select>
     <select id="checkusername" parameterType="String" resultType="User">
         SELECT *
@@ -40,10 +54,32 @@
         (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
         (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND type=0) AS folledNum
         FROM user AS u
-        WHERE u.alive = 0 AND
-        (u.nickname LIKE "%"#{keyword}"%" OR u.motto LIKE "%"#{keyword}"%")
-        LIMIT #{startNum},#{endNum}
+        WHERE u.alive = 0
+        <if test="keyword != null">
+          AND(u.nickname LIKE "%"#{keyword}"%" OR u.motto LIKE "%"#{keyword}"%")
+        </if>
+        <if test="start != null">
+            LIMIT #{startNum},#{endNum}
+        </if>
     </select>
+
+    <!--得到用户总被点赞数-->
+    <select id="getLikedNumByUid" parameterType="int" resultType="int">
+        SELECT COUNT(tu.tuid)
+        FROM thumb_up AS tu
+        JOIN blog b
+        ON tu.blog_id = b.bid
+        WHERE b.user_id = #{uid}
+    </select>
+
+    <!-- 设置权重 -->
+    <update id="setWeight">
+        UPDATE user
+        SET weight = #{weight}
+        WHERE
+        uid = #{uid}
+    </update>
+
     <!--用户修改-->
     <update id="updateUser" parameterType="User">
 
