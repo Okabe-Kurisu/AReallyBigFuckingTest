@@ -137,6 +137,17 @@ public class UserDao {
         return userList;
     }
 
+    public static List<User> hotUser(int date) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<User> userList = null;
+        try {
+            userList = sqlSession.selectList("weibo/BlogMapper.hotUser",date);
+        } finally {
+            sqlSession.close();
+        }
+        return userList;
+    }
+
     public static int addAtUser(CallAt user) {//at用户添加到表
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {

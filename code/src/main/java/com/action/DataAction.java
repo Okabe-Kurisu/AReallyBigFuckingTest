@@ -1,5 +1,7 @@
 package com.action;
 
+import com.DAO.BlogDao;
+import com.DAO.UserDao;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.DataTool;
 import com.tool.PowerfulTools;
@@ -23,12 +25,54 @@ public class DataAction extends ActionSupport implements ServletRequestAware {
     Map<String, Object> resultMap;
 
 
-
+    //得到热门词汇
     @Action(value = "hotspot")
     public String getHotspot() {
         Map<String, Object> map = new HashMap();
         try {
             resultMap = PowerfulTools.format("200", "成功", DataTool.loadRtn(DataTool.Type.HotSPot.getPath()));
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    //得到即时热门微博
+    @Action(value = "nowtimeHot")
+    public String getNowtimeHot() {
+        Map<String, Object> map = new HashMap();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600));//获得一小时有过评论转发和点赞的微博
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    //得到热门用户
+    @Action(value = "hotuser")
+    public String getHotuser() {
+        Map<String, Object> map = new HashMap();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", UserDao.hotUser(3600));//获得一小时有过评论转发和点赞的微博
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    //得到昨日热门微博
+    @Action(value = "lastTimeHot")
+    public String getLastTimeHot() {
+        Map<String, Object> map = new HashMap();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.lastTimeHot());//获得一小时有过评论转发和点赞的微博
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);

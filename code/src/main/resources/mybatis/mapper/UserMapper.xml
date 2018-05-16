@@ -21,7 +21,7 @@
         WHERE u.uid = b.user_id) AS forwardNum
         FROM user AS u
         WHERE u.alive = 0 AND u.last_logtime > 0
-        ORDER BY u.weight, u.last_logtime
+        ORDER BY u.weight DESC, u.last_logtime DESC
     </select>
     <select id="checkusername" parameterType="String" resultType="User">
         SELECT *
@@ -61,6 +61,7 @@
         <if test="start != null">
             LIMIT #{startNum},#{endNum}
         </if>
+        ORDER BY u.weight DESC, u.last_logtime DESC
     </select>
 
     <!--得到用户总被点赞数-->
@@ -94,15 +95,15 @@
         browser_sign = #{browser_sign}
         WHERE
         uid=#{uid}
-
-
     </update>
+
     <update id="userLeave" parameterType="int">
         UPDATE user
         SET alive = 1
         WHERE
         uid=#{uid}
     </update>
+
     <insert id="follow" parameterType="Follow">
         -- useGeneratedKeys="true" 表示给主键设置自增长
         -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
@@ -110,13 +111,27 @@
         INSERT INTO follow (user_id, type, followed_id, time, visibility)
         VALUES (#{user_id}, #{type}, #{followed_id}, #{time}, #{visibility})
     </insert>
+
     <delete id="unfollow" parameterType="Follow">
         DELETE FROM follow WHERE user_id=#{user_id} AND followed_id=followed_id
     </delete>
+
     <update id="initUser" parameterType="User">
         UPDATE blog
         SET visibility = 2
         WHERE
         user_id=#{uid}
     </update>
+
+    <select id="hotUser" parameterType="int" resultType="User">
+        SELECT *, COUNT(t.uid) as num
+        FROM (
+            SELECT u.*
+            FROM follow AS f
+            JOIN user as u
+            ON f.followed_id = u.uid AND f.time >= (unix_timestamp(now()) - #{date})
+        ) AS t
+        group by t.uid
+        ORDER BY num DESC
+    </select>
 </mapper>

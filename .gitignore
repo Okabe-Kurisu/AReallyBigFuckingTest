@@ -64,6 +64,7 @@ $RECYCLE.BIN/
 
 code/build/
 code/out/
+code/.idea/
 code/.gradle/
 doc/~$$数据库.~vsdx
 doc/~$功能列表.xlsx
