@@ -597,13 +597,18 @@
       <DataType>int(11)|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <index id="131" parent="14" name="motto">
+    <column id="131" parent="14" name="keyword">
+      <Position>17</Position>
+      <DataType>varchar(200)|0</DataType>
+      <DefaultExpression>&apos;[]&apos;</DefaultExpression>
+    </column>
+    <index id="132" parent="14" name="motto">
       <ColNames>motto</ColNames>
     </index>
-    <index id="132" parent="14" name="nickname">
+    <index id="133" parent="14" name="nickname">
       <ColNames>nickname</ColNames>
     </index>
-    <key id="133" parent="14" name="PRIMARY">
+    <key id="134" parent="14" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>uid</ColNames>
       <Primary>1</Primary>

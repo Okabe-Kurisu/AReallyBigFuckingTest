@@ -1,5 +1,6 @@
 package com.tool;
 
+import com.DAO.BlogDao;
 import com.DAO.UserDao;
 import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.NlpAnalysis;
@@ -27,6 +28,7 @@ public class DataTool {
         Type(String path) {this.path = path;}
         public String getPath() {return path;}
     }
+    //热词部分
     public List<String> getHotWords(){
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<String> hotWords = null;
@@ -52,57 +54,7 @@ public class DataTool {
         }
     }
 
-
-    public void saveRtn(List<String> temp, String filename){
-        BufferedWriter bw = null;
-        try {
-            String encoding = "UTF-8";
-            File file = new File(new URI(DataTool.class.getResource(filename).toString()));
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), encoding));
-            System.out.println(file.toString());
-            for(int i=0;i<temp.size();i++){
-                bw.write(temp.get(i));
-                bw.newLine();
-            }
-            bw.flush();
-            bw.close();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static List<String> loadRtn(String filename){
-        List<String> list = new ArrayList<String>();
-        try {
-
-            String encoding="UTF-8";
-            File file = new File(new URI(DataTool.class.getResource(filename).toString()));
-            //判断文件是否存在
-            if(file.isFile() && file.exists()){
-                //考虑到编码格式
-                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
-                BufferedReader bufferedReader = new BufferedReader(read);
-                String lineTxt = null;
-                //记录读取的数据文件的行数
-                int count = 0;
-                while((lineTxt = bufferedReader.readLine()) != null){
-                    list.add(lineTxt);
-                    count ++;
-                }
-                read.close();
-            }else{
-                System.out.println("找不到指定的文件");
-            }
-        } catch (Exception e) {
-            System.out.println("读取文件内容出错");
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public void initHotSpot() {//每隔十分钟查询一次数据
+    public void initHotSpot() {//每隔一分钟查询一次数据
         Runnable runnable = new Runnable() {
             public void run() {
                 int startTime = (int) System.currentTimeMillis()/1000;
@@ -151,12 +103,6 @@ public class DataTool {
         System.out.println("权重分析结束");
     }
 
-    public static void main(String[] args) {
-        DataTool dataTool = new DataTool();
-        dataTool.initHotSpot();
-    }
-
-
     public void initAUW() {//每隔1小时重置一次权重
         Runnable runnable = new Runnable() {
             public void run() {
@@ -167,6 +113,105 @@ public class DataTool {
         // 参数：1、任务体 2、首次执行的延时时间
         //      3、任务执行间隔 4、间隔时间单位
         service.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.HOURS);
+    }
+
+    //统计用户构成
+    //用户关键词提取,并加权存储,然后返回排名前十的关键词
+    public List<String> segKeyword(List<Map> contents) {
+        Map<String, Integer> userkey = new HashMap<String, Integer>();
+        List<String> temp = new ArrayList();
+        //只提取名词
+        Set<String> expectedNature = new HashSet<String>() {{
+            add("n");add("vn");add("ng");add("q");add("wh");
+            add("nt");add("nz");add("nw");add("nl");
+        }};
+        for (Map map: contents){
+            String text = map.get("content").toString();
+            for(Term term : NlpAnalysis.parse(text)){
+                if (expectedNature.contains(term.getNatureStr()) )
+                    continue;
+                String rst = term.getName();
+                int weight = (int) map.get("weight");
+                if (userkey.containsKey(rst)){
+                    userkey.put(rst, userkey.get(rst) + weight);
+                }else {
+                    userkey.put(rst, weight);
+                }
+            }
+        }
+        userkey = MapSorter.sortMapByValue(userkey);//map排序起
+        for (String key: userkey.keySet()){
+            if (temp.size() > 10)
+                break;
+            temp.add(key);
+        }
+        return temp;
+    }
+
+    //翻译词语,并查询父话题
+    public void getOrigin(List<String> contents){
+        Translate translate = new Translate();
+        for (String key: contents) {
+            key = translate.trans2EN(key).split("\"dst\":\"")[1].split("\"}]}")[0];
+
+        }
+    }
+
+
+    //提取关键词，
+    public void getUserKey(int uid){
+        List<Map> contents = BlogDao.allAboutUser();
+        List<String> userKey = segKeyword(contents);
+    }
+
+    //工具方法
+    public void saveRtn(List<String> temp, String filename){
+        BufferedWriter bw = null;
+        try {
+            String encoding = "UTF-8";
+            File file = new File(new URI(DataTool.class.getResource(filename).toString()));
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), encoding));
+            System.out.println(file.toString());
+            for(int i=0;i<temp.size();i++){
+                bw.write(temp.get(i));
+                bw.newLine();
+            }
+            bw.flush();
+            bw.close();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<String> loadRtn(String filename){
+        List<String> list = new ArrayList<String>();
+        try {
+
+            String encoding="UTF-8";
+            File file = new File(new URI(DataTool.class.getResource(filename).toString()));
+            //判断文件是否存在
+            if(file.isFile() && file.exists()){
+                //考虑到编码格式
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
+                BufferedReader bufferedReader = new BufferedReader(read);
+                String lineTxt = null;
+                //记录读取的数据文件的行数
+                int count = 0;
+                while((lineTxt = bufferedReader.readLine()) != null){
+                    list.add(lineTxt);
+                    count ++;
+                }
+                read.close();
+            }else{
+                System.out.println("找不到指定的文件");
+            }
+        } catch (Exception e) {
+            System.out.println("读取文件内容出错");
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }

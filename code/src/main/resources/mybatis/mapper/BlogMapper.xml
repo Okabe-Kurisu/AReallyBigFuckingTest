@@ -183,17 +183,39 @@
     </insert>
 
     <!--收集最近正在讨论的微博-->
-    <select id="nowTimeHot" parameterType="Map" resultType="Map">
-     SELECT *
-        FROM thumb_up as tu
-        RIGHT JOIN blog AS bc
-        ON 1=1
-        JOIN blog AS b
-        ON b.bid = tu.blog_id
-        WHERE
-        tu.date > (unix_timestamp() - 3600)
-        AND bc.type > 0
-        AND bc.release_time > (unix_timestamp() - 3600)
+    <select id="nowTimeHot" parameterType="int" resultType="Map">
+    SELECT * , COUNT(t.bid) as num
+    FROM (
+        SELECT b.*
+        FROM blog as b
+        JOIN thumb_up AS tu
+        ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - #{date})
+        UNION ALL
+        SELECT b.*
+        FROM blog as b
+        JOIN blog as bc
+        ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - #{date})
+        ) AS t
+     group by t.bid
+     ORDER BY num DESC
+    </select>
+
+    <!--得到昨日讨论的微博-->
+    <select id="lastTimeHot" resultType="Map">
+        SELECT * , COUNT(t.bid) as num
+        FROM (
+        SELECT b.*
+        FROM blog as b
+        JOIN thumb_up AS tu
+        ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - 86400)
+        UNION ALL
+        SELECT b.*
+        FROM blog as b
+        JOIN blog as bc
+        ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - 86400)
+        ) AS t
+        group by t.bid
+        ORDER BY num DESC
     </select>
     <!--用户注销，微博不可见-->
     <update id="userLeave" parameterType="int">
@@ -202,4 +224,29 @@
         WHERE
         user_id=#{uid}
     </update>
+
+    <!--得到用户所评论过的，转发过的，收藏过的，点赞过的全部内容-->
+    <select id="allAboutUser" parameterType="int" resultType="Map">
+        SELECT * FROM (
+          SELECT b.content, 4 AS weight
+          FROM blog AS b
+          WHERE b.user_id = #{uid}
+          UNION ALL
+          SELECT b.content, 2 AS weight
+          FROM blog AS bc
+          JOIN blog AS b
+          ON b.bid = bc.comment_on AND bc.user_id = #{uid}
+          UNION ALL
+          SELECT b.content, 2 AS weight
+          FROM favorite AS f
+          JOIN blog AS b
+          ON b.bid = f.blog_id AND f.user_id = #{uid}
+          UNION ALL
+          SELECT b.content, 1 AS weight
+          FROM thumb_up AS tu
+          JOIN blog AS b
+          ON b.bid = tu.blog_id AND tu.user_id = #{uid}
+        ) AS  t
+        ORDER BY t.weight
+    </select>
 </mapper>
