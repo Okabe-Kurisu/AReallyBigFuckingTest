@@ -75,16 +75,17 @@
     <update id="updateDiscuss" parameterType="Discuss" useGeneratedKeys="true" keyProperty="did">
         UPDATE discuss
         SET
-        <set>
-            <if test="name != null">name = #{name},</if>
-            <if test="user_id != null">user_id = #{user_id},</if>
-            <if test="detail != null">detail = #{detail},</if>
-            <if test="start_time != null">start_time = #{start_time},</if>
-            <if test="end_time != null">end_time = #{end_time},</if>
-            <if test="is_edit != null">is_edit = #{is_edit},</if>
-            <if test="release_time != null">release_time = #{release_time},</if>
-            <if test="visibility != null">visibility = #{visibility}</if>
-        </set>
-        WHERE did = #{id}
+        <if test="name != null">name = #{name},</if>
+        <if test="user_id != null">user_id = #{user_id},</if>
+        <if test="detail != null">detail = #{detail},</if>
+        <if test="start_time != null">start_time = #{start_time},</if>
+        <if test="end_time != null">end_time = #{end_time},</if>
+        <if test="release_time != null">release_time = #{release_time},</if>
+        <if test="visibility != null">visibility = #{visibility},</if>
+        is_edit = CASE
+        WHEN is_edit IS NULL THEN
+        1 ELSE is_edit + 1
+        END
+        WHERE did = #{id} AND is_edit &lt; 4
     </update>
 </mapper>
