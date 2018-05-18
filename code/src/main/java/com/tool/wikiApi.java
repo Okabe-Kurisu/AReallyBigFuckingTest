@@ -8,5 +8,6 @@ import java.util.Map;
  */
 public class wikiApi {
     private String wikiHost = "//www.wikidata.org/w/api.php";
+    private String userAgent;
 
 }

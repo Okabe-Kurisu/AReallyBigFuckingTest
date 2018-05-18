@@ -27,8 +27,6 @@ dependencies {
     compile group: 'org.ansj', name: 'ansj_seg', version: '5.1.6'
     //http访问支持
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
-    //谷歌翻译
-    compile group: 'com.googlecode', name: 'google-api-translate-java', version: '0.92'
 
 }
 

@@ -65,6 +65,9 @@ $RECYCLE.BIN/
 code/build/
 code/out/
 code/.idea/
+code/analServ/__pycache__
+code/analServ/.idea
+code/analServ/wiki/__pycache__
 code/.gradle/
 doc/~$$数据库.~vsdx
 doc/~$功能列表.xlsx
