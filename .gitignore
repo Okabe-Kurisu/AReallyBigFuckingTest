@@ -64,7 +64,8 @@ $RECYCLE.BIN/
 
 code/build/
 code/out/
-code/.idea/
+code/.idea
+code/s.idea/
 code/analServ/__pycache__
 code/analServ/.idea
 code/analServ/wiki/__pycache__
