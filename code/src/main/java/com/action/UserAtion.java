@@ -9,10 +9,7 @@ import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.tool.PowerfulTools;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +25,14 @@ import java.util.*;
  */
 @Namespace("/user")
 @ParentPackage("custom-default")
+@Results( { @Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+        @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class UserAtion extends ActionSupport implements ServletRequestAware {
 
     HttpServletRequest request;
-
     User user;
-
     String message;
+    Map resultMap;
 
 
     @Action("addAdmin")
@@ -108,9 +106,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "addCallAt", results = {//将@用户添加到表中
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "addCallAt")//将@用户添加到表中
     public String addCallAt() {
         int user_id, bid;
         CallAt user = new CallAt();
@@ -165,12 +161,8 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return message;
     }
 
-    @Action(value = "signIn", results = {//用户注册
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "signIn")//用户注册
     public String signIn() {
-        Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         String username, nickname, password;
         Integer age, sex, is_ns;
         User user = new User();
@@ -201,14 +193,10 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         try {
             if (UserDao.checkusername(username) == null && UserDao.checknickname(nickname) == null) {
                 UserDao.signup(user);
-                resultMap = PowerfulTools.format("200", "成功", map);
-                Gson gson = new Gson();
-                message = gson.toJson(resultMap);
-            } else {
-                resultMap = PowerfulTools.format("101", "注册失败，该用户名或昵称已存在", map);
-                Gson gson = new Gson();
-                message = gson.toJson(resultMap);
+                resultMap = PowerfulTools.format("200", "成功", user);
 
+            } else {
+                resultMap = PowerfulTools.format("101", "注册失败，该用户名或昵称已存在", user);
             }
         } catch (NullPointerException ne) {
             ne.printStackTrace();
@@ -218,9 +206,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     }
 
 
-    @Action(value = "login", results = {//用户登录
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "login")//用户登录
     public String login() {
         String username, password;
         Map<String, Object> map = new HashMap();
@@ -230,18 +216,12 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         try {
             if (UserDao.checkusername(username) == null) {
                 resultMap = PowerfulTools.format("101", "登录失败，该用户名不存在", map);
-                Gson gson = new Gson();
-                message = gson.toJson(resultMap);
             } else if (UserDao.checkPassword(username).getPassword() == password) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                resultMap = PowerfulTools.format("200", "成功", map);
-                Gson gson = new Gson();
-                message = gson.toJson(resultMap);
+                resultMap = PowerfulTools.format("200", "成功", user);
             } else {
                 resultMap = PowerfulTools.format("101", "登录失败，密码错误", map);
-                Gson gson = new Gson();
-                message = gson.toJson(resultMap);
             }
         } catch (NullPointerException ne) {
 
@@ -417,6 +397,13 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         this.message = message;
     }
 
+    public Map getResultMap() {
+        return resultMap;
+    }
+
+    public void setResultMap(Map resultMap) {
+        this.resultMap = resultMap;
+    }
 
     public String getIpAddr(HttpServletRequest request){
         String ipAddress = request.getHeader("x-forwarded-for");

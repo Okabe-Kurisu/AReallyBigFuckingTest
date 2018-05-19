@@ -24,14 +24,14 @@ $(function() {
 			param['is_ns'] = 1
 		}
 		$.ajax({
-			url: baseUrl + "/user/signIn",
+			url: "/user/signIn",
 			data: param,
 			type: "POST",
 			contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-			dataType: "jsonp",
-			success: function () {
+			dataType: "json",
+			success: function (data) {
 				mdui.snackbar("注册成功");
-				setTimeout("self.location= baseUrl",3000);
+				setTimeout("self.location= '/'",3000);
 			},
 			error: function () {
 				mdui.snackbar("注册失败");
@@ -47,14 +47,14 @@ $(function() {
 		}
 		console.log(param)
 		$.ajax({
-			url: baseUrl + "/user/login",
+			url: "/user/login",
 			data: param,
 			type: "POST",
 			contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-			dataType: "jsonp",
+			dataType: "json",
 			success: function () {
 				mdui.snackbar("登陆成功");
-				setTimeout("self.location= baseUrl",3000);
+				setTimeout("self.location= '/'",3000);
 			},
 			error: function () {
 				mdui.snackbar("登陆失败");
