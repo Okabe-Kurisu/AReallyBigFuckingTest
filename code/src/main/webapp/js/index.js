@@ -13,9 +13,11 @@ function initBlog(argument) {
 function initUser(argument) {
 	// body...
 	if (sessionStorage.me) {//已登录
+		var me = sessionStorage.me
 		$(".login-btn").hide();
-		var me = JSON.parse(sessionStorage.me)
-		$(".userinfo-avatar").attr("src", me.avatar)
+		$(".userinfo-avatar").attr("src", me.avatar);
+		$(".userinfo-nickname").attr("src", me.nickname);
+		$(".userinfo-motto").attr("src", me.motto);		
 	}else{//检测到未登录
 		$(".userinfo").hide();
 		$(".me").hide();

@@ -174,8 +174,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         age = Integer.parseInt(request.getParameter("age"));
         sex = Integer.parseInt(request.getParameter("sex"));
         Date day = new Date();//获取系统当前时间
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-        int logtime = Integer.parseInt((df.format(day)));
+        int logtime = (int) System.currentTimeMillis()/1000;
         String userAgent = request.getHeader("user-agent");//获取浏览器信息
         String ip = getIpAddr(request);//获取IP地址
         System.out.println(ip);
@@ -193,7 +192,9 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         try {
             if (UserDao.checkusername(username) == null && UserDao.checknickname(nickname) == null) {
                 UserDao.signup(user);
-                resultMap = PowerfulTools.format("200", "成功", user);
+                Map temp = new HashMap();
+                temp.put("me",user);
+                resultMap = PowerfulTools.format("200", "成功", temp);
 
             } else {
                 resultMap = PowerfulTools.format("101", "注册失败，该用户名或昵称已存在", user);
@@ -210,23 +211,26 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     public String login() {
         String username, password;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         username = request.getParameter("username");
         password = request.getParameter("password");
+        user = UserDao.checkusername(username);
         try {
-            if (UserDao.checkusername(username) == null) {
+            if (user == null) {
                 resultMap = PowerfulTools.format("101", "登录失败，该用户名不存在", map);
-            } else if (UserDao.checkPassword(username).getPassword() == password) {
+            } else if (user.getPassword().equals(password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
-                resultMap = PowerfulTools.format("200", "成功", user);
+                Map temp = new HashMap();
+                temp.put("me",user);
+                resultMap = PowerfulTools.format("200", "成功", temp);
             } else {
+                System.out.println(UserDao.checkPassword(username).getPassword() + "!=" + password);
                 resultMap = PowerfulTools.format("101", "登录失败，密码错误", map);
             }
-        } catch (NullPointerException ne) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return message;
+        return SUCCESS;
     }
 
     @Action(value = "Update", results = {//修改用户
@@ -244,9 +248,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         password = request.getParameter("password");
         age = Integer.parseInt(request.getParameter("age"));
         sex = Integer.parseInt(request.getParameter("sex"));
-        Date day = new Date();//获取系统当前时间
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-        int logtime = Integer.parseInt((df.format(day)));
+        int logtime = (int) System.currentTimeMillis()/1000;
         String userAgent = request.getHeader("user-agent");//获取浏览器信息
         String ip = getIpAddr(request);//获取IP地址
         user.setUsername(username);

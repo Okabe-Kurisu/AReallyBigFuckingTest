@@ -27,13 +27,18 @@ $(function() {
 			url: "/user/signIn",
 			data: param,
 			type: "POST",
-			contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType: "json",
-			success: function (data) {
-				mdui.snackbar("注册成功");
-				setTimeout("self.location= '/'",3000);
+			success: function(data) {
+				if (data.code == 200) {
+					mdui.snackbar("注册成功");
+					sessionStorage.me = data.data.me
+					setTimeout("self.location= '/'", 3000);
+				}else{
+					mdui.snackbar("注册失败,");
+				}
 			},
-			error: function () {
+			error: function() {
 				mdui.snackbar("注册失败");
 			},
 		})
@@ -50,13 +55,18 @@ $(function() {
 			url: "/user/login",
 			data: param,
 			type: "POST",
-			contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType: "json",
-			success: function () {
-				mdui.snackbar("登陆成功");
-				setTimeout("self.location= '/'",3000);
+			success: function(data) {
+				if (data.code == 200) {
+					mdui.snackbar("登陆成功");
+					sessionStorage.me = data.data.me
+					setTimeout("self.location= '/'", 3000);
+				}else{
+					mdui.snackbar("注册失败,");
+				}
 			},
-			error: function () {
+			error: function() {
 				mdui.snackbar("登陆失败");
 			},
 		})
