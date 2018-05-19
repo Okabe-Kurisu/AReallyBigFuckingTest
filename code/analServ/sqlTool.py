@@ -71,7 +71,7 @@ def setKeyword(uid, keywords):
     cursor = db.cursor()
 
     # SQL 更新语句
-    sql = "UPDATE user SET keyword = '%s' WHERE uid = '%s'" % (str(keywords), str(uid))
+    sql = 'UPDATE user SET keyword = "%s" WHERE uid = "%s"' % (str(keywords), str(uid))
     try:
         # 执行SQL语句
         cursor.execute(sql)

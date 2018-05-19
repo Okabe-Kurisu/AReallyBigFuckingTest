@@ -41,7 +41,7 @@ def seg(content):
         key_dict = getCag(trans(word, "en"), key_dict)  # 从维基百科取到结果
     word_dict = sorted(key_dict.items(), key=operator.itemgetter(1), reverse=True)  # 再次排序，得到最终确认的关键字
     print(word_dict)
-    return [trans(x[0]) for x in word_dict][0:9]
+    return [trans(x[0]) for x in word_dict][0:14]
 
 
 # 从维基百科取出全部关键字的父话题
@@ -52,34 +52,38 @@ def getCag(key, rtn={}):
     except:
         print("超时，正在重试")
         time.sleep(5)
-        result_list = wikipedia.search(key, type="pageid")
-    time.sleep(0.5)  # 请求太快会被停用
+        getCag(key, rtn)
     temp = []
     for x in result_list:
         try:
             categorie_list = wikipedia.page(pageid=x).categories
             temp.extend(categorie_list)
-            time.sleep(0.5)
+            time.sleep(0.3)  # 请求太快会被停用
         except:
             continue
-    return list2dict(temp, rtn)
+    return list2dict(temp, rtn, "web")
 
 
 # 将list中的数据使用dict进行统计
-def list2dict(list, rtn={}):
-    extensionsToCheck = ['articles', 'wikipedia', 'webarchive']
+def list2dict(list, rtn={}, type="nor"):
+    extensionsToCheck = ['article', 'wikipedia', 'webarchive', 'cs1', 'page', 'parameters']
     while len(list) != 0:
-        key = list[0].lower()
+        key = list[0]
         counts = list.count(key)
-        if key == " " or any(ext in key for ext in extensionsToCheck):
+        list = remove_key(list, key, counts)
+        if (type != "nor" and any(ext in key.lower() for ext in extensionsToCheck)) or key == " ":
             None
         elif key not in rtn:
             rtn[key] = counts
         elif key in rtn:
             rtn[key] += counts
-        for x in range(counts):
-            list.remove(key)
     return rtn
+
+
+def remove_key(list, key, counts):
+    for x in range(counts):
+        list.remove(key)
+    return list
 
 
 main()
