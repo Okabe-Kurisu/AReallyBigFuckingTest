@@ -13,7 +13,7 @@ public class User {
 
     private Integer age;
 
-    private Boolean is_ns;
+    private Integer is_ns;
 
     private String motto;
 
@@ -30,11 +30,10 @@ public class User {
     private Integer last_logtime;
 
     private String browser_sign;
-<<<<<<< HEAD
 
     private Integer weight;
-=======
->>>>>>> caaed01e1927c86f7145c77284e2dba40ab8e89b
+
+    private String keyword;
 
     public Integer getUid() {
         return uid;
@@ -84,11 +83,11 @@ public class User {
         this.age = age;
     }
 
-    public Boolean getIs_ns() {
+    public Integer getIs_ns() {
         return is_ns;
     }
 
-    public void setIs_ns(Boolean is_ns) {
+    public void setIs_ns(Integer is_ns) {
         this.is_ns = is_ns;
     }
 
@@ -155,7 +154,6 @@ public class User {
     public void setBrowser_sign(String browser_sign) {
         this.browser_sign = browser_sign == null ? null : browser_sign.trim();
     }
-<<<<<<< HEAD
 
     public Integer getWeight() {
         return weight;
@@ -164,6 +162,12 @@ public class User {
     public void setWeight(Integer weight) {
         this.weight = weight;
     }
-=======
->>>>>>> caaed01e1927c86f7145c77284e2dba40ab8e89b
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword == null ? null : keyword.trim();
+    }
 }

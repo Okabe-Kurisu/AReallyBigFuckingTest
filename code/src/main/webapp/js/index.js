@@ -1,8 +1,28 @@
 $("document").ready(function() {
 	mdui.mutation();
+	initBlog();
+	initUser();
 })
-$(".back-up").on("click",smoothscroll);
 
+// 得到一堆博客，并存储起来
+function initBlog(argument) {
+	// body...
+}
+
+// 得到用户信息
+function initUser(argument) {
+	// body...
+	if (sessionStorage.me) {//已登录
+		$(".login-btn").hide();
+		var me = JSON.parse(sessionStorage.me)
+		$(".userinfo-avatar").attr("src", me.avatar)
+	}else{//检测到未登录
+		$(".userinfo").hide();
+		$(".me").hide();
+	}
+}
+
+$(".back-up").on("click",smoothscroll);
 function smoothscroll(argument) {
 	var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
 	if (currentScroll > 0) {

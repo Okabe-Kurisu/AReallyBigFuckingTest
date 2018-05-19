@@ -1,6 +1,6 @@
 package com.listener;
 
-import com.tool.HotSpot;
+import com.tool.DataTool;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -19,8 +19,10 @@ public class InitListener implements ServletContextListener {
         //系统的初始化工作
 
         System.out.println("初始化热词获得器");
-        HotSpot hotSpot = new HotSpot();
+        DataTool hotSpot = new DataTool();
         hotSpot.initHotSpot();
 
+        System.out.println("初始化用户权重分析");
+        hotSpot.initAUW();
     }
 }

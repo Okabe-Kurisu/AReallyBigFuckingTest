@@ -20,6 +20,7 @@ public class BlogDao {
     public static int insertBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
+            blog.setIp_address("");
             sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
             sqlSession.commit();
         } finally {
@@ -179,6 +180,43 @@ public class BlogDao {
         return blogList;
     }
 
+
+    //收集最近一段时间被关注的微博
+    public static List<Map> nowTimeHot(int date) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.nowTimeHot", date);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
+    //收集最近一段时间被关注的微博
+    public static List<Map> lastTimeHot() {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.lastTimeHot");
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
+    //得到用户所评论过的，转发过的，收藏过的，点赞过的全部内容
+    public static List<Map> allAboutUser() {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.allAboutUser");
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
     // 插入blog_discuss  （在某个话题下发布微博，需要在该表插入一条关联记录）
     public static void insertBlogDiscuss(BlogDiscuss blogDiscuss) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
@@ -189,5 +227,7 @@ public class BlogDao {
             sqlSession.close();
         }
     }
+
+
 
 }

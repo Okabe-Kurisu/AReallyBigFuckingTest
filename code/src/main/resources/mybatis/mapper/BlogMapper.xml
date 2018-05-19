@@ -61,7 +61,10 @@
 
     <!-- 得到指定用户微博 -->
     <select id="getUserBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT *
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=1) AS reshareNum,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM user,blog
         WHERE user.uid=blog.user_id
         AND user.uid=#{userid}
@@ -78,10 +81,10 @@
         WHERE user.uid = #{userid}
     </select>
     <insert id="submitBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
-        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, brower_sign, is_showName)
+        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, browser_sign, is_showName)
             VALUE
             (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility}, #{is_edit},
-                         #{ip_address}, #{brower_sign}, #{is_showName})
+                         #{ip_address}, #{browser_sign}, #{is_showName})
     </insert>
 
     <!-- 删除微博 查用户 -->
@@ -169,8 +172,8 @@
     </insert>
     <!-- 举报微博 不能重复举报 验证账号 -->
     <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
-        INSERT INTO sensitivity (blog_id, type, details)
-            VALUE (#{blog_id}, #{type}, #{details})
+        INSERT INTO sensitivity (blog_id, type, details,time)
+            VALUE (#{blog_id}, #{type}, #{details},#{time})
     </insert>
 
     <!-- 向blog_discuss插入记录 -->
@@ -178,6 +181,42 @@
         INSERT INTO blog_discuss (blog_id, discuss_id, user_id)
             VALUE (#{blog_id}, #{discuss_id}, #{user_id})
     </insert>
+
+    <!--收集最近正在讨论的微博-->
+    <select id="nowTimeHot" parameterType="int" resultType="Map">
+    SELECT * , COUNT(t.bid) as num
+    FROM (
+        SELECT b.*
+        FROM blog as b
+        JOIN thumb_up AS tu
+        ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - #{date})
+        UNION ALL
+        SELECT b.*
+        FROM blog as b
+        JOIN blog as bc
+        ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - #{date})
+        ) AS t
+     group by t.bid
+     ORDER BY num DESC
+    </select>
+
+    <!--得到昨日讨论的微博-->
+    <select id="lastTimeHot" resultType="Map">
+        SELECT * , COUNT(t.bid) as num
+        FROM (
+        SELECT b.*
+        FROM blog as b
+        JOIN thumb_up AS tu
+        ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - 86400)
+        UNION ALL
+        SELECT b.*
+        FROM blog as b
+        JOIN blog as bc
+        ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - 86400)
+        ) AS t
+        group by t.bid
+        ORDER BY num DESC
+    </select>
     <!--用户注销，微博不可见-->
     <update id="userLeave" parameterType="int">
         UPDATE blog
@@ -185,4 +224,29 @@
         WHERE
         user_id=#{uid}
     </update>
+
+    <!--得到用户所评论过的，转发过的，收藏过的，点赞过的全部内容-->
+    <select id="allAboutUser" parameterType="int" resultType="Map">
+        SELECT * FROM (
+          SELECT b.content, 4 AS weight
+          FROM blog AS b
+          WHERE b.user_id = #{uid}
+          UNION ALL
+          SELECT b.content, 2 AS weight
+          FROM blog AS bc
+          JOIN blog AS b
+          ON b.bid = bc.comment_on AND bc.user_id = #{uid}
+          UNION ALL
+          SELECT b.content, 2 AS weight
+          FROM favorite AS f
+          JOIN blog AS b
+          ON b.bid = f.blog_id AND f.user_id = #{uid}
+          UNION ALL
+          SELECT b.content, 1 AS weight
+          FROM thumb_up AS tu
+          JOIN blog AS b
+          ON b.bid = tu.blog_id AND tu.user_id = #{uid}
+        ) AS  t
+        ORDER BY t.weight
+    </select>
 </mapper>
