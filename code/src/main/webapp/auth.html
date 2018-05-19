@@ -1,18 +1,92 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Fake 微博</title>
+		<title>Fake 微博 - 注册</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="charset" content="utf-8">
 		<link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
 		<link rel="stylesheet" type="text/css" href="./css/mine.css">
+		<link rel="stylesheet" type="text/css" href="./css/auth.css">
+		<meta http-equiv="content-type" charset="UTF-8" content="text/css">
+
 	</head>
-	<body class="mdui-theme-primary-indigo mdui-theme-accent-red mdui-color-grey-100">
+	<body class="mdui-theme-primary-indigo mdui-theme-accent-red mdui-color-grey-100 SignFlowHomepage">
 		<div class="mdui-container-fluid">
 			<!-- asdasd -->
+			<div id="SignFlowHomepage" class="">
+				<div id="SignFlowHomepage-content1" class="SignFlowHomepage-content1 mdui-color-grey-100">
+					<label class="mdui-switch  switch">
+						<input type="checkbox" id="is_ns" />
+						<i class="mdui-switch-icon "></i>
+					</label>
+					<h1>微博</h1>
+					<h3>注册微博，时刻分享新鲜事</h3>
+					<div class="contains">
+					<div class="mdui-textfield mdui-textfield-floating-label ">
+						<label class="mdui-textfield-label">用户名</label>
+						<input class="mdui-textfield-input signin-username" type="text"/>
+					</div>
+					<div class="mdui-textfield mdui-textfield-floating-label">
+						<label class="mdui-textfield-label ">昵称</label>
+						<input class="mdui-textfield-input signin-nickname" type="text"/>
+					</div>
+					<div class="mdui-textfield mdui-textfield-floating-label">
+						<label class="mdui-textfield-label">密码</label>
+						<input class="mdui-textfield-input signin-password" type="password"/>
+					</div>
+						<label class="mdui-radio sex">
+							<input type="radio" class="sex" name="sex" value="0" checked />
+							<i class="mdui-radio-icon"></i>
+							男
+						</label>
+						<label class="mdui-radio sex">
+							<input type="radio" class="sex" value="1" name="sex"/>
+							<i class="mdui-radio-icon"></i>
+							女
+
+						</label>
+						<div class="mdui-textfield">
+							<label class="mdui-textfield-label">年龄</label>
+						<input class="mdui-textfield-input signin-age" type="number"/>
+						</div>
+
+
+					</div>
+					<div class="mdui-col mdui-color-teal contains1">
+						<button class="mdui-btn mdui-btn-block mdui-ripple mdui-color-teal" id="signin-btn">注册</button>
+					</div>
+					<div>
+						<h4>已有账号？<span class="login">登录</span></h4>
+					</div>
+				</div>
+				<div id="SignFlowHomepage-content2" class="SignFlowHomepage-content2 mdui-color-grey-100">
+					<h1>微博</h1>
+					<h3>登录微博，时刻分享新鲜事</h3>
+					<div class="contains">
+						<div class="mdui-textfield mdui-textfield-floating-label">
+							<label class="mdui-textfield-label">用户名</label>
+							<input class="mdui-textfield-input login-username" type="text"/>
+						</div>
+						<div class="mdui-textfield mdui-textfield-floating-label">
+							<label class="mdui-textfield-label">密码</label>
+							<input class="mdui-textfield-input login-password" type="password"/>
+						</div>
+					</div>
+					<div class="mdui-col mdui-color-teal contains1">
+						<button class="mdui-btn mdui-btn-block mdui-ripple mdui-color-teal" id="login-btn">登录</button>
+					</div>
+					<div>
+						<h4>没有账号？<span class="sign">注册</span></h4>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
 		<footer>
 			<script type="text/javascript"  src="./js/mdui.min.js" ></script>
 			<script type="text/javascript"  src="./js/jquery.js" ></script>
-			<script type="text/javascript"  src="./js/index.js" ></script>
+			<script type="text/javascript"  src="./js/auth.js" ></script>
 		</footer>
 	</body>
 </html>

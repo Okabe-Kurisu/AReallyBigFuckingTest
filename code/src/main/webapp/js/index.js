@@ -1,8 +1,14 @@
 $("document").ready(function() {
 	mdui.mutation();
+	initBlog();
 })
-$(".back-up").on("click",smoothscroll);
 
+// 得到一堆博客，并存储起来
+function initBlog(argument) {
+	// body...
+}
+
+$(".back-up").on("click",smoothscroll);
 function smoothscroll(argument) {
 	var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
 	if (currentScroll > 0) {

@@ -17,6 +17,9 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -169,11 +172,12 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
         String username, nickname, password;
-        Integer age, sex;
+        Integer age, sex, is_ns;
         User user = new User();
         //从前端获取
         username = request.getParameter("username");
         nickname = request.getParameter("nickname");
+        is_ns = Integer.parseInt(request.getParameter("is_ns"));
         password = request.getParameter("password");
         age = Integer.parseInt(request.getParameter("age"));
         sex = Integer.parseInt(request.getParameter("sex"));
@@ -181,9 +185,11 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         int logtime = Integer.parseInt((df.format(day)));
         String userAgent = request.getHeader("user-agent");//获取浏览器信息
-        String ip = request.getHeader("X-Forwarded-For");//获取IP地址
+        String ip = getIpAddr(request);//获取IP地址
+        System.out.println(ip);
         user.setUsername(username);
         user.setIs_ban(0);
+        user.setIs_ns(is_ns);
         user.setNickname(nickname);
         user.setPassword(password);
         user.setSex(sex);
@@ -262,7 +268,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         int logtime = Integer.parseInt((df.format(day)));
         String userAgent = request.getHeader("user-agent");//获取浏览器信息
-        String ip = request.getHeader("X-Forwarded-For");//获取IP地址
+        String ip = getIpAddr(request);//获取IP地址
         user.setUsername(username);
         user.setIs_ban(0);
         user.setNickname(nickname);
@@ -335,7 +341,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         Follow follow  = new Follow();
         follow.setTime(Integer.parseInt((df.format(day))));
-        follow.setType(0);
+        follow.setType(0);//0代表关注的用户，1是话题,2是特别关注，3是黑名单
         follow.setVisibility(0);
         follow.setUser_id(user_id);
         follow.setFollowed_id(followed_id);
@@ -411,6 +417,36 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         this.message = message;
     }
 
+
+    public String getIpAddr(HttpServletRequest request){
+        String ipAddress = request.getHeader("x-forwarded-for");
+        if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getHeader("Proxy-Client-IP");
+        }
+        if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getRemoteAddr();
+            if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")){
+                //根据网卡取本机配置的IP
+                InetAddress inet=null;
+                try {
+                    inet = InetAddress.getLocalHost();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                ipAddress= inet.getHostAddress();
+            }
+        }
+        //对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if(ipAddress!=null && ipAddress.length()>15){ //"***.***.***.***".length() = 15
+            if(ipAddress.indexOf(",")>0){
+                ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));
+            }
+        }
+        return ipAddress;
+    }
 
     @Override
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {
