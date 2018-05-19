@@ -4,24 +4,22 @@ import com.DAO.MessageDao;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 @Namespace("/message")
 @ParentPackage("json-default")
+@Results( { @Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+        @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class MessageAction extends ActionSupport implements ServletRequestAware {
     HttpServletRequest request;
 
     String message;
     //用户私信他人
-    @Action(value = "sendMassage", results = {
-    })
-    public Map<String, Object> SendMassage(){
+    @Action(value = "sendMassage")
+    public String SendMassage(){
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
         String uid;//发送方的id
@@ -51,13 +49,11 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
         }
-        return resultMap;
+        return SUCCESS;
     }
 
      //获得发送私信用户的用户名
-     @Action(value = "getSendMessageUserId", results = {
-             @Result(name = "success", type = "json", params = {"root", "message"})
-     })
+     @Action(value = "getSendMessageUserId")
      public  String GetSendMessageUserId() {
          Map<String, Object> map = new HashMap();
          Map<String, Object> resultMap;
@@ -82,9 +78,7 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
          return SUCCESS;
      }
      //通过用户id和发送方的id查看信息
-     @Action(value = "GetMassageUseridAndAccpeter", results = {
-             @Result(name = "success", type = "json", params = {"root", "message"})
-     })
+     @Action(value = "GetMassageUseridAndAccpeter")
     public String GetMassageUseridAndAccpeter(){
          Map<String, Object> map = new HashMap();
          Map<String, Object> resultMap;
@@ -116,7 +110,7 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
              Gson gson = new Gson();
              message = gson.toJson(resultMap);
          }
-        return message;
+        return SUCCESS;
     }
 
     public String getMessage() {

@@ -5,10 +5,7 @@ import com.DAO.SensitivityDao;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +14,14 @@ import java.util.List;
 import java.util.Map;
 @Namespace("/sensitivity")
 @ParentPackage("json-default")
+@Results( { @Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+        @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class SensitivityAction extends ActionSupport implements ServletRequestAware {
     HttpServletRequest request;
 
     String message;
     //封禁账号
-    @Action(value = "banByUserId", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "banByUserId")
     public String BanByUserId(){
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
@@ -53,9 +50,7 @@ public class SensitivityAction extends ActionSupport implements ServletRequestAw
         return SUCCESS;
     }
     //解封账号
-    @Action(value = "openByUserId", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "openByUserId")
     public String OpenByUserId(){
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
@@ -78,12 +73,10 @@ public class SensitivityAction extends ActionSupport implements ServletRequestAw
             Gson gson = new Gson();
             message = gson.toJson(resultMap);
         }
-        return message;
+        return SUCCESS;
     }
     //获得被举报的微博
-    @Action(value = "getReportedBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "getReportedBlog")
     public  String getReportedBlog() {
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
