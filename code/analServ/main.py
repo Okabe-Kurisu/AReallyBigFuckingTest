@@ -66,7 +66,7 @@ def getCag(key, rtn={}):
 
 # 将list中的数据使用dict进行统计
 def list2dict(list, rtn={}, type="nor"):
-    extensionsToCheck = ['article', 'wikipedia', 'webarchive', 'cs1', 'page', 'parameters']
+    extensionsToCheck = ['article', 'wikipedia', 'webarchive', 'cs1', 'page', 'parameters', ' dmy ']
     while len(list) != 0:
         key = list[0]
         counts = list.count(key)

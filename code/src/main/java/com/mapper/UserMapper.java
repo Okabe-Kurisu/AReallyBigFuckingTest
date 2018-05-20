@@ -16,21 +16,21 @@ public interface UserMapper {
         "motto, avatar, background, ",
         "is_ban, alive, ip_address, ",
         "last_logtime, browser_sign, ",
-        "weight)",
+        "weight, keyword)",
         "values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, ",
         "#{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, ",
-        "#{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{is_ns,jdbcType=BIT}, ",
+        "#{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{is_ns,jdbcType=INTEGER}, ",
         "#{motto,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{background,jdbcType=VARCHAR}, ",
         "#{is_ban,jdbcType=INTEGER}, #{alive,jdbcType=INTEGER}, #{ip_address,jdbcType=VARCHAR}, ",
         "#{last_logtime,jdbcType=INTEGER}, #{browser_sign,jdbcType=VARCHAR}, ",
-        "#{weight,jdbcType=INTEGER})"
+        "#{weight,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR})"
     })
     int insert(User record);
 
     @Select({
         "select",
         "uid, username, nickname, password, sex, age, is_ns, motto, avatar, background, ",
-        "is_ban, alive, ip_address, last_logtime, browser_sign, weight",
+        "is_ban, alive, ip_address, last_logtime, browser_sign, weight, keyword",
         "from user"
     })
     @Results({
@@ -40,7 +40,7 @@ public interface UserMapper {
         @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
         @Result(column="sex", property="sex", jdbcType=JdbcType.INTEGER),
         @Result(column="age", property="age", jdbcType=JdbcType.INTEGER),
-        @Result(column="is_ns", property="is_ns", jdbcType=JdbcType.BIT),
+        @Result(column="is_ns", property="is_ns", jdbcType=JdbcType.INTEGER),
         @Result(column="motto", property="motto", jdbcType=JdbcType.VARCHAR),
         @Result(column="avatar", property="avatar", jdbcType=JdbcType.VARCHAR),
         @Result(column="background", property="background", jdbcType=JdbcType.VARCHAR),
@@ -49,7 +49,8 @@ public interface UserMapper {
         @Result(column="ip_address", property="ip_address", jdbcType=JdbcType.VARCHAR),
         @Result(column="last_logtime", property="last_logtime", jdbcType=JdbcType.INTEGER),
         @Result(column="browser_sign", property="browser_sign", jdbcType=JdbcType.VARCHAR),
-        @Result(column="weight", property="weight", jdbcType=JdbcType.INTEGER)
+        @Result(column="weight", property="weight", jdbcType=JdbcType.INTEGER),
+        @Result(column="keyword", property="keyword", jdbcType=JdbcType.VARCHAR)
     })
     List<User> selectAll();
 }
