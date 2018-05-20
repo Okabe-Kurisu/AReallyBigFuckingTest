@@ -9,6 +9,8 @@ import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.tool.PowerfulTools;
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -17,6 +19,9 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,8 +37,10 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     User user;
 
     String message;
+    private File file;
+    private String fileFileName;
 
-
+    private String fileContentType;
     @Action("addAdmin")
     public void addAdmin() {
 
@@ -395,6 +402,58 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return message;
 
     }
+    @Action(value = "setBackground", results = {//清空用户微博
+            @Result(name = "success", type = "json", params = {"root", "message"})
+    })
+    public String setBackground() {
+        int user_id;
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Map<String, Object> map = new HashMap();
+        Map<String, Object> resultMap;
+        try {
+            user = UserDao.getAvatar(user);
+            UserDao.setBackground(user);
+            resultMap = PowerfulTools.format("200", "关注成功", map);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        } catch (NullPointerException ne) {
+
+        }
+        return SUCCESS;
+
+    }
+    @Action(value = "upload", results = {//上传用户图片
+            @Result(name = "success", type = "json", params = {"root", "message"})
+    })
+    public String upload() throws IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Map<String, Object> map = new HashMap();
+        Map<String, Object> resultMap;
+        String root = ServletActionContext.getServletContext().getRealPath("/upload");
+        String type=fileFileName.substring(fileFileName.indexOf("."));
+        int len=type.length();
+        String fileOtherName=fileFileName.substring(0, fileFileName.length()-len);
+        System.out.println(fileFileName);
+        try {
+            if(file.exists()){
+                fileFileName=fileOtherName+System.currentTimeMillis()+type;
+                FileUtils.copyFile(file, new File(root+"/"+fileFileName));
+            }else{
+                FileUtils.copyFile(file, new File(root+"/"+fileFileName));
+            }
+            user.setAvatar(fileFileName);
+            UserDao.upload(user);
+            resultMap = PowerfulTools.format("200", "上传成功", map);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        } catch (NullPointerException ne) {
+
+        }
+        return SUCCESS;
+
+    }
     public User getUser() {
         return user;
     }
@@ -410,8 +469,24 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     public void setMessage(String message) {
         this.message = message;
     }
-
-
+    public String getFileFileName() {
+        return fileFileName;
+    }
+    public void setFileFileName(String fileFileName) {
+        this.fileFileName = fileFileName;
+    }
+    public String getFileContentType() {
+        return fileContentType;
+    }
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+    }
+    public File getFile() {
+        return file;
+    }
+    public void setFile(File file) {
+        this.file = file;
+    }
     @Override
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {
         this.request = request;
