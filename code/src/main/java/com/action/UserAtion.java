@@ -7,31 +7,23 @@ import com.model.CallAt;
 import com.model.Follow;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.tool.PowerfulTools;
-<<<<<<< HEAD
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-=======
 import org.apache.struts2.convention.annotation.*;
->>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-<<<<<<< HEAD
 
 import java.io.File;
 import java.io.IOException;
-=======
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
->>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -47,12 +39,9 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     HttpServletRequest request;
     User user;
     String message;
-<<<<<<< HEAD
     private File file;
     private String fileFileName;
-=======
     Map resultMap;
->>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
 
     private String fileContentType;
     @Action("addAdmin")
@@ -397,7 +386,18 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
 
     }
-    @Action(value = "setBackground", results = {//清空用户微博
+
+    @Action(value = "getUserByUid")//根据用户id得到用户
+    public String getUserByUid() {
+        try {
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            resultMap = PowerfulTools.format("200", "成功", UserDao.getUserByUid(uid));
+        } catch (NullPointerException ne) {
+            resultMap = PowerfulTools.format("100", "失败", "");
+        }
+        return SUCCESS;
+    }
+    @Action(value = "setBackground", results = {//设置用户背景
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
     public String setBackground() {
@@ -464,7 +464,6 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     public void setMessage(String message) {
         this.message = message;
     }
-<<<<<<< HEAD
     public String getFileFileName() {
         return fileFileName;
     }
@@ -483,7 +482,6 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     public void setFile(File file) {
         this.file = file;
     }
-=======
 
     public Map getResultMap() {
         return resultMap;
@@ -523,7 +521,6 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return ipAddress;
     }
 
->>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
     @Override
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {
         this.request = request;

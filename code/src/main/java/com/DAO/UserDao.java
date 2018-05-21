@@ -79,6 +79,19 @@ public class UserDao {
         }
         return 0;
     }
+    public static Map getUserByUid(int uid) {
+        HashMap user = null;
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            user = sqlSession.selectOne("weibo/UserMapper.getUserByUid",uid);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            sqlSession.close();
+        }
+        return user;
+    }
     public static int setBackground(User user) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {

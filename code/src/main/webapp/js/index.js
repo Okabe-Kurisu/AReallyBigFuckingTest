@@ -10,7 +10,7 @@ function initPage(argument) {
 	var request = GetRequest(); //取得url参数
 	var method = request["method"];
 	// 如果是特殊类型的访问
-	if (typeof(method) ！= "undefined") {
+	if (typeof(method) != "undefined") {
 		if (method == "index") {
 			// 主页
 
