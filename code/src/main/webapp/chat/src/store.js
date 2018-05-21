@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     state: {
         // 当前用户
         user: {
-            name: 'coffce',
+            name: 'ww',
             img: 'dist/images/1.jpg'
         },
         // 会话列表
@@ -20,7 +20,7 @@ const store = new Vuex.Store({
             {
                 id: 1,
                 user: {
-                    name: '示例介绍',
+                    name: 'dd',
                     img: 'dist/images/2.png'
                 },
                 messages: [

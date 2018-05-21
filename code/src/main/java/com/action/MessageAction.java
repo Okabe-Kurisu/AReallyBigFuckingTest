@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServletRequest;
         @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class MessageAction extends ActionSupport implements ServletRequestAware {
     HttpServletRequest request;
-
+    Map resultMap;
     String message;
     //用户私信他人
     @Action(value = "sendMassage")
     public String SendMassage(){
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         String uid;//发送方的id
         String aid;//接收方的id
         String is_showName;//选择是否匿名
@@ -56,7 +55,6 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
      @Action(value = "getSendMessageUserId")
      public  String GetSendMessageUserId() {
          Map<String, Object> map = new HashMap();
-         Map<String, Object> resultMap;
          String uid;
          try {
              //获得参数
@@ -66,14 +64,9 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
              List blogList = MessageDao.getSendMassageUserid(map);
              // 封装响应数据
              resultMap = PowerfulTools.format("200", "成功", blogList);
-             // 转换为JSON字符串
-             Gson gson = new Gson();
-             message = gson.toJson(resultMap);
          } catch (NullPointerException ne) {
              ne.printStackTrace();
              resultMap = PowerfulTools.format("500", "系统异常", null);
-             Gson gson = new Gson();
-             message = gson.toJson(resultMap);
          }
          return SUCCESS;
      }
@@ -81,7 +74,6 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
      @Action(value = "GetMassageUseridAndAccpeter")
     public String GetMassageUseridAndAccpeter(){
          Map<String, Object> map = new HashMap();
-         Map<String, Object> resultMap;
          String uid;//用户的id
          String sid;//发送方的id
          String is_showName;//选择是否查看匿名
@@ -120,6 +112,15 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public Map getResultMap() {
+        return resultMap;
+    }
+
+    public void setResultMap(Map resultMap) {
+        this.resultMap = resultMap;
+    }
+
     @Override
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {
         this.request = request;
