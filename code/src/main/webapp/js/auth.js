@@ -32,7 +32,7 @@ $(function() {
 			success: function(data) {
 				if (data.code == 200) {
 					mdui.snackbar("注册成功");
-					sessionStorage.me = data.data.me
+					sessionStorage.me = JSON.stringify(data.data.me);
 					setTimeout("self.location= '/'", 3000);
 				}else{
 					mdui.snackbar("注册失败,");
@@ -60,10 +60,10 @@ $(function() {
 			success: function(data) {
 				if (data.code == 200) {
 					mdui.snackbar("登陆成功");
-					sessionStorage.me = data.data.me
+					sessionStorage.me = JSON.stringify(data.data.me);
 					setTimeout("self.location= '/'", 3000);
 				}else{
-					mdui.snackbar("注册失败,");
+					mdui.snackbar("登陆失败");
 				}
 			},
 			error: function() {

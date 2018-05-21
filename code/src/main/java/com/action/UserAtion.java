@@ -136,9 +136,8 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "signUp", results = {//判断用户名和昵称是否存在
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "signUp")//判断用户名和昵称是否存在
+
     public String signUp() {//判断用户名和昵称是否存在
         String username, nickname;
         Map<String, Object> map = new HashMap();
@@ -158,7 +157,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
 
         }
-        return message;
+        return SUCCESS;
     }
 
     @Action(value = "signIn")//用户注册
@@ -270,9 +269,8 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "leave", results = {//注销用户
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "leave")//注销用户
+
     public String leave() {//注销用户
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
@@ -287,27 +285,23 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
 
         }
-        return message;
+        return SUCCESS;
     }
-    @Action(value = "logout", results = {//用户退出登录
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "logout")//用户退出登录
     public String logout() {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
-        Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
         try {
             session.removeAttribute("user");
-            resultMap = PowerfulTools.format("200", "退登成功", map);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            resultMap = PowerfulTools.format("200", "退出成功", "");
         } catch (NullPointerException ne) {
-
+            resultMap = PowerfulTools.format("100", "退出失败", "");
         }
-        return message;
+        return SUCCESS;
     }
+
     @Action(value = "follow", results = {//关注用户
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
@@ -335,7 +329,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
 
         }
-            return message;
+            return SUCCESS;
 
     }
     @Action(value = "unfollow", results = {////取消关注
@@ -360,7 +354,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
 
         }
-        return message;
+        return SUCCESS;
 
     }
     @Action(value = "initUser", results = {//清空用户微博
@@ -380,7 +374,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
 
         }
-        return message;
+        return SUCCESS;
 
     }
     public User getUser() {
