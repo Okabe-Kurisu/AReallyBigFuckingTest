@@ -61,9 +61,10 @@ public class myTest {
         System.out.println("aaaaaa"+UserDao.updateUuser(user)+"aaaaaaa");*/
        /* UserDao.userLeave(4);*/
         User user = new User();
-        user.setUid(3);
-        UserDao.initUser(user);
-
+        user.setUid(2);
+        user = UserDao.getAvatar(user);
+        System.out.println(user.getAvatar());
+        UserDao.setBackground(user);
 //        Sensitivity Sensitivity_blog = new Sensitivity();
 //        Favorite Favorite_blog = new Favorite();
 //        Sensitivity_blog.setType(0);

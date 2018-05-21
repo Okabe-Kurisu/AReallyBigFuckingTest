@@ -15,6 +15,17 @@ import java.util.Map;
  * Created by Amadeus on 2018/3/15.
  */
 public class UserDao {
+    public static Integer upload(User user) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        System.out.println(user);
+        try {
+            sqlSession.update("weibo/UserMapper.upload", user);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return user.getUid();
+    }
     public static Integer updateUuser(User user) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         System.out.println(user);
@@ -68,6 +79,16 @@ public class UserDao {
         }
         return 0;
     }
+    public static int setBackground(User user) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/UserMapper.setBackground", user);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return user.getUid();
+    }
     public static int signup(User user) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
@@ -90,6 +111,19 @@ public class UserDao {
             sqlSession.close();
         }
         return user;
+    }
+    public static User getAvatar(User user) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        User user1 = new User();
+        System.out.println(user.getUid());
+        try {
+            user1 = sqlSession.selectOne("weibo/UserMapper.getAvatar", user);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        System.out.println(user1.getAvatar()+"1111111111111111111111111111111111");
+        return user1;
     }
     public static User checkusername(String username) {
         SqlSession sqlSession = MybatisTool.getSqlSession();

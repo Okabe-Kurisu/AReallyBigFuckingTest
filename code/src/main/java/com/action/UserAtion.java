@@ -9,14 +9,29 @@ import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.tool.PowerfulTools;
+<<<<<<< HEAD
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+=======
 import org.apache.struts2.convention.annotation.*;
+>>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+<<<<<<< HEAD
+
+import java.io.File;
+import java.io.IOException;
+=======
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+>>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,9 +47,14 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     HttpServletRequest request;
     User user;
     String message;
+<<<<<<< HEAD
+    private File file;
+    private String fileFileName;
+=======
     Map resultMap;
+>>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
 
-
+    private String fileContentType;
     @Action("addAdmin")
     public void addAdmin() {
 
@@ -377,6 +397,58 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
 
     }
+    @Action(value = "setBackground", results = {//清空用户微博
+            @Result(name = "success", type = "json", params = {"root", "message"})
+    })
+    public String setBackground() {
+        int user_id;
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Map<String, Object> map = new HashMap();
+        Map<String, Object> resultMap;
+        try {
+            user = UserDao.getAvatar(user);
+            UserDao.setBackground(user);
+            resultMap = PowerfulTools.format("200", "关注成功", map);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        } catch (NullPointerException ne) {
+
+        }
+        return SUCCESS;
+
+    }
+    @Action(value = "upload", results = {//上传用户图片
+            @Result(name = "success", type = "json", params = {"root", "message"})
+    })
+    public String upload() throws IOException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Map<String, Object> map = new HashMap();
+        Map<String, Object> resultMap;
+        String root = ServletActionContext.getServletContext().getRealPath("/upload");
+        String type=fileFileName.substring(fileFileName.indexOf("."));
+        int len=type.length();
+        String fileOtherName=fileFileName.substring(0, fileFileName.length()-len);
+        System.out.println(fileFileName);
+        try {
+            if(file.exists()){
+                fileFileName=fileOtherName+System.currentTimeMillis()+type;
+                FileUtils.copyFile(file, new File(root+"/"+fileFileName));
+            }else{
+                FileUtils.copyFile(file, new File(root+"/"+fileFileName));
+            }
+            user.setAvatar(fileFileName);
+            UserDao.upload(user);
+            resultMap = PowerfulTools.format("200", "上传成功", map);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        } catch (NullPointerException ne) {
+
+        }
+        return SUCCESS;
+
+    }
     public User getUser() {
         return user;
     }
@@ -392,6 +464,26 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     public void setMessage(String message) {
         this.message = message;
     }
+<<<<<<< HEAD
+    public String getFileFileName() {
+        return fileFileName;
+    }
+    public void setFileFileName(String fileFileName) {
+        this.fileFileName = fileFileName;
+    }
+    public String getFileContentType() {
+        return fileContentType;
+    }
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+    }
+    public File getFile() {
+        return file;
+    }
+    public void setFile(File file) {
+        this.file = file;
+    }
+=======
 
     public Map getResultMap() {
         return resultMap;
@@ -431,6 +523,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return ipAddress;
     }
 
+>>>>>>> 0c7ac60219a7ec4b0763da22be5843d82c57dc4a
     @Override
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {
         this.request = request;
