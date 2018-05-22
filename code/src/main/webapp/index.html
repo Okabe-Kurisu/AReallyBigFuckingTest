@@ -201,25 +201,30 @@
 				</div>
 				<!-- 右侧边栏 -->
 				<div class="mdui-col-xs-3 mdui-m-t-1">
-					<div class="mdui-card">
+					<div class="mdui-card usercard">
 						<!-- 用户背景图片 和头像-->
 						<div class="mdui-card-media mdui-center">
-							<img src="./img/background.jpg">
+							<img src="./img/background.jpg" class="usercard-background">
 							<div class="mdui-card-media-covered mdui-card-media-covered-transparent mdui-card-media-covered-top mdui-valign user-cover">
-								<img class="mdui-img-circle user-cover-avatar mdui-center" src="./img/avatar.jpg"/>
+								<img class="mdui-img-circle user-cover-avatar mdui-center usercard-avatar" src="./img/avatar.jpg"/>
 							</div>
 						</div>
 						
 						<!-- 关注粉丝数之类的 -->
-						<div class="mdui-card-content mdui-center mdui-valign">
+						<div class="mdui-card-content mdui-center mdui-valign ">
 							<div class="user-info-list mdui-row-xs-3 mdui-center mdui-valign">
-								<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong>95</strong>关注</button>
-								<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong>5050410</strong>粉丝</button>
-								<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong>1</strong>微博</button>
+								<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong class="usercard-follerNum">0</strong>关注</button>
+								<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong class="usercard-folledNum">0</strong>粉丝</button>
+								<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong class="usercard-blogNum">0</strong>微博</button>
 							</div>
 						</div>
 						<!-- todo:如果这个人的id不是自己，就加上关注按钮组和屏蔽按钮
-								如果当前用户是鹳狸猿，则显示封禁按钮 -->
+						如果当前用户是鹳狸猿，则显示封禁按钮 -->
+						<div class="user-info-list mdui-row-xs-3 mdui-center mdui-valign usercard-action">
+							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center" mdui-tooltip="{content: '长按特别关注', delay: 500}">关注</button>
+							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center">屏蔽</button>
+							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center">私信</button>
+						</div>
 					</div>
 					<!-- 关注与被关注 -->
 					<div class="mdui-card mdui-m-t-2">
@@ -227,13 +232,7 @@
 							<p>这些人关注着他</p>
 							<div class="mdui-divider"></div>
 						</div>
-						<div class="mdui-card-content mdui-row-xs-3">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
+						<div class="mdui-card-content mdui-row-xs-3 usercard-folled">
 						</div>
 					</div>
 					<div class="mdui-card mdui-m-t-2">
@@ -241,13 +240,7 @@
 							<p>这些人被他关注着</p>
 							<div class="mdui-divider"></div>
 						</div>
-						<div class="mdui-card-content mdui-row-xs-3">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
-							<img src="./img/avatar.jpg" class="mdui-img-fluid mdui-col">
+						<div class="mdui-card-content mdui-row-xs-3 usercard-foller">
 						</div>
 					</div>
 					<!--todo: 热门话题 -->
@@ -269,7 +262,6 @@
 						<button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange mdui-text-color-white"   mdui-tooltip="{content: '创建话题', delay: 500}"><i class="mdui-icon material-icons">chat_bubble</i></button>
 						<button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange send-fab mdui-text-color-white" mdui-tooltip="{content: '收藏夹', delay: 500}"><i class="mdui-icon material-icons">folder</i></button>
 						<button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-teal send-fab" mdui-tooltip="{content: '发送文章', delay: 500}"><i class="mdui-icon material-icons">send</i></button>
-
 					</div>
 				</div>
 				
@@ -359,7 +351,7 @@
 					</div>
 				</div>
 				<!-- 拖动上传 -->
-				<div class="mdui-dialog image-dialog">
+				<div class="mdui-dialog upload-dialog">
 					<div class="mdui-dialog-title">上传图片</div>
 					<div class="mdui-dialog-content image-content">
 						<div class="image-zone mdui-center"></div>
@@ -369,8 +361,6 @@
 				<!-- todo:管理话题 -->
 				<!--todo: 收藏夹 -->
 				<!--todo: 个人信息修改dialog -->
-				<!--todo: 封禁用户按钮 -->
-				<!--todo: 封禁博客按钮 -->
 				<!-- 博客模版 -->
 				<div class="template mdui-hidden">
 					<div class="mdui-card mdui-m-t-1" blog-id="0">

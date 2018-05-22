@@ -8,29 +8,102 @@ $("document").ready(function() {
 // 初始化页面类型
 function initPage(argument) {
 	var request = GetRequest(); //取得url参数
-	var method = request["method"];
+	var method = request.method;
 	// 如果是特殊类型的访问
 	if (typeof(method) != "undefined") {
-		if (method == "index") {
-			// 主页
-
-		}
 		if (method == "userinfo") {
-			//他人用户页面
+			//用户页面
+			var uid = request.uid;
+			setUsercard(uid);
+			setFanCard(uid);
+
+			var meid = 0;
+			if (sessionStorage.me != "null" && typeof(sessionStorage.me) != "undefined") {
+				var me = JSON.parse(sessionStorage.me);
+				meid = me.uid
+			}
+			//如果这不是用户的主页，则显示关注按钮
+			if (uid == meid) {
+				$(".usercard-action").hide()
+			}
+
 		}
 		if (method == "search") {
 			// 搜索页面
+			var keyword = request.keyword
 		}
 		if (method == "callat") {
 			// at人页面
 		}
+	} else {
+		// 主页
 	}
-	console.log(request)
+
+	function setUsercard(id) {
+		params = {
+			uid: id
+		}
+		var userinfo = null;
+		$.ajax({
+			url: "/user/getUserByUid",
+			type: "POST",
+			data: params,
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+			dataType: "json",
+			success: function(data) {
+				if (data.code == 200 && data.data != null) {
+					userinfo = data.data
+					$(".usercard-background").attr("src", userinfo.background);
+					$(".usercard-avatar").attr("src", userinfo.avatar);
+					$(".usercard-follerNum").html(userinfo.follerNum);
+					$(".usercard-folledNum").html(userinfo.folledNum);
+					$(".usercard-blogNum").html(userinfo.blogNum);
+				} else {
+					mdui.snackbar("当前用户不存在");
+					setTimeout("self.location= '/'", 1500);
+				}
+			},
+		})
+	}
+
+	function setFanCard(id) {
+		params = {
+			uid: id
+		}
+		var userinfo = null;
+		$.ajax({
+			url: "/user/getFanAvatarByUid",
+			type: "POST",
+			data: params,
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+			dataType: "json",
+			success: function(data) {
+				if (data.code == 200 && data.data != null) {
+					userinfo = data.data
+					for (x in userinfo) {
+						user = userinfo[x]
+						if (user.userid != id) {
+							text = '<a href="./?method=userinfo&uid=' + user.userid + '" class=" mdui-col"><img src="' + user.avatar + '" class="mdui-img-fluid"></a>'
+							var html = $(".usercard-folled").html()
+							$(".usercard-folled").html(html + text)
+						} else {
+							text = '<a href="./?method=userinfo&uid=' + user.fid + '" class=" mdui-col"><img src="' + user.avatar + '" class="mdui-img-fluid"></a>'
+							var html = $(".usercard-foller").html()
+							$(".usercard-foller").html(html + text)
+						}
+					}
+				}
+			},
+		})
+	}
 }
 
 // 得到一堆博客，并存储起来
 function initBlog(argument) {
 	// body...
+
+	// todo:发送微博时，插入图片的方法:
+	// 先上传图片，然后返回一个图片地址，将图片地址存储于本地，然后和微博发送的ajax一起传回去
 }
 
 // 得到用户信息
@@ -131,13 +204,6 @@ $(".logout").click(function() {
 
 $(".back-up").on("click", smoothscroll);
 
-function smoothscroll(argument) {
-	var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-	if (currentScroll > 0) {
-		window.requestAnimationFrame(smoothscroll);
-		window.scrollTo(0, currentScroll - (currentScroll / 5));
-	}
-}
 $(".thumb_up").click(function thumb_up(argument) {
 	$(this).toggleClass("mdui-text-color-theme");
 	$(this).toggleClass("mdui-text-color-pink");
@@ -147,11 +213,6 @@ $(".commit-send").click(function commit(argument) {
 	mdui.snackbar("评论成功");
 })
 
-$(".insert-img").on("click", function insertImg(argument) {
-	var iDialog = $(".image-dialog");
-	var inst = new mdui.Dialog(iDialog, overlay = true);
-	inst.open();
-})
 
 $(".forward-send").click(function forwardSend(argument) {
 	mdui.snackbar("转发成功");
@@ -232,4 +293,63 @@ function GetRequest() {
 		}
 	}
 	return theRequest;
+}
+
+// 如果没登录，就让用户登陆
+function gotoLogin(argument) {
+	mdui.snackbar("请登录");
+	setTimeout("self.location= '/auth.html'", 1000);
+}
+
+//滚动会最上方
+function smoothscroll(argument) {
+	var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+	if (currentScroll > 0) {
+		window.requestAnimationFrame(smoothscroll);
+		window.scrollTo(0, currentScroll - (currentScroll / 5));
+	}
+}
+
+//文件上传
+function upload(argument) {
+	var iDialog = $(".upload-dialog");
+	var inst = new mdui.Dialog(iDialog, overlay = true);
+	inst.open();
+
+	$('.image-zone')[0].ondragover = function(ev) {
+		var oEvent = ev || window.event;
+		// 注意禁止浏览器默认事件      
+		oEvent.preventDefault();
+	}
+	// 离开目标区域
+	$('.image-zone')[0].ondragleave = function(ev) {
+		var oEvent = ev || window.event;
+		// 注意禁止浏览器默认事件
+		oEvent.preventDefault();
+	}
+	// 目标文件落在目标区域
+	$('.image-zone')[0].ondrop = function(ev) {
+		var oEvent = ev || window.event;
+		// 获取预览区域 生成预览
+		var oPreview = document.createElement('div');
+		var oProgress = document.createElement('progress');
+		oProgress.setAttribute('max', 100);
+		oProgress.setAttribute('value', 0);
+		// 生成不同的id 方便上传进度实时预览
+		var rstr = randomStr();
+		oPreview.setAttribute('class', 'madia_upload_preview');
+		oPreview.setAttribute('id', 'madia_upload_preview_' + rstr);
+		oPreview.appendChild(oProgress);
+		$('.media_upload').appendChild(oPreview);
+		// 获取form对象
+		var oForm = $('form')[0];
+		// 获取文件对象
+		var oFile = oEvent.dataTransfer;
+		/*   
+		    Ajax上传   下面介绍
+		 */
+		// 注意禁止浏览器默认事件
+		oEvent.preventDefault();
+	}
+
 }

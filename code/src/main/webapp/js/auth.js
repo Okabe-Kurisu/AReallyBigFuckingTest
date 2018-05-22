@@ -33,7 +33,7 @@ $(function() {
 				if (data.code == 200) {
 					mdui.snackbar("注册成功");
 					sessionStorage.me = JSON.stringify(data.data.me);
-					setTimeout("self.location= '/'", 3000);
+					setTimeout("self.location= '/'", 1500);
 				}else{
 					mdui.snackbar("注册失败,");
 				}
@@ -61,13 +61,33 @@ $(function() {
 				if (data.code == 200) {
 					mdui.snackbar("登陆成功");
 					sessionStorage.me = JSON.stringify(data.data.me);
-					setTimeout("self.location= '/'", 3000);
+					var uid = me.uid;
+					getFollow(uid)
+					setTimeout("self.location= '/'", 1500);
 				}else{
 					mdui.snackbar("登陆失败");
 				}
 			},
 			error: function() {
 				mdui.snackbar("登陆失败");
+			},
+		})
+
+		function getFollow(id) {
+			param = {uid: id}
+			$.ajax({
+			url: "/user/getFollow",
+			data: param,
+			type: "POST",
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+			dataType: "json",
+			success: function(data) {
+				if (data.code == 200 && data.data != null) {
+					var follows = data.data
+				}//todo: 获得用户的关注信息
+			},
+			error: function() {
+				mdui.snackbar("注册失败");
 			},
 		})
 	});

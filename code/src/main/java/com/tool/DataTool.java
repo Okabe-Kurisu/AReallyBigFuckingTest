@@ -72,7 +72,6 @@ public class DataTool {
                     i++;
                 }
                 int endTime = (int) System.currentTimeMillis()/1000;
-                System.out.println("当前热词列表如下:" + temp.toString() + "用时" + (endTime-startTime) + "秒");
                 saveRtn(temp,Type.HotSPot.getPath());
             }
         };
@@ -158,7 +157,6 @@ public class DataTool {
             String encoding = "UTF-8";
             File file = new File(new URI(DataTool.class.getResource(filename).toString()));
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), encoding));
-            System.out.println(file.toString());
             for(int i=0;i<temp.size();i++){
                 bw.write(temp.get(i));
                 bw.newLine();
