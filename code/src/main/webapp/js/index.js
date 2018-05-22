@@ -185,6 +185,20 @@ $(".discuss").on("click", function discuss(argument) {
 	inst.open();
 })
 
+// 我的话题按钮点击时间
+$(".myDiscuss").on("click", function showMyDiscuss(argument) {
+	var dDialog = $(".manageDiscuss-dialog");
+	var inst = new mdui.Dialog(dDialog, overlay = true);
+	inst.open();
+})
+
+// 创建话题按钮点击事件
+$(".creatDiscuss").on("click", function showAddDiscuss(argument) {
+	var dDialog = $(".addDiscuss-dialog");
+	var inst = new mdui.Dialog(dDialog, overlay = true);
+	inst.open();
+})
+
 $(".send-fab").on("click", function sendFab(argument) {
 	smoothscroll();
 	$("#blog-content").focus();
@@ -222,7 +236,7 @@ function addBlog(blog) {}
 function addCommit(Commit) {}
 
 function GetRequest() {
-	var url = location.search; //获取url中"?"符后的字串  
+	var url = location.search; //获取url中"?"符后的字串
 	var theRequest = new Object();
 	if (url.indexOf("?") != -1) {
 		var str = url.substr(1);
