@@ -1,6 +1,5 @@
 package com.action;
 
-import com.DAO.DiscussDao;
 import com.DAO.UserDao;
 import com.google.gson.Gson;
 import com.model.CallAt;
@@ -8,8 +7,6 @@ import com.model.Follow;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
-import org.apache.commons.io.FileUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -21,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -39,11 +35,8 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     HttpServletRequest request;
     User user;
     String message;
-    private File file;
-    private String fileFileName;
     Map resultMap;
 
-    private String fileContentType;
     @Action("addAdmin")
     public void addAdmin() {
 
@@ -314,7 +307,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     @Action(value = "follow", results = {//关注用户
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    public String follow() {//注销用户
+    public String follow() {
         int followed_id,user_id;
         followed_id =Integer.parseInt(request.getParameter("followed_id"));
         HttpSession session = request.getSession();
@@ -397,58 +390,29 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         }
         return SUCCESS;
     }
-    @Action(value = "setBackground", results = {//设置用户背景
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
-    public String setBackground() {
-        int user_id;
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
-        try {
-            user = UserDao.getAvatar(user);
-            UserDao.setBackground(user);
-            resultMap = PowerfulTools.format("200", "关注成功", map);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-        } catch (NullPointerException ne) {
 
+    @Action(value = "getFanAvatarByUid")//得到六个关注者头像和六个粉丝头像
+    public String getFanAvatarByUid() {
+        try {
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            resultMap = PowerfulTools.format("200", "成功", UserDao.getFanAvatarByUid(uid));
+        } catch (NullPointerException ne) {
+            resultMap = PowerfulTools.format("100", "失败", "");
         }
         return SUCCESS;
-
     }
-    @Action(value = "upload", results = {//上传用户图片
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
-    public String upload() throws IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
-        String root = ServletActionContext.getServletContext().getRealPath("/upload");
-        String type=fileFileName.substring(fileFileName.indexOf("."));
-        int len=type.length();
-        String fileOtherName=fileFileName.substring(0, fileFileName.length()-len);
-        System.out.println(fileFileName);
+    @Action(value = "getFollow")//得到六个关注者头像和六个粉丝头像
+    public String getFollow() {
         try {
-            if(file.exists()){
-                fileFileName=fileOtherName+System.currentTimeMillis()+type;
-                FileUtils.copyFile(file, new File(root+"/"+fileFileName));
-            }else{
-                FileUtils.copyFile(file, new File(root+"/"+fileFileName));
-            }
-            user.setAvatar(fileFileName);
-            UserDao.upload(user);
-            resultMap = PowerfulTools.format("200", "上传成功", map);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            resultMap = PowerfulTools.format("200", "成功", UserDao.getFollow(uid));
         } catch (NullPointerException ne) {
-
+            resultMap = PowerfulTools.format("100", "失败", "");
         }
         return SUCCESS;
-
     }
+
+
     public User getUser() {
         return user;
     }
@@ -463,24 +427,6 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-    public String getFileFileName() {
-        return fileFileName;
-    }
-    public void setFileFileName(String fileFileName) {
-        this.fileFileName = fileFileName;
-    }
-    public String getFileContentType() {
-        return fileContentType;
-    }
-    public void setFileContentType(String fileContentType) {
-        this.fileContentType = fileContentType;
-    }
-    public File getFile() {
-        return file;
-    }
-    public void setFile(File file) {
-        this.file = file;
     }
 
     public Map getResultMap() {
