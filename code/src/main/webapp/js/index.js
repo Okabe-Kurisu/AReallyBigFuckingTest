@@ -103,8 +103,35 @@ $(function () {
 
     // 得到一堆博客，并存储起来
     function initBlog(argument) {
-        // body...
-
+        // 得到博客并存储到websql中
+        function getBlog() {
+            $.ajax({
+                url: "/blog/getFollow",
+                async: false,
+                type: "POST",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200 && data.data != null) {
+                        var blogs = data.data
+                        var db = openDatabase('weibo', '1.0', 'Test DB', 2 * 1024 * 1024)
+                        db.transaction(function (tx) {
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (id unique, userid, content, multimedia, release_time)');
+                            for (x in blogs) {
+                                var blog = blogs[x];
+                                console.log(blog)
+                                tx.executeSql('INSERT INTO follow (id, userid, content, multimedia, release_time) VALUES (?, ?, ?, ?, ?)', [follow.fid, follow.user_id, follow.type, follow.followed_id, follow.time]);
+                            }
+                            console.log("博客表加载完成")
+                        })
+                    }
+                    //todo: 获得用户的关注信息
+                },
+                error: function () {
+                    mdui.snackbar("注册失败");
+                },
+            })
+        };
         // todo:发送微博时，插入图片的方法:
         // 先上传图片，然后返回一个图片地址，将图片地址存储于本地，然后和微博发送的ajax一起传回去
     }
