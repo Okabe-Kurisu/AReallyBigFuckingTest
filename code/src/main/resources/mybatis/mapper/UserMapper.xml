@@ -79,8 +79,7 @@
         SELECT
         u.*,
         (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
-        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND type=0) AS folledNum,
-        (SELECT COUNT(b.bid) FROM blog AS b WHERE u.uid=b.user_id AND b.visibility=0) AS blogNum
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND type=0) AS folledNum
         FROM user AS u
         WHERE u.alive = 0 AND uid = #{uid}
     </select>
@@ -94,32 +93,6 @@
         WHERE b.user_id = #{uid}
     </select>
 
-    <!--得到用户关注的所有人-->
-    <select id="getFollow" parameterType="int" resultType="follow">
-        SELECT *
-        FROM follow
-        WHERE follow.user_id = #{uid}
-    </select>
-
-    <!--得到六个关注者头像和六个粉丝头像-->
-    <select id="getFanAvatarByUid" resultType="Map">
-        SELECT *
-        FROM (
-        SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
-        FROM follow AS f
-        JOIN user AS u
-        ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
-        WHERE u.uid = #{uid}
-        LIMIT 6
-        UNION ALL
-        SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
-        FROM follow AS f
-        JOIN user AS u
-        ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)
-        WHERE u.uid = #{uid}
-        LIMIT 6
-        ) AS a
-    </select>
     <!-- 设置权重 -->
     <update id="setWeight">
         UPDATE user
@@ -128,19 +101,18 @@
         uid = #{uid}
     </update>
     <!--将上传路径保存-->
-    <update id="setImg">
+    <update id="setBackground">
         UPDATE user
-        SET
-        <if test="background != null">
-            background = #{background}
-        </if>
-        <if test="avatar != null">
-            avatar = #{avatar}
-        </if>
+        SET background = #{avatar}
         WHERE
         uid = #{uid}
     </update>
-
+    <update id="upload">
+        UPDATE user
+        SET avatar = #{avatar}
+        WHERE
+        uid = #{uid}
+    </update>
     <!--用户修改-->
     <update id="updateUser" parameterType="User">
 

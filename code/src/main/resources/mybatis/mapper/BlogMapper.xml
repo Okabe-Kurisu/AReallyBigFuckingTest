@@ -73,15 +73,13 @@
         ORDER BY blog.release_time DESC
     </select>
 
-    <!-- 查用户是否被封禁 -->
+
+    <!-- 发布博客 -->
     <select id="checkAdmin" parameterType="int" resultType="int">
         SELECT user.is_ban
         FROM user
         WHERE user.uid = #{userid}
     </select>
-
-    <!-- 发布博客 -->
-
     <insert id="submitBlog" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
         INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, browser_sign, is_showName)
             VALUE
@@ -98,23 +96,12 @@
     </update>
 
     <!-- 修改微博 用户被封不能改 一天修改微博次数限制-->
-    <select id="checkUpdateNum" parameterType="int" resultType="Map">
-        SELECT blog.is_edit,blog.release_time
-        FROM blog
-        WHERE blog.bid=#{bid}
-    </select>
-    <update id="clearUpdateNum" parameterType="int">
-        UPDATE blog
-        SET blog.is_edit=1
-        WHERE blog.bid=#{bid}
-    </update>
     <update id="setBlog" parameterType="blog">
         UPDATE blog
         SET content      = #{content},
             release_time = #{release_time},
             multimedia   = #{multimedia},
-            visibility   = #{visibility},
-            is_edit=is_edit+1
+            visibility   = #{visibility}
         WHERE
             bid = #{bid}
     </update>

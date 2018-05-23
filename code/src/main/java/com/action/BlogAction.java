@@ -10,7 +10,6 @@ import com.model.ThumbUp;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
 import com.tool.SensitivewordFilter;
-import org.apache.struts2.components.Date;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -44,14 +43,14 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         SensitivewordFilter filter = new SensitivewordFilter();
         Map<String, Object> resultMap;
         String release_time, multimedia, content;
-        int user_id, visibility, is_showName;
+        int user_id, visibility,is_showName;
         //从前端获取
         user_id = Integer.parseInt(request.getParameter("user_id"));
         content = request.getParameter("content");
         release_time = request.getParameter("release_ti me");
         visibility = Integer.parseInt(request.getParameter("visibility"));
         multimedia = request.getParameter("multimedia");
-        is_showName = Integer.parseInt(request.getParameter("is_showName"));
+        is_showName=Integer.parseInt(request.getParameter("is_showName"));
         try {
             Set<String> set = filter.getSensitiveWord(content, 1);
 
@@ -74,16 +73,16 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             String userAgent = request.getHeader("user-agent");//获取浏览器信息
             String ip = request.getHeader("X-Forwarded-For");//获取IP地址
             blog.setBrowser_sign(userAgent);
-            System.out.print("------------------user_id:" + user_id);
-            System.out.print("------------------ip address:" + ip);
+            System.out.print("------------------user_id:"+user_id);
+            System.out.print("------------------ip address:"+ip);
             blog.setIp_address(ip);
             blog.setComment_on(0);
             blog.setType(0);
             blog.setIs_edit(0);
 
-            int bid = BlogDao.insertBlog(blog);
-            if (set.size() > 0) {
-                Sensitivity Sensitivity_blog = new Sensitivity();
+            int bid=BlogDao.insertBlog(blog);
+            if(set.size()>0){
+                Sensitivity Sensitivity_blog=new Sensitivity();
                 Sensitivity_blog.setBlog_id(bid);
                 Sensitivity_blog.setDetails("");
                 Sensitivity_blog.setType(0);
@@ -109,39 +108,19 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "setBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    //@Authority("")
+    @Authority("")
     public String setBlog() {//修改微博
         Blog blog = new Blog();
         Map<String, Object> resultMap;
         String release_time, multimedia, content;
-        SensitivewordFilter filter = new SensitivewordFilter();
-        int bid, visibility, user_id;
+        int bid, visibility;
         //从前端获取
         bid = Integer.parseInt(request.getParameter("bid"));
-        user_id = Integer.parseInt(request.getParameter("uid"));
         content = request.getParameter("content");
         release_time = request.getParameter("release_time");
         multimedia = request.getParameter("multimedia");
         visibility = Integer.parseInt(request.getParameter("visibility"));
         try {
-            if (BlogDao.checkAdmin(user_id) != 0) {
-                // 封装响应数据
-                resultMap = PowerfulTools.format("101", "该账户被封", null);
-                // 转换为JSON字符串
-                Gson gson = new Gson();
-                message = gson.toJson(resultMap);
-                System.out.print("该账户被封");
-                return SUCCESS;
-            }
-            if (BlogDao.SetBlogNum(bid) != 0) {
-                // 封装响应数据
-                resultMap = PowerfulTools.format("101", "该博客今日修改次数达到上限（5次）", null);
-                // 转换为JSON字符串
-                Gson gson = new Gson();
-                message = gson.toJson(resultMap);
-                System.out.print("该博客今日修改次数达到上限(5次)");
-                return SUCCESS;
-            }
             if (release_time == null) {
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
             } else {
@@ -153,16 +132,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             } else {
                 blog.setMultimedia(multimedia);
             }
-            Set<String> set = filter.getSensitiveWord(content, 1);
-            if (set.size() > 0) {
-                Sensitivity Sensitivity_blog = new Sensitivity();
-                Sensitivity_blog.setBlog_id(bid);
-                Sensitivity_blog.setDetails("");
-                Sensitivity_blog.setType(0);
-                Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
-                BlogDao.reportBlog(Sensitivity_blog);
-            }
-
             blog.setBid(bid);
             blog.setContent(content);
             blog.setVisibility(visibility);
@@ -305,7 +274,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         bid = Integer.parseInt(request.getParameter("bid"));
 
         try {
-            BlogDao.forwordBlog(bid, user_id);
+           BlogDao.forwordBlog(bid,user_id);
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "转发成功", null);
 
@@ -321,7 +290,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         }
         return SUCCESS;
     }
-
     @Action(value = "searchBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
@@ -349,7 +317,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             map.put("startNum", startNum);
             map.put("endNum", endNum);
             // 获得当前时间戳
-            nowtime = new java.util.Date().getTime() / 1000;
+            nowtime = new Date().getTime() / 1000;
             map.put("nowtime", nowtime);
             // 调用Dao层 获取数据
             List blogList = BlogDao.getBlogByKeyword(map);
@@ -442,6 +410,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         }
         return SUCCESS;
     }
+
+
 
 
     @Action(value = "getFollowBlog", results = {

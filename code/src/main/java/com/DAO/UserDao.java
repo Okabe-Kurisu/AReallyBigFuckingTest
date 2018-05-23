@@ -3,6 +3,7 @@ package com.DAO;
 import com.model.CallAt;
 import com.model.Follow;
 import com.model.User;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
 
@@ -14,7 +15,18 @@ import java.util.Map;
  * Created by Amadeus on 2018/3/15.
  */
 public class UserDao {
-    public static Integer updateUser(User user) {
+    public static Integer upload(User user) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        System.out.println(user);
+        try {
+            sqlSession.update("weibo/UserMapper.upload", user);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return user.getUid();
+    }
+    public static Integer updateUuser(User user) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         System.out.println(user);
         try {
@@ -80,37 +92,10 @@ public class UserDao {
         }
         return user;
     }
-    public static List<HashMap> getFanAvatarByUid(int uid) {
-        List<HashMap> user = null;
+    public static int setBackground(User user) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-            user = sqlSession.selectList("weibo/UserMapper.getFanAvatarByUid", uid);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            sqlSession.close();
-        }
-        return user;
-    }
-    public static List<Follow> getFollow(int uid) {
-        List<Follow> follows = null;
-        SqlSession sqlSession = MybatisTool.getSqlSession();
-        try {
-            follows = sqlSession.selectList("weibo/UserMapper.getFollow", uid);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            sqlSession.close();
-        }
-        return follows;
-    }
-
-    public static int setImg(User user) {
-        SqlSession sqlSession = MybatisTool.getSqlSession();
-        try {
-            sqlSession.insert("weibo/UserMapper.setImg", user);
+            sqlSession.insert("weibo/UserMapper.setBackground", user);
             sqlSession.commit();
         } finally {
             sqlSession.close();
