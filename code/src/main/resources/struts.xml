@@ -26,6 +26,14 @@
             <result name="login">/auth.html</result>
         </global-results>
     </package>
+    <constant name="struts.devMode" value="true" />
+    <!-- 指定国际化资源文件的baseName为messageResource -->
+    <!-- 设置该应用使用的解码集 -->
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <!-- 上传的全部文件的最大限制-->
+    <constant name="struts.multipart.maxSize" value="1024102400"/>
+    <!-- 设置存放临时文件的文件夹 -->
+    <constant name="struts.multipart.saveDir" value="/tmp"></constant>
 
 
 </struts>
