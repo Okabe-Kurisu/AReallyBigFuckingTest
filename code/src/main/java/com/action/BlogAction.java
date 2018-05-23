@@ -18,6 +18,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -41,15 +42,16 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "submitBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    @Authority("")
+   //@Authority("")
     public String submitBlog() {//提交微博
         Blog blog = new Blog();
         SensitivewordFilter filter = new SensitivewordFilter();
         Map<String, Object> resultMap;
         String release_time, multimedia, content;
         int user_id, visibility, is_showName;
+        HttpSession session = request.getSession();
         //从前端获取
-        user_id = Integer.parseInt(request.getParameter("user_id"));
+        user_id = Integer.parseInt((String) session.getAttribute("user_id"));
         content = request.getParameter("content");
         release_time = request.getParameter("release_time");
         visibility = Integer.parseInt(request.getParameter("visibility"));

@@ -288,4 +288,5 @@
              ) AS t
         ORDER BY t.weight
     </select>
+
 </mapper>
