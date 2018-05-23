@@ -193,7 +193,7 @@ $(".myDiscuss").on("click", function showMyDiscuss(argument) {
 })
 
 // 创建话题按钮点击事件
-$(".creatDiscuss").on("click", function showAddDiscuss(argument) {
+$(".creatDiscuss").on("click", function showAddD(argument) {
 	var dDialog = $(".addDiscuss-dialog");
 	var inst = new mdui.Dialog(dDialog, overlay = true);
 	inst.open();
