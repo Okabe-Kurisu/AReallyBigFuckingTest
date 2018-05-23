@@ -28,6 +28,15 @@
         LIMIT #{startNum},#{endNum}
     </select>
 
+    <!-- 搜索一定时间内的博客 -->
+    <select id="selectBlogByTime">
+        SELECT *
+        FROM blog
+        WHERE #{release_time} &lt;= blog.release_time AND
+              type IN (0,1) AND
+              visibility=0
+
+    </select>
     <!-- 插入搜索记录 -->
     <insert id="insertSearchBlog" parameterType="Map">  <!-- 书写 SQL 语句 -->
         INSERT INTO search_log(user_id,content,date)
@@ -99,14 +108,16 @@
 
     <!-- 修改微博 用户被封不能改 一天修改微博次数限制-->
     <select id="checkUpdateNum" parameterType="int" resultType="Map">
-        SELECT blog.is_edit,blog.release_time
+        SELECT
+            blog.is_edit,
+            blog.release_time
         FROM blog
-        WHERE blog.bid=#{bid}
+        WHERE blog.bid = #{bid}
     </select>
     <update id="clearUpdateNum" parameterType="int">
         UPDATE blog
-        SET blog.is_edit=1
-        WHERE blog.bid=#{bid}
+        SET blog.is_edit = 1
+        WHERE blog.bid = #{bid}
     </update>
     <update id="setBlog" parameterType="blog">
         UPDATE blog
@@ -114,15 +125,17 @@
             release_time = #{release_time},
             multimedia   = #{multimedia},
             visibility   = #{visibility},
-            is_edit=is_edit+1
+            is_edit      = is_edit + 1
         WHERE
             bid = #{bid}
     </update>
 
-    <!-- 发布博客评论 查用户是否登录和被封  -->
+    <!-- 发布博客评论 查用户是否被封  -->
     <insert id="commit" parameterType="Blog" useGeneratedKeys="true" keyProperty="bid">
-        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility)
-            VALUE (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility})
+        INSERT INTO blog (user_id, content, multimedia, release_time, type, comment_on, visibility, is_edit, ip_address, browser_sign, is_showName)
+            VALUE
+            (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility}, #{is_edit},
+                         #{ip_address}, #{browser_sign}, #{is_showName})
     </insert>
 
     <!-- 点赞微博-->
@@ -185,8 +198,8 @@
     </insert>
     <!-- 举报微博 不能重复举报 验证账号 -->
     <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
-        INSERT INTO sensitivity (blog_id, type, details,time)
-            VALUE (#{blog_id}, #{type}, #{details},#{time})
+        INSERT INTO sensitivity (blog_id, type, details, time)
+            VALUE (#{blog_id}, #{type}, #{details}, #{time})
     </insert>
 
     <!-- 向blog_discuss插入记录 -->
@@ -197,37 +210,41 @@
 
     <!--收集最近正在讨论的微博-->
     <select id="nowTimeHot" parameterType="int" resultType="Map">
-    SELECT * , COUNT(t.bid) as num
-    FROM (
-        SELECT b.*
-        FROM blog as b
-        JOIN thumb_up AS tu
-        ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - #{date})
-        UNION ALL
-        SELECT b.*
-        FROM blog as b
-        JOIN blog as bc
-        ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - #{date})
-        ) AS t
-     group by t.bid
-     ORDER BY num DESC
+        SELECT
+            *,
+            COUNT(t.bid) AS num
+        FROM (
+                 SELECT b.*
+                 FROM blog AS b
+                     JOIN thumb_up AS tu
+                         ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - #{date})
+                 UNION ALL
+                 SELECT b.*
+                 FROM blog AS b
+                     JOIN blog AS bc
+                         ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - #{date})
+             ) AS t
+        GROUP BY t.bid
+        ORDER BY num DESC
     </select>
 
     <!--得到昨日讨论的微博-->
     <select id="lastTimeHot" resultType="Map">
-        SELECT * , COUNT(t.bid) as num
+        SELECT
+            *,
+            COUNT(t.bid) AS num
         FROM (
-        SELECT b.*
-        FROM blog as b
-        JOIN thumb_up AS tu
-        ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - 86400)
-        UNION ALL
-        SELECT b.*
-        FROM blog as b
-        JOIN blog as bc
-        ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - 86400)
-        ) AS t
-        group by t.bid
+                 SELECT b.*
+                 FROM blog AS b
+                     JOIN thumb_up AS tu
+                         ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - 86400)
+                 UNION ALL
+                 SELECT b.*
+                 FROM blog AS b
+                     JOIN blog AS bc
+                         ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - 86400)
+             ) AS t
+        GROUP BY t.bid
         ORDER BY num DESC
     </select>
     <!--用户注销，微博不可见-->
@@ -235,31 +252,40 @@
         UPDATE blog
         SET visibility = 1
         WHERE
-        user_id=#{uid}
+            user_id = #{uid}
     </update>
 
     <!--得到用户所评论过的，转发过的，收藏过的，点赞过的全部内容-->
     <select id="allAboutUser" parameterType="int" resultType="Map">
-        SELECT * FROM (
-          SELECT b.content, 4 AS weight
-          FROM blog AS b
-          WHERE b.user_id = #{uid}
-          UNION ALL
-          SELECT b.content, 2 AS weight
-          FROM blog AS bc
-          JOIN blog AS b
-          ON b.bid = bc.comment_on AND bc.user_id = #{uid}
-          UNION ALL
-          SELECT b.content, 2 AS weight
-          FROM favorite AS f
-          JOIN blog AS b
-          ON b.bid = f.blog_id AND f.user_id = #{uid}
-          UNION ALL
-          SELECT b.content, 1 AS weight
-          FROM thumb_up AS tu
-          JOIN blog AS b
-          ON b.bid = tu.blog_id AND tu.user_id = #{uid}
-        ) AS  t
+        SELECT *
+        FROM (
+                 SELECT
+                     b.content,
+                     4 AS weight
+                 FROM blog AS b
+                 WHERE b.user_id = #{uid}
+                 UNION ALL
+                 SELECT
+                     b.content,
+                     2 AS weight
+                 FROM blog AS bc
+                     JOIN blog AS b
+                         ON b.bid = bc.comment_on AND bc.user_id = #{uid}
+                 UNION ALL
+                 SELECT
+                     b.content,
+                     2 AS weight
+                 FROM favorite AS f
+                     JOIN blog AS b
+                         ON b.bid = f.blog_id AND f.user_id = #{uid}
+                 UNION ALL
+                 SELECT
+                     b.content,
+                     1 AS weight
+                 FROM thumb_up AS tu
+                     JOIN blog AS b
+                         ON b.bid = tu.blog_id AND tu.user_id = #{uid}
+             ) AS t
         ORDER BY t.weight
     </select>
 </mapper>

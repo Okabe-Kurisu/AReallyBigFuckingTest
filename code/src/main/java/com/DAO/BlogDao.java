@@ -207,6 +207,17 @@ public class BlogDao {
             sqlSession.close();
         }
     }
+    //获得一段时间前的微博
+    public static List<Map>selectBlogByTime(Map<String, Object> map){
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.selectBlogByTime", map);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
 
     public static List<Map> getFollowBlogByUserid(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
