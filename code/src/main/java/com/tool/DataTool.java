@@ -54,6 +54,8 @@ public class DataTool {
         }
     }
 
+
+
     public void initHotSpot() {//每隔一分钟查询一次数据
         Runnable runnable = new Runnable() {
             public void run() {
@@ -148,21 +150,6 @@ public class DataTool {
         return temp;
     }
 
-    //翻译词语,并查询父话题
-    public void getOrigin(List<String> contents){
-        Translate translate = new Translate();
-        for (String key: contents) {
-            key = translate.trans2EN(key).split("\"dst\":\"")[1].split("\"}]}")[0];
-
-        }
-    }
-
-
-    //提取关键词，
-    public void getUserKey(int uid){
-        List<Map> contents = BlogDao.allAboutUser();
-        List<String> userKey = segKeyword(contents);
-    }
 
     //工具方法
     public void saveRtn(List<String> temp, String filename){

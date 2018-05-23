@@ -1,0 +1,63 @@
+
+.SignFlowHomepage{
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/sign_bg.png");
+}
+.SignFlowHomepage-content1{
+    width: 400px;
+    height: 600px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10000;
+    margin: auto;
+    display: none;
+}
+h1{
+    text-align: center;
+    color: #0d47a1;
+}
+h3{
+    text-align: center;
+    color: #448AFF;
+}
+h4{
+    text-align: center;
+}
+.contains{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.sex{
+    margin-right: 50px;
+}
+.contains1{
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.SignFlowHomepage-content2{
+    width: 400px;
+    height: 400px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10000;
+    margin: auto;
+}
+span{
+    color:#448AFF ;
+}
+span:hover {
+    cursor: pointer;
+    background-color: #ccc;
+}
+.switch{
+    float: right;
+}

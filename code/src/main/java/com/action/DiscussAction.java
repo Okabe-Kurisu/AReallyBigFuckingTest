@@ -251,7 +251,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             int userId = user.getUid();
             int is_ban = user.getIs_ban();
 
-            // 如果用户被封，或者用户不是指定话题的创建者则插入失败
+            // 如果用户被封，或者用户不是指定话题的创建者则修改失败
             if (is_ban == 0 || DiscussDao.updateDiscuss(userId, discuss) == 0) {
                 throw new Exception("插入失败");
             }

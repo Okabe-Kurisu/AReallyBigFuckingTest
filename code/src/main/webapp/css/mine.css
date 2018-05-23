@@ -1,3 +1,16 @@
+.userinfo-body{
+	z-index: 2;
+    position: fixed;
+    right: 0px;
+	width: 200px!important;
+}
+.hotspot-body{
+	margin-top: 6px;
+    z-index: 2;
+    position: fixed;
+    right: 166px;
+}
+
 .user-cover{
 	bottom: 0!important;
 }

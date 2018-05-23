@@ -4,26 +4,23 @@ import com.DAO.MessageDao;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 @Namespace("/message")
 @ParentPackage("json-default")
+@Results( { @Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+        @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class MessageAction extends ActionSupport implements ServletRequestAware {
     HttpServletRequest request;
-
+    Map resultMap;
     String message;
     //用户私信他人
-    @Action(value = "sendMassage", results = {
-    })
-    public Map<String, Object> SendMassage(){
+    @Action(value = "sendMassage")
+    public String SendMassage(){
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         String uid;//发送方的id
         String aid;//接收方的id
         String is_showName;//选择是否匿名
@@ -51,16 +48,13 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
         }
-        return resultMap;
+        return SUCCESS;
     }
 
      //获得发送私信用户的用户名
-     @Action(value = "getSendMessageUserId", results = {
-             @Result(name = "success", type = "json", params = {"root", "message"})
-     })
+     @Action(value = "getSendMessageUserId")
      public  String GetSendMessageUserId() {
          Map<String, Object> map = new HashMap();
-         Map<String, Object> resultMap;
          String uid;
          try {
              //获得参数
@@ -70,24 +64,16 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
              List blogList = MessageDao.getSendMassageUserid(map);
              // 封装响应数据
              resultMap = PowerfulTools.format("200", "成功", blogList);
-             // 转换为JSON字符串
-             Gson gson = new Gson();
-             message = gson.toJson(resultMap);
          } catch (NullPointerException ne) {
              ne.printStackTrace();
              resultMap = PowerfulTools.format("500", "系统异常", null);
-             Gson gson = new Gson();
-             message = gson.toJson(resultMap);
          }
          return SUCCESS;
      }
      //通过用户id和发送方的id查看信息
-     @Action(value = "GetMassageUseridAndAccpeter", results = {
-             @Result(name = "success", type = "json", params = {"root", "message"})
-     })
+     @Action(value = "GetMassageUseridAndAccpeter")
     public String GetMassageUseridAndAccpeter(){
          Map<String, Object> map = new HashMap();
-         Map<String, Object> resultMap;
          String uid;//用户的id
          String sid;//发送方的id
          String is_showName;//选择是否查看匿名
@@ -116,7 +102,7 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
              Gson gson = new Gson();
              message = gson.toJson(resultMap);
          }
-        return message;
+        return SUCCESS;
     }
 
     public String getMessage() {
@@ -126,6 +112,15 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public Map getResultMap() {
+        return resultMap;
+    }
+
+    public void setResultMap(Map resultMap) {
+        this.resultMap = resultMap;
+    }
+
     @Override
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {
         this.request = request;

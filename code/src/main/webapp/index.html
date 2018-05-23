@@ -17,52 +17,86 @@
 				<div class="search-bar">
 					<div class="mdui-textfield mdui-textfield-expandable mdui-float-right ">
 						<button class="mdui-textfield-icon mdui-btn mdui-btn-icon" mdui-tooltip="{content: '搜索', delay: 100}"><i class="mdui-icon material-icons">search</i></button>
-						<input class="mdui-textfield-input" type="text" placeholder="键入以搜索"/>
+						<input class="mdui-textfield-input search-input" type="text" placeholder="键入以搜索"/>
 						<button class="mdui-textfield-close mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">close</i></button>
 					</div>
 				</div>
-				<!-- todo:搜索框下面应该有热门搜索词 -->
 				<a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '数据统计', delay: 100}"><i class="mdui-icon material-icons">bubble_chart</i></a>
-				<a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5" mdui-tooltip="{content: '登陆', delay: 100}"><i class="mdui-icon material-icons">open_in_new</i></a>
+				<a href="./auth.html" class="mdui-btn mdui-btn-icon mdui-m-r-5 login-btn" mdui-tooltip="{content: '登陆', delay: 100}"><i class="mdui-icon material-icons">open_in_new</i></a>
 				<a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5 me" mdui-tooltip="{content: '我', delay: 100}"><i class="mdui-icon material-icons">person_outline</i></a>
 			</div>
 			<!-- 登陆后的个人信息弹框 -->
 			<div class="mdui-collapse userinfo">
 				<div class="mdui-collapse-item " id="userinfo">
 					<div class="mdui-collapse-item-header"></div>
-					<div class="mdui-card mdui-float-right mdui-collapse-item-body" >
-						<div class="mdui-card-header  mdui-center " >
-							<img class="mdui-card-header-avatar  mdui-center" src="./img/avatar.jpg"/>
-							<div class="mdui-card-header-title mdui-center">默认用户</div>
-							<div class="mdui-card-header-subtitle mdui-center">一个普通的默认用户</div>
+					<div class="mdui-card mdui-float-right mdui-collapse-item-body userinfo-body" >
+						<div class="mdui-card-header mdui-center " >
+							<img class="mdui-card-header-avatar mdui-center userinfo-avator" src="./img/avatar.jpg"/>
+							<div class="mdui-card-header-title mdui-center userinfo-nickname">默认用户</div>
+							<div class="mdui-card-header-subtitle mdui-center userinfo-motto">一个普通的默认用户</div>
 						</div>
 						<div class="mdui-card-content ">
 							<ul class="mdui-list mdui-list-dense">
-								<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 									<div class="mdui-list-item-content">@我的</div>
 								</li>
-								<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 									<div class="mdui-list-item-content">评论我的</div>
 								</li>
-								<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 									<div class="mdui-list-item-content">私信</div>
 								</li>
 							</ul>
 						</div>
 						<div class="mdui-card-actions">
-							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme mdui-float-right"><i class="mdui-icon material-icons">open_in_new</i>退出</button>
+							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme mdui-float-right logout"><i class="mdui-icon material-icons">open_in_new</i>退出</button>
 						</div>
 					</div>
 				</div>
-				
 			</div>
+			<!-- 热门搜索 -->
+			<div class="mdui-collapse hotspot">
+				<div class="mdui-collapse-item " id="hotspot">
+					<div class="mdui-collapse-item-header"></div>
+					<div class="mdui-card mdui-float-right mdui-collapse-item-body hotspot-body" >
+						<div class="mdui-card-header mdui-center" >
+							<h3><strong>大家在搜什么</strong></h3>
+						</div>
+						<div class="mdui-card-content ">
+							<ul class="mdui-list mdui-list-dense">
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+									<p class="mdui-list-item-icon mdui-text-color-red">1</p>
+									<div class="mdui-list-item-content">热搜词语</div>
+								</li>
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+									<p class="mdui-list-item-icon mdui-text-color-red">2</p>
+									<div class="mdui-list-item-content">热搜词语</div>
+								</li>
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+									<p class="mdui-list-item-icon mdui-text-color-red">3</p>
+									<div class="mdui-list-item-content">热搜词语</div>
+								</li>
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+									<p class="mdui-list-item-icon mdui-text-color-red">4</p>
+									<div class="mdui-list-item-content">热搜词语</div>
+								</li>
+								<li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+									<p class="mdui-list-item-icon mdui-text-color-red">5</p>
+									<div class="mdui-list-item-content">热搜词语</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			
 		</header>
 		<div class="mdui-container-fluid">
 			<div class="mdui-col-row">
 				<div class="mdui-col-xs-5 mdui-col-offset-xs-2">
 					<!-- 发布微博 -->
-					<div class="mdui-card mdui-m-t-1">
+					<div class="mdui-card mdui-m-t-1 send">
 						<div class="mdui-textfield mdui-textfield-floating-label">
 							<label class="mdui-textfield-label">有什么新鲜事？</label>
 							<textarea class="mdui-textfield-input" rows="3" maxlength="140" id="blog-content"></textarea>
@@ -82,7 +116,7 @@
 							<div class="mdui-card-header-title">默认用户</div>
 							<div class="mdui-card-header-subtitle">一个普通的默认用户</div>
 							<!-- 时间戳生成发博时间 -->
-							<div class="mdui-card-menu  mdui-text-color-grey-500">
+							<div class="mdui-card-menu mdui-text-color-grey-500">
 								<p>1分钟前</p>
 							</div>
 						</div>
@@ -96,7 +130,7 @@
 							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up"><i class="mdui-icon material-icons">thumb_up</i>赞(1539)</button>
 							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle"><i class="mdui-icon material-icons">forum</i>(205)</button>
 							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite"><i class="mdui-icon material-icons">folder</i>收藏</button>
-							<button class="mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report "><i class="mdui-icon material-icons">flag</i>举报</button>
+							<button class="mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report "><i class="mdui-icon material-icons">flag</i>举报</button><!-- todo: 如果是鹳狸猿改成封禁 -->
 						</div>
 						<!-- 评论 -->
 						<div class="commit-panel mdui-collapse" mdui-panel>
@@ -107,7 +141,7 @@
 									
 									<ul class="mdui-list mdui-list-dense">
 										<!-- 用户评论部分 -->
-										<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+										<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 											<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 											<div class="mdui-list-item-content">
 												<input class="mdui-textfield-input" type="text" placeholder="发表评论"/>
@@ -118,11 +152,11 @@
 											</div>
 										</li>
 										<!-- 评论部分 -->
-										<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+										<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 											<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 											<div class="mdui-list-item-content">什摸东西</div>
 										</li>
-										<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+										<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 											<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 											<div class="mdui-list-item-content">什摸东西</div>
 										</li>
@@ -171,7 +205,7 @@
 						<!-- 用户背景图片 和头像-->
 						<div class="mdui-card-media mdui-center">
 							<img src="./img/background.jpg">
-							<div class="mdui-card-media-covered mdui-card-media-covered-transparent mdui-card-media-covered-top mdui-valign  user-cover">
+							<div class="mdui-card-media-covered mdui-card-media-covered-transparent mdui-card-media-covered-top mdui-valign user-cover">
 								<img class="mdui-img-circle user-cover-avatar mdui-center" src="./img/avatar.jpg"/>
 							</div>
 						</div>
@@ -184,7 +218,8 @@
 								<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong>1</strong>微博</button>
 							</div>
 						</div>
-						<!-- todo:如果这个人的id不是自己，就加上关注按钮组和屏蔽按钮 -->
+						<!-- todo:如果这个人的id不是自己，就加上关注按钮组和屏蔽按钮
+								如果当前用户是鹳狸猿，则显示封禁按钮 -->
 					</div>
 					<!-- 关注与被关注 -->
 					<div class="mdui-card mdui-m-t-2">
@@ -268,23 +303,23 @@
 							<input type="text" class="mdui-textfield-input" maxlength="7"/>
 						</div>
 						<ul class="mdui-list mdui-list-dense">
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">床铺</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">柳传志</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">码云</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">马化腾</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">马三立</div>
 							</li>
@@ -300,23 +335,23 @@
 							<input type="text" class="mdui-textfield-input"/>
 						</div>
 						<ul class="mdui-list mdui-list-dense">
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">为什么还没做完</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">前端大规模离职</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">好麻烦</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">不写了</div>
 							</li>
-							<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+							<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 								<div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
 								<div class="mdui-list-item-content">fuck</div>
 							</li>
@@ -333,6 +368,7 @@
 				<!-- todo:添加话题 -->
 				<!-- todo:管理话题 -->
 				<!--todo: 收藏夹 -->
+				<!--todo: 个人信息修改dialog -->
 				<!--todo: 封禁用户按钮 -->
 				<!--todo: 封禁博客按钮 -->
 				<!-- 博客模版 -->
@@ -368,7 +404,7 @@
 									<div class="mdui-divider"></div>
 									<ul class="mdui-list mdui-list-dense">
 										<!-- 用户评论部分 -->
-										<li class="mdui-list-item mdui-ripple  mdui-p-l-1">
+										<li class="mdui-list-item mdui-ripple mdui-p-l-1">
 											<div class="mdui-list-item-avatar"><img class="blog-avatar" src=""/></div>
 											<div class="mdui-list-item-content">
 												<input class="mdui-textfield-input" type="text" placeholder="发表评论"/>

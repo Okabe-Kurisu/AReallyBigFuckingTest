@@ -38,6 +38,12 @@
         FROM user
         WHERE nickname = #{nickname}
     </select>
+    <select id="getAvatar" resultType="User">
+        SELECT *
+        FROM user
+        WHERE uid = #{uid}
+    </select>
+
     <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
         -- useGeneratedKeys="true" 表示给主键设置自增长
         -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
@@ -56,12 +62,26 @@
         FROM user AS u
         WHERE u.alive = 0
         <if test="keyword != null">
-          AND(u.nickname LIKE "%"#{keyword}"%" OR u.motto LIKE "%"#{keyword}"%")
+            AND(u.nickname LIKE "%"#{keyword}"%" OR u.motto LIKE "%"#{keyword}"%")
+        </if>
+        <if test="uid != null">
+            AND uid = #{uid}
         </if>
         <if test="start != null">
             LIMIT #{startNum},#{endNum}
         </if>
+
         ORDER BY u.weight DESC, u.last_logtime DESC
+    </select>
+
+    <!-- 用户查询 -->
+    <select id="getUserByUid" parameterType="int" resultType="Map">  <!-- 书写 SQL 语句 -->
+        SELECT
+        u.*,
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND type=0) AS folledNum
+        FROM user AS u
+        WHERE u.alive = 0 AND uid = #{uid}
     </select>
 
     <!--得到用户总被点赞数-->
@@ -80,7 +100,19 @@
         WHERE
         uid = #{uid}
     </update>
-
+    <!--将上传路径保存-->
+    <update id="setBackground">
+        UPDATE user
+        SET background = #{avatar}
+        WHERE
+        uid = #{uid}
+    </update>
+    <update id="upload">
+        UPDATE user
+        SET avatar = #{avatar}
+        WHERE
+        uid = #{uid}
+    </update>
     <!--用户修改-->
     <update id="updateUser" parameterType="User">
 
