@@ -9,17 +9,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3be1141e-3d0a-4738-a1fc-d24def2f7522" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Gradle___HandsomeBoys___FakeWeibo_1_0_SNAPSHOT_war__exploded_.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/Gradle___HandsomeBoys___FakeWeibo_1_0_SNAPSHOT_war__exploded_.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/FakeWeibo_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/FakeWeibo_main.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/FakeWeibo_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/FakeWeibo_test.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/action/BlogAction.java" afterPath="$PROJECT_DIR$/src/main/java/com/action/BlogAction.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/myTest.java" afterPath="$PROJECT_DIR$/src/test/java/myTest.java" />
-    </list>
+    <list default="true" id="3be1141e-3d0a-4738-a1fc-d24def2f7522" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -1197,12 +1187,12 @@
       <workItem from="1526527242584" duration="86000" />
       <workItem from="1526527527116" duration="9275000" />
       <workItem from="1526567638414" duration="707000" />
-      <workItem from="1527056631353" duration="456000" />
+      <workItem from="1527056631353" duration="519000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="129409000" />
+    <option name="totallyTimeSpent" value="129472000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
