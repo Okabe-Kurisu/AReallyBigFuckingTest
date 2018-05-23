@@ -36,6 +36,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     String message;
 
+    Map<String, Object> resultMap;
+
     @Action(value = "submitBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
@@ -49,7 +51,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         //从前端获取
         user_id = Integer.parseInt(request.getParameter("user_id"));
         content = request.getParameter("content");
-        release_time = request.getParameter("release_ti me");
+        release_time = request.getParameter("release_time");
         visibility = Integer.parseInt(request.getParameter("visibility"));
         multimedia = request.getParameter("multimedia");
         is_showName = Integer.parseInt(request.getParameter("is_showName"));
@@ -402,12 +404,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     }
 
     @Action(value = "selectBlogByTime", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String selectBlogByTime() {
         int nowtime;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
+
         try {
             // 获得前3小时的时间戳
             SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -422,9 +424,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             map.put("release_time", nowtime);
             // 调用Dao层 获取数据
             List blogList = BlogDao.selectBlogByTime(map);
-            Blog blog=new Blog();
-            blog=(Blog)blogList.get(0);
-            System.out.print(blog.getBid());
+
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
@@ -622,6 +622,13 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         this.message = message;
     }
 
+    public Map<String, Object> getResultMap() {
+        return resultMap;
+    }
+
+    public void setResultMap(Map<String, Object> resultMap) {
+        this.resultMap = resultMap;
+    }
 
     @Override
     public void setServletRequest(javax.servlet.http.HttpServletRequest request) {

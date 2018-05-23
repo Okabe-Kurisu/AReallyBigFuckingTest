@@ -103,28 +103,31 @@ $(function () {
 
     // 得到一堆博客，并存储起来
     function initBlog(argument) {
+        getBlog();
+
         // 得到博客并存储到websql中
         function getBlog() {
             $.ajax({
-                url: "/blog/getFollow",
+                url: "/blog/selectBlogByTime",
                 async: false,
                 type: "POST",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function (data) {
+                    console.log("加载博客数据")
                     if (data.code == 200 && data.data != null) {
                         var blogs = data.data
                         var db = openDatabase('weibo', '1.0', 'Test DB', 2 * 1024 * 1024)
                         db.transaction(function (tx) {
-                            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (id unique, userid, content, multimedia, release_time)');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, release_time, is_edit)');
+                            console.log("执行sql")
                             for (x in blogs) {
                                 var blog = blogs[x];
-                                console.log(blog)
-                                tx.executeSql('INSERT INTO follow (id, userid, content, multimedia, release_time) VALUES (?, ?, ?, ?, ?)', [follow.fid, follow.user_id, follow.type, follow.followed_id, follow.time]);
+                                tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, release_time, is_edit) VALUES (?, ?, ?, ?, ?, ?, ?)', [blog.bid, blog.user_id, blog.content, blog.multimedia, blog.type, blog.release_time, blog.is_edit]);
                             }
-                            console.log("博客表加载完成")
                         })
                     }
+                    console.log("博客数据加载完成")
                     //todo: 获得用户的关注信息
                 },
                 error: function () {
@@ -261,8 +264,63 @@ $(function () {
 
     })
 
+    // 发布微博数据
     $(".send").click(function (argument) {
-        mdui.snackbar("发送成功");
+        param = {
+            content: $("#blog-content").val(),
+            multimedia: sessionStorage.img
+        }
+        $.ajax({
+            url: "/blog/submitBlog",
+            async: false,
+            data: param,
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                console.log("正在发布微博...")
+                var res = "<div class=\"mdui-card mdui-m-t-1\">\n" +
+                    "                <p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1 weibo-reason\">这条微博出现在这里，因为他很热门</p>\n" +
+                    "                <div class=\"mdui-card-header\">\n" +
+                    "                    <img class=\"mdui-card-header-avatar\" src=\"./img/avatar.jpg\"/>\n" +
+                    "                    <div class=\"mdui-card-header-title\">默认用户</div>\n" +
+                    "                    <div class=\"mdui-card-header-subtitle\">一个普通的默认用户</div>\n" +
+                    "                    <!-- 时间戳生成发博时间 -->\n" +
+                    "                    <div class=\"mdui-card-menu mdui-text-color-grey-500\">\n" +
+                    "                        <p>1分钟前</p>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "                <!-- 发布了带有多媒体的博客就加上这个 -->\n" +
+                    "                <div class=\"mdui-card-media\">\n" +
+                    "                    <img src=\"./img/background.jpg\"/>\n" +
+                    "                </div>\n" +
+                    "\n" +
+                    "                <div class=\"mdui-card-content\">子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」</div>\n" +
+                    "                <div class=\"mdui-card-actions\">\n" +
+                    "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
+                    "                            class=\"mdui-icon material-icons\">thumb_up</i>赞(0)\n" +
+                    "                    </button>\n" +
+                    "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\"><i\n" +
+                    "                            class=\"mdui-icon material-icons\">forum</i>(0)\n" +
+                    "                    </button>\n" +
+                    "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
+                    "                            class=\"mdui-icon material-icons\">folder</i>收藏\n" +
+                    "                    </button>\n" +
+                    "                    <button class=\"mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report \"><i\n" +
+                    "                            class=\"mdui-icon material-icons\">flag</i>举报\n" +
+                    "                    </button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
+                    "                </div>\n" +
+                    "\n" +
+                    "            </div>"
+                mdui.snackbar("发送成功");
+                console.log("发布成功(●ˇ∀ˇ●)")
+                //todo: 获得用户的关注信息
+            },
+            error: function () {
+                mdui.snackbar("注册失败");
+            },
+        })
+
     })
 
     $(".callat").on("click", function callat(argument) {
@@ -351,71 +409,74 @@ $(function () {
     }
 
     // 下面是上传文件代码
-    var box = document.getElementById("image-zone");
-    /*由于浏览器默认的对拖拽进的文件是打开或提示打开或保存
-    所以在投放区域使用preventDefault()阻止该事件，但投放区外还是默认事件
-    并且阻止默认事件的代码要放到第一行，即首先阻止默认行为*/
-    box.ondragenter = function (e) {
-        e.preventDefault();
-    };
-    box.ondragover = function (e) {
-        e.preventDefault();
-        box.innerHTML = "松开鼠标开始上传";
-    };
-    box.ondragleave = function (e) {
-        e.preventDefault();
-        box.innerHTML = "拖拽到这里上传";
-    };
-    box.ondrop = function (e) {
-        e.preventDefault();
-        box.innerHTML = "上传中...";
-        /**e.dataTransfer.files可以获取所投放的文件数组的信息
-         也就是说可以一次性拖入多个文件，该数组每个元素代表每个文件的详细信息*/
-        var files = e.dataTransfer.files;
-        //alert(files.length);  //获取拖入文件的个数
-        //获取投放的第一个文件的名称，size获取大小，type获取文件类型，...
-        //alert(files[0].name);
-        var file = files[0];
-        var fd = new FormData();
-        fd.append("upload", file);
-        fd.append("type", "upload")
-        $.ajax({
-            url: '/fileUpload',
-            type: "post",
-            processData: false,
-            contentType: false,
-            data: fd,
-            success: function (data) {
-                if (data.code == 200) {
-                    mdui.snackbar("上传成功");
-                    sessionStorage.img = data.data;
-                    var iDialog = $(".upload-dialog");
-                    var inst = new mdui.Dialog(iDialog, overlay = true);
-                    inst.close();
+
+    $('.insert-img').click(function () {
+        inst = upload()
+        var box = document.getElementById("image-zone");
+        /*由于浏览器默认的对拖拽进的文件是打开或提示打开或保存
+        所以在投放区域使用preventDefault()阻止该事件，但投放区外还是默认事件
+        并且阻止默认事件的代码要放到第一行，即首先阻止默认行为*/
+        box.ondragenter = function (e) {
+            e.preventDefault();
+        };
+        box.ondragover = function (e) {
+            e.preventDefault();
+            box.innerHTML = "松开鼠标开始上传";
+        };
+        box.ondragleave = function (e) {
+            e.preventDefault();
+            box.innerHTML = "拖拽到这里上传";
+        };
+        box.ondrop = function (e) {
+            e.preventDefault();
+            box.innerHTML = "上传中...";
+            /**e.dataTransfer.files可以获取所投放的文件数组的信息
+             也就是说可以一次性拖入多个文件，该数组每个元素代表每个文件的详细信息*/
+            var files = e.dataTransfer.files;
+            //alert(files.length);  //获取拖入文件的个数
+            //获取投放的第一个文件的名称，size获取大小，type获取文件类型，...
+            //alert(files[0].name);
+            var file = files[0];
+            var fd = new FormData();
+            fd.append("upload", file);
+            fd.append("type", "upload")
+            $.ajax({
+                url: '/fileUpload',
+                type: "post",
+                processData: false,
+                contentType: false,
+                data: fd,
+                success: function (data) {
+                    if (data.code == 200) {
+                        mdui.snackbar("上传成功");
+                        sessionStorage.img = data.data;
+                        inst.toggle();
+                    }
                 }
-            }
-        });
-    };
+            });
+        };
+    })
 
     //文件上传框呼出
     function upload(argument) {
         var iDialog = $(".upload-dialog");
         var inst = new mdui.Dialog(iDialog, overlay = true);
         inst.open();
+        return inst;
     }
 
-
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
 })
 
-function GetRequest() {
-    var url = location.search; //获取url中"?"符后的字串
-    var theRequest = new Object();
-    if (url.indexOf("?") != -1) {
-        var str = url.substr(1);
-        strs = str.split("&");
-        for (var i = 0; i < strs.length; i++) {
-            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-        }
-    }
-    return theRequest;
-}
+

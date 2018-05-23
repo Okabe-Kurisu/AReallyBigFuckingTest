@@ -29,7 +29,7 @@
     </select>
 
     <!-- 搜索一定时间内的博客 -->
-    <select id="selectBlogByTime">
+    <select id="selectBlogByTime" parameterType="Map" resultType="Map">
         SELECT *
         FROM blog
         WHERE #{release_time} &lt;= blog.release_time AND
