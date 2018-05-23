@@ -10,11 +10,13 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.Map;
 
 /**
  * Created by Amadeus on 2018/5/22.
  */
+@ParentPackage("custom-default")
 @Action("fileUpload")
 @InterceptorRefs(value = { @InterceptorRef("fileUploadStack") })
 @Results( { @Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
@@ -99,25 +101,7 @@ public class UploadAction extends ActionSupport implements ServletRequestAware {
 
     public void copy(File src, File dst) {
         try {
-            InputStream in = null;
-            OutputStream out = null;
-            try {
-                in = new BufferedInputStream(new FileInputStream(src),
-                        BUFFER_SIZE);
-                out = new BufferedOutputStream(new FileOutputStream(dst),
-                        BUFFER_SIZE);
-                byte[] buffer = new byte[BUFFER_SIZE];
-                while (in.read(buffer) > 0) {
-                    out.write(buffer);
-                }
-            } finally {
-                if (null != in) {
-                    in.close();
-                }
-                if (null != out) {
-                    out.close();
-                }
-            }
+            Files.copy(src.toPath(), dst.toPath());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,17 +116,20 @@ public class UploadAction extends ActionSupport implements ServletRequestAware {
     public String execute() throws Exception {
         storageFileName = System.currentTimeMillis()/1000 + fileName;
         File storageFile = new File(ServletActionContext.getServletContext()
-                .getRealPath("/upload") + "/" + storageFileName);
+                .getRealPath("/img/upload") + "/" + storageFileName);
+
         copy(upload, storageFile);
         String type = request.getParameter("type");
         String uid = request.getParameter("uid");
-        String url = "/img?filename=" + storageFileName;
-        User user = new User();
-        user.setUid(Integer.parseInt(uid));
+        String url = "/img/upload/" + storageFileName;
         if (type == "avatar"){
+            User user = new User();
+            user.setUid(Integer.parseInt(uid));
             user.setAvatar(url);
             UserDao.setImg(user);
         }else if (type == "background"){
+            User user = new User();
+            user.setUid(Integer.parseInt(uid));
             user.setBackground(url);
             UserDao.setImg(user);
         }

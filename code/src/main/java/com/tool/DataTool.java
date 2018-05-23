@@ -59,7 +59,6 @@ public class DataTool {
     public void initHotSpot() {//每隔一分钟查询一次数据
         Runnable runnable = new Runnable() {
             public void run() {
-                int startTime = (int) System.currentTimeMillis()/1000;
                 List<String> words = getHotWords();
                 List<String> temp = new ArrayList<>();
                 String word = StringUtils.join(words.toArray(), "");
@@ -71,7 +70,6 @@ public class DataTool {
                     temp.add(key);
                     i++;
                 }
-                int endTime = (int) System.currentTimeMillis()/1000;
                 saveRtn(temp,Type.HotSPot.getPath());
             }
         };
