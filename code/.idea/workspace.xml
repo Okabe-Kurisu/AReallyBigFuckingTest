@@ -9,7 +9,13 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3be1141e-3d0a-4738-a1fc-d24def2f7522" name="Default" comment="" />
+    <list default="true" id="3be1141e-3d0a-4738-a1fc-d24def2f7522" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/action/BlogAction.java" afterPath="$PROJECT_DIR$/src/main/java/com/action/BlogAction.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -66,74 +72,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="525">
-      <file leaf-file-name="BlogAction.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="12" column="42" lean-forward="false" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SensitivewordFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/SensitivewordFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="950">
-              <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="BlogMapper.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5300">
-              <caret line="106" column="19" lean-forward="false" selection-start-line="106" selection-start-column="19" selection-end-line="106" selection-end-column="19" />
+            <state relative-caret-position="260">
+              <caret line="34" column="53" lean-forward="false" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="53" />
               <folding>
-                <marker date="1526539136537" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
-                <marker date="1526539136537" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
-                <marker date="1526539136537" expanded="true" signature="795:1047" ph="SELECT * FRO... blog" />
-                <marker date="1526539136537" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
-                <marker date="1526539136537" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
-                <marker date="1526539136537" expanded="true" signature="1726:2259" ph="SELECT u.*,b... user" />
-                <marker date="1526539136537" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
-                <marker date="1526539136537" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
-                <marker date="1526539136537" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
-                <marker date="1526539136537" expanded="true" signature="2400:2876" ph="SELECT *, (S... user" />
-                <marker date="1526539136537" expanded="true" signature="2419:2489" ph="SELECT count... blog" />
-                <marker date="1526539136537" expanded="true" signature="2515:2585" ph="SELECT count... blog" />
-                <marker date="1526539136537" expanded="true" signature="2611:2672" ph="SELECT count... thumb_up" />
-                <marker date="1526539136537" expanded="true" signature="2988:3059" ph="SELECT user.... user" />
-                <marker date="1526539136537" expanded="true" signature="3194:3544" ph="INSERT INTO blog... " />
-                <marker date="1526539136537" expanded="true" signature="3636:3713" ph="UPDATE blog... " />
-                <marker date="1526539136537" expanded="true" signature="3843:3928" ph="SELECT user.... blog" />
-                <marker date="1526539136537" expanded="true" signature="4004:4061" ph="UPDATE blog... " />
-                <marker date="1526539136537" expanded="true" signature="4004:4072" ph="UPDATE blog... " />
-                <marker date="1526539136537" expanded="true" signature="4142:4389" ph="UPDATE blog... " />
-                <marker date="1526539136537" expanded="true" signature="4533:4738" ph="INSERT INTO blog... " />
-                <marker date="1526539136537" expanded="true" signature="4851:4980" ph="SELECT tuid thumb_up" />
-                <marker date="1526539136537" expanded="true" signature="5100:5197" ph="INSERT INTO thumb_up... " />
-                <marker date="1526539136537" expanded="true" signature="5270:5319" ph="DELETE FROM thumb_up... " />
-                <marker date="1526539136537" expanded="true" signature="5430:5591" ph="SELECT * FRO... user" />
-                <marker date="1526539136537" expanded="true" signature="5706:5802" ph="INSERT INTO call_at... " />
-                <marker date="1526539136537" expanded="true" signature="5925:6150" ph="SELECT bid, blog" />
-                <marker date="1526539136537" expanded="true" signature="6306:6388" ph="INSERT INTO favorite... " />
-                <marker date="1526539136537" expanded="true" signature="6540:6653" ph="INSERT INTO sensitivity... " />
-                <marker date="1526539136537" expanded="true" signature="6809:6922" ph="INSERT INTO blog_discuss... " />
-                <marker date="1526539136537" expanded="true" signature="7031:7453" ph="SELECT * , C... *" />
-                <marker date="1526539136537" expanded="true" signature="7081:7221" ph="SELECT b.* F... blog" />
-                <marker date="1526539136537" expanded="true" signature="7248:7395" ph="SELECT b.* F... blog" />
-                <marker date="1526539136537" expanded="true" signature="7545:7973" ph="SELECT * , C... *" />
-                <marker date="1526539136537" expanded="true" signature="7599:7737" ph="SELECT b.* F... blog" />
-                <marker date="1526539136537" expanded="true" signature="7764:7909" ph="SELECT b.* F... blog" />
-                <marker date="1526539136537" expanded="true" signature="8066:8141" ph="UPDATE blog... " />
-                <marker date="1526539136537" expanded="true" signature="8273:8939" ph="SELECT * FRO... content" />
-                <marker date="1526539136537" expanded="true" signature="8299:8388" ph="SELECT b.con... blog" />
-                <marker date="1526539136537" expanded="true" signature="8419:8558" ph="SELECT b.con... blog" />
-                <marker date="1526539136537" expanded="true" signature="8589:8726" ph="SELECT b.con... favorite" />
-                <marker date="1526539136537" expanded="true" signature="8757:8897" ph="SELECT b.con... thumb_up" />
+                <element signature="e#1187#1191#0" expanded="true" />
+                <element signature="n#insert#0;n#mapper#0;n#!!top" expanded="false" />
+                <element signature="n#select#4;n#mapper#0;n#!!top" expanded="false" />
+                <element signature="n#select#5;n#mapper#0;n#!!top" expanded="false" />
+                <element signature="n#select#6;n#mapper#0;n#!!top" expanded="false" />
+                <element signature="n#select#7;n#mapper#0;n#!!top" expanded="false" />
+                <element signature="n#insert#1;n#mapper#0;n#!!top" expanded="false" />
+                <element signature="n#update#0;n#mapper#0;n#!!top" expanded="false" />
+                <marker date="1527077839195" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+                <marker date="1527077839195" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+                <marker date="1527077839195" expanded="true" signature="795:1047" ph="SELECT * FRO... blog" />
+                <marker date="1527077839195" expanded="true" signature="1130:1273" ph="SELECT * FRO... blog" />
+                <marker date="1527077839195" expanded="true" signature="4069:4181" ph="SELECT user.... blog" />
+                <marker date="1527077839195" expanded="true" signature="4257:4316" ph="UPDATE blog... " />
+                <marker date="1527077839195" expanded="true" signature="4257:4329" ph="UPDATE blog... " />
+                <marker date="1527077839195" expanded="true" signature="4399:4655" ph="UPDATE blog... " />
+                <marker date="1527077839195" expanded="true" signature="4796:5146" ph="INSERT INTO blog... " />
+                <marker date="1527077839195" expanded="true" signature="5259:5388" ph="SELECT tuid thumb_up" />
+                <marker date="1527077839195" expanded="true" signature="5508:5605" ph="INSERT INTO thumb_up... " />
+                <marker date="1527077839195" expanded="true" signature="5678:5727" ph="DELETE FROM thumb_up... " />
+                <marker date="1527077839195" expanded="true" signature="5838:5999" ph="SELECT * FRO... user" />
+                <marker date="1527077839195" expanded="true" signature="6114:6210" ph="INSERT INTO call_at... " />
+                <marker date="1527077839195" expanded="true" signature="6333:6558" ph="SELECT bid, blog" />
+                <marker date="1527077839195" expanded="true" signature="6714:6796" ph="INSERT INTO favorite... " />
+                <marker date="1527077839195" expanded="true" signature="6948:7063" ph="INSERT INTO sensitivity... " />
+                <marker date="1527077839195" expanded="true" signature="7219:7332" ph="INSERT INTO blog_discuss... " />
+                <marker date="1527077839195" expanded="true" signature="7445:8010" ph="SELECT * , C... *" />
+                <marker date="1527077839195" expanded="true" signature="7531:7710" ph="SELECT b.* F... blog" />
+                <marker date="1527077839195" expanded="true" signature="7755:7941" ph="SELECT b.* F... blog" />
+                <marker date="1527077839195" expanded="true" signature="8102:8663" ph="SELECT * , C... *" />
+                <marker date="1527077839195" expanded="true" signature="8188:8365" ph="SELECT b.* F... blog" />
+                <marker date="1527077839195" expanded="true" signature="8410:8594" ph="SELECT b.* F... blog" />
+                <marker date="1527077839195" expanded="true" signature="8756:8837" ph="UPDATE blog... " />
+                <marker date="1527077839195" expanded="true" signature="8969:9977" ph="SELECT * FRO... content" />
+                <marker date="1527077839195" expanded="true" signature="9010:9155" ph="SELECT b.con... blog" />
+                <marker date="1527077839195" expanded="true" signature="9200:9414" ph="SELECT b.con... blog" />
+                <marker date="1527077839195" expanded="true" signature="9459:9671" ph="SELECT b.con... favorite" />
+                <marker date="1527077839195" expanded="true" signature="9716:9931" ph="SELECT b.con... thumb_up" />
               </folding>
             </state>
           </provider>
@@ -142,12 +124,11 @@
       <file leaf-file-name="BlogDao.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3150">
-              <caret line="90" column="40" lean-forward="false" selection-start-line="90" selection-start-column="40" selection-end-line="90" selection-end-column="40" />
+            <state relative-caret-position="339">
+              <caret line="210" column="43" lean-forward="false" selection-start-line="210" selection-start-column="27" selection-end-line="210" selection-end-column="43" />
               <folding>
                 <element signature="method#insertBlog#0;class#BlogDao#0" expanded="false" />
                 <element signature="method#delBlog#0;class#BlogDao#0" expanded="false" />
-                <element signature="method#commit#0;class#BlogDao#0" expanded="false" />
                 <element signature="method#forwordBlog#0;class#BlogDao#0" expanded="false" />
                 <element signature="method#collectBlog#0;class#BlogDao#0" expanded="false" />
                 <element signature="method#reportBlog#0;class#BlogDao#0" expanded="false" />
@@ -161,6 +142,30 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="250">
               <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlogAction.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="408" column="22" lean-forward="false" selection-start-line="408" selection-start-column="22" selection-end-line="408" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#7488#7616#0" expanded="false" />
+                <element signature="method#delBlog#0;class#BlogAction#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-350">
+              <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -199,6 +204,8 @@
       <find>is_s</find>
       <find>&lt;</find>
       <find>&lt;=</find>
+      <find>searc</find>
+      <find>sea</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -474,11 +481,11 @@
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/tool/DataTool.java" />
         <option value="$PROJECT_DIR$/code.iml" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/test/java/myTest.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/action/BlogAction.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
       </list>
     </option>
   </component>
@@ -495,7 +502,7 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="157" />
     <option name="y" value="26" />
     <option name="width" value="1934" />
@@ -550,6 +557,36 @@
               <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
               <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FakeWeibo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="action" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1187,12 +1224,12 @@
       <workItem from="1526527242584" duration="86000" />
       <workItem from="1526527527116" duration="9275000" />
       <workItem from="1526567638414" duration="707000" />
-      <workItem from="1527056631353" duration="519000" />
+      <workItem from="1527056631353" duration="7525000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="129472000" />
+    <option name="totallyTimeSpent" value="136478000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1204,32 +1241,34 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1046" extended-state="6" />
+    <frame x="-11" y="-11" width="1942" height="1046" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5140845" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20362474" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32858709" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24061033" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968238" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5140845" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36032864" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22135417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22135417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20362474" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.109375" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.109375" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1240,7 +1279,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24061033" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34605378" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1263,7 +1301,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/log4j2.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/listener/Log4j2ConfigListener.java" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -1471,21 +1508,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1450">
-          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/DataAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1622">
-          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mapper/BlogMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-501">
@@ -1500,17 +1522,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/myTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="12" column="42" lean-forward="false" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+        <state relative-caret-position="250">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/DataAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-550">
+          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tool/SensitivewordFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
+        <state relative-caret-position="674">
           <caret line="27" column="30" lean-forward="false" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="30" />
           <folding />
         </state>
@@ -1518,63 +1548,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/BlogMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5300">
-          <caret line="106" column="19" lean-forward="false" selection-start-line="106" selection-start-column="19" selection-end-line="106" selection-end-column="19" />
+        <state relative-caret-position="260">
+          <caret line="34" column="53" lean-forward="false" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="53" />
           <folding>
-            <marker date="1526539136537" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
-            <marker date="1526539136537" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
-            <marker date="1526539136537" expanded="true" signature="795:1047" ph="SELECT * FRO... blog" />
-            <marker date="1526539136537" expanded="true" signature="1166:1258" ph="INSERT INTO search_log... " />
-            <marker date="1526539136537" expanded="true" signature="1401:1588" ph="SELECT * FRO... blog" />
-            <marker date="1526539136537" expanded="true" signature="1726:2259" ph="SELECT u.*,b... user" />
-            <marker date="1526539136537" expanded="true" signature="1751:1821" ph="SELECT count... blog" />
-            <marker date="1526539136537" expanded="true" signature="1847:1917" ph="SELECT count... blog" />
-            <marker date="1526539136537" expanded="true" signature="1943:2004" ph="SELECT count... thumb_up" />
-            <marker date="1526539136537" expanded="true" signature="2400:2876" ph="SELECT *, (S... user" />
-            <marker date="1526539136537" expanded="true" signature="2419:2489" ph="SELECT count... blog" />
-            <marker date="1526539136537" expanded="true" signature="2515:2585" ph="SELECT count... blog" />
-            <marker date="1526539136537" expanded="true" signature="2611:2672" ph="SELECT count... thumb_up" />
-            <marker date="1526539136537" expanded="true" signature="2988:3059" ph="SELECT user.... user" />
-            <marker date="1526539136537" expanded="true" signature="3194:3544" ph="INSERT INTO blog... " />
-            <marker date="1526539136537" expanded="true" signature="3636:3713" ph="UPDATE blog... " />
-            <marker date="1526539136537" expanded="true" signature="3843:3928" ph="SELECT user.... blog" />
-            <marker date="1526539136537" expanded="true" signature="4004:4061" ph="UPDATE blog... " />
-            <marker date="1526539136537" expanded="true" signature="4004:4072" ph="UPDATE blog... " />
-            <marker date="1526539136537" expanded="true" signature="4142:4389" ph="UPDATE blog... " />
-            <marker date="1526539136537" expanded="true" signature="4533:4738" ph="INSERT INTO blog... " />
-            <marker date="1526539136537" expanded="true" signature="4851:4980" ph="SELECT tuid thumb_up" />
-            <marker date="1526539136537" expanded="true" signature="5100:5197" ph="INSERT INTO thumb_up... " />
-            <marker date="1526539136537" expanded="true" signature="5270:5319" ph="DELETE FROM thumb_up... " />
-            <marker date="1526539136537" expanded="true" signature="5430:5591" ph="SELECT * FRO... user" />
-            <marker date="1526539136537" expanded="true" signature="5706:5802" ph="INSERT INTO call_at... " />
-            <marker date="1526539136537" expanded="true" signature="5925:6150" ph="SELECT bid, blog" />
-            <marker date="1526539136537" expanded="true" signature="6306:6388" ph="INSERT INTO favorite... " />
-            <marker date="1526539136537" expanded="true" signature="6540:6653" ph="INSERT INTO sensitivity... " />
-            <marker date="1526539136537" expanded="true" signature="6809:6922" ph="INSERT INTO blog_discuss... " />
-            <marker date="1526539136537" expanded="true" signature="7031:7453" ph="SELECT * , C... *" />
-            <marker date="1526539136537" expanded="true" signature="7081:7221" ph="SELECT b.* F... blog" />
-            <marker date="1526539136537" expanded="true" signature="7248:7395" ph="SELECT b.* F... blog" />
-            <marker date="1526539136537" expanded="true" signature="7545:7973" ph="SELECT * , C... *" />
-            <marker date="1526539136537" expanded="true" signature="7599:7737" ph="SELECT b.* F... blog" />
-            <marker date="1526539136537" expanded="true" signature="7764:7909" ph="SELECT b.* F... blog" />
-            <marker date="1526539136537" expanded="true" signature="8066:8141" ph="UPDATE blog... " />
-            <marker date="1526539136537" expanded="true" signature="8273:8939" ph="SELECT * FRO... content" />
-            <marker date="1526539136537" expanded="true" signature="8299:8388" ph="SELECT b.con... blog" />
-            <marker date="1526539136537" expanded="true" signature="8419:8558" ph="SELECT b.con... blog" />
-            <marker date="1526539136537" expanded="true" signature="8589:8726" ph="SELECT b.con... favorite" />
-            <marker date="1526539136537" expanded="true" signature="8757:8897" ph="SELECT b.con... thumb_up" />
+            <element signature="e#1187#1191#0" expanded="true" />
+            <element signature="n#insert#0;n#mapper#0;n#!!top" expanded="false" />
+            <element signature="n#select#4;n#mapper#0;n#!!top" expanded="false" />
+            <element signature="n#select#5;n#mapper#0;n#!!top" expanded="false" />
+            <element signature="n#select#6;n#mapper#0;n#!!top" expanded="false" />
+            <element signature="n#select#7;n#mapper#0;n#!!top" expanded="false" />
+            <element signature="n#insert#1;n#mapper#0;n#!!top" expanded="false" />
+            <element signature="n#update#0;n#mapper#0;n#!!top" expanded="false" />
+            <marker date="1527077839195" expanded="true" signature="283:478" ph="SELECT COUNT... thumb_up" />
+            <marker date="1527077839195" expanded="true" signature="580:662" ph="SELECT COUNT... blog" />
+            <marker date="1527077839195" expanded="true" signature="795:1047" ph="SELECT * FRO... blog" />
+            <marker date="1527077839195" expanded="true" signature="1130:1273" ph="SELECT * FRO... blog" />
+            <marker date="1527077839195" expanded="true" signature="4069:4181" ph="SELECT user.... blog" />
+            <marker date="1527077839195" expanded="true" signature="4257:4316" ph="UPDATE blog... " />
+            <marker date="1527077839195" expanded="true" signature="4257:4329" ph="UPDATE blog... " />
+            <marker date="1527077839195" expanded="true" signature="4399:4655" ph="UPDATE blog... " />
+            <marker date="1527077839195" expanded="true" signature="4796:5146" ph="INSERT INTO blog... " />
+            <marker date="1527077839195" expanded="true" signature="5259:5388" ph="SELECT tuid thumb_up" />
+            <marker date="1527077839195" expanded="true" signature="5508:5605" ph="INSERT INTO thumb_up... " />
+            <marker date="1527077839195" expanded="true" signature="5678:5727" ph="DELETE FROM thumb_up... " />
+            <marker date="1527077839195" expanded="true" signature="5838:5999" ph="SELECT * FRO... user" />
+            <marker date="1527077839195" expanded="true" signature="6114:6210" ph="INSERT INTO call_at... " />
+            <marker date="1527077839195" expanded="true" signature="6333:6558" ph="SELECT bid, blog" />
+            <marker date="1527077839195" expanded="true" signature="6714:6796" ph="INSERT INTO favorite... " />
+            <marker date="1527077839195" expanded="true" signature="6948:7063" ph="INSERT INTO sensitivity... " />
+            <marker date="1527077839195" expanded="true" signature="7219:7332" ph="INSERT INTO blog_discuss... " />
+            <marker date="1527077839195" expanded="true" signature="7445:8010" ph="SELECT * , C... *" />
+            <marker date="1527077839195" expanded="true" signature="7531:7710" ph="SELECT b.* F... blog" />
+            <marker date="1527077839195" expanded="true" signature="7755:7941" ph="SELECT b.* F... blog" />
+            <marker date="1527077839195" expanded="true" signature="8102:8663" ph="SELECT * , C... *" />
+            <marker date="1527077839195" expanded="true" signature="8188:8365" ph="SELECT b.* F... blog" />
+            <marker date="1527077839195" expanded="true" signature="8410:8594" ph="SELECT b.* F... blog" />
+            <marker date="1527077839195" expanded="true" signature="8756:8837" ph="UPDATE blog... " />
+            <marker date="1527077839195" expanded="true" signature="8969:9977" ph="SELECT * FRO... content" />
+            <marker date="1527077839195" expanded="true" signature="9010:9155" ph="SELECT b.con... blog" />
+            <marker date="1527077839195" expanded="true" signature="9200:9414" ph="SELECT b.con... blog" />
+            <marker date="1527077839195" expanded="true" signature="9459:9671" ph="SELECT b.con... favorite" />
+            <marker date="1527077839195" expanded="true" signature="9716:9931" ph="SELECT b.con... thumb_up" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/DAO/BlogDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3150">
-          <caret line="90" column="40" lean-forward="false" selection-start-line="90" selection-start-column="40" selection-end-line="90" selection-end-column="40" />
+        <state relative-caret-position="339">
+          <caret line="210" column="43" lean-forward="false" selection-start-line="210" selection-start-column="27" selection-end-line="210" selection-end-column="43" />
           <folding>
             <element signature="method#insertBlog#0;class#BlogDao#0" expanded="false" />
             <element signature="method#delBlog#0;class#BlogDao#0" expanded="false" />
-            <element signature="method#commit#0;class#BlogDao#0" expanded="false" />
             <element signature="method#forwordBlog#0;class#BlogDao#0" expanded="false" />
             <element signature="method#collectBlog#0;class#BlogDao#0" expanded="false" />
             <element signature="method#reportBlog#0;class#BlogDao#0" expanded="false" />
@@ -1582,11 +1607,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/myTest.java">
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-350">
+          <caret line="8" column="14" lean-forward="false" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="408" column="22" lean-forward="false" selection-start-line="408" selection-start-column="22" selection-end-line="408" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7488#7616#0" expanded="false" />
+            <element signature="method#delBlog#0;class#BlogAction#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

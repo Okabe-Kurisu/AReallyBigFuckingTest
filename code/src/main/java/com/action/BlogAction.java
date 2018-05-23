@@ -18,6 +18,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -38,7 +39,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "submitBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    //@Authority("")
+    @Authority("")
     public String submitBlog() {//提交微博
         Blog blog = new Blog();
         SensitivewordFilter filter = new SensitivewordFilter();
@@ -109,13 +110,13 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "setBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    //@Authority("")
+    @Authority("")
     public String setBlog() {//修改微博
         Blog blog = new Blog();
         Map<String, Object> resultMap;
         String release_time, multimedia, content;
         SensitivewordFilter filter = new SensitivewordFilter();
-        int bid, visibility, user_id;
+        int bid, visibility, user_id,is_showName;
         //从前端获取
         bid = Integer.parseInt(request.getParameter("bid"));
         user_id = Integer.parseInt(request.getParameter("uid"));
@@ -123,6 +124,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         release_time = request.getParameter("release_time");
         multimedia = request.getParameter("multimedia");
         visibility = Integer.parseInt(request.getParameter("visibility"));
+        is_showName = Integer.parseInt(request.getParameter("is_showName"));
         try {
             if (BlogDao.checkAdmin(user_id) != 0) {
                 // 封装响应数据
@@ -169,8 +171,15 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
 
             //后台添加
+            String userAgent = request.getHeader("user-agent");//获取浏览器信息
+            String ip = request.getHeader("X-Forwarded-For");//获取IP地址
+            blog.setBrowser_sign(userAgent);
+            System.out.print("------------------user_id:" + user_id);
+            System.out.print("------------------ip address:" + ip);
+            blog.setIp_address(ip);
             blog.setComment_on(0);
             blog.setType(0);
+            blog.setIs_edit(0);
 
             BlogDao.setBlog(blog);
             // 封装响应数据
@@ -216,11 +225,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Action(value = "commitBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
-    @Authority("")
+    //@Authority("")
     public String commit() {//评论微博
         Blog blog = new Blog();
         Map<String, Object> resultMap;
         String multimedia, content;
+        SensitivewordFilter filter = new SensitivewordFilter();
         int user_id, bid;
         //从前端获取
         user_id = Integer.parseInt(request.getParameter("user_id"));
@@ -228,10 +238,28 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         content = request.getParameter("content");
         multimedia = request.getParameter("multimedia");
         try {
+            if (BlogDao.checkAdmin(user_id) != 0) {
+                // 封装响应数据
+                resultMap = PowerfulTools.format("101", "该账户被封", null);
+                // 转换为JSON字符串
+                Gson gson = new Gson();
+                message = gson.toJson(resultMap);
+                System.out.print("该账户被封");
+                return SUCCESS;
+            }
             if (multimedia == null) {
                 blog.setMultimedia("");
             } else {
                 blog.setMultimedia(multimedia);
+            }
+            Set<String> set = filter.getSensitiveWord(content, 1);
+            if (set.size() > 0) {
+                Sensitivity Sensitivity_blog = new Sensitivity();
+                Sensitivity_blog.setBlog_id(bid);
+                Sensitivity_blog.setDetails("");
+                Sensitivity_blog.setType(0);
+                Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
+                BlogDao.reportBlog(Sensitivity_blog);
             }
             blog.setUser_id(user_id);
             blog.setContent(content);
@@ -365,6 +393,46 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "selectBlogByTime", results = {
+            @Result(name = "success", type = "json", params = {"root", "message"})
+    })
+    public String selectBlogByTime() {
+        int nowtime;
+        Map<String, Object> map = new HashMap();
+        Map<String, Object> resultMap;
+        try {
+            // 获得前3小时的时间戳
+            SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            java.util.Date beginDate = new java.util.Date();
+            Calendar date = Calendar.getInstance();
+            date.setTime(beginDate);
+            date.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY) - 5);
+            java.util.Date endDate = dft.parse(dft.format(date.getTime()));
+            nowtime = (int) endDate.getTime();
+
+            // 封装参数
+            map.put("release_time", nowtime);
+            // 调用Dao层 获取数据
+            List blogList = BlogDao.selectBlogByTime(map);
+            Blog blog=new Blog();
+            blog=(Blog)blogList.get(0);
+            System.out.print(blog.getBid());
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", blogList);
+
+            // 转换为JSON字符串
+            Gson gson = new Gson();
+            message = gson.toJson(resultMap);
+
+        } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
             Gson gson = new Gson();
