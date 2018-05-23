@@ -278,24 +278,26 @@ $(function () {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
             success: function (data) {
+                console.log(data)
+                var user = data.data
                 console.log("正在发布微博...")
-                var res = "<div class=\"mdui-card mdui-m-t-1\">\n" +
+                $("<div class=\"mdui-card mdui-m-t-1\">\n" +
                     "                <p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1 weibo-reason\">这条微博出现在这里，因为他很热门</p>\n" +
                     "                <div class=\"mdui-card-header\">\n" +
                     "                    <img class=\"mdui-card-header-avatar\" src=\"./img/avatar.jpg\"/>\n" +
-                    "                    <div class=\"mdui-card-header-title\">默认用户</div>\n" +
-                    "                    <div class=\"mdui-card-header-subtitle\">一个普通的默认用户</div>\n" +
+                    "                    <div class=\"mdui-card-header-title\">" + user.username + "</div>\n" +
+                    "                    <div class=\"mdui-card-header-subtitle\">" + user.motto + "</div>\n" +
                     "                    <!-- 时间戳生成发博时间 -->\n" +
                     "                    <div class=\"mdui-card-menu mdui-text-color-grey-500\">\n" +
-                    "                        <p>1分钟前</p>\n" +
+                    "                        <p>刚刚</p>\n" +
                     "                    </div>\n" +
                     "                </div>\n" +
                     "                <!-- 发布了带有多媒体的博客就加上这个 -->\n" +
                     "                <div class=\"mdui-card-media\">\n" +
-                    "                    <img src=\"./img/background.jpg\"/>\n" +
+                    "                    <img src=\"" + param.multimedia + "\"/>\n" +
                     "                </div>\n" +
                     "\n" +
-                    "                <div class=\"mdui-card-content\">子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」</div>\n" +
+                    "                <div class=\"mdui-card-content\">" + param.content + "</div>\n" +
                     "                <div class=\"mdui-card-actions\">\n" +
                     "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
                     "                            class=\"mdui-icon material-icons\">thumb_up</i>赞(0)\n" +
@@ -311,13 +313,15 @@ $(function () {
                     "                    </button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
                     "                </div>\n" +
                     "\n" +
-                    "            </div>"
+                    "            </div>").insertAfter(".send-card")
+
+
                 mdui.snackbar("发送成功");
                 console.log("发布成功(●ˇ∀ˇ●)")
                 //todo: 获得用户的关注信息
             },
             error: function () {
-                mdui.snackbar("注册失败");
+                mdui.snackbar("微博发送失败");
             },
         })
 

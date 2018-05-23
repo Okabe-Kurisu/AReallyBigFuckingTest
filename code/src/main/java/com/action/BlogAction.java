@@ -3,10 +3,7 @@ package com.action;
 import com.DAO.BlogDao;
 import com.annotations.Authority;
 import com.google.gson.Gson;
-import com.model.Blog;
-import com.model.Favorite;
-import com.model.Sensitivity;
-import com.model.ThumbUp;
+import com.model.*;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
 import com.tool.SensitivewordFilter;
@@ -40,25 +37,33 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     Map<String, Object> resultMap;
 
     @Action(value = "submitBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
-   //@Authority("")
+    @Authority("")
     public String submitBlog() {//提交微博
         Blog blog = new Blog();
         SensitivewordFilter filter = new SensitivewordFilter();
-        Map<String, Object> resultMap;
-        String release_time, multimedia, content;
+
+        String release_time, multimedia, content1;
         int user_id, visibility, is_showName;
         HttpSession session = request.getSession();
         //从前端获取
-        user_id = Integer.parseInt((String) session.getAttribute("user_id"));
-        content = request.getParameter("content");
+        //user_id = Integer.parseInt((String) session.getAttribute("user_id"));
+        content1 = request.getParameter("content");
         release_time = request.getParameter("release_time");
-        visibility = Integer.parseInt(request.getParameter("visibility"));
+        String visiStr = request.getParameter("visibility");
+        if (visiStr == null || "".equals(visiStr)) visiStr = "0";
+        visibility = Integer.parseInt(visiStr);
         multimedia = request.getParameter("multimedia");
-        is_showName = Integer.parseInt(request.getParameter("is_showName"));
+        String isStr = request.getParameter("is_showName");
+        if (isStr == null || "".equals(isStr)) isStr = "0";
+        is_showName = Integer.parseInt(isStr);
         try {
-            Set<String> set = filter.getSensitiveWord(content, 1);
+            //获得当前登录用户
+            User user = (User) request.getSession().getAttribute("user");
+            user_id = user.getUid();
+
+            /*Set<String> set = filter.getSensitiveWord(content, 1);*/
 
             if (release_time == null) {
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
@@ -72,7 +77,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 blog.setMultimedia(multimedia);
             }
             blog.setUser_id(user_id);
-            blog.setContent(content);
+            blog.setContentO(content1);
             blog.setVisibility(visibility);
             blog.setIs_showName(is_showName);
             //后台添加
@@ -87,26 +92,22 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             blog.setIs_edit(0);
 
             int bid = BlogDao.insertBlog(blog);
-            if (set.size() > 0) {
+            System.out.print(bid);
+            System.out.println(blog.getContent());
+           /* if (set.size() > 0) {
                 Sensitivity Sensitivity_blog = new Sensitivity();
                 Sensitivity_blog.setBlog_id(bid);
                 Sensitivity_blog.setDetails("");
                 Sensitivity_blog.setType(0);
                 Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
-            }
+            }*/
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "发布成功", null);
-
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-
+            resultMap = PowerfulTools.format("200", "发布成功", user);
+            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
@@ -120,7 +121,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         Map<String, Object> resultMap;
         String release_time, multimedia, content;
         SensitivewordFilter filter = new SensitivewordFilter();
-        int bid, visibility, user_id,is_showName;
+        int bid, visibility, user_id, is_showName;
         //从前端获取
         bid = Integer.parseInt(request.getParameter("bid"));
         user_id = Integer.parseInt(request.getParameter("uid"));
