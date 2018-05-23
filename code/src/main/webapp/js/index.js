@@ -243,6 +243,7 @@ $(function() {
 		inst.open();
 	})
 
+<<<<<<< HEAD
 	$(".discuss").on("click", function discuss(argument) {
 		var dDialog = $(".discuss-dialog");
 		var inst = new mdui.Dialog(dDialog, overlay = true);
@@ -253,6 +254,26 @@ $(function() {
 		smoothscroll();
 		$("#blog-content").focus();
 	})
+=======
+// 我的话题按钮点击时间
+$(".myDiscuss").on("click", function showMyDiscuss(argument) {
+	var dDialog = $(".manageDiscuss-dialog");
+	var inst = new mdui.Dialog(dDialog, overlay = true);
+	inst.open();
+})
+
+// 创建话题按钮点击事件
+$(".creatDiscuss").on("click", function showAddDiscuss(argument) {
+	var dDialog = $(".addDiscuss-dialog");
+	var inst = new mdui.Dialog(dDialog, overlay = true);
+	inst.open();
+})
+
+$(".send-fab").on("click", function sendFab(argument) {
+	smoothscroll();
+	$("#blog-content").focus();
+})
+>>>>>>> be7572633ffb76688b8fe0ab4ea36eff52745255
 
 
 	$(".report").click(function report(argument) {
@@ -304,6 +325,7 @@ $(function() {
 		setTimeout("self.location= '/auth.html'", 1000);
 	}
 
+<<<<<<< HEAD
 	//滚动会最上方
 	function smoothscroll(argument) {
 		var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
@@ -369,3 +391,17 @@ $(function() {
 
 
 })
+=======
+function GetRequest() {
+	var url = location.search; //获取url中"?"符后的字串
+	var theRequest = new Object();
+	if (url.indexOf("?") != -1) {
+		var str = url.substr(1);
+		strs = str.split("&");
+		for (var i = 0; i < strs.length; i++) {
+			theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+		}
+	}
+	return theRequest;
+}
+>>>>>>> be7572633ffb76688b8fe0ab4ea36eff52745255

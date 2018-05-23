@@ -5,6 +5,9 @@ import com.model.*;
 import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +43,19 @@ public class BlogDao {
         }
     }
 
+    //查看人员是否被封禁
+    public static int checkAdmin(int user_id) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        int is_ban;
+        try {
+            is_ban = sqlSession.selectOne("weibo/BlogMapper.checkAdmin", user_id);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return is_ban;
+    }
+
     //修改微博
     public static void setBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
@@ -49,6 +65,51 @@ public class BlogDao {
         } finally {
             sqlSession.close();
         }
+    }
+
+    //微博修改次数
+    public static int SetBlogNum(int blog_id) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        int release_time;
+        int flag = 0;
+        List<Map> blogList = null;
+        try {
+            System.out.print("enter");
+            blogList = sqlSession.selectList("weibo/BlogMapper.checkUpdateNum", blog_id);
+            System.out.print("   " + (int)blogList.get(0).get("is_edit"));
+            //获得前一天时间戳
+            SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date beginDate = new Date();
+            Calendar date = Calendar.getInstance();
+            date.setTime(beginDate);
+            date.set(Calendar.DATE, date.get(Calendar.DATE) - 1);
+            Date endDate = dft.parse(dft.format(date.getTime()));
+            release_time = (int) endDate.getTime();
+            sqlSession.commit();
+
+            if ((int)blogList.get(0).get("is_edit") > 5 && release_time > (int)blogList.get(0).get("release_time")) {
+                sqlSession.update("weibo/BlogMapper.clearUpdateNum", blog_id);
+                sqlSession.commit();
+                System.out.print("情况1");
+                flag = 0;
+                return flag;
+            } else if ((int)blogList.get(0).get("is_edit") <= 5) {
+                System.out.print("情况2");
+                flag = 0;
+                return flag;
+            } else {
+                System.out.print("情况3");
+                flag = 1;
+                return flag;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
+        System.out.print("flag=" + flag);
+        return flag;
     }
 
     //发布评论
@@ -227,7 +288,6 @@ public class BlogDao {
             sqlSession.close();
         }
     }
-
 
 
 }

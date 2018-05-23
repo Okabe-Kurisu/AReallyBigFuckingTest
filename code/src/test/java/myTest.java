@@ -8,6 +8,7 @@ import java.util.List;
 
 public class myTest {
     public static void main(String[] args) {
+        BlogDao.SetBlogNum(19);
 //        Blog blog=new Blog();
 //        blog.setUser_id(3);
 ////        blog.setBid(15);
@@ -60,11 +61,18 @@ public class myTest {
         user.setBrowser_sign("asdasdf");
         System.out.println("aaaaaa"+UserDao.updateUuser(user)+"aaaaaaa");*/
        /* UserDao.userLeave(4);*/
+<<<<<<< HEAD
+//        User user = new User();
+//        user.setUid(3);
+//        UserDao.initUser(user);
+
+=======
         User user = new User();
         user.setUid(2);
         user = UserDao.getAvatar(user);
         System.out.println(user.getAvatar());
         UserDao.setBackground(user);
+>>>>>>> 0d6a66f23a0a258e1f2b7e5966e8fc9b532c5e3e
 //        Sensitivity Sensitivity_blog = new Sensitivity();
 //        Favorite Favorite_blog = new Favorite();
 //        Sensitivity_blog.setType(0);
