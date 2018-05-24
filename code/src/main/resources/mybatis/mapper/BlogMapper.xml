@@ -72,7 +72,6 @@
     <!-- 得到指定用户微博 -->
     <select id="getUserBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT *,
-        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=1) AS reshareNum,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM user,blog
@@ -99,10 +98,12 @@
                          #{ip_address}, #{browser_sign}, #{is_showName})
     </insert>
 
-    <select id="getBlogById" parameterType="int" resultType="blog">
-        SELECT *
-        FROM blog
-        WHERE blog.bid = #{bid}
+    <select id="getBlogById" parameterType="int" resultType="map">
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM blog AS b
+        WHERE b.bid = #{bid}
     </select>
 
     <!-- 删除微博 查用户 -->

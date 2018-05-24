@@ -31,10 +31,8 @@ import java.util.*;
 public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     HttpServletRequest request;
-
-    String message;
-
     Map<String, Object> resultMap;
+    String message;
 
     @Action(value = "submitBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "resultMap"})
@@ -101,7 +99,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 BlogDao.reportBlog(Sensitivity_blog);
             }
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "发布成功", user);
+            Map map = new HashMap();
+            map.put("blog", BlogDao.getBlogById(bid));
+            map.put("user", user);
+            resultMap = PowerfulTools.format("200", "发布成功", map);
             System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
@@ -347,7 +348,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         String keyword, userid, pageNum, pageCap;
         long nowtime;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             // 获得参数
             keyword = request.getParameter("keyword");
@@ -430,7 +430,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Authority("")
     public String collectBlog() {//收藏微博
         Favorite Favorite_blog = new Favorite();
-        Map<String, Object> resultMap;
         int user_id, bid;
         //从前端获取
         user_id = Integer.parseInt(request.getParameter("user_id"));
@@ -458,7 +457,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Authority("")
     public String reportBlog() {//举报微博
         Sensitivity Sensitivity_blog = new Sensitivity();
-        Map<String, Object> resultMap;
         String details;
         int bid;
         //从前端获取
@@ -493,7 +491,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     public String getFollowBlog() {
         String userid;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             // 获得参数
             userid = request.getParameter("userid");
@@ -523,7 +520,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     public String getHotspot() {
 
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             // 调用Dao层 获取数据
             List blogList = BlogDao.getTodayHostBlog(map);
@@ -547,13 +543,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "getUserBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "getUserBlog")
     public String getUserBlog() {
         String userid;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             // 获得参数
             userid = request.getParameter("userid");

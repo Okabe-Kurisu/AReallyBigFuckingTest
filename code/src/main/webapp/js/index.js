@@ -6,7 +6,6 @@ $(function() {
 
 	$("document").ready(function() {
 		initPage();
-		initBlog();
 		initUser();
 		initSearch();
 		initPanel();
@@ -19,6 +18,7 @@ $(function() {
 		// 如果是特殊类型的访问
 		if (typeof(method) != "undefined") {
 			if (method == "userinfo") {
+				$(".index").hide();
 				//用户页面
 				var uid = request.uid;
 				setUsercard(uid);
@@ -45,6 +45,7 @@ $(function() {
 		} else {
 			// 主页
 			$(".userinfo").hide()
+			initBlog("index");
 		}
 
 		function setUsercard(id) {
@@ -107,16 +108,21 @@ $(function() {
 	}
 
 	// 得到一堆博客，并存储起来
-	function initBlog(argument) {
-		getBlog();
+	function initBlog(method) {
+		if (method == "index") {
+			getBlog(0);
+		} else if (method == "userinfo") {
+			getBlog(1);
+		}
 
 		// 得到博客并存储到websql中
-		function getBlog() {
+		function getBlog(type) {
+			urls = ["selectBlogByTime", "getUserBlog", "search", "callat"]
 			params = {
 				time: Math.round(new Date().getTime() / 1000),
 			}
 			$.ajax({
-				url: "/blog/selectBlogByTime",
+				url: "/blog/" + urls[type],
 				type: "POST",
 				data: params,
 				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -125,15 +131,9 @@ $(function() {
 					console.log("加载博客数据")
 					if (data.code == 200 && data.data != null) {
 						var blogs = data.data
-						var db = openDatabase('weibo', '1.0', 'Test DB', 2 * 1024 * 1024)
-						db.transaction(function(tx) {
-							tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum)');
-							console.log("执行sql")
-							for (x in blogs) {
-								var blog = blogs[x];
-								tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [blog.bid, blog.user_id, blog.content, blog.multimedia, blog.type, blog.release_time, blog.is_edit, blog.commentNum, blog.likeNum]);
-							}
-						})
+						if (type == 0) { //当用户打开主页时，将数据保存至主数据库
+							saveToSql(blogs)
+						}
 					}
 					console.log("博客数据加载完成")
 					//todo: 获得用户的关注信息
@@ -142,6 +142,19 @@ $(function() {
 					mdui.snackbar("注册失败");
 				},
 			})
+
+			// 将数据保存至数据库
+			function saveToSql(data) {
+				var db = openDatabase('weibo', '1.0', 'Test DB', 2 * 1024 * 1024)
+				db.transaction(function(tx) {
+					tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum)');
+					console.log("执行sql")
+					for (x in data) {
+						var blog = data[x];
+						tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [blog.bid, blog.user_id, blog.content, blog.multimedia, blog.type, blog.release_time, blog.is_edit, blog.commentNum, blog.likeNum]);
+					}
+				})
+			}
 		};
 		// todo:发送微博时，插入图片的方法:
 		// 先上传图片，然后返回一个图片地址，将图片地址存储于本地，然后和微博发送的ajax一起传回去
@@ -161,15 +174,12 @@ $(function() {
 			$(".userpanel").hide();
 			$(".me").hide();
 			$(".send-card").hide();
-
-			mdui.mutation();
 		} else { //已登录
 			var me = JSON.parse(sessionStorage.me);
 			$(".login-btn").hide();
 			$(".userpanel-avatar").attr("src", me.avatar);
 			$(".userpanel-nickname").html(me.nickname);
 			$(".userpanel-motto").html(me.motto);
-			mdui.mutation();
 		}
 	}
 
@@ -238,7 +248,14 @@ $(function() {
 			success: function(data) {
 				mdui.snackbar("退出成功");
 				sessionStorage.removeItem("me")
-				setTimeout("self.location= '/'", 3000);
+				var db = openDatabase('weibo', "1.0", 'Test DB', 2 * 1024 * 1024)
+				db.transaction(function(tx) {
+					tx.executeSql('DROP TABLE IF EXISTS follow');
+					tx.executeSql('DROP TABLE IF EXISTS callat');
+					tx.executeSql('DROP TABLE IF EXISTS favarite');
+				})
+				console.log("用户信息清理完成")
+				self.location = '/';
 			},
 			error: function() {
 				mdui.snackbar("退出失败");
@@ -333,10 +350,10 @@ $(function() {
 
 		res += "                <div class=\"mdui-card-actions\">\n" +
 			"                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
-			"                            class=\"mdui-icon material-icons\">thumb_up</i>赞(" + blog.likeNum +  ")\n" +
+			"                            class=\"mdui-icon material-icons\" likeNum=" + blog.likeNum + ">thumb_up</i>赞(" + blog.likeNum + ")\n" +
 			"                    </button>\n" +
 			"                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\"><i\n" +
-			"                            class=\"mdui-icon material-icons\">forum</i>(" + blog.commentNum + ")\n" +
+			"                            class=\"mdui-icon material-icons\" commentNum=" + blog.commentNum + ">forum</i>(" + blog.commentNum + ")\n" +
 			"                    </button>\n" +
 			"                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
 			"                            class=\"mdui-icon material-icons\">folder</i>收藏\n" +

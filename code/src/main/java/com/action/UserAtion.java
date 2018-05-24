@@ -3,6 +3,7 @@ package com.action;
 import com.DAO.UserDao;
 import com.google.gson.Gson;
 import com.model.CallAt;
+import com.model.Favorite;
 import com.model.Follow;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
@@ -95,6 +96,28 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
             List<User> userList = UserDao.getFiveUser(nickname);
 
             resultMap = PowerfulTools.format("200", "获取用户", userList);
+
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "initUserinfo")//初始化用户各种信息
+    public String initUserinfo() {
+        int uid = Integer.parseInt(request.getParameter("uid"));
+        Map<String, Object> map = new HashMap();
+
+        try {
+            List<Follow> follows = UserDao.getFollow(uid);
+            List<Favorite> favorites = UserDao.getFavorite(uid);
+            List<CallAt> callats = UserDao.getCallat(uid);
+            map.put("follows", follows);
+            map.put("favorites", favorites);
+            map.put("callats", callats);
+            resultMap = PowerfulTools.format("200", "成功", map);
 
 
         } catch (NullPointerException ne) {
