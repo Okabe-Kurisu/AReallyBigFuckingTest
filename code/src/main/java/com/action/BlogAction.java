@@ -72,10 +72,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             blog.setIs_showName(is_showName);
             //后台添加
             String userAgent = request.getHeader("user-agent");//获取浏览器信息
-            String ip = request.getHeader("X-Forwarded-For");//获取IP地址
+            String ip = UserAtion.getIpAddr(request);//获取IP地址
             blog.setBrowser_sign(userAgent);
-            System.out.print("------------------user_id:" + user_id);
-            System.out.print("------------------ip address:" + ip);
             blog.setIp_address(ip);
             blog.setComment_on(0);
             blog.setType(0);
@@ -334,6 +332,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 获得参数
             keyword = request.getParameter("keyword");
             pageNum = request.getParameter("pageNum");
+            pageCap = request.getParameter("pageCap");
             pageCap = request.getParameter("pageCap");
             userid = request.getParameter("userid");
 
