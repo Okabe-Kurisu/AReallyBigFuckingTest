@@ -584,12 +584,6 @@ $(function() {
 		var inst = new mdui.Dialog(dDialog, overlay = true);
 		inst.open();
 	})
-	// 创建话题按钮点击事件
-	$(".creatDiscuss").on("click", function showAddDiscuss(argument) {
-		var dDialog = $(".addDiscuss-dialog");
-		var inst = new mdui.Dialog(dDialog, overlay = true);
-		inst.open();
-	})
 
 	$(".send-fab").on("click", function sendFab(argument) {
 		smoothscroll();
