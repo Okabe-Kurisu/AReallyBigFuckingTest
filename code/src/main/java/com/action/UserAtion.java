@@ -28,14 +28,14 @@ import java.util.*;
  */
 @Namespace("/user")
 @ParentPackage("custom-default")
-@Results( { @Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+@Results({@Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
         @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class UserAtion extends ActionSupport implements ServletRequestAware {
 
     HttpServletRequest request;
     User user;
     String message;
-    Map resultMap;
+    Map<String, Object> resultMap;
 
     @Action("addAdmin")
     public void addAdmin() {
@@ -83,57 +83,49 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     }
 
     @Action(value = "getFiveUser", results = {//@用户时获取5个用户
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String getFiveUser() {
         String nickname;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
+
         try {
             nickname = request.getParameter("nickname");
+            if (null == nickname) nickname = "";
             List<User> userList = UserDao.getFiveUser(nickname);
 
             resultMap = PowerfulTools.format("200", "获取用户", userList);
 
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
     @Action(value = "addCallAt")//将@用户添加到表中
     public String addCallAt() {
-        int user_id, bid;
-        CallAt user = new CallAt();
+        int user_id, bid,atuserid;
+        CallAt users = new CallAt();
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         //从前端获取
-        user_id = Integer.parseInt(request.getParameter("user_id"));
+        User user = (User) request.getSession().getAttribute("user");
+        user_id = user.getUid();
+        atuserid = Integer.parseInt(request.getParameter("atuserid"));
         bid = Integer.parseInt(request.getParameter("bid"));
         try {
-            user.setUser_id(user_id);
-            user.setBlog_id(bid);
-            user.setDate((int) (System.currentTimeMillis() / 1000));
+            users.setUser_id(user_id);
+            users.setAt_userid(atuserid);
+            users.setBlog_id(bid);
+            users.setDate((int) (System.currentTimeMillis() / 1000));
 
-            UserDao.addAtUser(user);
-            resultMap = PowerfulTools.format("200", "@用户添加成功", null);
-
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            UserDao.addAtUser(users);
+            resultMap = PowerfulTools.format("200", "@用户添加成功", user);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
-            resultMap = PowerfulTools.format("500", "系统异常", null);
-
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            resultMap = PowerfulTools.format("500", "系统异常", user);
         }
         return SUCCESS;
     }
@@ -175,7 +167,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         age = Integer.parseInt(request.getParameter("age"));
         sex = Integer.parseInt(request.getParameter("sex"));
         Date day = new Date();//获取系统当前时间
-        int logtime = (int) System.currentTimeMillis()/1000;
+        int logtime = (int) System.currentTimeMillis() / 1000;
         String userAgent = request.getHeader("user-agent");//获取浏览器信息
         String ip = getIpAddr(request);//获取IP地址
         System.out.println(ip);
@@ -194,7 +186,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
             if (UserDao.checkusername(username) == null && UserDao.checknickname(nickname) == null) {
                 UserDao.signup(user);
                 Map temp = new HashMap();
-                temp.put("me",user);
+                temp.put("me", user);
                 resultMap = PowerfulTools.format("200", "成功", temp);
 
             } else {
@@ -222,7 +214,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 Map temp = new HashMap();
-                temp.put("me",user);
+                temp.put("me", user);
                 resultMap = PowerfulTools.format("200", "成功", temp);
             } else {
                 System.out.println(UserDao.checkPassword(username).getPassword() + "!=" + password);
@@ -249,7 +241,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         password = request.getParameter("password");
         age = Integer.parseInt(request.getParameter("age"));
         sex = Integer.parseInt(request.getParameter("sex"));
-        int logtime = (int) System.currentTimeMillis()/1000;
+        int logtime = (int) System.currentTimeMillis() / 1000;
         String userAgent = request.getHeader("user-agent");//获取浏览器信息
         String ip = getIpAddr(request);//获取IP地址
         user.setUsername(username);
@@ -289,6 +281,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         }
         return SUCCESS;
     }
+
     @Action(value = "logout")//用户退出登录
     public String logout() {
         HttpSession session = request.getSession();
@@ -308,8 +301,8 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
     public String follow() {
-        int followed_id,user_id;
-        followed_id =Integer.parseInt(request.getParameter("followed_id"));
+        int followed_id, user_id;
+        followed_id = Integer.parseInt(request.getParameter("followed_id"));
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         user_id = user.getUid();
@@ -317,7 +310,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         Map<String, Object> resultMap;
         Date day = new Date();//获取系统当前时间
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-        Follow follow  = new Follow();
+        Follow follow = new Follow();
         follow.setTime(Integer.parseInt((df.format(day))));
         follow.setType(0);//0代表关注的用户，1是话题,2是特别关注，3是黑名单
         follow.setVisibility(0);
@@ -331,21 +324,22 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
 
         }
-            return SUCCESS;
+        return SUCCESS;
 
     }
+
     @Action(value = "unfollow", results = {////取消关注
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
     public String unfollow() {
-        int followed_id,user_id;
-        followed_id =Integer.parseInt(request.getParameter("followed_id"));
+        int followed_id, user_id;
+        followed_id = Integer.parseInt(request.getParameter("followed_id"));
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         user_id = user.getUid();
         Map<String, Object> map = new HashMap();
         Map<String, Object> resultMap;
-        Follow follow  = new Follow();
+        Follow follow = new Follow();
         follow.setUser_id(user_id);
         follow.setFollowed_id(followed_id);
         try {
@@ -359,6 +353,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
 
     }
+
     @Action(value = "initUser", results = {//清空用户微博
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
@@ -401,6 +396,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         }
         return SUCCESS;
     }
+
     @Action(value = "getFollow")//得到六个关注者头像和六个粉丝头像
     public String getFollow() {
         try {
@@ -429,39 +425,39 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         this.message = message;
     }
 
-    public Map getResultMap() {
+    public Map<String, Object> getResultMap() {
         return resultMap;
     }
 
-    public void setResultMap(Map resultMap) {
+    public void setResultMap(Map<String, Object> resultMap) {
         this.resultMap = resultMap;
     }
 
-    public static String getIpAddr(HttpServletRequest request){
+    public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = request.getHeader("x-forwarded-for");
-        if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getHeader("Proxy-Client-IP");
         }
-        if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getHeader("WL-Proxy-Client-IP");
         }
-        if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
+        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getRemoteAddr();
-            if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")){
+            if (ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")) {
                 //根据网卡取本机配置的IP
-                InetAddress inet=null;
+                InetAddress inet = null;
                 try {
                     inet = InetAddress.getLocalHost();
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
-                ipAddress= inet.getHostAddress();
+                ipAddress = inet.getHostAddress();
             }
         }
         //对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-        if(ipAddress!=null && ipAddress.length()>15){ //"***.***.***.***".length() = 15
-            if(ipAddress.indexOf(",")>0){
-                ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));
+        if (ipAddress != null && ipAddress.length() > 15) { //"***.***.***.***".length() = 15
+            if (ipAddress.indexOf(",") > 0) {
+                ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
             }
         }
         return ipAddress;
