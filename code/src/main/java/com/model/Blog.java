@@ -48,6 +48,9 @@ public class Blog {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+    public void setContentO(String content) {
+        this.content = content;
+    }
 
     public Integer getRelease_time() {
         return release_time;

@@ -9,18 +9,21 @@ Vue.use(Vuex);
 
 const now = new Date();
 const store = new Vuex.Store({
-    state: {
+    state: 
+    {
         // 当前用户
-        user: {
-            name: 'ww',
+        user:
+        {
+            name: '永远的得不到',
             img: 'dist/images/1.jpg'
         },
         // 会话列表
-        sessions: [
+        sessions: 
+        [
             {
                 id: 1,
                 user: {
-                    name: 'dd',
+                    name: '示例介绍',
                     img: 'dist/images/2.png'
                 },
                 messages: [
@@ -42,11 +45,23 @@ const store = new Vuex.Store({
                 messages: []
             }
         ],
+
+
+
+
+
+
         // 当前选中的会话
         currentSessionId: 1,
         // 过滤出只包含这个key的会话
         filterKey: ''
     },
+ 
+
+
+
+
+
     mutations: {
         INIT_DATA (state) {
             let data = localStorage.getItem('vue-chat-session');

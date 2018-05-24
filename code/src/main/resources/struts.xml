@@ -26,7 +26,7 @@
             <result name="login">/auth.html</result>
         </global-results>
     </package>
-    <constant name="struts.devMode" value="true" />
+    <constant name="struts.devMode" value="false" />
     <!-- 指定国际化资源文件的baseName为messageResource -->
     <!-- 设置该应用使用的解码集 -->
     <constant name="struts.i18n.encoding" value="UTF-8"/>

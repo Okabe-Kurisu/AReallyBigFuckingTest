@@ -101,6 +101,8 @@
         WHERE follow.user_id = #{uid}
     </select>
 
+
+
     <!--得到六个关注者头像和六个粉丝头像-->
     <select id="getFanAvatarByUid" resultType="Map">
         SELECT *

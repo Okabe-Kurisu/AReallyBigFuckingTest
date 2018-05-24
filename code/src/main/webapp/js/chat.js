@@ -16,8 +16,13 @@ $(function () {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
             success: function(data) {
+
                 if (data.code == 200) {
-                    console.log(data.data[0].nickname)
+                    data = data.data;
+                    for(x in data) {
+                        console.log(data[x].nickname)
+                        console.log(data[x].uid)
+                    }
                 }else{
                     mdui.snackbar("聊天失败,");
                 }
