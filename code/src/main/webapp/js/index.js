@@ -143,6 +143,8 @@ $(function() {
 				},
 			})
 		};
+		// todo:发送微博时，插入图片的方法:
+		// 先上传图片，然后返回一个图片地址，将图片地址存储于本地，然后和微博发送的ajax一起传回去
 	}
 
 	// 得到用户信息
@@ -285,6 +287,7 @@ $(function() {
 			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType: "json",
 			success: function(data) {
+				console.log(data);
 				var rtn = data.data;
 				var user = rtn.user;
 				var blog = rtn.blog;
