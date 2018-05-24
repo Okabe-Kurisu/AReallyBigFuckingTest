@@ -65,7 +65,6 @@ $RECYCLE.BIN/
 code/build/
 code/out/
 code/.idea
-code/s.idea/
 code/analServ/__pycache__
 code/analServ/.idea
 code/analServ/wiki/__pycache__
@@ -75,12 +74,16 @@ doc/~$功能列表.xlsx
 .idea/AReallyBigFuckingTest.iml
 .idea/misc.xml
 .idea/modules.xml
-.idea/workspace.xml
-.idea/workspace.xml
-.idea/vcs.xml
+code/.idea/workspace.xml
+code/.idea/workspace.xml
+code/.idea/vcs.xml
 code/src/main/webapp/src/chat.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/App.vue
+doc/功能列表.xlsx
+*.xlsx
+code/.idea/workspace.xml
+*.xml
 code/.idea/workspace.xml

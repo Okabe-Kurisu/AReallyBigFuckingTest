@@ -18,7 +18,8 @@
     <!--通过发送者和接收者的id查看私信-->
     <select id="getMassageUseridAndAccpeter" parameterType="Map" resultType="Map">
         select * FROM message
-        where accpeter_id=#{uid} and user_id=#{sid} and is_showName=#{is_showName}
+        where ((accpeter_id=#{uid} and user_id=#{sid}) OR (accpeter_id=#{sid} and user_id=#{uid}))
+        and is_showName=#{is_showName}
         order by date asc
     </select>
     <!--标志已读-->
