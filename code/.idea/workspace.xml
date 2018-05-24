@@ -105,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="316" column="42" lean-forward="true" selection-start-line="316" selection-start-column="42" selection-end-line="316" selection-end-column="42" />
+            <state relative-caret-position="312">
+              <caret line="318" column="42" selection-start-line="318" selection-start-column="42" selection-end-line="318" selection-end-column="42" />
               <folding>
                 <element signature="e#212#3747#0" />
                 <element signature="e#362#1102#0" />
@@ -175,11 +175,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UploadAction.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UploadAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UploadAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="124" selection-start-line="124" selection-end-line="124" />
+            <state relative-caret-position="131">
+              <caret line="123" column="46" lean-forward="true" selection-start-line="123" selection-start-column="46" selection-end-line="123" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -539,9 +539,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/interceptors/LoginInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/model/Blog.java" />
         <option value="$PROJECT_DIR$/src/main/resources/struts.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/index.js" />
         <option value="$PROJECT_DIR$/src/main/java/com/action/BlogAction.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/action/UploadAction.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/index.js" />
       </list>
     </option>
   </component>
@@ -898,12 +898,12 @@
       <workItem from="1527034119280" duration="28000" />
       <workItem from="1527073515777" duration="4937000" />
       <workItem from="1527080829274" duration="10331000" />
-      <workItem from="1527119880537" duration="1361000" />
+      <workItem from="1527119880537" duration="1722000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22318000" />
+    <option name="totallyTimeSpent" value="22679000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1553" height="840" extended-state="0" />
@@ -928,7 +928,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.6394366" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23802817" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2367893" />
       <window_info id="Web" order="2" side_tool="true" />
@@ -1492,10 +1492,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="67" column="39" lean-forward="true" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#BlogAction#0" />
+            <element signature="method#setBlog#0;class#BlogAction#0" />
+            <element signature="method#commit#0;class#BlogAction#0" />
+            <element signature="method#thumbUp#0;class#BlogAction#0" />
+            <element signature="method#forwardBlog#0;class#BlogAction#0" />
+            <element signature="method#searchBlog#0;class#BlogAction#0" />
+            <element signature="method#collectBlog#0;class#BlogAction#0" />
+            <element signature="method#reportBlog#0;class#BlogAction#0" />
+            <element signature="method#getFollowBlog#0;class#BlogAction#0" />
+            <element signature="method#getHotspot#0;class#BlogAction#0" />
+            <element signature="method#getUserBlog#0;class#BlogAction#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UploadAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="123" column="46" lean-forward="true" selection-start-line="123" selection-start-column="46" selection-end-line="123" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="316" column="42" lean-forward="true" selection-start-line="316" selection-start-column="42" selection-end-line="316" selection-end-column="42" />
+        <state relative-caret-position="312">
+          <caret line="318" column="42" selection-start-line="318" selection-start-column="42" selection-end-line="318" selection-end-column="42" />
           <folding>
             <element signature="e#212#3747#0" />
             <element signature="e#362#1102#0" />
@@ -1520,34 +1548,6 @@
             <element signature="e#2954#3300#0" />
             <element signature="e#3306#3649#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/BlogAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="67" column="39" lean-forward="true" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#BlogAction#0" />
-            <element signature="method#setBlog#0;class#BlogAction#0" />
-            <element signature="method#commit#0;class#BlogAction#0" />
-            <element signature="method#thumbUp#0;class#BlogAction#0" />
-            <element signature="method#forwardBlog#0;class#BlogAction#0" />
-            <element signature="method#searchBlog#0;class#BlogAction#0" />
-            <element signature="method#collectBlog#0;class#BlogAction#0" />
-            <element signature="method#reportBlog#0;class#BlogAction#0" />
-            <element signature="method#getFollowBlog#0;class#BlogAction#0" />
-            <element signature="method#getHotspot#0;class#BlogAction#0" />
-            <element signature="method#getUserBlog#0;class#BlogAction#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/action/UploadAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="124" selection-start-line="124" selection-end-line="124" />
         </state>
       </provider>
     </entry>

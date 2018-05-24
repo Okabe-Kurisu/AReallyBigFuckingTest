@@ -316,7 +316,7 @@ $(function () {
                     "            </div>"
                 $(".send-card").after(res)
 
-
+                $("#blog-content").val("")
                 mdui.snackbar("发送成功");
                 console.log("发布成功(●ˇ∀ˇ●)")
                 //todo: 获得用户的关注信息
