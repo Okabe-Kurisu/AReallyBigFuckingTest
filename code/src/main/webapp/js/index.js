@@ -2,7 +2,12 @@ $(function() {
 	//全局变量
 
 	//reason是生成博客列表的时候标注的理由
-	var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词"]
+	var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词"];
+	//主数据库,主要存放关注表，at表，收藏表以及主页的微博信息存储
+	var weiboDB = openDatabase('weibo', '1.0', '主表', 2 * 1024 * 1024);
+	//临时数据库，存储临时微博，每次页面打开先删除全部表，然后向里面填充数值
+	var tempDB = openDatabase('temp', '1.0', '临时表', 2 * 1024 * 1024);
+
 
 	$("document").ready(function() {
 		initPage();
@@ -15,6 +20,13 @@ $(function() {
 	function initPage(argument) {
 		var request = GetRequest(); //取得url参数
 		var method = request.method;
+		//清空临时数据
+		tempDB.transaction(function(tx) {
+					tx.executeSql('DROP TABLE IF EXISTS blog');
+					console.log("清空全部临时数据")
+				})
+		//用户标签初始化标记为0
+		sessionStorage.tag = 0;
 		// 如果是特殊类型的访问
 		if (typeof(method) != "undefined") {
 			if (method == "userinfo") {
@@ -145,8 +157,7 @@ $(function() {
 
 			// 将数据保存至数据库
 			function saveToSql(data) {
-				var db = openDatabase('weibo', '1.0', 'Test DB', 2 * 1024 * 1024)
-				db.transaction(function(tx) {
+				weiboDB.transaction(function(tx) {
 					tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum)');
 					console.log("执行sql")
 					for (x in data) {
@@ -248,8 +259,7 @@ $(function() {
 			success: function(data) {
 				mdui.snackbar("退出成功");
 				sessionStorage.removeItem("me")
-				var db = openDatabase('weibo', "1.0", 'Test DB', 2 * 1024 * 1024)
-				db.transaction(function(tx) {
+				weiboDB.transaction(function(tx) {
 					tx.executeSql('DROP TABLE IF EXISTS follow');
 					tx.executeSql('DROP TABLE IF EXISTS callat');
 					tx.executeSql('DROP TABLE IF EXISTS favarite');
@@ -348,21 +358,21 @@ $(function() {
 			res += "                <div class=\"mdui-card-content\">" + param.content + "</div>\n"
 		}
 
-		res += "                <div class=\"mdui-card-actions\">\n" +
-			"                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
-			"                            class=\"mdui-icon material-icons\" likeNum=" + blog.likeNum + ">thumb_up</i>赞(" + blog.likeNum + ")\n" +
-			"                    </button>\n" +
-			"                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\"><i\n" +
-			"                            class=\"mdui-icon material-icons\" commentNum=" + blog.commentNum + ">forum</i>(" + blog.commentNum + ")\n" +
-			"                    </button>\n" +
-			"                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
-			"                            class=\"mdui-icon material-icons\">folder</i>收藏\n" +
-			"                    </button>\n" +
-			"                    <button class=\"mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report \"><i\n" +
-			"                            class=\"mdui-icon material-icons\">flag</i>举报\n" +
-			"                    </button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
-			"                </div>\n" +
-			"            </div>"
+		res += "<div class=\"mdui-card-actions\">\n" +
+			"<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
+			"class=\"mdui-icon material-icons\" likeNum=" + blog.likeNum + ">thumb_up</i>赞(" + blog.likeNum + ")\n" +
+			"</button>\n" +
+			"<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\"><i\n" +
+			"class=\"mdui-icon material-icons\" commentNum=" + blog.commentNum + ">forum</i>(" + blog.commentNum + ")\n" +
+			"</button>\n" +
+			"<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
+			"class=\"mdui-icon material-icons\">folder</i>收藏\n" +
+			"</button>\n" +
+			"<button class=\"mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report \"><i\n" +
+			"class=\"mdui-icon material-icons\">flag</i>举报\n" +
+			"</button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
+			"</div>\n" +
+			"</div>"
 		$(".send-card").after(res)
 	}
 
@@ -379,6 +389,25 @@ $(function() {
 		inst.open();
 	})
 
+	//召唤用户数据统计
+	$(".usertag-btn").on("click", function (argument) {
+		var me = JSON.parse(sessionStorage.me)
+		var keywords = eval(me.keyword);
+		if (keywords.length == 0) {
+			mdui.snackbar("还没有任何标签信息，请多使用本网站或者等一会再来", timeout=1500)
+			return;
+		}
+		for (keyword in keywords){
+			$("#tagsList").append("<a>" + keywords[keyword] + "</a>")
+		}
+		if (sessionStorage.tag != 1) {
+			initTag()
+			sessionStorage.tag = 1
+		}
+		var dDialog = $(".usertag");
+		var inst = new mdui.Dialog(dDialog, overlay = true);
+		inst.open();
+	})
 	// 创建话题按钮点击事件
 	$(".creatDiscuss").on("click", function showAddDiscuss(argument) {
 		var dDialog = $(".addDiscuss-dialog");
