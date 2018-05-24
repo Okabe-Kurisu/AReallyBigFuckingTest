@@ -101,7 +101,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 BlogDao.reportBlog(Sensitivity_blog);
             }
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "发布成功", user);
+            Map map = new HashMap();
+            map.put("blog", BlogDao.getBlogById(bid));
+            map.put("user", user);
+            resultMap = PowerfulTools.format("200", "发布成功", map);
             System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
@@ -414,15 +417,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         //1527122341  1527104341
         try {
             // 获得前3小时的时间戳
-            /*SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            java.util.Date beginDate = new java.util.Date();
-            Calendar date = Calendar.getInstance();
-            date.setTime(beginDate);
-            date.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY) - 5);
-            java.util.Date endDate = dft.parse(dft.format(date.getTime()));
-            nowtime = (int) endDate.getTime();
-            System.out.println(nowtime);*/
-            nowtime = ((int) (System.currentTimeMillis() / 1000)) - 18000;
+            nowtime = Integer.parseInt(request.getParameter("time"));
+            nowtime -= 18000;
 
             // 封装参数
             map.put("release_time", nowtime);

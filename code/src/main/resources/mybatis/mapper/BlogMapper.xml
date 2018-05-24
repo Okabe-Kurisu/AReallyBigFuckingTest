@@ -30,12 +30,13 @@
 
     <!-- 搜索一定时间内的博客 -->
     <select id="selectBlogByTime" parameterType="Map" resultType="Map">
-        SELECT *
-        FROM blog
-        WHERE #{release_time} &lt;= blog.release_time AND
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM blog AS b
+        WHERE #{release_time} &lt;= b.release_time AND
               type IN (0,1) AND
               visibility=0
-
     </select>
     <!-- 插入搜索记录 -->
     <insert id="insertSearchBlog" parameterType="Map">  <!-- 书写 SQL 语句 -->
@@ -97,6 +98,12 @@
             (#{user_id}, #{content}, #{multimedia}, #{release_time}, #{type}, #{comment_on}, #{visibility}, #{is_edit},
                          #{ip_address}, #{browser_sign}, #{is_showName})
     </insert>
+
+    <select id="getBlogById" parameterType="int" resultType="blog">
+        SELECT *
+        FROM blog
+        WHERE blog.bid = #{bid}
+    </select>
 
     <!-- 删除微博 查用户 -->
     <update id="delBlog" parameterType="int">

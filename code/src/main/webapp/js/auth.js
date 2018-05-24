@@ -33,7 +33,7 @@ $(function () {
                 if (data.code == 200) {
                     mdui.snackbar("注册成功");
                     sessionStorage.me = JSON.stringify(data.data.me);
-                    setTimeout("self.location= '/'", 1500);
+                    setTimeout("self.location= '/'", 500);
                 } else {
                     mdui.snackbar("注册失败,");
                 }

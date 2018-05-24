@@ -56,6 +56,18 @@ public class BlogDao {
         return is_ban;
     }
 
+    public static Blog getBlogById(int bid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        Blog blog;
+        try {
+            blog = sqlSession.selectOne("weibo/BlogMapper.getBlogById", bid);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return blog;
+    }
+
     //修改微博
     public static void setBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
