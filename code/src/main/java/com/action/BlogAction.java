@@ -218,7 +218,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     }
 
     @Action(value = "commitBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     //@Authority("")
     public String commit() {//评论微博
@@ -341,7 +341,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     }
 
     @Action(value = "searchBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String searchBlog() {
         String keyword, userid, pageNum, pageCap;
@@ -380,14 +380,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
             // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
@@ -420,20 +416,16 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
             // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
     @Action(value = "collectBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String collectBlog() {//收藏微博
@@ -452,20 +444,16 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "收藏成功", null);
 
             // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "收藏失败", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
     @Action(value = "reportBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String reportBlog() {//举报微博
@@ -490,21 +478,17 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "举报成功", null);
 
             // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "举报失败", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
 
     @Action(value = "getFollowBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String getFollowBlog() {
         String userid;
@@ -524,21 +508,17 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
             // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
 
     @Action(value = "getHotspot", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String getHotspot() {
 
@@ -559,20 +539,16 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
             // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
     @Action(value = "getUserBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String getUserBlog() {
         String userid;
@@ -592,14 +568,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
             // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
