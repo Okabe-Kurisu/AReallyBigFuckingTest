@@ -99,7 +99,10 @@ public class UploadAction extends ActionSupport implements ServletRequestAware {
         this.contentType = contentType;
     }
 
-    public void copy(File src, File dst) {
+    public void copy(File src, File dst, File root) {
+        if (!Files.exists(root.toPath())){
+            root.mkdir();
+        }
         try {
             Files.copy(src.toPath(), dst.toPath());
         } catch (Exception e) {
@@ -117,8 +120,9 @@ public class UploadAction extends ActionSupport implements ServletRequestAware {
         storageFileName = System.currentTimeMillis()/1000 + fileName;
         File storageFile = new File(ServletActionContext.getServletContext()
                 .getRealPath("/img/upload") + "/" + storageFileName);
-
-        copy(upload, storageFile);
+        File root = new File(ServletActionContext.getServletContext()
+                .getRealPath("/img/upload") );
+        copy(upload, storageFile, root);
         String type = request.getParameter("type");
         String uid = request.getParameter("uid");
         String url = "/img/upload/" + storageFileName;

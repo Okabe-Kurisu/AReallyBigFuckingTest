@@ -281,7 +281,7 @@ $(function () {
                 console.log(data)
                 var user = data.data
                 console.log("正在发布微博...")
-                $("<div class=\"mdui-card mdui-m-t-1\">\n" +
+                var res = "<div class=\"mdui-card mdui-m-t-1\">\n" +
                     "                <p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1 weibo-reason\">这条微博出现在这里，因为他很热门</p>\n" +
                     "                <div class=\"mdui-card-header\">\n" +
                     "                    <img class=\"mdui-card-header-avatar\" src=\"./img/avatar.jpg\"/>\n" +
@@ -313,7 +313,8 @@ $(function () {
                     "                    </button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
                     "                </div>\n" +
                     "\n" +
-                    "            </div>").insertAfter(".send-card")
+                    "            </div>"
+                $(".send-card").after(res)
 
 
                 mdui.snackbar("发送成功");

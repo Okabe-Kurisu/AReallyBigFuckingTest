@@ -63,7 +63,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             User user = (User) request.getSession().getAttribute("user");
             user_id = user.getUid();
 
-            /*Set<String> set = filter.getSensitiveWord(content, 1);*/
+            Set<String> set = filter.getSensitiveWord(content1, 1);
 
             if (release_time == null) {
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
@@ -94,14 +94,14 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             int bid = BlogDao.insertBlog(blog);
             System.out.print(bid);
             System.out.println(blog.getContent());
-           /* if (set.size() > 0) {
+            if (set.size() > 0) {
                 Sensitivity Sensitivity_blog = new Sensitivity();
                 Sensitivity_blog.setBlog_id(bid);
                 Sensitivity_blog.setDetails("");
                 Sensitivity_blog.setType(0);
                 Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
-            }*/
+            }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "发布成功", user);
             System.out.println(resultMap);
