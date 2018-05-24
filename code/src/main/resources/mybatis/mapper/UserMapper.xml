@@ -95,10 +95,22 @@
     </select>
 
     <!--得到用户关注的所有人-->
-    <select id="getFollow" parameterType="int" resultType="follow">
+    <select id="getFollow" parameterType="int" resultType="Follow">
         SELECT *
         FROM follow
         WHERE follow.user_id = #{uid}
+    </select>
+
+    <select id="getFavorite" parameterType="int" resultType="Favorite">
+        SELECT *
+        FROM favorite
+        WHERE favorite.user_id = #{uid}
+    </select>
+
+    <select id="getCallat" parameterType="int" resultType="CallAt">
+        SELECT *
+        FROM call_at
+        WHERE call_at.user_id = #{uid}
     </select>
 
 

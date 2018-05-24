@@ -1,6 +1,5 @@
 package com.tool;
 
-import com.DAO.BlogDao;
 import com.DAO.UserDao;
 import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.NlpAnalysis;

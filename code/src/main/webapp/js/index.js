@@ -1,4 +1,8 @@
+<<<<<<<
+HEAD
 $(function () {
+    //reason是生成博客列表的时候标注的理由
+    var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词"]
     //全局变量
     var ataDialog_inst; //@dialog对话框
     var myDialog_inst //我的话题对话框
@@ -736,3 +740,4 @@ $(function () {
 })
 
 
+=== === =

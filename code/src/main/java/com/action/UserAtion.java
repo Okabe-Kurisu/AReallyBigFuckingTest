@@ -3,6 +3,7 @@ package com.action;
 import com.DAO.UserDao;
 import com.google.gson.Gson;
 import com.model.CallAt;
+import com.model.Favorite;
 import com.model.Follow;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
@@ -98,36 +99,55 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
+
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "initUserinfo")//初始化用户各种信息
+    public String initUserinfo() {
+        int uid = Integer.parseInt(request.getParameter("uid"));
+        Map<String, Object> map = new HashMap();
+
+        try {
+            List<Follow> follows = UserDao.getFollow(uid);
+            List<Favorite> favorites = UserDao.getFavorite(uid);
+            List<CallAt> callats = UserDao.getCallat(uid);
+            map.put("follows", follows);
+            map.put("favorites", favorites);
+            map.put("callats", callats);
+            resultMap = PowerfulTools.format("200", "成功", map);
+
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
         }
         return SUCCESS;
     }
 
     @Action(value = "addCallAt")//将@用户添加到表中
     public String addCallAt() {
-        int user_id, bid;
-        CallAt user = new CallAt();
+        int user_id, bid,atuserid;
+        CallAt users = new CallAt();
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         //从前端获取
-        user_id = Integer.parseInt(request.getParameter("user_id"));
+        User user = (User) request.getSession().getAttribute("user");
+        user_id = user.getUid();
+        atuserid = Integer.parseInt(request.getParameter("atuserid"));
         bid = Integer.parseInt(request.getParameter("bid"));
         try {
-            user.setUser_id(user_id);
-            user.setBlog_id(bid);
-            user.setDate((int) (System.currentTimeMillis() / 1000));
+            users.setUser_id(user_id);
+            users.setAt_userid(atuserid);
+            users.setBlog_id(bid);
+            users.setDate((int) (System.currentTimeMillis() / 1000));
 
-            UserDao.addAtUser(user);
-            resultMap = PowerfulTools.format("200", "@用户添加成功", null);
-
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            UserDao.addAtUser(users);
+            resultMap = PowerfulTools.format("200", "@用户添加成功", user);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
-            resultMap = PowerfulTools.format("500", "系统异常", null);
-
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            resultMap = PowerfulTools.format("500", "系统异常", user);
         }
         return SUCCESS;
     }

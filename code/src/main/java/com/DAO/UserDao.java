@@ -1,6 +1,7 @@
 package com.DAO;
 
 import com.model.CallAt;
+import com.model.Favorite;
 import com.model.Follow;
 import com.model.User;
 import com.tool.MybatisTool;
@@ -98,6 +99,32 @@ public class UserDao {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
             follows = sqlSession.selectList("weibo/UserMapper.getFollow", uid);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            sqlSession.close();
+        }
+        return follows;
+    }
+    public static List<Favorite> getFavorite(int uid) {
+        List<Favorite> follows = null;
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            follows = sqlSession.selectList("weibo/UserMapper.getFavorite", uid);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            sqlSession.close();
+        }
+        return follows;
+    }
+    public static List<CallAt> getCallat(int uid) {
+        List<CallAt> follows = null;
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            follows = sqlSession.selectList("weibo/UserMapper.getCallat", uid);
         }catch (Exception e){
             e.printStackTrace();
         }
