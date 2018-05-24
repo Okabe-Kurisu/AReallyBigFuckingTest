@@ -411,16 +411,18 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     public String selectBlogByTime() {
         int nowtime;
         Map<String, Object> map = new HashMap();
-
+        //1527122341  1527104341
         try {
             // 获得前3小时的时间戳
-            SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            /*SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             java.util.Date beginDate = new java.util.Date();
             Calendar date = Calendar.getInstance();
             date.setTime(beginDate);
             date.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY) - 5);
             java.util.Date endDate = dft.parse(dft.format(date.getTime()));
             nowtime = (int) endDate.getTime();
+            System.out.println(nowtime);*/
+            nowtime = ((int) (System.currentTimeMillis() / 1000)) - 18000;
 
             // 封装参数
             map.put("release_time", nowtime);
