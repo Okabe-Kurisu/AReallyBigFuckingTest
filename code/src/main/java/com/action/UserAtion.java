@@ -44,12 +44,12 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
     }
 
     @Action(value = "searchUser", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String searchUser() {
         String keyword, page, pageCap;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
+
         try {
             keyword = request.getParameter("keyword");
             page = request.getParameter("page");
@@ -70,18 +70,16 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
 
             resultMap = PowerfulTools.format("200", "成功", userList);
 
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
 
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
+    
 
     @Action(value = "getFiveUser", results = {//@用户时获取5个用户
             @Result(name = "success", type = "json", params = {"root", "resultMap"})
@@ -101,6 +99,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
+
         }
         return SUCCESS;
     }

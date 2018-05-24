@@ -11,6 +11,15 @@
         WHERE visibility = 0
     </select>
 
+    <!-- 搜索指定用户创建的话题（修改次数小于4的） -->
+    <select id="selectSpecUserDiscuss" resultType="Discuss">
+        SELECT *
+        FROM discuss
+        WHERE visibility = 0
+              AND user_id = #{uid}
+              AND is_edit &lt; 4
+    </select>
+
     <select id="selectDiscussById" parameterType="int" resultType="Discuss">
         SELECT *
         FROM discuss
@@ -59,13 +68,14 @@
     </select>
 
     <!-- 建立话题（话题名不能重复） -->
-    <insert id="insertDiscuss" parameterType="Map" useGeneratedKeys="true" keyProperty="did">
-        INSERT INTO discuss (name, user_id, detail, start_time)
+    <insert id="insertDiscuss" parameterType="Map" useGeneratedKeys="true">
+        INSERT INTO discuss (name, user_id, detail, start_time, release_time)
             SELECT
                 #{name},
                 #{user_id},
                 #{detail},
-                #{start_time}
+                #{start_time},
+                #{release_time}
             FROM DUAL
             WHERE NOT EXISTS(SELECT did
                              FROM discuss
@@ -86,6 +96,6 @@
         WHEN is_edit IS NULL THEN
         1 ELSE is_edit + 1
         END
-        WHERE did = #{id} AND is_edit &lt; 4
+        WHERE did = #{did} AND is_edit &lt; 4 AND user_id=#{user_id}
     </update>
 </mapper>

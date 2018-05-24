@@ -34,6 +34,17 @@ public class DiscussDao {
         return discuss;
     }
 
+    public static List<Discuss> selectDiscussByUserId(int uid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Discuss> discusses;
+        try {
+            discusses = sqlSession.selectList("weibo/DiscussMapper.selectSpecUserDiscuss", uid);
+        } finally {
+            sqlSession.close();
+        }
+        return discusses;
+    }
+
     public static List<Discuss> quickQueryDiscuss(String key) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Discuss> discussList;
@@ -69,9 +80,12 @@ public class DiscussDao {
 
     public static Integer insertDiscuss(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        int discussId;
+        int discussId = 0;
         try {
             discussId = sqlSession.insert("weibo/DiscussMapper.insertDiscuss", map);
+            sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             sqlSession.close();
         }
@@ -82,13 +96,15 @@ public class DiscussDao {
     public static Integer updateDiscuss(int userId, Discuss discuss) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-            // 先判断当前用户是否有权限更改
-            if (judgeUserDiscuss(userId, discuss.getDid())) {
-                sqlSession.update("weibo/DiscussMapper.updateDiscuss", discuss);
-            } else {// 如果当前用户无权更改
-                return 0;
-            }
-        } finally {
+
+            sqlSession.update("weibo/DiscussMapper.updateDiscuss", discuss);
+            sqlSession.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally
+
+        {
             sqlSession.close();
         }
         return discuss.getDid();
