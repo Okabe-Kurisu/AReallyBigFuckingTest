@@ -35,10 +35,10 @@ public class LoginInterceptor extends AbstractInterceptor {
             ActionContext context = invocation.getInvocationContext();
             Map session = context.getSession();
             //Constants.UserName=="UserName"
-            String user = (String) session.get("user");
+            //String user = (String) ;
 
             System.err.println("拦截器起作用");
-            if (user == null) // 未登陆，跳转到登录页
+            if (session.get("user") == null) // 未登陆，跳转到登录页
             {
                 System.err.println("进入拦截器：未登陆");
                 context.put("tip", "你还没有登录");

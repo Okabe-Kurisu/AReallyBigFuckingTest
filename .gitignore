@@ -83,6 +83,7 @@ code/src/main/webapp/src/store.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/App.vue
+<<<<<<< HEAD
 doc/功能列表.xlsx
 doc/功能列表.xlsx
 doc/功能列表.xlsx
@@ -99,3 +100,7 @@ doc/功能列表.xlsx
 doc/功能列表.xlsx
 doc/功能列表.xlsx
 doc/功能列表.xlsx
+=======
+code/.idea/workspace.xml
+>>>>>>> 329399b0bc12d5548caef7e073b88de094e5d163
+*.xml
