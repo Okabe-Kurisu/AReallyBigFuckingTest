@@ -370,29 +370,9 @@
             <div class="mdui-dialog-content callat-content">
                 <div class="mdui-textfield mdui-textfield-floating-label">
                     <label class="mdui-textfield-label">用户昵称</label>
-                    <input type="text" class="mdui-textfield-input" maxlength="7"/>
+                    <input type="text" class="mdui-textfield-input peoyourwant" maxlength="7"/>
                 </div>
-                <ul class="mdui-list mdui-list-dense">
-                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                        <div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
-                        <div class="mdui-list-item-content">床铺</div>
-                    </li>
-                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                        <div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
-                        <div class="mdui-list-item-content">柳传志</div>
-                    </li>
-                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                        <div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
-                        <div class="mdui-list-item-content">码云</div>
-                    </li>
-                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                        <div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
-                        <div class="mdui-list-item-content">马化腾</div>
-                    </li>
-                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                        <div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
-                        <div class="mdui-list-item-content">马三立</div>
-                    </li>
+                <ul class="mdui-list mdui-list-dense friend-list">
                 </ul>
             </div>
         </div>
@@ -441,22 +421,28 @@
             <div class="mdui-dialog-content">
                 <div class="mdui-textfield">
                     <label class="mdui-textfield-label">话题名称</label>
-                    <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入合法话题名" required/>
+                    <input class="mdui-textfield-input discuss-name" type="text" maxlength="20" placeholder="请输入合法话题名"
+                           required/>
                 </div>
                 <div class="mdui-textfield">
                     <label class="mdui-textfield-label">话题简介</label>
-                    <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入合法文字" required/>
+                    <input class="mdui-textfield-input discuss-description" type="text" maxlength="20"
+                           placeholder="请输入合法文字" required/>
+                </div>
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">开始时间</label>
+                    <input class="mdui-textfield-input" id="discuss-startTime" type="text" required/>
                 </div>
             </div>
             <div class="mdui-dialog-actions">
-                <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>提交</button>
+                <button class="mdui-btn mdui-ripple submit-discussion">提交</button>
                 <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
             </div>
         </div>
         <!-- 管理话题 -->
         <div class="mdui-dialog manageDiscuss-dialog">
             <div class="mdui-table-fluid">
-                <table class="mdui-table mdui-table-hoverable">
+                <table class="mdui-table mdui-table-hoverable discuss-manage-list">
                     <thead>
                     <tr>
                         <th>编号</th>
@@ -466,106 +452,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="中国梦" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="蛤" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple deleteDiscuss-button"
-                                    mdui-tooltip="{content: '删除话题', delay: 500}">
-                                <i class="mdui-icon material-icons">delete</i>
-                            </button>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple changeDiscuss-button"
-                                    mdui-tooltip="{content: '修改话题', delay: 500}">
-                                <i class="mdui-icon material-icons">update</i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="中国梦" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="蛤" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple deleteDiscuss-button"
-                                    mdui-tooltip="{content: '删除话题', delay: 500}">
-                                <i class="mdui-icon material-icons">delete</i>
-                            </button>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple changeDiscuss-button"
-                                    mdui-tooltip="{content: '修改话题', delay: 500}">
-                                <i class="mdui-icon material-icons">update</i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="中国梦" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="蛤" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple deleteDiscuss-button"
-                                    mdui-tooltip="{content: '删除话题', delay: 500}">
-                                <i class="mdui-icon material-icons">delete</i>
-                            </button>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple changeDiscuss-button"
-                                    mdui-tooltip="{content: '修改话题', delay: 500}">
-                                <i class="mdui-icon material-icons">update</i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="中国梦" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="mdui-textfield">
-                                <input class="mdui-textfield-input" type="text" maxlength="20" placeholder="请输入要修改的内容"
-                                       value="蛤" required/>
-                            </div>
-                        </td>
-                        <td>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple deleteDiscuss-button"
-                                    mdui-tooltip="{content: '删除话题', delay: 500}">
-                                <i class="mdui-icon material-icons">delete</i>
-                            </button>
-                            <button class="mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple changeDiscuss-button"
-                                    mdui-tooltip="{content: '修改话题', delay: 500}">
-                                <i class="mdui-icon material-icons">update</i>
-                            </button>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -640,6 +526,7 @@
         <script src="./js/jquery.js"></script>
         <script src="./js/index.js"></script>
         <script src="./js/datestampTool.js"></script>
+        <script src="./js/laydate.js"></script>
     </footer>
 </div>
 </body>

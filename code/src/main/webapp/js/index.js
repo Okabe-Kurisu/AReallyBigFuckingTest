@@ -1,5 +1,12 @@
 $(function () {
+    //全局变量
+    var ataDialog_inst; //@dialog对话框
+    var myDialog_inst //我的话题对话框
+    var createDialog_inst //创建话题对话框
+
     $("document").ready(function () {
+
+
         initPage();
         initBlog();
         initUser();
@@ -328,24 +335,219 @@ $(function () {
 
     })
 
+    // @用户按钮点击事件
     $(".callat").on("click", function callat(argument) {
-        var cDialog = $(".callat-dialog");
-        var inst = new mdui.Dialog(cDialog, overlay = true);
-        inst.open();
+        $(".friend-list").text("");
+        $.ajax({
+            url: "/user/getFiveUser",
+            async: false,
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                var users = data.data;
+                console.log("获取5个用户...");
+                if (data.code == 200 && users != null) {
+                    for (x in users) {
+                        var user = users[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+                            "                    </li>";
+                        $(".friend-list").append(res);
+                    }
+                }
+
+                var cDialog = $(".callat-dialog");
+                ataDialog_inst = new mdui.Dialog(cDialog, overlay = true);
+                ataDialog_inst.open();
+
+            },
+            error: function () {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+
     })
 
 // 我的话题按钮点击时间
     $(".myDiscuss").on("click", function showMyDiscuss(argument) {
+        $(".discuss-manage-list").find("tbody").text("");
+        $.ajax({
+            url: "/discuss/selectDiscussByUserid",
+            type: "POST",
+            async: false,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                console.log("正在获取用户的话题...");
+                if (data.code == 200) {
+                    var discusses = data.data;
+                    for (var x = 0; x < discusses.length; x++) {
+                        var discuss = discusses[x]
+                        console.log(discuss)
+                        var res = "<tr>\n" +
+                            "                        <td>1</td>\n" +
+                            "                        <td>\n" +
+                            "                            <div class=\"mdui-textfield\">\n" +
+                            "                                <input class=\"mdui-textfield-input discuss-name\" type=\"text\" maxlength=\"20\" placeholder=\"请输入要修改的内容\"\n" +
+                            "                                       value=\"" + discuss.name + "\" required/>\n" +
+                            "                            </div>\n" +
+                            "                        </td>\n" +
+                            "                        <td>\n" +
+                            "                            <div class=\"mdui-textfield\">\n" +
+                            "                                <input class=\"mdui-textfield-input discuss-desc\" type=\"text\" maxlength=\"20\" placeholder=\"请输入要修改的内容\"\n" +
+                            "                                       value=\"" + discuss.detail + "\" required/>\n" +
+                            "                            </div>\n" +
+                            "                        </td>\n" +
+                            "                        <td>\n" +
+                            "                            <button class=\"mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple deleteDiscuss-button\"\n" +
+                            "                                    mdui-tooltip=\"{content: '删除话题', delay: 500}\" did=\"" + discuss.did + "\">\n" +
+                            "                                <i class=\"mdui-icon material-icons\">delete</i>\n" +
+                            "                            </button>\n" +
+                            "                            <button class=\"mdui-btn mdui-btn-icon mdui-btn-dense mdui-color-theme-accent mdui-ripple changeDiscuss-button\"\n" +
+                            "                                    mdui-tooltip=\"{content: '修改话题', delay: 500}\" did=\"" + discuss.did + "\">\n" +
+                            "                                <i class=\"mdui-icon material-icons\">update</i>\n" +
+                            "                            </button>\n" +
+                            "                        </td>\n" +
+                            "                    </tr>";
+                        $(".discuss-manage-list").find("tbody").append(res);
+                    }
+
+                    mdui.mutation(".discuss-manage-list")
+                    console.log("话题获取成功");
+                }
+            },
+            error: function () {
+                mdui.snackbar("话题获取失败");
+            },
+        })
         var dDialog = $(".manageDiscuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
+        myDialog_inst = new mdui.Dialog(dDialog, overlay = true);
+        myDialog_inst.open();
+
     })
+
+    //我的话题删除按钮点击事件（删除话题）
+    $(".discuss-manage-list").on("click", ".deleteDiscuss-button", function () {
+        var did = $(this).attr("did")
+        param = {
+            "discuss.did": did,
+            "discuss.visibility": 1
+        };
+        $.ajax({
+            url: "/discuss/updateDiscuss",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                console.log("正在删除话题...");
+                if (data.code == 200) {
+                    mdui.snackbar("话题删除成功");
+                } else {
+                    mdui.snackbar("话题删除失败");
+                }
+            },
+            error: function () {
+                mdui.snackbar("话题删除失败");
+            },
+        })
+
+        $(this).parent().parent().remove();  //移除这条记录
+        mdui.mutation(".discuss-manage-list")
+    })
+
+    //我的话题修改按钮点击事件（修改话题）
+    $(".discuss-manage-list").on("click", ".changeDiscuss-button", function () {
+        var did = $(this).attr("did");
+        var tr = $(this).parent().parent();
+        var name = $(tr).find(".discuss-name").val();
+        var detail = $(tr).find(".discuss-desc").val();
+        param = {
+            "discuss.did": did,
+            "discuss.name": name,
+            "discuss.detail": detail
+        };
+        console.log(param)
+        $.ajax({
+            url: "/discuss/updateDiscuss",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                console.log("正在修改话题...");
+                if (data.code == 200) {
+                    mdui.snackbar("话题修改成功");
+                } else {
+                    mdui.snackbar("话题修改失败");
+                }
+            },
+            error: function () {
+                mdui.snackbar("话题删除失败");
+            },
+        });
+
+    });
 
 // 创建话题按钮点击事件
     $(".creatDiscuss").on("click", function showAddDiscuss(argument) {
         var dDialog = $(".addDiscuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
+        createDialog_inst = new mdui.Dialog(dDialog, overlay = true);
+        createDialog_inst.open();
+
+        // 初始化时间框件
+        //时间选择器
+        laydate.render({
+            elem: '#discuss-startTime'
+            , type: 'datetime'
+        });
+    })
+// 提交话题按钮点击事件（创建话题）
+    $(".submit-discussion").click(function () {
+        var discuss_name = $(".discuss-name").val();
+        var discuss_description = $(".discuss-description").val()
+        var date_str = $("#discuss-startTime").val()
+
+        if (discuss_name == "" || discuss_description == "" || date_str == "") {
+            mdui.snackbar("数据不能为空");
+            return;
+        }
+
+        var date = new Date(date_str)
+        var time = date.getTime() / 1000;
+        param = {
+            name: discuss_name,
+            detail: discuss_description,
+            start_time: time
+        }
+        $.ajax({
+            url: "/discuss/submitDiscuss",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                console.log(data)
+                console.log("正在添加话题...");
+                if (data.code == 200) {
+                    mdui.snackbar("话题添加成功");
+                    createDialog_inst.close()
+                } else {
+                    mdui.snackbar("话题添加失败");
+                }
+            },
+            error: function () {
+                mdui.snackbar("话题添加失败");
+            },
+        })
     })
 
     $(".send-fab").on("click", function sendFab(argument) {
@@ -398,13 +600,13 @@ $(function () {
         return theRequest;
     }
 
-    // 如果没登录，就让用户登陆
+// 如果没登录，就让用户登陆
     function gotoLogin(argument) {
         mdui.snackbar("请登录");
         setTimeout("self.location= '/auth.html'", 1000);
     }
 
-    //滚动会最上方
+//滚动会最上方
     function smoothscroll(argument) {
         var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
         if (currentScroll > 0) {
@@ -413,7 +615,7 @@ $(function () {
         }
     }
 
-    // 下面是上传文件代码
+// 下面是上传文件代码
 
     $('.insert-img').click(function () {
         inst = upload()
@@ -462,7 +664,7 @@ $(function () {
         };
     })
 
-    //文件上传框呼出
+//文件上传框呼出
     function upload(argument) {
         var iDialog = $(".upload-dialog");
         var inst = new mdui.Dialog(iDialog, overlay = true);
@@ -482,6 +684,55 @@ $(function () {
         }
         return theRequest;
     }
+
+// @列表点击事件
+    $(".friend-list").on("click", ".callat-item", function () {
+        var uid = $(this).attr("userid")
+        var username = $(this).attr("username");
+
+        //todo: 未添加到点赞表
+
+        var v = $("#blog-content").val();
+        $("#blog-content").val(v + " @" + username + " ");
+        ataDialog_inst.close();
+        console.log(uid)
+    })
+
+
+// @用户搜索事件（监听keyup的回车事件）
+    $('.peoyourwant').keyup('keyup', function (event) {
+        param = {
+            nickname: $(".peoyourwant").val()
+        };
+        $(".friend-list").text("");
+        $.ajax({
+            url: "/user/getFiveUser",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                var users = data.data;
+                console.log("获取5个用户...");
+                if (data.code == 200 && users != null) {
+                    for (x in users) {
+                        var user = users[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+                            "                    </li>";
+                        $(".friend-list").append(res);
+                    }
+                }
+            },
+            error: function () {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+
+    });
+
 })
 
 

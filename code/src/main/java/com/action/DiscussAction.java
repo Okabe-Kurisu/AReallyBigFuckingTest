@@ -34,6 +34,8 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
     private String message;
 
+    Map<String, Object> resultMap;
+
     @Action(value = "selectAllDiscuss", results = {
             @Result(name = "success", type = "json", params = {"root", "message"})
     })
@@ -55,6 +57,31 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             resultMap = PowerfulTools.format("500", "系统异常", null);
             Gson gson = new Gson();
             message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "selectDiscussByUserid", results = {
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
+    })
+    @Authority("")
+    public String selectDiscussByUserid() {
+        try {
+
+            //获得当前登录用户id
+            User user = (User) request.getSession().getAttribute("user");
+            int userId = user.getUid();
+            int is_ban = user.getIs_ban();
+
+            // 调用Dao层 获取数据
+            List<Discuss> discusses = DiscussDao.selectDiscussByUserId(userId);
+
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", discusses);
+
+        } catch (Exception ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
         }
         return SUCCESS;
     }
@@ -179,58 +206,57 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     }
 
     @Action(value = "submitDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String submitDiscuss() {
-        String name, detail;
+        String name, detail, st_str;
         int start_time;
-        Map<String, Object> resultMap;
+
         Map<String, Object> map = new HashMap<>();
         try {
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
             int userId = user.getUid();
             int is_ban = user.getIs_ban();
+            int release_time = (int) (System.currentTimeMillis() / 1000);
 
-            // 封装请求数据
+            // 获得参数
             name = request.getParameter("name");
             detail = request.getParameter("detail");
-            start_time = (int) System.currentTimeMillis() / 1000;
+            // 时间戳参数
+            st_str = request.getParameter("start_time");
+            if (st_str == null || "".equals(st_str)) start_time = (int) (System.currentTimeMillis() / 1000);
+            else start_time = Integer.parseInt(st_str);
+
+            // 封装请求数据
             map.put("name", name);
             map.put("user_id", userId);
             map.put("detail", detail);
             map.put("start_time", start_time);
+            map.put("release_time", release_time);
 
 
             // 用户被封禁则无法插入
-            if (is_ban == 0 || DiscussDao.insertDiscuss(map) == null) {
+            if (is_ban != 0 || DiscussDao.insertDiscuss(map) == null) {
                 throw new Exception("插入失败");
             }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功");
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
     @Action(value = "updateDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String updateDiscuss() {
         //String name, user_id, detail, start_time, end_time, did;
-        Map<String, Object> resultMap;
-        //Discuss discuss = new Discuss();
         try {
             // 封装请求数据
 //            name = request.getParameter("name");
@@ -251,21 +277,18 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             int userId = user.getUid();
             int is_ban = user.getIs_ban();
 
+            discuss.setUser_id(userId);
+            System.out.println(discuss.toString());
+
             // 如果用户被封，或者用户不是指定话题的创建者则修改失败
-            if (is_ban == 0 || DiscussDao.updateDiscuss(userId, discuss) == 0) {
-                throw new Exception("插入失败");
+            if (is_ban != 0 || DiscussDao.updateDiscuss(userId, discuss) == 0) {
+                //throw new Exception("插入失败");
             }
             resultMap = PowerfulTools.format("200", "成功");
-
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
@@ -297,5 +320,13 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
     public void setDiscuss(Discuss discuss) {
         this.discuss = discuss;
+    }
+
+    public Map<String, Object> getResultMap() {
+        return resultMap;
+    }
+
+    public void setResultMap(Map<String, Object> resultMap) {
+        this.resultMap = resultMap;
     }
 }

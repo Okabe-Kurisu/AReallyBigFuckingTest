@@ -90,4 +90,19 @@ public class Discuss {
     public void setIs_edit(Integer is_edit) {
         this.is_edit = is_edit;
     }
+
+    @Override
+    public String toString() {
+        return "Discuss{" +
+                "did=" + did +
+                ", name='" + name + '\'' +
+                ", user_id=" + user_id +
+                ", detail='" + detail + '\'' +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
+                ", visibility=" + visibility +
+                ", release_time=" + release_time +
+                ", is_edit=" + is_edit +
+                '}';
+    }
 }
