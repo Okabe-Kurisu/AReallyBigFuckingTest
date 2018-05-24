@@ -75,9 +75,9 @@ doc/~$功能列表.xlsx
 .idea/AReallyBigFuckingTest.iml
 .idea/misc.xml
 .idea/modules.xml
-.idea/workspace.xml
-.idea/workspace.xml
-.idea/vcs.xml
+code/.idea/workspace.xml
+code/.idea/workspace.xml
+code/.idea/vcs.xml
 code/src/main/webapp/src/chat.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/store.js
