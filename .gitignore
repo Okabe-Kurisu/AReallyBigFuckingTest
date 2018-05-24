@@ -65,7 +65,6 @@ $RECYCLE.BIN/
 code/build/
 code/out/
 code/.idea
-code/s.idea/
 code/analServ/__pycache__
 code/analServ/.idea
 code/analServ/wiki/__pycache__
@@ -83,24 +82,7 @@ code/src/main/webapp/src/store.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/store.js
 code/src/main/webapp/src/App.vue
-<<<<<<< HEAD
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
 doc/功能列表.xlsx
 *.xlsx
-*.xlsx
-*.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-doc/功能列表.xlsx
-=======
 code/.idea/workspace.xml
->>>>>>> 329399b0bc12d5548caef7e073b88de094e5d163
 *.xml
