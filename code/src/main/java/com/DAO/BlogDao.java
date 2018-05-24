@@ -56,9 +56,9 @@ public class BlogDao {
         return is_ban;
     }
 
-    public static Map getBlogById(int bid) {
+    public static Blog getBlogById(int bid) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        Map blog;
+        Blog blog;
         try {
             blog = sqlSession.selectOne("weibo/BlogMapper.getBlogById", bid);
             sqlSession.commit();
@@ -136,6 +136,19 @@ public class BlogDao {
         return blog.getBid();
     }
 
+    //获得微博发布者的id
+    public static int getUidByBid(int bid) {
+        int uid;
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            uid=sqlSession.selectOne("weibo/UserMapper.getUserByBid", bid);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return uid;
+    }
+
     //点赞微博
     public static void thumbUp(ThumbUp thumb) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
@@ -143,6 +156,7 @@ public class BlogDao {
         try {
             blogList = sqlSession.selectList("weibo/BlogMapper.checkThumbUp", thumb);
             if (blogList.isEmpty()) {
+
                 sqlSession.insert("weibo/BlogMapper.addThumbUp", thumb);
             } else {
                 sqlSession.delete("weibo/BlogMapper.delThumbUp", blogList.get(0));

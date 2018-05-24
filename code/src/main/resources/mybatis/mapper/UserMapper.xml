@@ -8,7 +8,7 @@
     <!-- 查询功能，resultType 设置返回值类型 -->
     <select id="selectAllUser" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT *,
-        (SELECT COUNT(f.fid) FROM follow as f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
         (SELECT COUNT(tu.tuid)
         FROM thumb_up AS tu
         JOIN blog AS b
@@ -84,62 +84,58 @@
         FROM user AS u
         WHERE u.alive = 0 AND uid = #{uid}
     </select>
+    <!-- 用户查询byId -->
+    <select id="getUserByBid" parameterType="int" resultType="int">
+        SELECT blog.user_id
+        FROM blog
+        WHERE blog.bid = #{bid}
 
+    </select>
     <!--得到用户总被点赞数-->
     <select id="getLikedNumByUid" parameterType="int" resultType="int">
         SELECT COUNT(tu.tuid)
         FROM thumb_up AS tu
-        JOIN blog b
-        ON tu.blog_id = b.bid
+            JOIN blog b
+                ON tu.blog_id = b.bid
         WHERE b.user_id = #{uid}
     </select>
 
     <!--得到用户关注的所有人-->
-    <select id="getFollow" parameterType="int" resultType="Follow">
+    <select id="getFollow" parameterType="int" resultType="follow">
         SELECT *
         FROM follow
         WHERE follow.user_id = #{uid}
     </select>
-
-    <select id="getFavorite" parameterType="int" resultType="Favorite">
-        SELECT *
-        FROM favorite
-        WHERE favorite.user_id = #{uid}
-    </select>
-
-    <select id="getCallat" parameterType="int" resultType="CallAt">
-        SELECT *
-        FROM call_at
-        WHERE call_at.user_id = #{uid}
-    </select>
-
 
 
     <!--得到六个关注者头像和六个粉丝头像-->
     <select id="getFanAvatarByUid" resultType="Map">
         SELECT *
         FROM (
-        SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
-        FROM follow AS f
-        JOIN user AS u
-        ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
-        WHERE u.uid = #{uid}
-        LIMIT 6
-        UNION ALL
-        SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
-        FROM follow AS f
-        JOIN user AS u
-        ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)
-        WHERE u.uid = #{uid}
-        LIMIT 6
-        ) AS a
+                 SELECT
+                     u.avatar,
+                     f.user_id     AS userid,
+                     f.followed_id AS fid
+                 FROM follow AS f
+                     JOIN user AS u
+                         ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
+                 WHERE u.uid = #{uid}
+                 LIMIT 6
+                 UNION ALL
+                       SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
+                                                     FROM follow AS f
+                                                                    JOIN USER AS u
+                                                                    ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)
+                 WHERE u.uid = #{uid}
+                 LIMIT 6
+             ) AS a
     </select>
     <!-- 设置权重 -->
     <update id="setWeight">
         UPDATE user
         SET weight = #{weight}
         WHERE
-        uid = #{uid}
+            uid = #{uid}
     </update>
     <!--将上传路径保存-->
     <update id="setImg">
@@ -159,23 +155,23 @@
     <update id="updateUser" parameterType="User">
 
         UPDATE user
-        SET username = #{username},
-        nickname = #{nickname},
-        password = #{password},
-        sex = #{sex},
-        is_ban = #{is_ban},
-        ip_address = #{ip_address},
-        last_logtime = #{last_logtime},
-        browser_sign = #{browser_sign}
+        SET username     = #{username},
+            nickname     = #{nickname},
+            password     = #{password},
+            sex          = #{sex},
+            is_ban       = #{is_ban},
+            ip_address   = #{ip_address},
+            last_logtime = #{last_logtime},
+            browser_sign = #{browser_sign}
         WHERE
-        uid=#{uid}
+            uid = #{uid}
     </update>
 
     <update id="userLeave" parameterType="int">
         UPDATE user
         SET alive = 1
         WHERE
-        uid=#{uid}
+            uid = #{uid}
     </update>
 
     <insert id="follow" parameterType="Follow">
@@ -187,25 +183,28 @@
     </insert>
 
     <delete id="unfollow" parameterType="Follow">
-        DELETE FROM follow WHERE user_id=#{user_id} AND followed_id=followed_id
+        DELETE FROM follow
+        WHERE user_id = #{user_id} AND followed_id = followed_id
     </delete>
 
     <update id="initUser" parameterType="User">
         UPDATE blog
         SET visibility = 2
         WHERE
-        user_id=#{uid}
+            user_id = #{uid}
     </update>
 
     <select id="hotUser" parameterType="int" resultType="User">
-        SELECT *, COUNT(t.uid) as num
+        SELECT
+            *,
+            COUNT(t.uid) AS num
         FROM (
-            SELECT u.*
-            FROM follow AS f
-            JOIN user as u
-            ON f.followed_id = u.uid AND f.time >= (unix_timestamp(now()) - #{date})
-        ) AS t
-        group by t.uid
+                 SELECT u.*
+                 FROM follow AS f
+                     JOIN user AS u
+                         ON f.followed_id = u.uid AND f.time >= (unix_timestamp(now()) - #{date})
+             ) AS t
+        GROUP BY t.uid
         ORDER BY num DESC
     </select>
 </mapper>
