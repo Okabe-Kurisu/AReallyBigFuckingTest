@@ -71,16 +71,17 @@
     </select>
 
     <!-- 得到指定用户微博 -->
-    <select id="getUserBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+    <select id="getUserBlogByUserid" parameterType="int" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT *,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
-        FROM user,blog
-        WHERE user.uid=blog.user_id
-        AND user.uid=#{userid}
-        AND type=0
+        FROM blog AS b
+        JOIN user AS u
+        ON u.uid = b.user_id
+        WHERE u.uid=#{uid}
+        AND b.type &lt;= 1
         AND (visibility=0 OR visibility=1)
-        ORDER BY blog.release_time DESC
+        ORDER BY b.release_time DESC
     </select>
 
     <!-- 查用户是否被封禁 -->

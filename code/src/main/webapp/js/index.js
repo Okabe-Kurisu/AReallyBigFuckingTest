@@ -2,9 +2,7 @@ $(function() {
     //全局变量
 
     //reason是生成博客列表的时候标注的理由
-    var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词"]
-    //reason是生成博客列表的时候标注的理由
-    var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词"];
+    var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词", "这是个人主页"];
     //主数据库,主要存放关注表，at表，收藏表以及主页的微博信息存储
     var weiboDB = openDatabase('weibo', '1.0', '主表', 2 * 1024 * 1024);
     //临时数据库，存储临时微博，每次页面打开先删除全部表，然后向里面填充数值
@@ -16,7 +14,6 @@ $(function() {
 
     $("document").ready(function() {
         initPage();
-        initBlog();
         initUser();
         initSearch();
         initPanel();
@@ -33,14 +30,18 @@ $(function() {
         })
         //用户标签初始化标记为0
         sessionStorage.tag = 0;
+        //不应该显示的标签
+        $(".userinfo").hide();
+        $(".index").hide();
         // 如果是特殊类型的访问
         if (typeof(method) != "undefined") {
             if (method == "userinfo") {
                 //用户页面
                 var uid = request.uid;
+                getBlog(1, uid = uid);
                 setUsercard(uid);
                 setFanCard(uid);
-
+                $(".userinfo").show();
                 var meid = 0;
                 if (typeof(sessionStorage.me) != "undefined") {
                     var me = JSON.parse(sessionStorage.me);
@@ -61,7 +62,8 @@ $(function() {
             }
         } else {
             // 主页
-            $(".userinfo").hide()
+            $(".index").show();
+            getBlog(0);
         }
 
         function setUsercard(id) {
@@ -122,57 +124,68 @@ $(function() {
             })
         }
     }
-
-    // 得到一堆博客，并存储起来
-    function initBlog(method) {
-        if (method == "index") {
-            getBlog(0);
-        } else if (method == "userinfo") {
-            getBlog(1);
+    // 得到博客并存储到websql中
+    function getBlog(type, uid) {
+        urls = ["selectBlogByTime", "getUserBlog", "search", "callat"]
+        params = {
+            time: Math.round(new Date().getTime() / 1000),
         }
-
-        // 得到博客并存储到websql中
-        function getBlog(type) {
-            urls = ["selectBlogByTime", "getUserBlog", "search", "callat"]
-            params = {
-                time: Math.round(new Date().getTime() / 1000),
-            }
-            $.ajax({
-                url: "/blog/" + urls[type],
-                type: "POST",
-                data: params,
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                dataType: "json",
-                success: function(data) {
-                    console.log("加载博客数据")
-                    if (data.code == 200 && data.data != null) {
-                        var blogs = data.data
-                        if (type == 0) { //当用户打开主页时，将数据保存至主数据库
-                            saveToSql(blogs)
-                        }
-                    }
-                    console.log("博客数据加载完成")
-                    //todo: 获得用户的关注信息
-                },
-                error: function() {},
-            })
-        };
-
-        // 将数据保存至数据库
-        function saveToSql(data) {
-            var db = openDatabase('weibo', '1.0', 'Test DB', 2 * 1024 * 1024)
-            db.transaction(function(tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, isShow)');
-                console.log("执行sql")
-                for (x in data) {
-                    var blog = data[x];
-                    var bloginfo = [blog.bid, blog.user_id, blog.content, blog.multimedia, blog.type, blog.release_time, blog.is_edit, blog.commentNum, blog.likeNum, blog.browser_sign, blog.comment_on];
-                    tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', bloginfo);
+        var db = weiboDB;
+        //如果是个人信息页面，加入id属性，数据存入临时表中
+        if (type == 1) {
+            params.uid = uid;
+            db = tempDB;
+        }
+        $.ajax({
+            url: "/blog/" + urls[type],
+            type: "POST",
+            data: params,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function(data) {
+                console.log("加载博客数据")
+                if (data.code == 200 && data.data != null) {
+                    var blogs = data.data
+                    saveToSql(blogs, db);
                 }
-            })
-        }
-        // todo:发送微博时，插入图片的方法:
-        // 先上传图片，然后返回一个图片地址，将图片地址存储于本地，然后和微博发送的ajax一起传回去
+                console.log("博客数据加载完成")
+
+                readBlog(db);
+            },
+        })
+
+    };
+
+    // 将数据保存至数据库
+    function saveToSql(data, db) {
+        db.transaction(function(tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow)');
+            for (x in data) {
+                var temp = data[x];
+                var bloginfo = [temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight];
+                tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', bloginfo);
+            }
+        })
+    }
+
+    // 从数据库读取并生成微博
+    //todo: 分页查询
+    function readBlog(db) {
+        db.transaction(function(tx) {//这tm是异步方法
+            tx.executeSql('SELECT * FROM blog', [], function(tx, results) {
+                var datas = results.rows;
+                var len = datas.length;
+                for (x in datas){
+                    if (x == (len - 1)) {
+                        break;
+                    }
+                    insertBlog(datas[x], reason[5]);
+                }
+                insertForword();
+                bindDevInfoBtn();
+                mdui.mutation();
+            }, null);
+        })
     }
 
     // 得到用户信息
@@ -563,46 +576,46 @@ $(function() {
             "<div class=\"dev-info\" style=\"display: none;\">\n" +
             "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">这条微博出现在这里，因为<strong>" + reason + "</strong></p>\n" +
             "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">用户权重：<strong>" + data.weight + "</strong></p>\n" +
-            "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">发布环境：<strong>" + data.b + "</strong></p>\n" +
+            "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">发布环境：<strong>" + data.browserSign + "</strong></p>\n" +
             "</div>\n" +
             "<div class=\"blog-head-menu\">\n" +
-            "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal dev-info-btn\" mdui-tooltip=\"{content: \"开发信息\", delay: 100}\">\n" +
+            "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal dev-info-btn\" mdui-tooltip=\"{content: \'开发信息\', delay: 100}\">\n" +
             "<i class=\"mdui-icon material-icons\">arrow_drop_up</i>\n" +
             "</button>\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-del-btn\">删除</button>\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-edit-btn\">编辑</button>\n" +
             "</div>\n" +
             "<div class=\"mdui-card-header\">\n" +
-            "<a href=\"./?method=userinfo&uid=" + user.userid + "\"<img class=\"mdui-card-header-avatar\" src=\"" + user.avatar + "\"/>\n" +
-            "<div class=\"mdui-card-header-title\">" + user.username + "</div>\n" +
-            "<div class=\"mdui-card-header-subtitle\">" + user.motto + "</div>\n" +
+            "<a href=\"./?method=userinfo&uid=" + data.userid + "\"><img class=\"mdui-card-header-avatar\" src=\"" + data.avatar + "\"/></a>\n" +
+            "<div class=\"mdui-card-header-title\">" + data.nickname + "</div>\n" +
+            "<div class=\"mdui-card-header-subtitle\">" + data.motto + "</div>\n" +
             "<!-- 时间戳生成发博时间 -->\n" +
             "<div class=\"mdui-card-menu mdui-text-color-grey-500\">\n" +
-            "<p>" + formatMsgTime(blog.release_time) + "</p>\n" +
+            "<p>" + formatMsgTime(data.releaseTime) + "</p>\n" +
             "</div>\n" +
             "</div>\n";
         // 如果blog中包含图片
-        if (blog.multimedia != null) {
+        if (data.multimedia != null) {
             res += "<div class=\"mdui-card-media\">\n" +
-                "<img src=\"" + blog.multimedia + "\"/>\n" +
+                "<img src=\"" + data.multimedia + "\"/>\n" +
                 "</div>\n";
         }
         // 如果blog中包含转发内容
-        if (blog.type == 1) {
-            res += "<div class=\"mdui-card-content\">" + param.content + //转发博客的主体内容
+        if (data.type == 1) {
+            res += "<div class=\"mdui-card-content\">" + data.content + //转发博客的主体内容
                 "<!-- 被转发微博在下面， 相当于是在本身微博的最后加上一个新的微博卡片 -->"
             //先显示正在加载，然后在每次生成微博后绑定上真正的转发内容加载方法,待加载bid获取方法为$(".waitload").attr("bid")
-            "<div class=\"mdui-spinner mdui-spinner-colorful waitload\" bid=\"" + blog.commentOn + "\"></div>"
+            "<div class=\"mdui-spinner mdui-spinner-colorful waitload\" bid=\"" + data.commentOn + "\"></div>"
             "</div>\n"
         } else {
-            res += "<div class=\"mdui-card-content\">" + param.content + "</div>\n"
+            res += "<div class=\"mdui-card-content\">" + data.content + "</div>\n"
         }
         res += "<div class=\"mdui-card-actions\">\n" +
-            "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\" likeNum=\"" + blog.likeNum + "\"><i\n" +
-            "class=\"mdui-icon material-icons\">thumb_up</i>赞(" + blog.likeNum + ")\n" +
+            "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\" likeNum=\"" + data.likeNum + "\"><i\n" +
+            "class=\"mdui-icon material-icons\">thumb_up</i>赞(" + data.likeNum + ")\n" +
             "</button>\n" +
-            "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\" commentNum=\"" + blog.commentNum + "\"><i\n" +
-            "class=\"mdui-icon material-icons\">forum</i>(" + blog.commentNum + ")\n" +
+            "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\" commentNum=\"" + data.commentNum + "\"><i\n" +
+            "class=\"mdui-icon material-icons\">forum</i>(" + data.commentNum + ")\n" +
             "</button>\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
             "class=\"mdui-icon material-icons\">folder</i>收藏\n" +
@@ -612,13 +625,13 @@ $(function() {
             "</button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
             "</div>\n" +
             "</div>"
-        $(".send-card").after(res)
+        $(".blogs").append(res);
     }
 
 
     //开发者信息按钮的代码绑定。因为该内容会动态生成很多次，所以写成方法
-    function bindDevInfoBtn(argument) {
-        $(".dev-info-btn").click(function(argument) {
+    function bindDevInfoBtn() {
+        $(".dev-info-btn").click(function() {
             var devInfo = $(this).parent().prev();
             if (devInfo.css("display") == 'none') {
                 devInfo.show(speed = "normal");
@@ -630,7 +643,7 @@ $(function() {
 
     //生成所有被转发的微博
     function insertForword() {
-        $(".waitload").each(function(argument) {
+        $(".waitload").each(function() {
             var id = $(this).attr("bid");
             var thisDiv = $(this)
             $.ajax({
@@ -655,10 +668,9 @@ $(function() {
                             "<div class=\"mdui-card-header-subtitle\">" + rtn.motto + "</div>\n" +
                             "</div>" +
                             "<div class=\"mdui-card-content\">" + rtn.content + "</div>" +
-                            "</div>" +
+                            "</div>";
                     }
                 },
-                error: function() {},
             })
         })
     }

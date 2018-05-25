@@ -8,10 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
 import com.tool.SensitivewordFilter;
 import org.apache.struts2.components.Date;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +25,8 @@ import java.util.*;
 
 @Namespace("/blog")
 @ParentPackage("custom-default")
+@Results({@Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+        @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     HttpServletRequest request;
@@ -36,9 +35,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     Map<String, Object> resultMap;
 
-    @Action(value = "submitBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "submitBlog")
     @Authority("")
     public String submitBlog() {//提交微博
         Blog blog = new Blog();
@@ -111,9 +108,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "setBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "setBlog")
     @Authority("")
     public String setBlog() {//修改微博
         Blog blog = new Blog();
@@ -200,9 +195,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "delBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "delBlog")
     @Authority("")
     public String delBlog() {
         int bid;
@@ -306,9 +299,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "thumbUp", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "thumbUp")
     @Authority("")
     public String thumbUp() {//点赞微博
         ThumbUp thumbup = new ThumbUp();
@@ -461,9 +452,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "selectBlogByTime", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "selectBlogByTime")
     public String selectBlogByTime() {
         int nowtime;
         Map<String, Object> map = new HashMap();
@@ -605,19 +594,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     @Action(value = "getUserBlog")
     public String getUserBlog() {
-        String userid;
         Map<String, Object> map = new HashMap();
         try {
-            // 获得参数
-            userid = request.getParameter("userid");
-
-            // 封装参数
-            map.put("userid", userid);
-
-            // 调用Dao层 获取数据
-            List blogList = BlogDao.getUserBlog(map);
-
-            // 封装响应数据
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            List blogList = BlogDao.getUserBlog(uid);
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
         } catch (NullPointerException ne) {
