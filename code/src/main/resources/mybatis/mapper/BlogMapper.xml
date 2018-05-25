@@ -30,13 +30,18 @@
 
     <!-- 搜索一定时间内的博客 -->
     <select id="selectBlogByTime" parameterType="Map" resultType="Map">
-        SELECT *,
-        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
-        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        SELECT
+            *,
+            (SELECT count(bl.bid)
+             FROM blog bl
+             WHERE bl.comment_on = b.bid AND type = 2) AS commentNum,
+            (SELECT count(tu.tuid)
+             FROM thumb_up tu
+             WHERE tu.blog_id = b.bid)                 AS likeNum
         FROM blog AS b
         WHERE #{release_time} &lt;= b.release_time AND
-              type IN (0,1) AND
-              visibility=0
+              type IN (0, 1) AND
+              visibility = 0
     </select>
     <!-- 插入搜索记录 -->
     <insert id="insertSearchBlog" parameterType="Map">  <!-- 书写 SQL 语句 -->
@@ -156,8 +161,8 @@
     </select>
 
     <insert id="addThumbUp" parameterType="ThumbUp" useGeneratedKeys="true" keyProperty="tuid">
-        INSERT INTO thumb_up (user_id, blog_id, date,t_id)
-            VALUE (#{user_id}, #{blog_id}, #{date},#{t_id})
+        INSERT INTO thumb_up (user_id, blog_id, date, t_id)
+            VALUE (#{user_id}, #{blog_id}, #{date}, #{t_id})
     </insert>
 
     <delete id="delThumbUp" parameterType="int">
@@ -182,31 +187,39 @@
             VALUE (#{user_id}, #{blog_id}, #{date})
     </insert>
 
-    <!-- 转发微博 只能转发一次，再点击就取消-->
-    <select id="forwardBlog" parameterType="int" resultType="Blog">
-        SELECT
-            bid,
-            user_id,
-            content,
-            release_time,
-            type,
-            comment_on,
-            visibility,
-            multimedia
+    <!-- 转发微博 只能转发一次-->
+    <select id="CheckforwardBlog" parameterType="Map" resultType="Blog">
+        SELECT *
         FROM blog
-        WHERE bid = #{bid}
+        WHERE type = 1 AND user_id = #{user_id} AND comment_on = #{comment_on}
+    </select>
+    <select id="GetforwardBlog" parameterType="int" resultType="Blog">
+        SELECT *
+        FROM blog
+        WHERE blog.bid = #{bid}
+              AND blog.type = 0 AND blog.visibility = 0
     </select>
 
 
     <!-- 收藏微博 是否已经收藏 收藏微博是否被举报-->
+    <select id="Checkcollect" parameterType="Map" resultType="Favorite">
+        SELECT *
+        FROM favorite
+        WHERE user_id = #{user_id} AND blog_id = #{blog_id}
+    </select>
     <insert id="collectBlog" parameterType="Favorite" useGeneratedKeys="true" keyProperty="fid">
-        INSERT INTO favorite (user_id, blog_id)
-            VALUE (#{user_id}, #{blog_id})
+        INSERT INTO favorite (user_id, blog_id, time, visibility)
+            VALUE (#{user_id}, #{blog_id}, #{time}, #{visibility})
     </insert>
-    <!-- 举报微博 不能重复举报 验证账号 -->
+    <delete id="delcollect" parameterType="int">
+        DELETE FROM favorite
+        WHERE fid = #{fid}
+    </delete>
+
+    <!-- 举报微博 -->
     <insert id="reportBlog" parameterType="Sensitivity" useGeneratedKeys="true" keyProperty="sid">
-        INSERT INTO sensitivity (blog_id, type, details, time)
-            VALUE (#{blog_id}, #{type}, #{details}, #{time})
+        INSERT INTO sensitivity (blog_id, type, details, time,visibility,user_id)
+            VALUE (#{blog_id}, #{type}, #{details}, #{time},#{visibility},#{user_id})
     </insert>
 
     <!-- 向blog_discuss插入记录 -->
