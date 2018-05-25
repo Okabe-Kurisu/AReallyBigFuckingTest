@@ -3,6 +3,16 @@ $(function () {
 
     //reason是生成博客列表的时候标注的理由
     var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词"]
+    //reason是生成博客列表的时候标注的理由
+    var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词"];
+    //主数据库,主要存放关注表，at表，收藏表以及主页的微博信息存储
+    var weiboDB = openDatabase('weibo', '1.0', '主表', 2 * 1024 * 1024);
+    //临时数据库，存储临时微博，每次页面打开先删除全部表，然后向里面填充数值
+    var tempDB = openDatabase('temp', '1.0', '临时表', 2 * 1024 * 1024);
+    //全局变量
+    var ataDialog_inst; //@dialog对话框
+    var myDialog_inst //我的话题对话框
+    var createDialog_inst //创建话题对话框
 
     $("document").ready(function () {
         initPage();
@@ -332,9 +342,8 @@ $(function () {
             fImg.html("folder_open");
             mdui.snackbar("取消收藏");
         }
+    })
 
-<<<<<<< HEAD
-=======
 	//召唤用户数据统计
 	$(".usertag-btn").on("click", function (argument) {
 		var me = JSON.parse(sessionStorage.me)
@@ -498,7 +507,6 @@ $(function () {
         $("#blog-content").val(v + " @" + username + " ");
         ataDialog_inst.close();
         console.log(uid)
->>>>>>> ea37b29ac39543cff0cc7e875a6d553749ecf22d
     })
 
     // 发布微博数据
@@ -633,18 +641,6 @@ $(function () {
     function addCommit(Commit) {
     }
 
-    function GetRequest() {
-        var url = location.search; //获取url中"?"符后的字串
-        var theRequest = new Object();
-        if (url.indexOf("?") != -1) {
-            var str = url.substr(1);
-            strs = str.split("&");
-            for (var i = 0; i < strs.length; i++) {
-                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-            }
-        }
-        return theRequest;
-    }
 
     // 如果没登录，就让用户登陆
     function gotoLogin(argument) {

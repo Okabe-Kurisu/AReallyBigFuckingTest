@@ -101,8 +101,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 BlogDao.reportBlog(Sensitivity_blog);
             }
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "发布成功", user);
-            System.out.println(resultMap);
+            Map map = new HashMap();
+            map.put("blog", BlogDao.getBlogById(bid));
+            map.put("user", user);
+            resultMap = PowerfulTools.format("200", "发布成功", map);            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);

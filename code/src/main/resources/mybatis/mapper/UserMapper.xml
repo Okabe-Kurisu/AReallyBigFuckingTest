@@ -107,28 +107,37 @@
         WHERE follow.user_id = #{uid}
     </select>
 
+    <select id="getFavorite" parameterType="int" resultType="Favorite">
+        SELECT *
+        FROM favorite
+        WHERE favorite.user_id = #{uid}
+    </select>
+
+    <select id="getCallat" parameterType="int" resultType="CallAt">
+        SELECT *
+        FROM call_at
+        WHERE call_at.user_id = #{uid}
+    </select>
+
 
     <!--得到六个关注者头像和六个粉丝头像-->
     <select id="getFanAvatarByUid" resultType="Map">
         SELECT *
         FROM (
-                 SELECT
-                     u.avatar,
-                     f.user_id     AS userid,
-                     f.followed_id AS fid
-                 FROM follow AS f
-                     JOIN user AS u
-                         ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
-                 WHERE u.uid = #{uid}
-                 LIMIT 6
-                 UNION ALL
-                       SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
-                                                     FROM follow AS f
-                                                                    JOIN USER AS u
-                                                                    ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)
-                 WHERE u.uid = #{uid}
-                 LIMIT 6
-             ) AS a
+            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
+            FROM follow AS f
+            JOIN user AS u
+            ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
+            WHERE u.uid = #{uid}
+            LIMIT 6
+            UNION ALL
+            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
+            FROM follow AS f
+            JOIN user AS u
+            ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)
+            WHERE u.uid = #{uid}
+            LIMIT 6
+        ) AS a
     </select>
     <!-- 设置权重 -->
     <update id="setWeight">

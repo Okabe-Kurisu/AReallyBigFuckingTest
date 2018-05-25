@@ -56,9 +56,9 @@ public class BlogDao {
         return is_ban;
     }
 
-    public static Blog getBlogById(int bid) {
+    public static Map getBlogById(int bid) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        Blog blog;
+        Map blog;
         try {
             blog = sqlSession.selectOne("weibo/BlogMapper.getBlogById", bid);
             sqlSession.commit();
