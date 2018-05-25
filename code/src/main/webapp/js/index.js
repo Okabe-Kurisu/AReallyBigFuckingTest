@@ -137,11 +137,12 @@ $(function () {
                         var blogs = data.data
                         var db = openDatabase('weibo', '1.0', 'Test DB', 2 * 1024 * 1024)
                         db.transaction(function (tx) {
-                            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid UNIQUE, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum)');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid UNIQUE, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum, commentOn, isShow)');
                             console.log("执行sql")
                             for (x in blogs) {
                                 var blog = blogs[x];
-                                tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [blog.bid, blog.user_id, blog.content, blog.multimedia, blog.type, blog.release_time, blog.is_edit, blog.commentNum, blog.likeNum]);
+                                tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, release_time, is_edit, commentNum, likeNum, commentOn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+                                    [blog.bid, blog.user_id, blog.content, blog.multimedia, blog.type, blog.release_time, blog.is_edit, blog.commentNum, blog.likeNum, blog.comment_on]);
                             }
                         })
                     }
@@ -149,7 +150,6 @@ $(function () {
                     //todo: 获得用户的关注信息
                 },
                 error: function () {
-                    mdui.snackbar("注册失败");
                 },
             })
         };
@@ -545,7 +545,7 @@ $(function () {
         var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + blog.bid + ">\n" +
             "                <p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1 weibo-reason\">这条微博出现在这里，因为" + reason + "</p>\n" +
             "                <div class=\"mdui-card-header\">\n" +
-            "                    <img class=\"mdui-card-header-avatar\" src=\"" + user.avatar + "\"/>\n" +
+            "                    <a href=\"./?method=userinfo&uid=" + user.userid + "\"<img class=\"mdui-card-header-avatar\" src=\"" + user.avatar + "\"/>\n" +
             "                    <div class=\"mdui-card-header-title\">" + user.username + "</div>\n" +
             "                    <div class=\"mdui-card-header-subtitle\">" + user.motto + "</div>\n" +
             "                    <!-- 时间戳生成发博时间 -->\n" +
@@ -560,17 +560,30 @@ $(function () {
                 "                </div>\n";
         }
         // 如果blog中包含转发内容
-        if (blog.type == 2) {
-            res += "                <div class=\"mdui-card-content\">" + param.content + "</div>\n"
+        if (blog.type == 1) {
+            res += "<div class=\"mdui-card-content\">" + param.content +//转发博客的主体内容
+                    "<!-- 被转发微博在下面， 相当于是在本身微博的最后加上一个新的微博卡片 -->"
+                    //先显示正在加载，然后在每次生成微博后绑定上真正的转发内容加载方法,待加载bid获取方法为$(".waitload").attr("bid")
+                    "<div class=\"mdui-spinner mdui-spinner-colorful waitload\" bid=\"" + blog.commentOn + "\"></div>"
+                            // "<div class=\"origin-blog\">" +
+                            //     "<div class=\"mdui-card mdui-m-t-1\">" +
+                            //         "<div class=\"mdui-card-header\">" +
+                            //             "<img class=\"mdui-card-header-avatar\" src=\"./img/avatar.jpg\"/>" +
+                            //             "<div class=\"mdui-card-header-title\">默认用户</div>" +
+                            //         "</div>" +
+                            //         "<div class=\"mdui-card-content\">子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」</div>" +
+                            //     "</div>" +
+                            // "</div>"
+                "</div>\n"
         } else {
             res += "                <div class=\"mdui-card-content\">" + param.content + "</div>\n"
         }
 
         res += "                <div class=\"mdui-card-actions\">\n" +
-            "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
+            "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\" likeNum=\"" + blog.likeNum + "\"><i\n" +
             "                            class=\"mdui-icon material-icons\">thumb_up</i>赞(" + blog.likeNum + ")\n" +
             "                    </button>\n" +
-            "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\"><i\n" +
+            "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\" commentNum=\"" + blog.commentNum + "\"><i\n" +
             "                            class=\"mdui-icon material-icons\">forum</i>(" + blog.commentNum + ")\n" +
             "                    </button>\n" +
             "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
@@ -583,6 +596,8 @@ $(function () {
             "            </div>"
         $(".send-card").after(res)
     }
+
+    
 
     $(".callat").on("click", function callat(argument) {
         var cDialog = $(".callat-dialog");

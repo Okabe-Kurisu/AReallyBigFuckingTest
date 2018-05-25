@@ -113,14 +113,25 @@
 							</button>
 							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme callat">@at某人</button>
 							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme discuss">#话题</button>
-							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-float-right mdui-color-teal mdui-text-color-wihte send">
+							<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-float-right mdui-color-teal mdui-text-color-white send">
 							<i class="mdui-icon material-icons">check</i>发送
 							</button>
 						</div>
 					</div>
 					<!-- 一条基础微博 -->
 					<div class="mdui-card mdui-m-t-1">
-						<p class="mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1 weibo-reason">这条微博出现在这里，因为他很热门</p>
+						<div class="dev-info" style="display: none;">
+							<p class="mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1">这条微博出现在这里，因为<strong>他很热门</strong></p>
+							<p class="mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1">用户权重：<strong>7</strong></p>
+							<p class="mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1">发布环境：<strong>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36</strong></p>
+						</div>
+						<div class="blog-head-menu">
+							<button class="mdui-btn mdui-btn-dense mdui-text-color-teal" mdui-tooltip="{content: '开发信息', delay: 100}">
+							<i class="mdui-icon material-icons">arrow_drop_up</i>
+							</button>
+							<button class="mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-del-btn">删除</button>
+							<button class="mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-edit-btn">编辑</button>
+						</div>
 						<div class="mdui-card-header">
 							<img class="mdui-card-header-avatar" src="./img/avatar.jpg"/>
 							<div class="mdui-card-header-title">默认用户</div>
@@ -205,8 +216,6 @@
 										<div class="mdui-card-header-subtitle">一个普通的默认用户</div>
 									</div>
 									<div class="mdui-card-content">子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」</div>
-									<div class="mdui-card-actions">
-									</div>
 								</div>
 							</div>
 							<div class="mdui-card-actions">

@@ -34,6 +34,8 @@
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM blog AS b
+        JOIN user AS u
+        ON u.uid = b.user_id
         WHERE #{release_time} &lt;= b.release_time AND
               type IN (0,1) AND
               visibility=0
