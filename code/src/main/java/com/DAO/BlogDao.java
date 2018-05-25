@@ -225,7 +225,6 @@ public class BlogDao {
 
     public static void insertSearchBlog(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        List<Map> blogList = null;
         try {
             sqlSession.insert("weibo/BlogMapper.insertSearchBlog", map);
             sqlSession.commit();
@@ -267,11 +266,11 @@ public class BlogDao {
         return blogList;
     }
 
-    public static List<Map> getUserBlog(Map<String, Object> map) {
+    public static List<Map> getUserBlog(int uid) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {
-            blogList = sqlSession.selectList("weibo/BlogMapper.getUserBlogByUserid", map);
+            blogList = sqlSession.selectList("weibo/BlogMapper.getUserBlogByUserid", uid);
         } finally {
             sqlSession.close();
         }

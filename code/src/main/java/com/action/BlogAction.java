@@ -8,10 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
 import com.tool.SensitivewordFilter;
 import org.apache.struts2.components.Date;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +25,8 @@ import java.util.*;
 
 @Namespace("/blog")
 @ParentPackage("custom-default")
+@Results({@Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+        @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     HttpServletRequest request;
@@ -36,9 +35,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     Map<String, Object> resultMap;
 
-    @Action(value = "submitBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "submitBlog")
     @Authority("")
     public String submitBlog() {//提交微博
         Blog blog = new Blog();
@@ -102,9 +99,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             }
             // 封装响应数据
             Map map = new HashMap();
-            map.put("blog", BlogDao.getBlogById(bid));
-            map.put("user", user);
-            resultMap = PowerfulTools.format("200", "发布成功", map);            System.out.println(resultMap);
+            map.put("data", BlogDao.getBlogById(bid));
+            resultMap = PowerfulTools.format("200", "发布成功", map);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -112,9 +108,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "setBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "setBlog")
     @Authority("")
     public String setBlog() {//修改微博
         Blog blog = new Blog();
@@ -201,9 +195,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "delBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "delBlog")
     @Authority("")
     public String delBlog() {
         int bid;
@@ -299,7 +291,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "发布成功", user);
-            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -307,9 +298,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "thumbUp", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "thumbUp")
     @Authority("")
     public String thumbUp() {//点赞微博
         ThumbUp thumbup = new ThumbUp();
@@ -323,7 +312,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             thumbup.setUser_id(user_id);
             thumbup.setBlog_id(bid);
             //获得被点赞人的id
-            System.out.println("-----user id:" + BlogDao.getUidByBid(bid));
             thumbup.setT_id(BlogDao.getUidByBid(bid));
             //后台添加
             thumbup.setDate((int) (System.currentTimeMillis() / 1000));
@@ -410,7 +398,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "发布成功", user);
-            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -418,35 +405,19 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "searchBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "searchBlog")
     public String searchBlog() {
         String keyword, userid, pageNum, pageCap;
         long nowtime;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             // 获得参数
             keyword = request.getParameter("keyword");
-            pageNum = request.getParameter("pageNum");
-            pageCap = request.getParameter("pageCap");
-            pageCap = request.getParameter("pageCap");
-            userid = request.getParameter("userid");
-
-            // 封装参数
-            map.put("keyword", keyword);
-            map.put("userid", userid);
-            // 计算分页 开始项和结束项
-            if (null == pageNum || "".equals(pageNum)) pageNum = "1";
-            int pageN = Integer.parseInt(pageNum);
-            int pageC = Integer.parseInt(pageCap);
-            int startNum = (pageN - 1) * pageC;
-            int endNum = pageN * pageC;
-            map.put("startNum", startNum);
-            map.put("endNum", endNum);
+            userid = request.getParameter("uid");
             // 获得当前时间戳
             nowtime = new java.util.Date().getTime() / 1000;
+            map.put("userid", userid);
+            map.put("keyword", keyword);
             map.put("nowtime", nowtime);
             // 调用Dao层 获取数据
             List blogList = BlogDao.getBlogByKeyword(map);
@@ -457,22 +428,15 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
-    @Action(value = "selectBlogByTime", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "selectBlogByTime")
     public String selectBlogByTime() {
         int nowtime;
         Map<String, Object> map = new HashMap();
@@ -497,26 +461,18 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
-    @Action(value = "collectBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "collectBlog")
     @Authority("")
     public String collectBlog() {//收藏微博
         Favorite Favorite_blog = new Favorite();
-        Map<String, Object> resultMap;
         int user_id, bid;
         //从前端获取
         user_id = Integer.parseInt(request.getParameter("user_id"));
@@ -529,26 +485,18 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "收藏成功", null);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "收藏失败", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
-    @Action(value = "reportBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "reportBlog")
     @Authority("")
     public String reportBlog() {//举报微博
         Sensitivity Sensitivity_blog = new Sensitivity();
-        Map<String, Object> resultMap;
         String details;
         int bid;
         //从前端获取
@@ -567,27 +515,19 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "举报成功", null);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "举报失败", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
 
-    @Action(value = "getFollowBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "getFollowBlog")
     public String getFollowBlog() {
         String userid;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             // 获得参数
             userid = request.getParameter("userid");
@@ -601,27 +541,19 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
 
-    @Action(value = "getHotspot", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "getHotspot")
     public String getHotspot() {
 
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             // 调用Dao层 获取数据
             List blogList = BlogDao.getTodayHostBlog(map);
@@ -636,48 +568,42 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
 
-    @Action(value = "getUserBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "getUserBlog")
     public String getUserBlog() {
-        String userid;
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
-            // 获得参数
-            userid = request.getParameter("userid");
-
-            // 封装参数
-            map.put("userid", userid);
-
-            // 调用Dao层 获取数据
-            List blogList = BlogDao.getUserBlog(map);
-
-            // 封装响应数据
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            List blogList = BlogDao.getUserBlog(uid);
             resultMap = PowerfulTools.format("200", "成功", blogList);
-
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getBlogById")
+    public String getBlogById() {
+        int bid;
+        try {
+            // 获得参数
+            bid = Integer.parseInt(request.getParameter("bid"));
+            Map data = BlogDao.getBlogById(bid);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", data);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
         }
         return SUCCESS;
     }

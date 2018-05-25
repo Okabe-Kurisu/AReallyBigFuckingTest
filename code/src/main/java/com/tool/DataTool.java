@@ -86,17 +86,18 @@ public class DataTool {
         List<Map> userList = UserDao.getAllUser();
         for(Map user: userList){
             int weight = 0;
-            weight += Integer.valueOf(user.get("follerNum").toString())/5
-                    + Integer.valueOf(user.get("likeNum").toString())/10
-                    + Integer.valueOf(user.get("forwardNum").toString())/5;
-            int nowdate = (int) System.currentTimeMillis()/1000;
-            int leftDays = ((int) user.get("last_logtime") - nowdate)/3600;
-            weight -= leftDays * 5;
-            user.put("weight", weight);
+            weight += Integer.valueOf(user.get("follerNum").toString())*1
+                    + Integer.valueOf(user.get("likeNum").toString())*2
+                    + Integer.valueOf(user.get("forwardNum").toString())*1
+                    + Integer.valueOf(user.get("blogNum").toString())*1;
+            int nowdate = Integer.parseInt(System.currentTimeMillis()/1000 + "") ;
+            int leftDays = (nowdate - (int) user.get("last_logtime"))/3600/24;
+            weight -= leftDays * 1;
             if (weight != (int) user.get("weight")){
+                user.put("weight", weight);
                 System.out.println("用户:" + user.get("nickname") + "的权重更新为" + weight);
+                UserDao.setWeight(user);
             }
-            UserDao.setWeight(user);
         }
         System.out.println("权重分析结束");
     }

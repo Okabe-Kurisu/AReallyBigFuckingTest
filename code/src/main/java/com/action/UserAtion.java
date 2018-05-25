@@ -188,7 +188,6 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         password = request.getParameter("password");
         age = Integer.parseInt(request.getParameter("age"));
         sex = Integer.parseInt(request.getParameter("sex"));
-        Date day = new Date();//获取系统当前时间
         int logtime = (int) System.currentTimeMillis() / 1000;
         String userAgent = request.getHeader("user-agent");//获取浏览器信息
         String ip = getIpAddr(request);//获取IP地址

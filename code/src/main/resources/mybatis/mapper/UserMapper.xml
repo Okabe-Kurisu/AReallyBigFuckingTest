@@ -8,17 +8,20 @@
     <!-- 查询功能，resultType 设置返回值类型 -->
     <select id="selectAllUser" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT *,
-        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
-        (SELECT COUNT(tu.tuid)
-        FROM thumb_up AS tu
-        JOIN blog AS b
-        ON tu.blog_id = b.bid
-        WHERE b.user_id = u.uid) AS likeNum,
-        (SELECT COUNT(b.bid)
-        FROM blog AS b
-        JOIN blog AS b2
-        ON b.comment_on = b2.bid
-        WHERE u.uid = b.user_id) AS forwardNum
+            (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
+            (SELECT COUNT(tu.tuid)
+            FROM thumb_up AS tu
+            JOIN blog AS b
+            ON tu.blog_id = b.bid
+            WHERE b.user_id = u.uid) AS likeNum,
+            (SELECT COUNT(b1.bid)
+            FROM blog AS b1
+            WHERE b1.user_id = u.uid) AS blogNum,
+            (SELECT COUNT(b.bid)
+            FROM blog AS b
+            JOIN blog AS b2
+            ON b.comment_on = b2.bid
+            WHERE u.uid = b.user_id) AS forwardNum
         FROM user AS u
         WHERE u.alive = 0 AND u.last_logtime > 0
         ORDER BY u.weight DESC, u.last_logtime DESC
