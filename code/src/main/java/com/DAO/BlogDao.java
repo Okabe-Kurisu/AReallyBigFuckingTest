@@ -88,7 +88,7 @@ public class BlogDao {
         try {
             System.out.print("enter");
             blogList = sqlSession.selectList("weibo/BlogMapper.checkUpdateNum", blog_id);
-            System.out.print("   " + (int)blogList.get(0).get("is_edit"));
+            System.out.print("   " + (int) blogList.get(0).get("is_edit"));
             //获得前一天时间戳
             SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date beginDate = new Date();
@@ -99,13 +99,13 @@ public class BlogDao {
             release_time = (int) endDate.getTime();
             sqlSession.commit();
 
-            if ((int)blogList.get(0).get("is_edit") > 5 && release_time > (int)blogList.get(0).get("release_time")) {
+            if ((int) blogList.get(0).get("is_edit") > 5 && release_time > (int) blogList.get(0).get("release_time")) {
                 sqlSession.update("weibo/BlogMapper.clearUpdateNum", blog_id);
                 sqlSession.commit();
                 System.out.print("情况1");
                 flag = 0;
                 return flag;
-            } else if ((int)blogList.get(0).get("is_edit") <= 5) {
+            } else if ((int) blogList.get(0).get("is_edit") <= 5) {
                 System.out.print("情况2");
                 flag = 0;
                 return flag;
@@ -141,7 +141,7 @@ public class BlogDao {
         int uid;
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-            uid=sqlSession.selectOne("weibo/UserMapper.getUserByBid", bid);
+            uid = sqlSession.selectOne("weibo/UserMapper.getUserByBid", bid);
             sqlSession.commit();
         } finally {
             sqlSession.close();
@@ -168,24 +168,31 @@ public class BlogDao {
     }
 
     //转发微博
-    public static void forwordBlog(int bid, int user_id) {
+    public static int forwordBlog(int bid, String content, int user_id) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         Blog blog = new Blog();
+        int blogid=0;
         try {
             blog = sqlSession.selectOne("weibo/BlogMapper.forwardBlog", bid);
             sqlSession.commit();
+            //自己不能转发自己的微博
             if (blog.getUser_id() != user_id) {
                 blog.setUser_id(user_id);
+                blog.setContent(content);
                 blog.setType(1);
+                blog.setComment_on(bid);
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
-                sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
+                blogid = sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
                 sqlSession.commit();
-            } else {
+            } else if (blog.getUser_id() == user_id && blog.getType() != 0) {
+                System.out.println("不能转发自己的微博");
+                return 0;
             }
         } finally {
             sqlSession.close();
         }
-
+        System.out.println("转发微博");
+        return blogid;
     }
 
     //收藏微博
@@ -233,8 +240,9 @@ public class BlogDao {
             sqlSession.close();
         }
     }
+
     //获得一段时间前的微博
-    public static List<Map>selectBlogByTime(Map<String, Object> map){
+    public static List<Map> selectBlogByTime(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {

@@ -297,7 +297,7 @@ $(function () {
     })
 
 
-    $(".forward-send").click(function forwardSend(argument) {
+    $(".forward-send").click(function forwardSend(argument) {//转发微博
         var bid = $(this).parents(".blog-card").attr("bid");
         var content = $(this).parents(".mdui-list-item-content").find("input").val();
         console.log(content);
@@ -306,7 +306,7 @@ $(function () {
             content: content
         }
         $.ajax({
-            url: "/blog/commitBlog",
+            url: "/blog/forwardBlog",
             type: "POST",
             data: param,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -333,401 +333,403 @@ $(function () {
             mdui.snackbar("取消收藏");
         }
 
-<<<<<<< HEAD
-=======
-	//召唤用户数据统计
-	$(".usertag-btn").on("click", function (argument) {
-		var me = JSON.parse(sessionStorage.me)
-		var keywords = eval(me.keyword);
-		if (keywords.length == 0) {
-			mdui.snackbar("还没有任何标签信息，请多使用本网站或者等一会再来", timeout=1500)
-			return;
-		}
-		for (keyword in keywords){
-			$("#tagsList").append("<a>" + keywords[keyword] + "</a>")
-		}
-		if (sessionStorage.tag != 1) {
-			initTag()
-			sessionStorage.tag = 1
-		}
-		var dDialog = $(".usertag");
-		var inst = new mdui.Dialog(dDialog, overlay = true);
-		inst.open();
-	})
-
-	$(".send-fab").on("click", function sendFab(argument) {
-		smoothscroll();
-		$("#blog-content").focus();
-	})
-
-
-	$(".report").click(function report(argument) {
-		var inst = new mdui.Dialog(".report-dialog", overlay = true);
-		inst.open();
-		$(".report-cancel").click(function reportCancel(argument) {
-			inst.close();
-		})
-		$(".report-send").click(function reportSend(argument) {
-			inst.close();
-		})
-	})
-
-	$(".commit-toggle").click(function commitToggle(argument) {
-		var commitPanel = $(this).parent().next();
-		closePanel();
-		var inst = new mdui.Collapse(commitPanel, accordion = true);
-		inst.toggle(".commit")
-	})
-
-	function closePanel() { //用来收起多出来的框框
-		var Panel = $('.mdui-collapse-item-open');
-		var inst = new mdui.Collapse(Panel.parent(), accordion = true);
-		inst.closeAll();
-	}
-
-
-	function addBlog(blog) {}
-
-	function addCommit(Commit) {}
-
-	function GetRequest() {
-		var url = location.search; //获取url中"?"符后的字串
-		var theRequest = new Object();
-		if (url.indexOf("?") != -1) {
-			var str = url.substr(1);
-			strs = str.split("&");
-			for (var i = 0; i < strs.length; i++) {
-				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-			}
-		}
-		return theRequest;
-	}
-
-	// 如果没登录，就让用户登陆
-	function gotoLogin(argument) {
-		mdui.snackbar("请登录");
-		setTimeout("self.location= '/auth.html'", 1000);
-	}
-
-	//滚动会最上方
-	function smoothscroll(argument) {
-		var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-		if (currentScroll > 0) {
-			window.requestAnimationFrame(smoothscroll);
-			window.scrollTo(0, currentScroll - (currentScroll / 5));
-		}
-	}
-
-	// 下面是上传文件代码
-
-	$('.insert-img').click(function() {
-		inst = upload()
-		var box = document.getElementById("image-zone");
-		/*由于浏览器默认的对拖拽进的文件是打开或提示打开或保存
-		所以在投放区域使用preventDefault()阻止该事件，但投放区外还是默认事件
-		并且阻止默认事件的代码要放到第一行，即首先阻止默认行为*/
-		box.ondragenter = function(e) {
-			e.preventDefault();
-		};
-		box.ondragover = function(e) {
-			e.preventDefault();
-			box.innerHTML = "松开鼠标开始上传";
-		};
-		box.ondragleave = function(e) {
-			e.preventDefault();
-			box.innerHTML = "拖拽到这里上传";
-		};
-		box.ondrop = function(e) {
-			e.preventDefault();
-			box.innerHTML = "上传中...";
-			/**e.dataTransfer.files可以获取所投放的文件数组的信息
-			 也就是说可以一次性拖入多个文件，该数组每个元素代表每个文件的详细信息*/
-			var files = e.dataTransfer.files;
-			//alert(files.length);  //获取拖入文件的个数
-			//获取投放的第一个文件的名称，size获取大小，type获取文件类型，...
-			//alert(files[0].name);
-			var file = files[0];
-			var fd = new FormData();
-			fd.append("upload", file);
-			fd.append("type", "upload")
-			$.ajax({
-				url: '/fileUpload',
-				type: "post",
-				processData: false,
-				contentType: false,
-				data: fd,
-				success: function(data) {
-					if (data.code == 200) {
-						mdui.snackbar("上传成功");
-						sessionStorage.img = data.data;
-						inst.toggle();
-					}
-				}
-			});
-		};
-	})
-
-	//文件上传框呼出
-	function upload(argument) {
-		var iDialog = $(".upload-dialog");
-		var inst = new mdui.Dialog(iDialog, overlay = true);
-		inst.open();
-		return inst;
-	}
-
-	function GetRequest() {
-		var url = location.search; //获取url中"?"符后的字串
-		var theRequest = new Object();
-		if (url.indexOf("?") != -1) {
-			var str = url.substr(1);
-			strs = str.split("&");
-			for (var i = 0; i < strs.length; i++) {
-				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-			}
-		}
-		return theRequest;
-	}
-	// @列表点击事件
-    $(".friend-list").on("click", ".callat-item", function () {
-        var uid = $(this).attr("userid")
-        var username = $(this).attr("username");
-
-        //todo: 未添加到点赞表
-
-        var v = $("#blog-content").val();
-        $("#blog-content").val(v + " @" + username + " ");
-        ataDialog_inst.close();
-        console.log(uid)
->>>>>>> ea37b29ac39543cff0cc7e875a6d553749ecf22d
-    })
-
-    // 发布微博数据
-    $(".send").click(function (argument) {
-        param = {
-            content: $("#blog-content").val(),
-            multimedia: sessionStorage.img
-        }
-        $.ajax({
-            url: "/blog/submitBlog",
-            data: param,
-            type: "POST",
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                var rtn = data.data;
-                var user = rtn.user;
-                var blog = rtn.blog;
-                console.log("正在发布微博...")
-
-                insertBlog(user, blog, reason[0]);
-                $("#blog-content").val("")
-                mdui.snackbar("发送成功");
-                console.log("发布成功(●ˇ∀ˇ●)")
-                //todo: 获得用户的关注信息
-            },
-            error: function () {
-                mdui.snackbar("微博发送失败");
-            },
-        })
-
-    })
-
-    function insertBlog(user, blog, reason) {
-        var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + blog.bid + ">\n" +
-            "                <p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1 weibo-reason\">这条微博出现在这里，因为" + reason + "</p>\n" +
-            "                <div class=\"mdui-card-header\">\n" +
-            "                    <img class=\"mdui-card-header-avatar\" src=\"" + user.avatar + "\"/>\n" +
-            "                    <div class=\"mdui-card-header-title\">" + user.username + "</div>\n" +
-            "                    <div class=\"mdui-card-header-subtitle\">" + user.motto + "</div>\n" +
-            "                    <!-- 时间戳生成发博时间 -->\n" +
-            "                    <div class=\"mdui-card-menu mdui-text-color-grey-500\">\n" +
-            "                        <p>" + formatMsgTime(blog.release_time) + "</p>\n" +
-            "                    </div>\n" +
-            "                </div>\n";
-        // 如果blog中包含图片
-        if (blog.multimedia != null) {
-            res += "                <div class=\"mdui-card-media\">\n" +
-                "                    <img src=\"" + blog.multimedia + "\"/>\n" +
-                "                </div>\n";
-        }
-        // 如果blog中包含转发内容
-        if (blog.type == 2) {
-            res += "                <div class=\"mdui-card-content\">" + param.content + "</div>\n"
-        } else {
-            res += "                <div class=\"mdui-card-content\">" + param.content + "</div>\n"
-        }
-
-        res += "                <div class=\"mdui-card-actions\">\n" +
-            "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
-            "                            class=\"mdui-icon material-icons\">thumb_up</i>赞(" + blog.likeNum + ")\n" +
-            "                    </button>\n" +
-            "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\"><i\n" +
-            "                            class=\"mdui-icon material-icons\">forum</i>(" + blog.commentNum + ")\n" +
-            "                    </button>\n" +
-            "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
-            "                            class=\"mdui-icon material-icons\">folder</i>收藏\n" +
-            "                    </button>\n" +
-            "                    <button class=\"mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report \"><i\n" +
-            "                            class=\"mdui-icon material-icons\">flag</i>举报\n" +
-            "                    </button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
-            "                </div>\n" +
-            "            </div>"
-        $(".send-card").after(res)
-    }
-
-    $(".callat").on("click", function callat(argument) {
-        var cDialog = $(".callat-dialog");
-        var inst = new mdui.Dialog(cDialog, overlay = true);
-        inst.open();
-    })
-
-    // 我的话题按钮点击时间
-    $(".myDiscuss").on("click", function showMyDiscuss(argument) {
-        var dDialog = $(".manageDiscuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
-    })
-
-    // 创建话题按钮点击事件
-    $(".creatDiscuss").on("click", function showAddDiscuss(argument) {
-        var dDialog = $(".addDiscuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
-    })
-
-    $(".send-fab").on("click", function sendFab(argument) {
-        smoothscroll();
-        $("#blog-content").focus();
-    })
-
-
-    $(".report").click(function report(argument) {
-        var inst = new mdui.Dialog(".report-dialog", overlay = true);
-        inst.open();
-        $(".report-cancel").click(function reportCancel(argument) {
-            inst.close();
-        })
-        $(".report-send").click(function reportSend(argument) {
-            inst.close();
-        })
-    })
-
-    $(".commit-toggle").click(function commitToggle(argument) {
-        var commitPanel = $(this).parent().next();
-        closePanel();
-        var inst = new mdui.Collapse(commitPanel, accordion = true);
-        inst.toggle(".commit")
-    })
-
-    function closePanel() { //用来收起多出来的框框
-        var Panel = $('.mdui-collapse-item-open');
-        var inst = new mdui.Collapse(Panel.parent(), accordion = true);
-        inst.closeAll();
-    }
-
-
-    function addBlog(blog) {
-    }
-
-    function addCommit(Commit) {
-    }
-
-    function GetRequest() {
-        var url = location.search; //获取url中"?"符后的字串
-        var theRequest = new Object();
-        if (url.indexOf("?") != -1) {
-            var str = url.substr(1);
-            strs = str.split("&");
-            for (var i = 0; i < strs.length; i++) {
-                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        //召唤用户数据统计
+        $(".usertag-btn").on("click", function (argument) {
+            var me = JSON.parse(sessionStorage.me)
+            var keywords = eval(me.keyword);
+            if (keywords.length == 0) {
+                mdui.snackbar("还没有任何标签信息，请多使用本网站或者等一会再来", timeout = 1500)
+                return;
             }
+            for (keyword in keywords) {
+                $("#tagsList").append("<a>" + keywords[keyword] + "</a>")
+            }
+            if (sessionStorage.tag != 1) {
+                initTag()
+                sessionStorage.tag = 1
+            }
+            var dDialog = $(".usertag");
+            var inst = new mdui.Dialog(dDialog, overlay = true);
+            inst.open();
+        })
+
+        $(".send-fab").on("click", function sendFab(argument) {
+            smoothscroll();
+            $("#blog-content").focus();
+        })
+
+
+        $(".report").click(function report(argument) {
+            var inst = new mdui.Dialog(".report-dialog", overlay = true);
+            inst.open();
+            $(".report-cancel").click(function reportCancel(argument) {
+                inst.close();
+            })
+            $(".report-send").click(function reportSend(argument) {
+                inst.close();
+            })
+        })
+
+        $(".commit-toggle").click(function commitToggle(argument) {
+            var commitPanel = $(this).parent().next();
+            closePanel();
+            var inst = new mdui.Collapse(commitPanel, accordion = true);
+            inst.toggle(".commit")
+        })
+
+        function closePanel() { //用来收起多出来的框框
+            var Panel = $('.mdui-collapse-item-open');
+            var inst = new mdui.Collapse(Panel.parent(), accordion = true);
+            inst.closeAll();
         }
-        return theRequest;
-    }
 
-    // 如果没登录，就让用户登陆
-    function gotoLogin(argument) {
-        mdui.snackbar("请登录");
-        setTimeout("self.location= '/auth.html'", 1000);
-    }
 
-    //滚动会最上方
-    function smoothscroll(argument) {
-        var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-        if (currentScroll > 0) {
-            window.requestAnimationFrame(smoothscroll);
-            window.scrollTo(0, currentScroll - (currentScroll / 5));
+        function addBlog(blog) {
         }
-    }
 
-    // 下面是上传文件代码
+        function addCommit(Commit) {
+        }
 
-    $('.insert-img').click(function () {
-        inst = upload()
-        var box = document.getElementById("image-zone");
-        /*由于浏览器默认的对拖拽进的文件是打开或提示打开或保存
-        所以在投放区域使用preventDefault()阻止该事件，但投放区外还是默认事件
-        并且阻止默认事件的代码要放到第一行，即首先阻止默认行为*/
-        box.ondragenter = function (e) {
-            e.preventDefault();
-        };
-        box.ondragover = function (e) {
-            e.preventDefault();
-            box.innerHTML = "松开鼠标开始上传";
-        };
-        box.ondragleave = function (e) {
-            e.preventDefault();
-            box.innerHTML = "拖拽到这里上传";
-        };
-        box.ondrop = function (e) {
-            e.preventDefault();
-            box.innerHTML = "上传中...";
-            /**e.dataTransfer.files可以获取所投放的文件数组的信息
-             也就是说可以一次性拖入多个文件，该数组每个元素代表每个文件的详细信息*/
-            var files = e.dataTransfer.files;
-            //alert(files.length);  //获取拖入文件的个数
-            //获取投放的第一个文件的名称，size获取大小，type获取文件类型，...
-            //alert(files[0].name);
-            var file = files[0];
-            var fd = new FormData();
-            fd.append("upload", file);
-            fd.append("type", "upload")
-            $.ajax({
-                url: '/fileUpload',
-                type: "post",
-                processData: false,
-                contentType: false,
-                data: fd,
-                success: function (data) {
-                    if (data.code == 200) {
-                        mdui.snackbar("上传成功");
-                        sessionStorage.img = data.data;
-                        inst.toggle();
-                    }
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
                 }
-            });
-        };
-    })
+            }
+            return theRequest;
+        }
 
-    //文件上传框呼出
-    function upload(argument) {
-        var iDialog = $(".upload-dialog");
-        var inst = new mdui.Dialog(iDialog, overlay = true);
-        inst.open();
-        return inst;
-    }
+        // 如果没登录，就让用户登陆
+        function gotoLogin(argument) {
+            mdui.snackbar("请登录");
+            setTimeout("self.location= '/auth.html'", 1000);
+        }
 
-    function GetRequest() {
-        var url = location.search; //获取url中"?"符后的字串
-        var theRequest = new Object();
-        if (url.indexOf("?") != -1) {
-            var str = url.substr(1);
-            strs = str.split("&");
-            for (var i = 0; i < strs.length; i++) {
-                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        //滚动会最上方
+        function smoothscroll(argument) {
+            var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(smoothscroll);
+                window.scrollTo(0, currentScroll - (currentScroll / 5));
             }
         }
-        return theRequest;
-    }
+
+        // 下面是上传文件代码
+
+        $('.insert-img').click(function () {
+            inst = upload()
+            var box = document.getElementById("image-zone");
+            /*由于浏览器默认的对拖拽进的文件是打开或提示打开或保存
+            所以在投放区域使用preventDefault()阻止该事件，但投放区外还是默认事件
+            并且阻止默认事件的代码要放到第一行，即首先阻止默认行为*/
+            box.ondragenter = function (e) {
+                e.preventDefault();
+            };
+            box.ondragover = function (e) {
+                e.preventDefault();
+                box.innerHTML = "松开鼠标开始上传";
+            };
+            box.ondragleave = function (e) {
+                e.preventDefault();
+                box.innerHTML = "拖拽到这里上传";
+            };
+            box.ondrop = function (e) {
+                e.preventDefault();
+                box.innerHTML = "上传中...";
+                /**e.dataTransfer.files可以获取所投放的文件数组的信息
+                 也就是说可以一次性拖入多个文件，该数组每个元素代表每个文件的详细信息*/
+                var files = e.dataTransfer.files;
+                //alert(files.length);  //获取拖入文件的个数
+                //获取投放的第一个文件的名称，size获取大小，type获取文件类型，...
+                //alert(files[0].name);
+                var file = files[0];
+                var fd = new FormData();
+                fd.append("upload", file);
+                fd.append("type", "upload")
+                $.ajax({
+                    url: '/fileUpload',
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    data: fd,
+                    success: function (data) {
+                        if (data.code == 200) {
+                            mdui.snackbar("上传成功");
+                            sessionStorage.img = data.data;
+                            inst.toggle();
+                        }
+                    }
+                });
+            };
+        })
+
+        //文件上传框呼出
+        function upload(argument) {
+            var iDialog = $(".upload-dialog");
+            var inst = new mdui.Dialog(iDialog, overlay = true);
+            inst.open();
+            return inst;
+        }
+
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+
+        // @列表点击事件
+        $(".friend-list").on("click", ".callat-item", function () {
+            var uid = $(this).attr("userid")
+            var username = $(this).attr("username");
+
+            //todo: 未添加到点赞表
+
+            var v = $("#blog-content").val();
+            $("#blog-content").val(v + " @" + username + " ");
+            ataDialog_inst.close();
+            console.log(uid)
+            s
+        })
+
+        // 发布微博数据
+        $(".send").click(function (argument) {
+            param = {
+                content: $("#blog-content").val(),
+                multimedia: sessionStorage.img
+            }
+            $.ajax({
+                url: "/blog/submitBlog",
+                data: param,
+                type: "POST",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    var rtn = data.data;
+                    var user = rtn.user;
+                    var blog = rtn.blog;
+                    console.log("正在发布微博...")
+
+                    insertBlog(user, blog, reason[0]);
+                    $("#blog-content").val("")
+                    mdui.snackbar("发送成功");
+                    console.log("发布成功(●ˇ∀ˇ●)")
+                    //todo: 获得用户的关注信息
+                },
+                error: function () {
+                    mdui.snackbar("微博发送失败");
+                },
+            })
+
+        })
+
+        function insertBlog(user, blog, reason) {
+            var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + blog.bid + ">\n" +
+                "                <p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1 weibo-reason\">这条微博出现在这里，因为" + reason + "</p>\n" +
+                "                <div class=\"mdui-card-header\">\n" +
+                "                    <img class=\"mdui-card-header-avatar\" src=\"" + user.avatar + "\"/>\n" +
+                "                    <div class=\"mdui-card-header-title\">" + user.username + "</div>\n" +
+                "                    <div class=\"mdui-card-header-subtitle\">" + user.motto + "</div>\n" +
+                "                    <!-- 时间戳生成发博时间 -->\n" +
+                "                    <div class=\"mdui-card-menu mdui-text-color-grey-500\">\n" +
+                "                        <p>" + formatMsgTime(blog.release_time) + "</p>\n" +
+                "                    </div>\n" +
+                "                </div>\n";
+            // 如果blog中包含图片
+            if (blog.multimedia != null) {
+                res += "                <div class=\"mdui-card-media\">\n" +
+                    "                    <img src=\"" + blog.multimedia + "\"/>\n" +
+                    "                </div>\n";
+            }
+            // 如果blog中包含转发内容
+            if (blog.type == 2) {
+                res += "                <div class=\"mdui-card-content\">" + param.content + "</div>\n"
+            } else {
+                res += "                <div class=\"mdui-card-content\">" + param.content + "</div>\n"
+            }
+
+            res += "                <div class=\"mdui-card-actions\">\n" +
+                "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\"><i\n" +
+                "                            class=\"mdui-icon material-icons\">thumb_up</i>赞(" + blog.likeNum + ")\n" +
+                "                    </button>\n" +
+                "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\"><i\n" +
+                "                            class=\"mdui-icon material-icons\">forum</i>(" + blog.commentNum + ")\n" +
+                "                    </button>\n" +
+                "                    <button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
+                "                            class=\"mdui-icon material-icons\">folder</i>收藏\n" +
+                "                    </button>\n" +
+                "                    <button class=\"mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report \"><i\n" +
+                "                            class=\"mdui-icon material-icons\">flag</i>举报\n" +
+                "                    </button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
+                "                </div>\n" +
+                "            </div>"
+            $(".send-card").after(res)
+        }
+
+        $(".callat").on("click", function callat(argument) {
+            var cDialog = $(".callat-dialog");
+            var inst = new mdui.Dialog(cDialog, overlay = true);
+            inst.open();
+        })
+
+        // 我的话题按钮点击时间
+        $(".myDiscuss").on("click", function showMyDiscuss(argument) {
+            var dDialog = $(".manageDiscuss-dialog");
+            var inst = new mdui.Dialog(dDialog, overlay = true);
+            inst.open();
+        })
+
+        // 创建话题按钮点击事件
+        $(".creatDiscuss").on("click", function showAddDiscuss(argument) {
+            var dDialog = $(".addDiscuss-dialog");
+            var inst = new mdui.Dialog(dDialog, overlay = true);
+            inst.open();
+        })
+
+        $(".send-fab").on("click", function sendFab(argument) {
+            smoothscroll();
+            $("#blog-content").focus();
+        })
+
+
+        $(".report").click(function report(argument) {
+            var inst = new mdui.Dialog(".report-dialog", overlay = true);
+            inst.open();
+            $(".report-cancel").click(function reportCancel(argument) {
+                inst.close();
+            })
+            $(".report-send").click(function reportSend(argument) {
+                inst.close();
+            })
+        })
+
+        $(".commit-toggle").click(function commitToggle(argument) {
+            var commitPanel = $(this).parent().next();
+            closePanel();
+            var inst = new mdui.Collapse(commitPanel, accordion = true);
+            inst.toggle(".commit")
+        })
+
+        function closePanel() { //用来收起多出来的框框
+            var Panel = $('.mdui-collapse-item-open');
+            var inst = new mdui.Collapse(Panel.parent(), accordion = true);
+            inst.closeAll();
+        }
+
+
+        function addBlog(blog) {
+        }
+
+        function addCommit(Commit) {
+        }
+
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+
+        // 如果没登录，就让用户登陆
+        function gotoLogin(argument) {
+            mdui.snackbar("请登录");
+            setTimeout("self.location= '/auth.html'", 1000);
+        }
+
+        //滚动会最上方
+        function smoothscroll(argument) {
+            var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            if (currentScroll > 0) {
+                window.requestAnimationFrame(smoothscroll);
+                window.scrollTo(0, currentScroll - (currentScroll / 5));
+            }
+        }
+
+        // 下面是上传文件代码
+
+        $('.insert-img').click(function () {
+            inst = upload()
+            var box = document.getElementById("image-zone");
+            /*由于浏览器默认的对拖拽进的文件是打开或提示打开或保存
+            所以在投放区域使用preventDefault()阻止该事件，但投放区外还是默认事件
+            并且阻止默认事件的代码要放到第一行，即首先阻止默认行为*/
+            box.ondragenter = function (e) {
+                e.preventDefault();
+            };
+            box.ondragover = function (e) {
+                e.preventDefault();
+                box.innerHTML = "松开鼠标开始上传";
+            };
+            box.ondragleave = function (e) {
+                e.preventDefault();
+                box.innerHTML = "拖拽到这里上传";
+            };
+            box.ondrop = function (e) {
+                e.preventDefault();
+                box.innerHTML = "上传中...";
+                /**e.dataTransfer.files可以获取所投放的文件数组的信息
+                 也就是说可以一次性拖入多个文件，该数组每个元素代表每个文件的详细信息*/
+                var files = e.dataTransfer.files;
+                //alert(files.length);  //获取拖入文件的个数
+                //获取投放的第一个文件的名称，size获取大小，type获取文件类型，...
+                //alert(files[0].name);
+                var file = files[0];
+                var fd = new FormData();
+                fd.append("upload", file);
+                fd.append("type", "upload")
+                $.ajax({
+                    url: '/fileUpload',
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    data: fd,
+                    success: function (data) {
+                        if (data.code == 200) {
+                            mdui.snackbar("上传成功");
+                            sessionStorage.img = data.data;
+                            inst.toggle();
+                        }
+                    }
+                });
+            };
+        })
+
+        //文件上传框呼出
+        function upload(argument) {
+            var iDialog = $(".upload-dialog");
+            var inst = new mdui.Dialog(iDialog, overlay = true);
+            inst.open();
+            return inst;
+        }
+
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+    })
 })

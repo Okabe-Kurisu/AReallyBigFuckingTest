@@ -30,13 +30,18 @@
 
     <!-- 搜索一定时间内的博客 -->
     <select id="selectBlogByTime" parameterType="Map" resultType="Map">
-        SELECT *,
-        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
-        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        SELECT
+            *,
+            (SELECT count(bl.bid)
+             FROM blog bl
+             WHERE bl.comment_on = b.bid AND type = 2) AS commentNum,
+            (SELECT count(tu.tuid)
+             FROM thumb_up tu
+             WHERE tu.blog_id = b.bid)                 AS likeNum
         FROM blog AS b
         WHERE #{release_time} &lt;= b.release_time AND
-              type IN (0,1) AND
-              visibility=0
+              type IN (0, 1) AND
+              visibility = 0
     </select>
     <!-- 插入搜索记录 -->
     <insert id="insertSearchBlog" parameterType="Map">  <!-- 书写 SQL 语句 -->
@@ -156,8 +161,8 @@
     </select>
 
     <insert id="addThumbUp" parameterType="ThumbUp" useGeneratedKeys="true" keyProperty="tuid">
-        INSERT INTO thumb_up (user_id, blog_id, date,t_id)
-            VALUE (#{user_id}, #{blog_id}, #{date},#{t_id})
+        INSERT INTO thumb_up (user_id, blog_id, date, t_id)
+            VALUE (#{user_id}, #{blog_id}, #{date}, #{t_id})
     </insert>
 
     <delete id="delThumbUp" parameterType="int">
@@ -184,17 +189,10 @@
 
     <!-- 转发微博 只能转发一次，再点击就取消-->
     <select id="forwardBlog" parameterType="int" resultType="Blog">
-        SELECT
-            bid,
-            user_id,
-            content,
-            release_time,
-            type,
-            comment_on,
-            visibility,
-            multimedia
+        SELECT *
         FROM blog
         WHERE bid = #{bid}
+              AND blog.type = 0 AND blog.visibility = 0 AND blog.comment_on = 0
     </select>
 
 
