@@ -2,10 +2,14 @@ $(function () {
     //全局变量
     var createDialog_inst;
     var changeDiscuss_inst;
+    // 判断是话题中心还是我的话题（0：话题中心，1：我的话题）
+    var discuss_page = 0;
 
     $("document").ready(function () {
         // 初始化操作
         intiDiscuss();
+
+        initHotDiscuss();
 
     });
 
@@ -13,11 +17,13 @@ $(function () {
 
     //话题中心绑定事件
     $(".discuss-center").click(function () {
+        discuss_page = 0;
         getAllDiscuss();
     });
 
     //我的话题绑定事件
     $(".my-discuss").click(function () {
+        discuss_page = 1;
         getUserDiscuss();
     });
 
@@ -162,6 +168,102 @@ $(function () {
         });
     });
 
+    // 话题搜索
+    $(".discuss-search").keyup('keyup', function (event) {
+        console.log(discuss_page)
+        var key = $(".discuss-search").val();
+        param = {
+            discuss_page: discuss_page,
+            key: key
+        };
+        $.ajax({
+            url: "/discuss/searchDiscuss",
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 200 && data.data != null) {
+                    $(".discuss-list").text("");
+                    var discusses = data.data;
+                    for (x in discusses) {
+                        var discuss = discusses[x]
+                        if (discuss_page === 0) {
+                            var res = "<div class=\"mdui-col\">\n" +
+                                "                    <div class=\"mdui-grid-tile\">\n" +
+                                "                        <div class=\"mdui-card\">\n" +
+                                "                            <div class=\"mdui-card-media\">\n" +
+                                "                                <img src=\"img/sign_bg.jpg\"/>\n" +
+                                "                                <div class=\"mdui-card-media-covered\">\n" +
+                                "                                    <div class=\"mdui-card-primary\">\n" +
+                                "                                        <div class=\"mdui-card-primary-title\">" + discuss.name + "</div>\n" +
+                                "                                        <div class=\"mdui-card-primary-subtitle\">" + discuss.detail + "</div>\n" +
+                                "                                    </div>\n" +
+                                "                                    <div class=\"mdui-card-actions\">\n" +
+                                // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 1</button>\n" +
+                                // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 2</button>\n" +
+                                "                                    </div>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                </div>"
+                        }
+                        else if (discuss.is_edit >= 4) {
+                            var res = "<div class=\"mdui-col\">\n" +
+                                "                    <div class=\"mdui-grid-tile\">\n" +
+                                "                        <div class=\"mdui-card\">\n" +
+                                "                            <div class=\"mdui-card-media\">\n" +
+                                "                                <img src=\"img/sign_bg.jpg\"/>\n" +
+                                "                                <div class=\"mdui-card-media-covered\">\n" +
+                                "                                    <div class=\"mdui-card-primary\">\n" +
+                                "                                        <div class=\"mdui-card-primary-title\">" + discuss.name + "</div>\n" +
+                                "                                        <div class=\"mdui-card-primary-subtitle\">" + discuss.detail + "</div>\n" +
+                                "                                    </div>\n" +
+                                "                                    <div class=\"mdui-card-actions\">\n" +
+                                "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white end-discuss\" did=\"" + discuss.did + "\">结束话题</button>\n" +
+                                "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white mdui-btn-raised change-discuss\" did=\"" + discuss.did + "\" disabled>禁止修改</button>\n" +
+                                "                                    </div>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                </div>"
+                        }
+                        else {
+                            var res = "<div class=\"mdui-col\">\n" +
+                                "                    <div class=\"mdui-grid-tile\">\n" +
+                                "                        <div class=\"mdui-card\">\n" +
+                                "                            <div class=\"mdui-card-media\">\n" +
+                                "                                <img src=\"img/sign_bg.jpg\"/>\n" +
+                                "                                <div class=\"mdui-card-media-covered\">\n" +
+                                "                                    <div class=\"mdui-card-primary\">\n" +
+                                "                                        <div class=\"mdui-card-primary-title\">" + discuss.name + "</div>\n" +
+                                "                                        <div class=\"mdui-card-primary-subtitle\">" + discuss.detail + "</div>\n" +
+                                "                                    </div>\n" +
+                                "                                    <div class=\"mdui-card-actions\">\n" +
+                                "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white end-discuss\" did=\"" + discuss.did + "\">结束话题</button>\n" +
+                                "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white change-discuss\" did=\"" + discuss.did + "\">修改话题</button>\n" +
+                                "                                    </div>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </div>\n" +
+                                "                    </div>\n" +
+                                "                </div>"
+                        }
+
+                        $(".discuss-list").append(res);
+                    }
+
+                } else {
+                    mdui.snackbar("话题获取失败");
+                }
+            },
+            error: function () {
+                mdui.snackbar("请求错误");
+            },
+        });
+    });
 
     // function
     var intiDiscuss = function () {
@@ -171,7 +273,7 @@ $(function () {
     // 获得全部话题
     var getAllDiscuss = function () {
         $.ajax({
-            url: "/discuss/selectAllDiscuss",
+            url: "/discuss/searchDiscuss",
             type: "POST",
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
@@ -192,8 +294,8 @@ $(function () {
                             "                                        <div class=\"mdui-card-primary-subtitle\">" + discuss.detail + "</div>\n" +
                             "                                    </div>\n" +
                             "                                    <div class=\"mdui-card-actions\">\n" +
-                            "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 1</button>\n" +
-                            "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 2</button>\n" +
+                            // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 1</button>\n" +
+                            // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 2</button>\n" +
                             "                                    </div>\n" +
                             "                                </div>\n" +
                             "                            </div>\n" +
@@ -215,9 +317,13 @@ $(function () {
 
     // 获得当前登陆用户的话题
     var getUserDiscuss = function () {
+        param = {
+            discuss_page: discuss_page
+        }
         $.ajax({
-            url: "/discuss/selectDiscussByUserid",
+            url: "/discuss/searchDiscuss",
             type: "POST",
+            data: param,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
             success: function (data) {
@@ -273,7 +379,7 @@ $(function () {
                     }
 
                 } else {
-                    mdui.snackbar("话题获取失败");
+                    mdui.snackbar("请先登陆");
                 }
             },
             error: function () {
@@ -281,5 +387,37 @@ $(function () {
             },
         });
     };
+
+    // 获得热门话题
+    var initHotDiscuss = function () {
+        $.ajax({
+            url: "/discuss/selectHotDiscuss",
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 200 && data.data != null) {
+                    $(".hot-discuss").text("");
+                    var discusses = data.data;
+                    for (x in discusses) {
+                        var discuss = discusses[x];
+
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list\">\n" +
+                            "                            <p class=\"mdui-list-item-icon mdui-text-color-red\"><i class=\"mdui-icon material-icons\">brightness_5</i></p>\n" +
+                            "                            <div class=\"mdui-list-item-content\">"+ discuss.name +"</div>\n" +
+                            "                        </li>";
+
+                        $(".hot-discuss").append(res);
+                    }
+
+                } else {
+                    mdui.snackbar("话题获取失败");
+                }
+            },
+            error: function () {
+                mdui.snackbar("请求错误");
+            },
+        });
+    }
 
 });

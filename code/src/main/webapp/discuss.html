@@ -14,6 +14,10 @@
 <header>
     <div class="mdui-toolbar mdui-color-white mdui-shadow-2">
         <span class="mdui-typo-title mdui-m-l-5">Fake 微博</span>
+        <a href="./index.html" class="mdui-btn mdui-btn-icon index-page"
+           mdui-tooltip="{content: '首页', delay: 100}"><i class="mdui-icon material-icons">home</i></a>
+        <a href="./discuss.html" class="mdui-btn mdui-btn-icon discuss-page"
+           mdui-tooltip="{content: '话题中心', delay: 100}"><i class="mdui-icon material-icons">filter_vintage</i></a>
         <div class="mdui-toolbar-spacer"></div>
         <!-- 弹出搜索 -->
         <div class="search-bar">
@@ -110,9 +114,9 @@
             <div class="mdui-typo-title"><i class="mdui-icon material-icons">filter_vintage</i>话题中心</div>
             <div class="mdui-divider-inset"></div>
             <!-- 话题搜索框 -->
-            <div class="mdui-textfield discuss-search">
+            <div class="mdui-textfield discuss-search-div">
                 <label class="mdui-textfield-label">搜索话题</label>
-                <input class="mdui-textfield-input" type="text"/>
+                <input class="mdui-textfield-input discuss-search" type="text"/>
             </div>
             <div class="mdui-row-xs-3 mdui-row-sm-4 mdui-row-md-5 mdui-row-lg-2 mdui-row-xl-7 mdui-grid-list discuss-list">
                 <!-- 每个话题框 -->
@@ -155,7 +159,7 @@
                 </div>
             </div>
             <!-- 关注与被关注 -->
-            <div class="mdui-card mdui-m-t-2 userinfo">
+            <div class="mdui-card mdui-m-t-2">
                 <div class="mdui-card-header">
                     <p>用户操作</p>
                     <div class="mdui-divider"></div>
@@ -181,14 +185,13 @@
                     </ul>
                 </div>
             </div>
-            <!--todo: 热门话题 -->
-            <!-- todo:热门微博 -->
+            <!-- todo:热门话题 -->
             <div class="mdui-card mdui-m-t-2 index">
                 <div class="mdui-card-header mdui-center">
-                    <h3><strong>今日热门微博</strong></h3>
+                    <h3><strong>热门话题</strong></h3>
                 </div>
                 <div class="mdui-card-content ">
-                    <ul class="mdui-list mdui-list-dense">
+                    <ul class="mdui-list mdui-list-dense hot-discuss">
                         <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
                             <p class="mdui-list-item-icon mdui-text-color-red">1</p>
                             <div class="mdui-list-item-content">热搜词语</div>
@@ -266,6 +269,7 @@
 <script src="./js/tags.js"></script>
 <script src="./js/datestampTool.js"></script>
 <script src="./js/laydate.js"></script>
+<script src="./js/index.js"></script>
 <script src="js/discuss.js"></script>
 
 </body>

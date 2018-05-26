@@ -42,6 +42,32 @@
         LIMIT #{startNum}, #{endNum}
     </select>
 
+    <!-- 查询话题（正在使用的） -->
+    <select id="selectDiscuss" parameterType="Map" resultType="Discuss">
+        SELECT *
+        FROM discuss
+        WHERE visibility = 0
+        <if test="user_id != null">AND user_id = #{user_id}</if>
+        <if test="key != null">AND (name LIKE #{key} OR detail LIKE #{key})</if>
+        LIMIT #{startNum}, #{endNum}
+    </select>
+
+    <!-- 查询热门话题(查询每个话题下的微博数并排序) -->
+    <select id="selectHotDiscuss" resultType="Map">
+        SELECT
+            d.*,
+            (SELECT COUNT(bd.bdid)
+             FROM blog_discuss bd
+             WHERE d.did = bd.discuss_id) AS blogNum
+        FROM
+            discuss d
+        WHERE
+            visibility = 0
+        ORDER BY
+            blogNum DESC
+        LIMIT 0, 5
+    </select>
+
     <!-- 判断指定话题是否是当前用户建立的 -->
     <select id="judgeUserDiscuss" parameterType="Map" resultType="Map">
         SELECT *

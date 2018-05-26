@@ -105,41 +105,62 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     }
 
     @Action(value = "searchDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String searchDiscuss() {
-        String keyword, page, pageCap;
-        Map<String, Object> resultMap;
-        String key;
+        String key, page, pageCap, flag;
+        Map<String, Object> map = new HashMap<>();
         try {
-            key = request.getParameter("keyword");
-            key = '%' + key + '%';
-            Map<String, Object> map = new HashMap<>();
+            // 获取参数
+            //key
+            key = request.getParameter("key");
+            if (key != null) key = '%' + key + '%';
+
+            //分页参数
             page = request.getParameter("page");
             pageCap = request.getParameter("pageCap");
-            map.put("key", key);
-
             // 计算分页 开始项和结束项
             if (null == page || "".equals(page)) page = "1";
+            if (null == pageCap || "".equals(pageCap)) pageCap = "5";
             int pageN = Integer.parseInt(page);
             int pageC = Integer.parseInt(pageCap);
-
             int startNum = (pageN - 1) * pageC;
             int endNum = pageN * pageC;
+
+            //场景标识，判断是话题中心还是我的话题（0：话题中心，1：我的话题）
+            flag = request.getParameter("discuss_page");
+            if (null != flag && flag.equals("1")) {
+                //获得当前登录用户id
+                User user = (User) request.getSession().getAttribute("user");
+                int userId = user.getUid();
+                map.put("user_id", userId);
+            }
+
+            map.put("key", key);
             map.put("startNum", startNum);
             map.put("endNum", endNum);
-            List<Discuss> discussList = DiscussDao.selectDiscussLike(map);
-            resultMap = PowerfulTools.format("200", "成功", discussList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            List<Discuss> discussList = DiscussDao.selectDiscuss(map);
+            resultMap = PowerfulTools.format("200", "成功", discussList);
 
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "selectHotDiscuss", results = {
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
+    })
+    public String selectHotDiscuss() {
+        try {
+            List<Map> discussList = DiscussDao.selectHotDiscuss();
+            resultMap = PowerfulTools.format("200", "成功", discussList);
+
+        } catch (Exception ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
         }
         return SUCCESS;
     }
