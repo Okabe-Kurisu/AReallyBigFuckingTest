@@ -416,22 +416,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         try {
             // 获得参数
             keyword = request.getParameter("keyword");
-            pageNum = request.getParameter("pageNum");
-            pageCap = request.getParameter("pageCap");
-            pageCap = request.getParameter("pageCap");
             userid = request.getParameter("userid");
-
-            // 封装参数
-            map.put("keyword", keyword);
-            map.put("userid", userid);
-            // 计算分页 开始项和结束项
-            if (null == pageNum || "".equals(pageNum)) pageNum = "1";
-            int pageN = Integer.parseInt(pageNum);
-            int pageC = Integer.parseInt(pageCap);
-            int startNum = (pageN - 1) * pageC;
-            int endNum = pageN * pageC;
-            map.put("startNum", startNum);
-            map.put("endNum", endNum);
             // 获得当前时间戳
             nowtime = new java.util.Date().getTime() / 1000;
             map.put("nowtime", nowtime);

@@ -34,11 +34,21 @@ $(function() {
         $(".userinfo").hide();
         $(".index").hide();
         // 如果是特殊类型的访问
-        if (typeof(method) != "undefined") {
+        if (typeof(method) == "undefined") {
+            // 主页
+            $(".index").show();
+            params = {
+                time: Math.round(new Date().getTime() / 1000),
+            }
+            getBlog(0, params);
+        } else {
             if (method == "userinfo") {
                 //用户页面
                 var uid = request.uid;
-                getBlog(1, uid = uid);
+                params = {
+                    uid = uid
+                };
+                getBlog(1, params);
                 setUsercard(uid);
                 setFanCard(uid);
                 $(".userinfo").show();
@@ -60,10 +70,6 @@ $(function() {
             if (method == "callat") {
                 // at人页面
             }
-        } else {
-            // 主页
-            $(".index").show();
-            getBlog(0);
         }
 
         function setUsercard(id) {
@@ -125,15 +131,11 @@ $(function() {
         }
     }
     // 得到博客并存储到websql中
-    function getBlog(type, uid) {
+    function getBlog(type, params) {
         urls = ["selectBlogByTime", "getUserBlog", "search", "callat"]
-        params = {
-            time: Math.round(new Date().getTime() / 1000),
-        }
         var db = weiboDB;
         //如果是个人信息页面，加入id属性，数据存入临时表中
-        if (type == 1) {
-            params.uid = uid;
+        if (type != 0) {
             db = tempDB;
         }
         $.ajax({
@@ -171,11 +173,11 @@ $(function() {
     // 从数据库读取并生成微博
     //todo: 分页查询
     function readBlog(db) {
-        db.transaction(function(tx) {//这tm是异步方法
+        db.transaction(function(tx) { //这tm是异步方法
             tx.executeSql('SELECT * FROM blog', [], function(tx, results) {
                 var datas = results.rows;
                 var len = datas.length;
-                for (x in datas){
+                for (x in datas) {
                     if (x == (len - 1)) {
                         break;
                     }
@@ -245,7 +247,14 @@ $(function() {
             $('.search-input').val($(this).children('.mdui-list-item-content').html())
         })
 
-        //todo: 等到微博生成写完后再写搜索
+        $(".search-input").keypress(function(event) {
+            var keynum = (event.keyCode ? event.keyCode : event.which);
+            if (keynum == '13') {
+                var url = "./?method=search&keyword=";
+                var keyword = $(".search-input").val()
+                self.location = url + keyword;
+            }
+        });
     }
 
 
