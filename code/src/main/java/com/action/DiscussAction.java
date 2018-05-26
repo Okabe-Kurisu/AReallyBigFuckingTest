@@ -121,7 +121,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             pageCap = request.getParameter("pageCap");
             // 计算分页 开始项和结束项
             if (null == page || "".equals(page)) page = "1";
-            if (null == pageCap || "".equals(pageCap)) pageCap = "5";
+            if (null == pageCap || "".equals(pageCap)) pageCap = "10";
             int pageN = Integer.parseInt(page);
             int pageC = Integer.parseInt(pageCap);
             int startNum = (pageN - 1) * pageC;
@@ -166,12 +166,11 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     }
 
     @Action(value = "getBlogInDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String getBlogInDiscuss() {
         String key, did, page, pageCap;
         Map<String, Object> map = new HashMap<>();
-        Map<String, Object> resultMap;
         try {
             // 获得参数
             key = request.getParameter("keyword");
@@ -203,15 +202,10 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }

@@ -45,10 +45,11 @@
     <!-- 查询话题（正在使用的） -->
     <select id="selectDiscuss" parameterType="Map" resultType="Discuss">
         SELECT *
-        FROM discuss
-        WHERE visibility = 0
-        <if test="user_id != null">AND user_id = #{user_id}</if>
-        <if test="key != null">AND (name LIKE #{key} OR detail LIKE #{key})</if>
+        FROM discuss d,user u
+        WHERE d.user_id=u.uid
+        AND visibility = 0
+        <if test="user_id != null">AND d.user_id = #{user_id}</if>
+        <if test="key != null">AND (d.name LIKE #{key} OR d.detail LIKE #{key})</if>
         LIMIT #{startNum}, #{endNum}
     </select>
 
@@ -77,7 +78,9 @@
     </select>
 
     <select id="selectBlogInDiscuss" parameterType="Map" resultType="Map">
-        SELECT *
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM blog_discuss d
         LEFT JOIN blog b
         ON d.blog_id = b.bid

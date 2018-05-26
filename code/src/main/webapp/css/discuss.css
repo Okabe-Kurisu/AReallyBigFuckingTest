@@ -1,7 +1,12 @@
 .mdui-container-fluid {
-  margin-top: 10px !important;
+    margin-top: 10px !important;
 }
 
 .discuss-search-div {
-  width: 60%;
+    width: 60%;
+}
+
+.blog-discuss-name {
+    display: block;
+    text-align: center;
 }

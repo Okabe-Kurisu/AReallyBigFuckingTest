@@ -168,6 +168,15 @@ $(function () {
         });
     });
 
+    //话题卡片点击事件
+    $(".discuss-list").on("click", ".mdui-col", function () {
+        var did = $(this).attr("did");
+        var dname = $(this).attr("dname")
+        sessionStorage.setItem('blog_did', did);
+        sessionStorage.setItem('blog_dis_title', dname);
+        window.location.href = "/discuss_blog.html";
+    });
+
     // 话题搜索
     $(".discuss-search").keyup('keyup', function (event) {
         console.log(discuss_page)
@@ -189,7 +198,7 @@ $(function () {
                     for (x in discusses) {
                         var discuss = discusses[x]
                         if (discuss_page === 0) {
-                            var res = "<div class=\"mdui-col\">\n" +
+                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
                                 "                    <div class=\"mdui-grid-tile\">\n" +
                                 "                        <div class=\"mdui-card\">\n" +
                                 "                            <div class=\"mdui-card-media\">\n" +
@@ -210,7 +219,7 @@ $(function () {
                                 "                </div>"
                         }
                         else if (discuss.is_edit >= 4) {
-                            var res = "<div class=\"mdui-col\">\n" +
+                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
                                 "                    <div class=\"mdui-grid-tile\">\n" +
                                 "                        <div class=\"mdui-card\">\n" +
                                 "                            <div class=\"mdui-card-media\">\n" +
@@ -231,7 +240,7 @@ $(function () {
                                 "                </div>"
                         }
                         else {
-                            var res = "<div class=\"mdui-col\">\n" +
+                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
                                 "                    <div class=\"mdui-grid-tile\">\n" +
                                 "                        <div class=\"mdui-card\">\n" +
                                 "                            <div class=\"mdui-card-media\">\n" +
@@ -283,7 +292,7 @@ $(function () {
                     var discusses = data.data;
                     for (x in discusses) {
                         var discuss = discusses[x]
-                        var res = "<div class=\"mdui-col\">\n" +
+                        var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
                             "                    <div class=\"mdui-grid-tile\">\n" +
                             "                        <div class=\"mdui-card\">\n" +
                             "                            <div class=\"mdui-card-media\">\n" +
@@ -333,7 +342,7 @@ $(function () {
                     for (x in discusses) {
                         var discuss = discusses[x]
                         if (discuss.is_edit >= 4) {
-                            var res = "<div class=\"mdui-col\">\n" +
+                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
                                 "                    <div class=\"mdui-grid-tile\">\n" +
                                 "                        <div class=\"mdui-card\">\n" +
                                 "                            <div class=\"mdui-card-media\">\n" +
@@ -354,7 +363,7 @@ $(function () {
                                 "                </div>"
                         }
                         else {
-                            var res = "<div class=\"mdui-col\">\n" +
+                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\""+ discuss.name +"\">\n" +
                                 "                    <div class=\"mdui-grid-tile\">\n" +
                                 "                        <div class=\"mdui-card\">\n" +
                                 "                            <div class=\"mdui-card-media\">\n" +
@@ -404,7 +413,7 @@ $(function () {
 
                         var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list\">\n" +
                             "                            <p class=\"mdui-list-item-icon mdui-text-color-red\"><i class=\"mdui-icon material-icons\">brightness_5</i></p>\n" +
-                            "                            <div class=\"mdui-list-item-content\">"+ discuss.name +"</div>\n" +
+                            "                            <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
                             "                        </li>";
 
                         $(".hot-discuss").append(res);
