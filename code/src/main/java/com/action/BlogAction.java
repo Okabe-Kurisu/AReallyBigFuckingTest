@@ -100,7 +100,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 封装响应数据
             Map map = new HashMap();
             map.put("data", BlogDao.getBlogById(bid));
-            resultMap = PowerfulTools.format("200", "发布成功", map);            System.out.println(resultMap);
+            resultMap = PowerfulTools.format("200", "发布成功", map);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -291,7 +291,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "发布成功", user);
-            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -313,7 +312,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             thumbup.setUser_id(user_id);
             thumbup.setBlog_id(bid);
             //获得被点赞人的id
-            System.out.println("-----user id:" + BlogDao.getUidByBid(bid));
             thumbup.setT_id(BlogDao.getUidByBid(bid));
             //后台添加
             thumbup.setDate((int) (System.currentTimeMillis() / 1000));
@@ -400,7 +398,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "发布成功", user);
-            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -425,7 +422,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 调用Dao层 获取数据
             List blogList = BlogDao.getBlogByKeyword(map);
 
-            System.out.println(userid);
             // 写入搜索记录(用户登陆状态下)
             if (userid != null && !"".equals(userid)) BlogDao.insertSearchBlog(map);
 
