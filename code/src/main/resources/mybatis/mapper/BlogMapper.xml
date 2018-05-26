@@ -18,14 +18,19 @@
 
     <!-- 搜索博客 -->
     <select id="selectBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT *
-        FROM blog,user
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=blog.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=blog.bid) AS likeNum
+        FROM blog
+        JOIN user
+        on blog.user_id=user.uid AND user.alive = 0 AND user.is_ban = 0
         WHERE
-        blog.user_id=user.uid AND
-        (blog.content LIKE "%"#{keyword}"%") AND
+        (blog.content LIKE "%"#{keyword}"%"
+        OR user.nickname LIKE "%"#{keyword}"%"
+        OR user.motto LIKE "%"#{keyword}"%"
+        ) AND
         blog.release_time &lt; #{nowtime} AND
         blog.visibility=0 AND blog.type=0
-        LIMIT #{startNum},#{endNum}
     </select>
 
     <!-- 搜索一定时间内的博客 -->
@@ -39,6 +44,7 @@
         WHERE #{release_time} &lt;= b.release_time AND
               type IN (0,1) AND
               visibility=0
+        ORDER BY u.weight DESC
     </select>
     <!-- 插入搜索记录 -->
     <insert id="insertSearchBlog" parameterType="Map">  <!-- 书写 SQL 语句 -->

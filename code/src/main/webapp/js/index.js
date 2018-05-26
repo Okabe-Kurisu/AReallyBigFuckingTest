@@ -1,8 +1,5 @@
 $(function() {
     //全局变量
-
-    //reason是生成博客列表的时候标注的理由
-    var reason = ["是你发送的", "他很热门", "你关注了博主", "你关注了该话题", "包含了搜索词", "这是个人主页"];
     //主数据库,主要存放关注表，at表，收藏表以及主页的微博信息存储
     var weiboDB = openDatabase('weibo', '1.0', '主表', 2 * 1024 * 1024);
     //临时数据库，存储临时微博，每次页面打开先删除全部表，然后向里面填充数值
@@ -46,7 +43,7 @@ $(function() {
                 //用户页面
                 var uid = request.uid;
                 params = {
-                    uid = uid
+                    uid: uid
                 };
                 getBlog(1, params);
                 setUsercard(uid);
@@ -65,7 +62,15 @@ $(function() {
             }
             if (method == "search") {
                 // 搜索页面
-                var keyword = request.keyword
+                params = {
+                    keyword: sessionStorage.keyword,
+                    uid: 0,
+                };
+                if (typeof(sessionStorage.me) != "undefined") {
+                    var me = JSON.parse(sessionStorage.me);
+                    params.uid = me.uid;
+                }
+                getBlog(2, params);
             }
             if (method == "callat") {
                 // at人页面
@@ -132,9 +137,12 @@ $(function() {
     }
     // 得到博客并存储到websql中
     function getBlog(type, params) {
-        urls = ["selectBlogByTime", "getUserBlog", "search", "callat"]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "callat"]
+        //reason是生成博客列表的时候标注的理由
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了博主", "你关注了该话题"];
         var db = weiboDB;
-        //如果是个人信息页面，加入id属性，数据存入临时表中
+        var reason = reasons[type];
+        //如果不是主页，数据存入临时表中
         if (type != 0) {
             db = tempDB;
         }
@@ -147,8 +155,8 @@ $(function() {
             success: function(data) {
                 console.log("加载博客数据")
                 if (data.code == 200 && data.data != null) {
-                    var blogs = data.data
-                    saveToSql(blogs, db);
+                    var blogs = data.data;
+                    saveToSql(blogs, db, reason=reason);
                 }
                 console.log("博客数据加载完成")
 
@@ -158,14 +166,16 @@ $(function() {
 
     };
 
+
     // 将数据保存至数据库
-    function saveToSql(data, db) {
+    function saveToSql(data, db, reason) {
         db.transaction(function(tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow, reason)');
             for (x in data) {
                 var temp = data[x];
-                var bloginfo = [temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight];
-                tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', bloginfo);
+                var bloginfo = [temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight, reason];
+                tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, reason) \
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', bloginfo);
             }
         })
     }
@@ -175,17 +185,23 @@ $(function() {
     function readBlog(db) {
         db.transaction(function(tx) { //这tm是异步方法
             tx.executeSql('SELECT * FROM blog', [], function(tx, results) {
+                console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
+                console.log(len)
                 for (x in datas) {
-                    if (x == (len - 1)) {
+                    console.log(x)
+                    console.log(x == len)
+                    insertBlog(datas[x]);
+                    tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                    if (x == (len - 1)){
                         break;
                     }
-                    insertBlog(datas[x], reason[5]);
                 }
                 insertForword();
                 bindDevInfoBtn();
                 mdui.mutation();
+                console.log("生成博客html完成");
             }, null);
         })
     }
@@ -250,9 +266,9 @@ $(function() {
         $(".search-input").keypress(function(event) {
             var keynum = (event.keyCode ? event.keyCode : event.which);
             if (keynum == '13') {
-                var url = "./?method=search&keyword=";
-                var keyword = $(".search-input").val()
-                self.location = url + keyword;
+                var url = "./?method=search";
+                sessionStorage.keyword = $(".search-input").val();
+                self.location = url;
             }
         });
     }
@@ -568,7 +584,7 @@ $(function() {
             success: function(data) {
                 console.log("正在发布微博...")
                 var rtn = data.data;
-                insertBlog(rtn, reason[0]);
+                insertBlog(rtn, reason = "是你发送的");
                 mdui.snackbar("发送成功");
                 console.log("发布成功(●ˇ∀ˇ●)")
                 //todo: 获得用户的关注信息
@@ -583,7 +599,7 @@ $(function() {
     function insertBlog(data, reason) {
         var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + data.bid + ">\n" +
             "<div class=\"dev-info\" style=\"display: none;\">\n" +
-            "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">这条微博出现在这里，因为<strong>" + reason + "</strong></p>\n" +
+            "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">这条微博出现在这里，因为<strong>" + data.reason + "</strong></p>\n" +
             "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">用户权重：<strong>" + data.weight + "</strong></p>\n" +
             "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">发布环境：<strong>" + data.browserSign + "</strong></p>\n" +
             "</div>\n" +

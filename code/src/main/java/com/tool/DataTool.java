@@ -93,7 +93,6 @@ public class DataTool {
             int nowdate = Integer.parseInt(System.currentTimeMillis()/1000 + "") ;
             int leftDays = (nowdate - (int) user.get("last_logtime"))/3600/24;
             weight -= leftDays * 1;
-            System.out.println(weight + "|" +  (int)user.get("weight")+ "|" +  (int)user.get("uid"));
             if (weight != (int) user.get("weight")){
                 user.put("weight", weight);
                 System.out.println("用户:" + user.get("nickname") + "的权重更新为" + weight);

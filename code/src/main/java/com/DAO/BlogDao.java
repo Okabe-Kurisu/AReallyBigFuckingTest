@@ -225,7 +225,6 @@ public class BlogDao {
 
     public static void insertSearchBlog(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        List<Map> blogList = null;
         try {
             sqlSession.insert("weibo/BlogMapper.insertSearchBlog", map);
             sqlSession.commit();

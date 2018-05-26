@@ -416,13 +416,16 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         try {
             // 获得参数
             keyword = request.getParameter("keyword");
-            userid = request.getParameter("userid");
+            userid = request.getParameter("uid");
             // 获得当前时间戳
             nowtime = new java.util.Date().getTime() / 1000;
+            map.put("userid", userid);
+            map.put("keyword", keyword);
             map.put("nowtime", nowtime);
             // 调用Dao层 获取数据
             List blogList = BlogDao.getBlogByKeyword(map);
 
+            System.out.println(userid);
             // 写入搜索记录(用户登陆状态下)
             if (userid != null && !"".equals(userid)) BlogDao.insertSearchBlog(map);
 
