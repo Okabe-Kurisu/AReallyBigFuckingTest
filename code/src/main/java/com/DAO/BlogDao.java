@@ -6,10 +6,7 @@ import com.tool.MybatisTool;
 import org.apache.ibatis.session.SqlSession;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 主要是与Blog表有关的操作
@@ -171,12 +168,25 @@ public class BlogDao {
     public static int forwordBlog(int bid, String content, int user_id) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         Blog blog = new Blog();
-        int blogid=0;
+        Map<String, Object> maps = new HashMap();
+        int blogid = 0;
+        System.out.println("bid=" + bid);
+        maps.put("comment_on", bid);
+        maps.put("user_id", user_id);
         try {
-            blog = sqlSession.selectOne("weibo/BlogMapper.forwardBlog", bid);
+            blog = sqlSession.selectOne("weibo/BlogMapper.CheckforwardBlog", maps);
+            if (blog != null) {
+                System.out.println("不能转发同一微博两次");
+                return 0;
+            }
+            blog = sqlSession.selectOne("weibo/BlogMapper.GetforwardBlog", bid);
             sqlSession.commit();
+            if (blog == null) {
+                System.out.println("不能转发非博客或可见性不为公开");
+                return 0;
+            }
             //自己不能转发自己的微博
-            if (blog.getUser_id() != user_id) {
+            if (blog.getUser_id() != user_id && blog.getType() == 0) {
                 blog.setUser_id(user_id);
                 blog.setContent(content);
                 blog.setType(1);
@@ -198,9 +208,24 @@ public class BlogDao {
     //收藏微博
     public static int collectBlog(Favorite blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
+        Map<String, Object> maps = new HashMap();
+        Favorite fblog = new Favorite();
+        maps.put("user_id", blog.getUser_id());
+        maps.put("blog_id", blog.getBlog_id());
         try {
-            sqlSession.insert("weibo/BlogMapper.collectBlog", blog);
-            sqlSession.commit();
+            fblog = sqlSession.selectOne("weibo/BlogMapper.Checkcollect", maps);
+            if (fblog != null) {
+                //取消收藏
+                sqlSession.delete("weibo/BlogMapper.delcollect", fblog.getFid());
+                sqlSession.commit();
+                System.out.println("取消收藏");
+                return 0;
+            } else {
+                sqlSession.insert("weibo/BlogMapper.collectBlog", blog);
+                sqlSession.commit();
+                System.out.println("收藏博客");
+            }
+
         } finally {
             sqlSession.close();
         }

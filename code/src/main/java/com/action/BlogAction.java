@@ -219,8 +219,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     @Action(value = "commitBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "resultMap"}),
-            @Result(name="error",type="json", params = {"root", "resultMap"}),
-            @Result(name="login",type="json", params = {"root", "resultMap"})
+            @Result(name = "error", type = "json", params = {"root", "resultMap"}),
+            @Result(name = "login", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String commit() {//评论微博
@@ -244,7 +244,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 System.out.print("该账户被封");
                 return LOGIN;
             }
-            if(content1==null||"".equals(content1)){
+            if (content1 == null || "".equals(content1)) {
                 // 封装响应数据
                 resultMap = PowerfulTools.format("101", "评论不能空", user);
                 System.out.print("评论为空");
@@ -338,7 +338,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     @Action(value = "forwardBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "resultMap"}),
-            @Result(name="login",type="json", params = {"root", "resultMap"})
+            @Result(name = "login", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String forwardBlog() {//转发微博
@@ -346,10 +346,11 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         SensitivewordFilter filter = new SensitivewordFilter();
 
         String content1;
-        int user_id, Commentid,bid;
+        int user_id, Commentid, bid;
         //从前端获取
         Commentid = Integer.parseInt(request.getParameter("bid"));
         content1 = request.getParameter("content");
+        if (content1 == null && "".equals(content1)) content1 = "";
         try {
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
@@ -361,12 +362,9 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 return LOGIN;
             }
             Set<String> set = filter.getSensitiveWord(content1, 1);
-            if (Commentid != 0) {
-                blog.setComment_on(Commentid);
-                blog.setComment_on(Commentid);
-            }
+            System.out.println(Commentid);
             //后台添加
-            bid=BlogDao.forwordBlog(Commentid,content1,user.getUid());
+            bid = BlogDao.forwordBlog(Commentid, content1, user.getUid());
 
             if (set.size() > 0) {
                 System.out.println("转发评论存在敏感词");
@@ -377,12 +375,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
             }
-            if(bid!=0){ // 封装响应数据
+            if (bid != 0) { // 封装响应数据
                 resultMap = PowerfulTools.format("200", "转发成功", user);
-                System.out.println(resultMap);}
-           else{
+                System.out.println(resultMap);
+            } else if (bid == 0) {
                 // 封装响应数据
-                resultMap = PowerfulTools.format("200", "不能转发自己的微博", user);
+                resultMap = PowerfulTools.format("200", "不能转发同一微博两次", user);
                 System.out.println(resultMap);
             }
         } catch (NullPointerException ne) {
@@ -485,71 +483,85 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     }
 
     @Action(value = "collectBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"}),
+            @Result(name = "login", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String collectBlog() {//收藏微博
         Favorite Favorite_blog = new Favorite();
-        Map<String, Object> resultMap;
-        int user_id, bid;
+        int user_id, bid, fid;
         //从前端获取
-        user_id = Integer.parseInt(request.getParameter("user_id"));
         bid = Integer.parseInt(request.getParameter("bid"));
-
         try {
+            //获得当前登录用户
+            User user = (User) request.getSession().getAttribute("user");
+            user_id = user.getUid();
+            if (BlogDao.checkAdmin(user_id) != 0) {
+                // 封装响应数据
+                resultMap = PowerfulTools.format("101", "该账户被封", user);
+                System.out.print("该账户被封");
+                return LOGIN;
+            }
             Favorite_blog.setUser_id(user_id);
             Favorite_blog.setBlog_id(bid);
-            BlogDao.collectBlog(Favorite_blog);
-            // 封装响应数据
-            resultMap = PowerfulTools.format("200", "收藏成功", null);
+            Favorite_blog.setTime((int) (System.currentTimeMillis() / 1000));
+            Favorite_blog.setVisibility(0);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            fid = BlogDao.collectBlog(Favorite_blog);
+            if (fid == 0) {
+                // 封装响应数据
+                resultMap = PowerfulTools.format("200", "取消收藏成功", user);
+            } else {
+                // 封装响应数据
+                resultMap = PowerfulTools.format("200", "收藏成功", user);
+            }
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
-            resultMap = PowerfulTools.format("101", "收藏失败", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            resultMap = PowerfulTools.format("101", "异常", null);
         }
         return SUCCESS;
     }
 
     @Action(value = "reportBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"}),
+            @Result(name = "login", type = "json", params = {"root", "resultMap"})
     })
     @Authority("")
     public String reportBlog() {//举报微博
         Sensitivity Sensitivity_blog = new Sensitivity();
-        Map<String, Object> resultMap;
-        String details;
-        int bid;
+        String details,type;
+        int bid,user_id;
         //从前端获取
         bid = Integer.parseInt(request.getParameter("bid"));
+        type = request.getParameter("type");
         details = request.getParameter("details");
         try {
-            if (details == null) {
-                Sensitivity_blog.setDetails("");
+            //获得当前登录用户
+            User user = (User) request.getSession().getAttribute("user");
+            user_id = user.getUid();
+            if (BlogDao.checkAdmin(user_id) != 0) {
+                // 封装响应数据
+                resultMap = PowerfulTools.format("101", "该账户被封", user);
+                System.out.print("该账户被封");
+                return LOGIN;
+            }
+            if (details == null&&"".equals(details)) {
+                Sensitivity_blog.setDetails(type);
             } else {
-                Sensitivity_blog.setDetails(details);
+                Sensitivity_blog.setDetails(type+details);
             }
             Sensitivity_blog.setBlog_id(bid);
             Sensitivity_blog.setType(0);
-
+            Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
+            Sensitivity_blog.setUser_id(user_id);
+            Sensitivity_blog.setVisibility(0);
             BlogDao.reportBlog(Sensitivity_blog);
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "举报成功", null);
-
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-
+            resultMap = PowerfulTools.format("200", "举报成功", user);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "举报失败", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
