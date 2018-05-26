@@ -11,13 +11,12 @@
         WHERE visibility = 0
     </select>
 
-    <!-- 搜索指定用户创建的话题（修改次数小于4的） -->
+    <!-- 搜索指定用户创建的话题（） -->
     <select id="selectSpecUserDiscuss" resultType="Discuss">
         SELECT *
         FROM discuss
         WHERE visibility = 0
               AND user_id = #{uid}
-              AND is_edit &lt; 4
     </select>
 
     <select id="selectDiscussById" parameterType="int" resultType="Discuss">
@@ -43,6 +42,33 @@
         LIMIT #{startNum}, #{endNum}
     </select>
 
+    <!-- 查询话题（正在使用的） -->
+    <select id="selectDiscuss" parameterType="Map" resultType="Discuss">
+        SELECT *
+        FROM discuss d,user u
+        WHERE d.user_id=u.uid
+        AND visibility = 0
+        <if test="user_id != null">AND d.user_id = #{user_id}</if>
+        <if test="key != null">AND (d.name LIKE #{key} OR d.detail LIKE #{key})</if>
+        LIMIT #{startNum}, #{endNum}
+    </select>
+
+    <!-- 查询热门话题(查询每个话题下的微博数并排序) -->
+    <select id="selectHotDiscuss" resultType="Map">
+        SELECT
+            d.*,
+            (SELECT COUNT(bd.bdid)
+             FROM blog_discuss bd
+             WHERE d.did = bd.discuss_id) AS blogNum
+        FROM
+            discuss d
+        WHERE
+            visibility = 0
+        ORDER BY
+            blogNum DESC
+        LIMIT 0, 5
+    </select>
+
     <!-- 判断指定话题是否是当前用户建立的 -->
     <select id="judgeUserDiscuss" parameterType="Map" resultType="Map">
         SELECT *
@@ -52,7 +78,9 @@
     </select>
 
     <select id="selectBlogInDiscuss" parameterType="Map" resultType="Map">
-        SELECT *
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM blog_discuss d
         LEFT JOIN blog b
         ON d.blog_id = b.bid

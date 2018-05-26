@@ -67,6 +67,28 @@ public class DiscussDao {
         return discussList;
     }
 
+    public static List<Discuss> selectDiscuss(Map map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Discuss> discussList;
+        try {
+            discussList = sqlSession.selectList("weibo/DiscussMapper.selectDiscuss", map);
+        } finally {
+            sqlSession.close();
+        }
+        return discussList;
+    }
+
+    public static List<Map> selectHotDiscuss() {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> discussList;
+        try {
+            discussList = sqlSession.selectList("weibo/DiscussMapper.selectHotDiscuss");
+        } finally {
+            sqlSession.close();
+        }
+        return discussList;
+    }
+
     public static List<Map> selectBlogInDiscuss(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> BlogList;

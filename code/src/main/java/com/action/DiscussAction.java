@@ -14,12 +14,9 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.opensymphony.xwork2.Action.SUCCESS;
 
 /**
  * Created by Amadeus on 2018/4/12.
@@ -37,10 +34,9 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     Map<String, Object> resultMap;
 
     @Action(value = "selectAllDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String selectAllDiscuss() {
-        Map<String, Object> resultMap;
         try {
             // 调用Dao层 获取数据
             List<Discuss> discussList = DiscussDao.selectAllDiscuss();
@@ -48,15 +44,9 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", discussList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
@@ -115,57 +105,79 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     }
 
     @Action(value = "searchDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String searchDiscuss() {
-        String keyword, page, pageCap;
-        Map<String, Object> resultMap;
-        String key;
+        String key, page, pageCap, flag;
+        Map<String, Object> map = new HashMap<>();
         try {
-            key = request.getParameter("keyword");
-            key = '%' + key + '%';
-            Map<String, Object> map = new HashMap<>();
+            // 获取参数
+            //key
+            key = request.getParameter("key");
+            if (key != null) key = '%' + key + '%';
+
+            //分页参数
             page = request.getParameter("page");
             pageCap = request.getParameter("pageCap");
-            map.put("key", key);
-
             // 计算分页 开始项和结束项
             if (null == page || "".equals(page)) page = "1";
+            if (null == pageCap || "".equals(pageCap)) pageCap = "10";
             int pageN = Integer.parseInt(page);
             int pageC = Integer.parseInt(pageCap);
-
             int startNum = (pageN - 1) * pageC;
             int endNum = pageN * pageC;
+
+            //场景标识，判断是话题中心还是我的话题（0：话题中心，1：我的话题）
+            flag = request.getParameter("discuss_page");
+            if (null != flag && flag.equals("1")) {
+                //获得当前登录用户id
+                User user = (User) request.getSession().getAttribute("user");
+                int userId = user.getUid();
+                map.put("user_id", userId);
+            }
+
+            map.put("key", key);
             map.put("startNum", startNum);
             map.put("endNum", endNum);
-            List<Discuss> discussList = DiscussDao.selectDiscussLike(map);
-            resultMap = PowerfulTools.format("200", "成功", discussList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            List<Discuss> discussList = DiscussDao.selectDiscuss(map);
+            resultMap = PowerfulTools.format("200", "成功", discussList);
 
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "selectHotDiscuss", results = {
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
+    })
+    public String selectHotDiscuss() {
+        try {
+            List<Map> discussList = DiscussDao.selectHotDiscuss();
+            resultMap = PowerfulTools.format("200", "成功", discussList);
+
+        } catch (Exception ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
         }
         return SUCCESS;
     }
 
     @Action(value = "getBlogInDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String getBlogInDiscuss() {
         String key, did, page, pageCap;
         Map<String, Object> map = new HashMap<>();
-        Map<String, Object> resultMap;
         try {
             // 获得参数
             key = request.getParameter("keyword");
             if (key != null) key = '%' + key + '%';
             did = request.getParameter("did");
+
+            if (did == null || "".equals(did)) throw new Exception("参数异常");
 
             page = request.getParameter("page");
             pageCap = request.getParameter("pageCap");
@@ -192,15 +204,10 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
 
-        } catch (NullPointerException ne) {
+        } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
@@ -224,6 +231,9 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             // 获得参数
             name = request.getParameter("name");
             detail = request.getParameter("detail");
+
+            if (name == null || "".equals(name) || detail == null || "".equals(detail)) throw new Exception("参数错误");
+
             // 时间戳参数
             st_str = request.getParameter("start_time");
             if (st_str == null || "".equals(st_str)) start_time = (int) (System.currentTimeMillis() / 1000);
@@ -242,7 +252,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
                 throw new Exception("插入失败");
             }
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "成功");
+            resultMap = PowerfulTools.format("200", "发布成功", null);
 
         } catch (Exception ne) {
             ne.printStackTrace();
@@ -277,14 +287,16 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             int userId = user.getUid();
             int is_ban = user.getIs_ban();
 
+            if (discuss == null || discuss.getDid() == null) throw new Exception("参数错误");
+
             discuss.setUser_id(userId);
             System.out.println(discuss.toString());
 
             // 如果用户被封，或者用户不是指定话题的创建者则修改失败
             if (is_ban != 0 || DiscussDao.updateDiscuss(userId, discuss) == 0) {
-                //throw new Exception("插入失败");
+                throw new Exception("插入失败");
             }
-            resultMap = PowerfulTools.format("200", "成功");
+            resultMap = PowerfulTools.format("200", "成功", null);
 
         } catch (Exception ne) {
             ne.printStackTrace();
