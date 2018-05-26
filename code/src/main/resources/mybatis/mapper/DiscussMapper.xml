@@ -11,13 +11,12 @@
         WHERE visibility = 0
     </select>
 
-    <!-- 搜索指定用户创建的话题（修改次数小于4的） -->
+    <!-- 搜索指定用户创建的话题（） -->
     <select id="selectSpecUserDiscuss" resultType="Discuss">
         SELECT *
         FROM discuss
         WHERE visibility = 0
               AND user_id = #{uid}
-              AND is_edit &lt; 4
     </select>
 
     <select id="selectDiscussById" parameterType="int" resultType="Discuss">

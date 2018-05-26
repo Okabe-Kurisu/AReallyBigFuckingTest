@@ -14,12 +14,9 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.opensymphony.xwork2.Action.SUCCESS;
 
 /**
  * Created by Amadeus on 2018/4/12.
@@ -37,10 +34,9 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     Map<String, Object> resultMap;
 
     @Action(value = "selectAllDiscuss", results = {
-            @Result(name = "success", type = "json", params = {"root", "message"})
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
     public String selectAllDiscuss() {
-        Map<String, Object> resultMap;
         try {
             // 调用Dao层 获取数据
             List<Discuss> discussList = DiscussDao.selectAllDiscuss();
@@ -48,15 +44,9 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", discussList);
 
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         }
         return SUCCESS;
     }
@@ -282,7 +272,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
             // 如果用户被封，或者用户不是指定话题的创建者则修改失败
             if (is_ban != 0 || DiscussDao.updateDiscuss(userId, discuss) == 0) {
-                //throw new Exception("插入失败");
+                throw new Exception("插入失败");
             }
             resultMap = PowerfulTools.format("200", "成功");
 
