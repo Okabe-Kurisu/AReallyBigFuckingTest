@@ -451,7 +451,11 @@ $(function() {
     $(".send").click(function(argument) {
         param = {
             content: $("#blog-content").val(),
-            multimedia: sessionStorage.img
+            multimedia: ""
+        }
+        if (typeof(sessionStorage.img) != "undefined") {
+            param.multimedia = sessionStorage.img;
+            sessionStorage.removeItem("img");
         }
         $.ajax({
             url: "/blog/submitBlog",
@@ -531,7 +535,7 @@ $(function() {
             "</button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
             "</div>\n" +
             "</div>"
-        $(".blogs").append(res);
+        $(".blogs").after(res);
     }
 
 
