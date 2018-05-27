@@ -80,7 +80,8 @@ $(function () {
     });
 
     // 结束话题点击事件
-    $(".discuss-list").on("click", ".end-discuss", function () {
+    $(".discuss-list").on("click", ".end-discuss", function (event) {
+        event.stopPropagation();
         var did = $(this).attr("did");
         // 含文本、标题确认按钮和取消按钮回调
         mdui.confirm('您确认结束话题吗', '结束话题',
@@ -121,7 +122,8 @@ $(function () {
     });
 
     // 修改话题点击事件(显示修改话题dialog)
-    $(".discuss-list").on("click", ".change-discuss", function () {
+    $(".discuss-list").on("click", ".change-discuss", function (event) {
+        event.stopPropagation();
         // 显示dialog
         var dDialog = $(".changeDiscuss-dialog");
         changeDiscuss_inst = new mdui.Dialog(dDialog, overlay = true);
