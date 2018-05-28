@@ -162,7 +162,7 @@ $(function() {
                 console.log("加载博客数据")
                 if (data.code == 200 && data.data != null) {
                     var blogs = data.data;
-                    saveToSql(blogs, db, reason=reason);
+                    saveToSql(blogs, db, reason = reason);
                 }
                 console.log("博客数据加载完成")
 
@@ -194,13 +194,14 @@ $(function() {
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
-                for (x in datas) {
-                    insertBlog(datas[x]);
-                    tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
-                    if (x == (len - 1)){
-                        break;
+                if (len != 0)
+                    for (x in datas) {
+                        insertBlog(datas[x]);
+                        tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                        if (x == (len - 1)) {
+                            break;
+                        }
                     }
-                }
                 insertForword();
                 bindDevInfoBtn();
                 mdui.mutation();
@@ -650,7 +651,8 @@ $(function() {
     //开发者信息按钮的代码绑定。因为该内容会动态生成很多次，所以写成方法
     function bindDevInfoBtn() {
         $(".dev-info-btn").off("click");
-        $(".dev-info-btn").on("click",devInfoBtn);
+        $(".dev-info-btn").on("click", devInfoBtn);
+
         function devInfoBtn() {
             var devInfo = $(this).parent().prev();
             if (devInfo.css("display") == 'none') {
