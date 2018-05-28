@@ -132,6 +132,18 @@ public class DiscussDao {
         return discuss.getDid();
     }
 
+    // 查找用户所关注话题地全部微博
+    public static List<Map> selectFollowDisBlog(List<String> dids) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> BlogList;
+        try {
+            BlogList = sqlSession.selectList("weibo/DiscussMapper.selectFollowDisBlog", dids);
+        } finally {
+            sqlSession.close();
+        }
+        return BlogList;
+    }
+
     // 判断指定话题是否是当前用户建立的
     public static boolean judgeUserDiscuss(int userId, int discussId) {
         List<Discuss> discussList;
@@ -153,5 +165,4 @@ public class DiscussDao {
         }
         return result;
     }
-
 }

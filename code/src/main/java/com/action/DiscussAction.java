@@ -31,6 +31,8 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
     private String message;
 
+    private List<String> dids;
+
     Map<String, Object> resultMap;
 
     @Action(value = "selectAllDiscuss", results = {
@@ -156,6 +158,24 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     public String selectHotDiscuss() {
         try {
             List<Map> discussList = DiscussDao.selectHotDiscuss();
+            resultMap = PowerfulTools.format("200", "成功", discussList);
+
+        } catch (Exception ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getFollowDisBlog", results = {
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
+    })
+    @Authority("")
+    public String getFollowDisBlog() {
+        try {
+            System.out.println(dids);
+            if (dids == null || dids.size() < 1) throw new Exception("参数错误");
+            List<Map> discussList = DiscussDao.selectFollowDisBlog(dids);
             resultMap = PowerfulTools.format("200", "成功", discussList);
 
         } catch (Exception ne) {
@@ -340,5 +360,13 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
     public void setResultMap(Map<String, Object> resultMap) {
         this.resultMap = resultMap;
+    }
+
+    public List<String> getDids() {
+        return dids;
+    }
+
+    public void setDids(List<String> dids) {
+        this.dids = dids;
     }
 }

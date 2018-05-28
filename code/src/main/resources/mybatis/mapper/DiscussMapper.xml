@@ -77,6 +77,22 @@
               AND user_id = #{userid}
     </select>
 
+    <!-- 查找用户所关注话题的全部微博 -->
+    <select id="selectFollowDisBlog" parameterType="Map" resultType="Map">
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM blog_discuss d
+        LEFT JOIN blog b
+        ON d.blog_id = b.bid
+        JOIN user u
+        ON b.user_id = u.uid
+        WHERE d.discuss_id IN #{dids}
+        AND b.type = 0
+        GROUP BY d.blog_id
+        LIMIT 1,10
+    </select>
+
     <select id="selectBlogInDiscuss" parameterType="Map" resultType="Map">
         SELECT *,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
