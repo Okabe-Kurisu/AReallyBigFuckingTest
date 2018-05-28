@@ -21,18 +21,26 @@ import java.util.concurrent.TimeUnit;
  */
 public class DataTool {
     private Map<String, Integer> hotspot = new HashMap<String, Integer>();
+
     public static enum Type {
         HotSPot("/data/hotspot.txt");
         String path;
-        Type(String path) {this.path = path;}
-        public String getPath() {return path;}
+
+        Type(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
     }
+
     //热词部分
-    public List<String> getHotWords(){
+    public List<String> getHotWords() {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<String> hotWords = null;
-        int date = (int) System.currentTimeMillis()/1000;
-        date -= 7*24*3600;
+        int date = (int) System.currentTimeMillis() / 1000;
+        date -= 7 * 24 * 3600;
         try {
             hotWords = sqlSession.selectList("weibo/SearchLogMapper.selectSearchLog", date);
         } finally {
@@ -43,33 +51,35 @@ public class DataTool {
 
     //    對得到的搜索记录进行分词，并且放入map中,统计出现次数
     public void seg(String text) {
-        for(Term term : NlpAnalysis.parse(text)){
+        for (Term term : NlpAnalysis.parse(text)) {
             String rst = term.getName();
-            if (hotspot.containsKey(rst)){
+            if (hotspot.containsKey(rst)) {
                 hotspot.put(rst, hotspot.get(rst) + 1);
-            }else {
+            } else {
                 hotspot.put(rst, 1);
             }
         }
     }
 
 
-
     public void initHotSpot() {//每隔一分钟查询一次数据
         Runnable runnable = new Runnable() {
             public void run() {
+                System.out.println("热词获取程序启动");
                 List<String> words = getHotWords();
                 List<String> temp = new ArrayList<>();
                 String word = StringUtils.join(words.toArray(), "");
                 seg(word);
                 hotspot = MapSorter.sortMapByValue(hotspot);//map排序起
                 int i = 0;
-                for(String key : hotspot.keySet()){
-                    if (i==5) break;
+                for (String key : hotspot.keySet()) {
+                    if (i == 5) break;
                     temp.add(key);
                     i++;
+                    System.out.println(key);
                 }
-                saveRtn(temp,Type.HotSPot.getPath());
+                saveRtn(temp, Type.HotSPot.getPath());
+                System.out.println("热词获取程序执行结束");
             }
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
@@ -84,16 +94,16 @@ public class DataTool {
         System.out.println("权重分析开始");
         Map<String, Object> map = new HashMap();
         List<Map> userList = UserDao.getAllUser();
-        for(Map user: userList){
+        for (Map user : userList) {
             int weight = 0;
-            weight += Integer.valueOf(user.get("follerNum").toString())/5
-                    + Integer.valueOf(user.get("likeNum").toString())/10
-                    + Integer.valueOf(user.get("forwardNum").toString())/5;
-            int nowdate = (int) System.currentTimeMillis()/1000;
-            int leftDays = ((int) user.get("last_logtime") - nowdate)/3600;
+            weight += Integer.valueOf(user.get("follerNum").toString()) / 5
+                    + Integer.valueOf(user.get("likeNum").toString()) / 10
+                    + Integer.valueOf(user.get("forwardNum").toString()) / 5;
+            int nowdate = (int) System.currentTimeMillis() / 1000;
+            int leftDays = ((int) user.get("last_logtime") - nowdate) / 3600;
             weight -= leftDays * 5;
             user.put("weight", weight);
-            if (weight != (int) user.get("weight")){
+            if (weight != (int) user.get("weight")) {
                 System.out.println("用户:" + user.get("nickname") + "的权重更新为" + weight);
             }
             UserDao.setWeight(user);
@@ -120,25 +130,32 @@ public class DataTool {
         List<String> temp = new ArrayList();
         //只提取名词
         Set<String> expectedNature = new HashSet<String>() {{
-            add("n");add("vn");add("ng");add("q");add("wh");
-            add("nt");add("nz");add("nw");add("nl");
+            add("n");
+            add("vn");
+            add("ng");
+            add("q");
+            add("wh");
+            add("nt");
+            add("nz");
+            add("nw");
+            add("nl");
         }};
-        for (Map map: contents){
+        for (Map map : contents) {
             String text = map.get("content").toString();
-            for(Term term : NlpAnalysis.parse(text)){
-                if (expectedNature.contains(term.getNatureStr()) )
+            for (Term term : NlpAnalysis.parse(text)) {
+                if (expectedNature.contains(term.getNatureStr()))
                     continue;
                 String rst = term.getName();
                 int weight = (int) map.get("weight");
-                if (userkey.containsKey(rst)){
+                if (userkey.containsKey(rst)) {
                     userkey.put(rst, userkey.get(rst) + weight);
-                }else {
+                } else {
                     userkey.put(rst, weight);
                 }
             }
         }
         userkey = MapSorter.sortMapByValue(userkey);//map排序起
-        for (String key: userkey.keySet()){
+        for (String key : userkey.keySet()) {
             if (temp.size() > 10)
                 break;
             temp.add(key);
@@ -148,13 +165,13 @@ public class DataTool {
 
 
     //工具方法
-    public void saveRtn(List<String> temp, String filename){
+    public void saveRtn(List<String> temp, String filename) {
         BufferedWriter bw = null;
         try {
             String encoding = "UTF-8";
             File file = new File(new URI(DataTool.class.getResource(filename).toString()));
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), encoding));
-            for(int i=0;i<temp.size();i++){
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), encoding));
+            for (int i = 0; i < temp.size(); i++) {
                 bw.write(temp.get(i));
                 bw.newLine();
             }
@@ -167,26 +184,26 @@ public class DataTool {
         }
     }
 
-    public static List<String> loadRtn(String filename){
+    public static List<String> loadRtn(String filename) {
         List<String> list = new ArrayList<String>();
         try {
 
-            String encoding="UTF-8";
+            String encoding = "UTF-8";
             File file = new File(new URI(DataTool.class.getResource(filename).toString()));
             //判断文件是否存在
-            if(file.isFile() && file.exists()){
+            if (file.isFile() && file.exists()) {
                 //考虑到编码格式
-                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file), encoding);
                 BufferedReader bufferedReader = new BufferedReader(read);
                 String lineTxt = null;
                 //记录读取的数据文件的行数
                 int count = 0;
-                while((lineTxt = bufferedReader.readLine()) != null){
+                while ((lineTxt = bufferedReader.readLine()) != null) {
                     list.add(lineTxt);
-                    count ++;
+                    count++;
                 }
                 read.close();
-            }else{
+            } else {
                 System.out.println("找不到指定的文件");
             }
         } catch (Exception e) {

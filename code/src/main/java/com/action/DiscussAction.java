@@ -177,6 +177,8 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             if (key != null) key = '%' + key + '%';
             did = request.getParameter("did");
 
+            if (did == null || "".equals(did)) throw new Exception("参数异常");
+
             page = request.getParameter("page");
             pageCap = request.getParameter("pageCap");
 
@@ -203,7 +205,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             resultMap = PowerfulTools.format("200", "成功", blogList);
 
 
-        } catch (NullPointerException ne) {
+        } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
         }
@@ -229,6 +231,9 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             // 获得参数
             name = request.getParameter("name");
             detail = request.getParameter("detail");
+
+            if (name == null || "".equals(name) || detail == null || "".equals(detail)) throw new Exception("参数错误");
+
             // 时间戳参数
             st_str = request.getParameter("start_time");
             if (st_str == null || "".equals(st_str)) start_time = (int) (System.currentTimeMillis() / 1000);
@@ -247,7 +252,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
                 throw new Exception("插入失败");
             }
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "成功");
+            resultMap = PowerfulTools.format("200", "发布成功", null);
 
         } catch (Exception ne) {
             ne.printStackTrace();
@@ -282,6 +287,8 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             int userId = user.getUid();
             int is_ban = user.getIs_ban();
 
+            if (discuss == null || discuss.getDid() == null) throw new Exception("参数错误");
+
             discuss.setUser_id(userId);
             System.out.println(discuss.toString());
 
@@ -289,7 +296,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             if (is_ban != 0 || DiscussDao.updateDiscuss(userId, discuss) == 0) {
                 throw new Exception("插入失败");
             }
-            resultMap = PowerfulTools.format("200", "成功");
+            resultMap = PowerfulTools.format("200", "成功", null);
 
         } catch (Exception ne) {
             ne.printStackTrace();
