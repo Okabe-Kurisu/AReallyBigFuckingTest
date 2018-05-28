@@ -241,6 +241,7 @@ public class UserDao {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
             sqlSession.insert("weibo/BlogMapper.atUser",user);
+            sqlSession.commit();
         } finally {
             sqlSession.close();
         }
@@ -251,7 +252,9 @@ public class UserDao {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
             sqlSession.insert("weibo/UserMapper.setWeight",map);
-        } finally {
+            sqlSession.commit();
+        }
+        finally {
             sqlSession.close();
         }
     }
