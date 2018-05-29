@@ -45,7 +45,7 @@
              WHERE tu.blog_id = b.bid)                 AS likeNum
         FROM blog AS b
         JOIN user AS u
-        ON u.uid = b.user_id
+        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
         WHERE #{release_time} &lt;= b.release_time AND
               type IN (0,1) AND
               visibility=0
@@ -59,26 +59,32 @@
 
     <!-- 搜索关注者的微博 -->
     <select id="getFollowBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT *
-        FROM blog
-        LEFT JOIN follow
-        ON follow.followed_id=blog.user_id
-        WHERE follow.user_id=#{userid}
-        AND blog.type=0
-        AND blog.visibility=0
+        SELECT DISTINCT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM blog AS b
+        JOIN user AS u
+        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
+        LEFT JOIN follow AS f
+        ON f.followed_id=b.user_id AND (f.type &lt; 3)
+        WHERE f.user_id=#{userid}
+        AND b.type=0
+        AND b.visibility=0
+        group by b.bid
     </select>
 
     <!-- 得到今日热点微博 -->
     <select id="getTodayHostBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT u.*,b.*,
+        SELECT *,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
-        FROM user u,blog b
-        WHERE u.uid=b.user_id
-        AND b.type=0
+        FROM blog as b
+        JOIN user as u
+        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
+        WHERE
+        b.type=0
         AND b.visibility=0
-        AND FROM_UNIXTIME(b.release_time, '%Y-%c-%d')=DATE_FORMAT(NOW(),'%Y-%c-%d')
-        AND b.release_time &lt; UNIX_TIMESTAMP(NOW())
+        AND b.release_time > #{nowtime}
     </select>
 
     <!-- 得到指定用户微博 -->
@@ -88,7 +94,7 @@
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM blog AS b
         JOIN user AS u
-        ON u.uid = b.user_id
+        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
         WHERE u.uid=#{uid}
         AND b.type &lt;= 1
         AND (visibility=0 OR visibility=1)
@@ -117,7 +123,7 @@
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM blog AS b
         JOIN user AS u
-        ON u.uid = b.user_id
+        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
         WHERE b.bid = #{bid}
     </select>
 
