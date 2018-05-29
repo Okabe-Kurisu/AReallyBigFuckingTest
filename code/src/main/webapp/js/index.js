@@ -36,10 +36,12 @@ $(function() {
         //不应该显示的标签
         $(".userinfo").hide();
         $(".index").hide();
+        $(".send-card").hide();
         // 如果是特殊类型的访问
         if (typeof(method) == "undefined") {
             // 主页
             $(".index").show();
+            $(".send-card").show();
             params = {
                 time: Math.round(new Date().getTime() / 1000),
             }
@@ -56,9 +58,8 @@ $(function() {
                 setFanCard(uid);
                 $(".userinfo").show();
                 var meid = 0;
-                if (typeof(sessionStorage.me) != "undefined") {
-                    var me = JSON.parse(sessionStorage.me);
-                    meid = me.uid
+                if (typeof(sessionStorage.uid) != "undefined") {
+                    meid = sessionStorage.uid
                 }
                 //如果这不是用户的主页，则显示关注按钮
                 if (uid == meid) {
@@ -68,13 +69,13 @@ $(function() {
             }
             if (method == "search") {
                 // 搜索页面
+                $(".index").show();
                 params = {
                     keyword: sessionStorage.keyword,
                     uid: 0,
                 };
-                if (typeof(sessionStorage.me) != "undefined") {
-                    var me = JSON.parse(sessionStorage.me);
-                    params.uid = me.uid;
+                if (typeof(sessionStorage.uid) != "undefined") {
+                    meid = sessionStorage.uid
                 }
                 getBlog(2, params);
             }
@@ -194,20 +195,29 @@ $(function() {
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
-                if (len != 0)
+                if (len != 0) {
                     for (x in datas) {
                         insertBlog(datas[x]);
                         tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
-                        if (x == (len - 1)) {
+                        if (x == (len - 1))
                             break;
-                        }
                     }
+                } else {
+                    insertNone();
+                }
                 insertForword();
-                bindDevInfoBtn();
+                initCard();
                 mdui.mutation();
                 console.log("生成博客html完成");
             }, null);
         })
+    }
+
+    function insertNone() {
+        var res = "<div class=\"mdui-card mdui-color-red mdui-text-color-white mdui-m-t-5\">" +
+            "<div class=\"mdui-card-content\">这里空空如也</div>" +
+            "</div>";
+        $(".blogs").html(res);
     }
 
     // 得到用户信息
@@ -226,6 +236,7 @@ $(function() {
             $(".send-card").hide();
         } else { //已登录
             var me = JSON.parse(sessionStorage.me);
+            sessionStorage.uid = me.uid;
             $(".login-btn").hide();
             $(".userpanel-avatar").attr("src", me.avatar);
             $(".userpanel-nickname").html(me.nickname);
@@ -305,8 +316,7 @@ $(function() {
             success: function(data) {
                 mdui.snackbar("退出成功");
                 sessionStorage.removeItem("me")
-                var db = openDatabase('weibo', "1.0", 'Test DB', 2 * 1024 * 1024)
-                db.transaction(function(tx) {
+                weiboDB.transaction(function(tx) {
                     tx.executeSql('DROP TABLE IF EXISTS follow');
                     tx.executeSql('DROP TABLE IF EXISTS callat');
                     tx.executeSql('DROP TABLE IF EXISTS favarite');
@@ -321,134 +331,6 @@ $(function() {
     })
 
     $(".back-up").on("click", smoothscroll);
-
-    $(".thumb_up").click(function thumb_up(argument) { //点赞博客
-        var bid = $(this).parents(".blog-card").attr("bid");
-        param = {
-            bid: bid
-        }
-        console.log("bid" + bid)
-        $.ajax({
-            url: "/blog/thumbUp",
-            type: "POST",
-            data: param,
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                var num = $(this).parents(".blog-card").val()
-                $(this).parents(".blog-card").val(num + 1)
-            }
-        })
-        $(this).toggleClass("mdui-text-color-theme");
-        $(this).toggleClass("mdui-text-color-pink");
-
-    })
-
-    $(".commit-send").click(function commit(argument) {
-        var bid = $(this).parents(".blog-card").attr("bid");
-        var content = $(this).parents(".mdui-list-item-content").find("input").val();
-        console.log(bid);
-        param = {
-            bid: bid,
-            content: content
-        }
-        $.ajax({
-            url: "/blog/commitBlog",
-            type: "POST",
-            data: param,
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                mdui.snackbar(data.msg);
-            },
-            error: function(data) {
-                console.log(data);
-                mdui.snackbar(data.msg);
-            }
-        })
-    })
-
-
-    $(".forward-send").click(function forwardSend(argument) { //转发微博
-        var bid = $(this).parents(".blog-card").attr("bid");
-        var content = $(this).parents(".mdui-list-item-content").find("input").val();
-        console.log(bid, content);
-        param = {
-            bid: bid,
-            content: content
-        }
-        $.ajax({
-            url: "/blog/forwardBlog",
-            type: "POST",
-            data: param,
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                mdui.snackbar("转发成功");
-            },
-            error: function(data) {
-                console.log(data);
-                mdui.snackbar("转发失败");
-            }
-        })
-
-    })
-
-    $(".favorite").click(function favorite(argument) {
-        var fImg = $(this).children("i");
-        if (fImg.html() == "folder_open") {
-            fImg.html("folder");
-            var bid = $(this).parents(".blog-card").attr("bid");
-            console.log(bid);
-            param = {
-                bid: bid
-            }
-            $.ajax({
-                url: "/blog/collectBlog",
-                type: "POST",
-                data: param,
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                dataType: "json",
-                success: function(data) {
-                    console.log(data);
-                    mdui.snackbar("收藏");
-                    mdui.snackbar(data.msg);
-                },
-                error: function(data) {
-                    console.log(data);
-                    mdui.snackbar("转发失败");
-                }
-            })
-        } else {
-            fImg.html("folder_open");
-            var bid = $(this).parents(".blog-card").attr("bid");
-            console.log(bid);
-            param = {
-                bid: bid
-            }
-            $.ajax({
-                url: "/blog/collectBlog",
-                type: "POST",
-                data: param,
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                dataType: "json",
-                success: function(data) {
-                    console.log(data);
-                    mdui.snackbar("取消收藏");
-                    mdui.snackbar(data.msg);
-
-                },
-                error: function(data) {
-                    console.log(data);
-                    mdui.snackbar("取消收藏失败");
-                }
-            })
-
-        }
-    })
 
     //召唤用户数据统计
     $(".usertag-btn").on("click", function(argument) {
@@ -481,7 +363,6 @@ $(function() {
             var bid = $(this).parents().find(".blog-card").attr("bid");
             var type = $(this).parents(".report-dialog").find(".report-type").find("option:selected").text();
             var details = $(this).parents(".report-dialog").find("textarea").val();
-            console.log(type);
             param = {
                 bid: bid,
                 type: type,
@@ -494,12 +375,10 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
-                    console.log(data);
                     mdui.snackbar(data.msg);
 
                 },
                 error: function(data) {
-                    console.log(data);
                     mdui.snackbar("举报失败");
                 }
             })
@@ -553,7 +432,6 @@ $(function() {
         var v = $("#blog-content").val();
         $("#blog-content").val(v + " @" + username + " ");
         ataDialog_inst.close();
-        console.log(uid)
     })
 
     // 发布微博数据
@@ -600,10 +478,13 @@ $(function() {
             "<div class=\"blog-head-menu\">\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal dev-info-btn\" mdui-tooltip=\"{content: \'开发信息\', delay: 100}\">\n" +
             "<i class=\"mdui-icon material-icons\">arrow_drop_up</i>\n" +
-            "</button>\n" +
-            "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-del-btn\">删除</button>\n" +
-            "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-edit-btn\">编辑</button>\n" +
-            "</div>\n" +
+            "</button>\n";
+        if (typeof(sessionStorage.uid) != "undefined" && parseInt(sessionStorage.uid) == parseInt(data.uid)) {
+            res += "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-del-btn\">删除</button>\n" +
+                "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-edit-btn\">编辑</button>\n";
+        }
+
+        res += "</div>\n" +
             "<div class=\"mdui-card-header\">\n" +
             "<a href=\"./?method=userinfo&uid=" + data.userid + "\"><img class=\"mdui-card-header-avatar\" src=\"" + data.avatar + "\"/></a>\n" +
             "<div class=\"mdui-card-header-title\">" + data.nickname + "</div>\n" +
@@ -616,18 +497,18 @@ $(function() {
         // 如果blog中包含图片
         if (data.multimedia != null) {
             res += "<div class=\"mdui-card-media\">\n" +
-                "<img src=\"" + data.multimedia + "\"/>\n" +
+                "<img class=\"blog-media\" src=\"" + data.multimedia + "\"/>\n" +
                 "</div>\n";
         }
         // 如果blog中包含转发内容
         if (data.type == 1) {
-            res += "<div class=\"mdui-card-content\">" + data.content + //转发博客的主体内容
+            res += "<div class=\"mdui-card-content\" content=\"" + data.content + "\">" + data.content + //转发博客的主体内容
                 "<!-- 被转发微博在下面， 相当于是在本身微博的最后加上一个新的微博卡片 -->"
             //先显示正在加载，然后在每次生成微博后绑定上真正的转发内容加载方法,待加载bid获取方法为$(".waitload").attr("bid")
             "<div class=\"mdui-spinner mdui-spinner-colorful waitload\" bid=\"" + data.commentOn + "\"></div>"
             "</div>\n"
         } else {
-            res += "<div class=\"mdui-card-content\">" + data.content + "</div>\n"
+            res += "<div class=\"mdui-card-content\" content=\"" + data.content + "\">" + data.content + "</div>\n"
         }
         res += "<div class=\"mdui-card-actions\">\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\" likeNum=\"" + data.likeNum + "\"><i\n" +
@@ -649,9 +530,183 @@ $(function() {
 
 
     //开发者信息按钮的代码绑定。因为该内容会动态生成很多次，所以写成方法
-    function bindDevInfoBtn() {
+    function initCard() {
         $(".dev-info-btn").off("click");
         $(".dev-info-btn").on("click", devInfoBtn);
+        $(".thumb_up").off("click");
+        $(".thumb_up").on("click", thumb_up);
+        $(".commit-send").off("click");
+        $(".commit-send").on("click", commit);
+        $(".favorite").off("click");
+        $(".favorite").on("click", favorite);
+        $(".blog-del-btn").off("click");
+        $(".blog-del-btn").on("click", blogDel);
+        $(".blog-edit-btn").off("click");
+        $(".blog-edit-btn").on("click", blogEdit);
+        $(".blog-edit-btn").off("click");
+        $(".blog-edit-btn").on("click", blogEdit);
+        $(".commit-toggle").off("click");
+        $(".commit-toggle").on("click", commitToggle);
+
+
+        function commitToggle(argument) {
+            var commitPanel = $(this).parent().next();
+            closePanel();
+            var inst = new mdui.Collapse(commitPanel, accordion = true);
+            inst.toggle(".commit")
+        }
+
+        function blogDel(argument) {
+            var thisCard = $(this).parents(".blog-card");
+            var bid = thisCard.attr("bid");
+            param = {
+                bid: bid
+            }
+            $.ajax({
+                url: "/blog/delBlog",
+                type: "POST",
+                data: param,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    mdui.snackbar("删除成功");
+                    thisCard.hide();
+                }
+            })
+        }
+
+        function blogEdit(argument) {
+            var thisCard = $(this).parents(".blog-card");
+            var bid = thisCard.attr("bid");
+            var content = thisCard.children(".mdui-card-content").attr("content");
+            var img = "";
+            $(".blog-edit-delimg").hide();
+            if (thisCard.children(".blog-media").length > 0) {
+                img = thisCard.children(".blog-media").attr("src");
+                $(".blog-edit-delimg").show();
+                $(".blog-edit-image").attr("src", img)
+            }
+            $(".blog-edit-input").val(content);
+            $(".blog-edit-content").attr("bid", bid);
+            var beDialog = $(".blog-edit-dialog");
+            var inst = new mdui.Dialog(beDialog, overlay = true);
+            inst.open();
+
+            $(".blog-edit-delimg").off("click");
+            $(".blog-edit-delimg").click(function (argument) {
+                $(".blog-edit-image").attr("src", "");
+                inst.close();
+            })
+
+            $(".blog-edit-cancel").off("click");
+            $(".blog-edit-cancel").click(function (argument) {
+                $(".blog-edit-image").attr("src", "");
+                $(".blog-edit-input").val();
+                $(".blog-edit-content").attr("bid", "");
+                inst.close();
+            })
+
+            $(".blog-edit-send").off("click");
+            $(".blog-edit-send").click(function (argument) {
+                params = {
+                    bid: $(".blog-edit-content").attr("bid"),
+                    multimedia: $(".blog-edit-image").attr("src"),
+                    content: $(".blog-edit-content").val(),
+                }
+                if (params.content == "") {
+                    mdui.snackbar("不可修改为空");
+                    inst.close();
+                }
+                //todo： 记得上传修改
+            })
+        }
+
+        function thumb_up(argument) { //点赞博客
+            var bid = $(this).parents(".blog-card").attr("bid");
+            param = {
+                bid: bid
+            }
+            $.ajax({
+                url: "/blog/thumbUp",
+                type: "POST",
+                data: param,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    var num = $(this).parents(".blog-card").val()
+                    $(this).parents(".blog-card").val(num + 1)
+                }
+            })
+            $(this).toggleClass("mdui-text-color-theme");
+            $(this).toggleClass("mdui-text-color-pink");
+
+        }
+
+        function commit(argument) {
+            var bid = $(this).parents(".blog-card").attr("bid");
+            var content = $(this).parents(".mdui-list-item-content").find("input").val();
+            param = {
+                bid: bid,
+                content: content
+            }
+            $.ajax({
+                url: "/blog/commitBlog",
+                type: "POST",
+                data: param,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    mdui.snackbar(data.msg);
+                },
+                error: function(data) {
+                    mdui.snackbar(data.msg);
+                }
+            })
+        }
+
+        function favorite(argument) {
+            var fImg = $(this).children("i");
+            if (fImg.html() == "folder_open") {
+                fImg.html("folder");
+                var bid = $(this).parents(".blog-card").attr("bid");
+                param = {
+                    bid: bid
+                }
+                $.ajax({
+                    url: "/blog/collectBlog",
+                    type: "POST",
+                    data: param,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
+                        mdui.snackbar("收藏");
+                        mdui.snackbar(data.msg);
+                    }
+                })
+            } else {
+                fImg.html("folder_open");
+                var bid = $(this).parents(".blog-card").attr("bid");
+                param = {
+                    bid: bid
+                }
+                $.ajax({
+                    url: "/blog/collectBlog",
+                    type: "POST",
+                    data: param,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
+                        mdui.snackbar("取消收藏");
+                        mdui.snackbar(data.msg);
+
+                    },
+                    error: function(data) {
+                        mdui.snackbar("取消收藏失败");
+                    }
+                })
+
+            }
+        }
 
         function devInfoBtn() {
             var devInfo = $(this).parent().prev();
@@ -720,13 +775,6 @@ $(function() {
     $(".send-fab").on("click", function sendFab(argument) {
         smoothscroll();
         $("#blog-content").focus();
-    })
-
-    $(".commit-toggle").click(function commitToggle(argument) {
-        var commitPanel = $(this).parent().next();
-        closePanel();
-        var inst = new mdui.Collapse(commitPanel, accordion = true);
-        inst.toggle(".commit")
     })
 
     function closePanel() { //用来收起多出来的框框

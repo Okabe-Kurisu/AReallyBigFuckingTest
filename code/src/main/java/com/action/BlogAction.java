@@ -207,7 +207,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             resultMap = PowerfulTools.format("200", "删除成功", user);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
-            resultMap = PowerfulTools.format("101", "内容为空或者过长", user);
         }
         return SUCCESS;
     }
@@ -427,7 +426,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             java.util.Date endDate = dft.parse(dft.format(date.getTime()));
             nowtime = (int) endDate.getTime();
             System.out.println(nowtime);*/
-            nowtime = ((int) (System.currentTimeMillis() / 1000)) - 18000;
+            int sevenDay = 7*24*3600;
+            nowtime = ((int) (System.currentTimeMillis() / 1000)) - sevenDay;
 
             // 封装参数
             map.put("release_time", nowtime);

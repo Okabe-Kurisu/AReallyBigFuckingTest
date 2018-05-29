@@ -188,22 +188,6 @@
                                     <p class="mdui-list-item-icon mdui-text-color-red">1</p>
                                     <div class="mdui-list-item-content">热搜词语</div>
                                 </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">2</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">3</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">4</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">5</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -251,6 +235,22 @@
                     <div class="mdui-dialog-actions">
                         <button class="mdui-btn mdui-ripple report-cancel mdui-color-red">取消</button>
                         <button class="mdui-btn mdui-ripple report-send mdui-color-teal">确认</button>
+                    </div>
+                </div>
+                <!-- 博客编辑 -->
+                <div class="mdui-dialog blog-edit-dialog">
+                    <div class="mdui-dialog-title">编辑</div>
+                    <div class="mdui-dialog-content blog-edit-content" bid="0">
+                        <textarea class="mdui-textfield-input blog-edit-input" rows="3" maxlength="140"></textarea>
+                        <img src="" class="blog-edit-image">
+                        <button class="mdui-btn mdui-ripple mdui-text-color-theme blog-edit-img"><i
+                        class="mdui-icon material-icons">photo</i>修改图片</button>
+                        <button class="mdui-btn mdui-ripple mdui-text-color-theme blog-edit-delimg"><i
+                        class="mdui-icon material-icons">clear</i>清空图片</button>
+                    </div>
+                    <div class="mdui-dialog-actions">
+                        <button class="mdui-btn mdui-ripple blog-edit-cancel mdui-color-red">取消</button>
+                        <button class="mdui-btn mdui-ripple blog-edit-send mdui-color-teal">确认</button>
                     </div>
                 </div>
                 <!-- @人dialog -->
@@ -311,7 +311,6 @@
                     </div>
                 </div>
                 <!-- 添加话题 -->
-                <!-- 添加话题 -->
                 <div class="mdui-dialog addDiscuss-dialog">
                     <div class="mdui-dialog-title">添加话题</div>
                     <div class="mdui-dialog-content">
@@ -353,7 +352,6 @@
                     </div>
                 </div>
                 <!--todo: 收藏夹 -->
-                <!--todo: 个人信息修改dialog -->
                 <!-- 博客模版 -->
                 <div class="template mdui-hidden">
                     <div class="mdui-card mdui-m-t-1" blog-id="0">
