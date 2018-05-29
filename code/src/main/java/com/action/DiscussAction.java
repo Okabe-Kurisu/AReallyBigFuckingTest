@@ -129,11 +129,13 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             int startNum = (pageN - 1) * pageC;
             int endNum = pageN * pageC;
 
+            User user = (User) request.getSession().getAttribute("user");
+            if (user != null) map.put("userid", user.getUid());
+
             //场景标识，判断是话题中心还是我的话题（0：话题中心，1：我的话题）
             flag = request.getParameter("discuss_page");
             if (null != flag && flag.equals("1")) {
                 //获得当前登录用户id
-                User user = (User) request.getSession().getAttribute("user");
                 int userId = user.getUid();
                 map.put("user_id", userId);
             }
@@ -142,8 +144,46 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
             map.put("startNum", startNum);
             map.put("endNum", endNum);
 
-            List<Discuss> discussList = DiscussDao.selectDiscuss(map);
+            List<Map> discussList = DiscussDao.selectDiscuss(map);
             resultMap = PowerfulTools.format("200", "成功", discussList);
+
+        } catch (Exception ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "followDiscussion", results = {
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
+    })
+    @Authority("")
+    public String followDiscussion() {
+        String st_str;
+        int start_time;
+        Map<String, Object> map = new HashMap<>();
+        try {
+
+            String did_str = request.getParameter("did");
+            if (did_str == null || "".equals(did_str)) throw new Exception("参数错误");
+            int did = Integer.parseInt(did_str);
+
+            User user = (User) request.getSession().getAttribute("user");
+            int userId = user.getUid();
+
+            // 获得当前时间戳
+            st_str = request.getParameter("start_time");
+            if (st_str == null || "".equals(st_str)) start_time = (int) (System.currentTimeMillis() / 1000);
+            else start_time = Integer.parseInt(st_str);
+
+            map.put("did", did);
+            map.put("user_id", userId);
+            map.put("start_time", start_time);
+            // 调用Dao层 获取数据
+            int id = DiscussDao.insertFollowDis(map);
+
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", id);
 
         } catch (Exception ne) {
             ne.printStackTrace();
@@ -170,12 +210,29 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     @Action(value = "getFollowDisBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
-    @Authority("")
     public String getFollowDisBlog() {
+        String page, pageCap;
+        Map<String, Object> map = new HashMap<>();
         try {
             System.out.println(dids);
             if (dids == null || dids.size() < 1) throw new Exception("参数错误");
-            List<Map> discussList = DiscussDao.selectFollowDisBlog(dids);
+
+            page = request.getParameter("page");
+            pageCap = request.getParameter("pageCap");
+            // 计算分页 开始项和结束项
+            if (null == page || "".equals(page)) page = "1";
+            int pageN = Integer.parseInt(page);
+            if (null == pageCap || "".equals(pageCap)) pageCap = "10";
+            int pageC = Integer.parseInt(pageCap);
+
+            int startNum = (pageN - 1) * pageC;
+            int endNum = pageN * pageC;
+
+            map.put("dids", dids);
+            map.put("startNum", startNum);
+            map.put("endNum", endNum);
+
+            List<Map> discussList = DiscussDao.selectFollowDisBlog(map);
             resultMap = PowerfulTools.format("200", "成功", discussList);
 
         } catch (Exception ne) {
@@ -242,33 +299,30 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
         Map<String, Object> map = new HashMap<>();
         try {
+
+            if (discuss == null || discuss.getName() == null || discuss.getDetail() == null)
+                throw new Exception("参数错误");
+
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
             int userId = user.getUid();
             int is_ban = user.getIs_ban();
             int release_time = (int) (System.currentTimeMillis() / 1000);
 
-            // 获得参数
-            name = request.getParameter("name");
-            detail = request.getParameter("detail");
-
-            if (name == null || "".equals(name) || detail == null || "".equals(detail)) throw new Exception("参数错误");
 
             // 时间戳参数
-            st_str = request.getParameter("start_time");
-            if (st_str == null || "".equals(st_str)) start_time = (int) (System.currentTimeMillis() / 1000);
-            else start_time = Integer.parseInt(st_str);
+            if (discuss.getStart_time() == null) {
+                start_time = (int) (System.currentTimeMillis() / 1000);
+                discuss.setStart_time(start_time);
+            }
 
             // 封装请求数据
-            map.put("name", name);
-            map.put("user_id", userId);
-            map.put("detail", detail);
-            map.put("start_time", start_time);
-            map.put("release_time", release_time);
+            discuss.setRelease_time(release_time);
+            discuss.setUser_id(userId);
 
 
             // 用户被封禁则无法插入
-            if (is_ban != 0 || DiscussDao.insertDiscuss(map) == null) {
+            if (is_ban != 0 || DiscussDao.insertDiscuss(discuss) == null) {
                 throw new Exception("插入失败");
             }
             // 封装响应数据
