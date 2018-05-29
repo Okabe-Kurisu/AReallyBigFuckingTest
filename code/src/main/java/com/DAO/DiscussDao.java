@@ -133,11 +133,11 @@ public class DiscussDao {
     }
 
     // 查找用户所关注话题地全部微博
-    public static List<Map> selectFollowDisBlog(List<String> dids) {
+    public static List<Map> selectFollowDisBlog(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> BlogList;
         try {
-            BlogList = sqlSession.selectList("weibo/DiscussMapper.selectFollowDisBlog", dids);
+            BlogList = sqlSession.selectList("weibo/DiscussMapper.selectFollowDisBlog", map);
         } finally {
             sqlSession.close();
         }

@@ -170,12 +170,29 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     @Action(value = "getFollowDisBlog", results = {
             @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
-    @Authority("")
     public String getFollowDisBlog() {
+        String page, pageCap;
+        Map<String, Object> map = new HashMap<>();
         try {
             System.out.println(dids);
             if (dids == null || dids.size() < 1) throw new Exception("参数错误");
-            List<Map> discussList = DiscussDao.selectFollowDisBlog(dids);
+
+            page = request.getParameter("page");
+            pageCap = request.getParameter("pageCap");
+            // 计算分页 开始项和结束项
+            if (null == page || "".equals(page)) page = "1";
+            int pageN = Integer.parseInt(page);
+            if (null == pageCap || "".equals(pageCap)) pageCap = "10";
+            int pageC = Integer.parseInt(pageCap);
+
+            int startNum = (pageN - 1) * pageC;
+            int endNum = pageN * pageC;
+
+            map.put("dids", dids);
+            map.put("startNum", startNum);
+            map.put("endNum", endNum);
+
+            List<Map> discussList = DiscussDao.selectFollowDisBlog(map);
             resultMap = PowerfulTools.format("200", "成功", discussList);
 
         } catch (Exception ne) {

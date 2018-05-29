@@ -87,10 +87,13 @@
         ON d.blog_id = b.bid
         JOIN user u
         ON b.user_id = u.uid
-        WHERE d.discuss_id IN #{dids}
+        WHERE d.discuss_id IN
+        <foreach collection="dids" index="index" item="did" open="(" separator="," close=")">
+            #{did}
+        </foreach>
         AND b.type = 0
         GROUP BY d.blog_id
-        LIMIT 1,10
+        LIMIT #{startNum},#{endNum}
     </select>
 
     <select id="selectBlogInDiscuss" parameterType="Map" resultType="Map">
