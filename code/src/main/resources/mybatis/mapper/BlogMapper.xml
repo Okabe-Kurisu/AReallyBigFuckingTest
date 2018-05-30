@@ -29,7 +29,7 @@
         OR user.nickname LIKE "%"#{keyword}"%"
         OR user.motto LIKE "%"#{keyword}"%"
         ) AND
-        blog.release_time &lt; #{nowtime} AND
+        blog.release_time &lt; #{nowtime} and #{nowtime} &gt;= b.release_time AND
         blog.visibility=0 AND blog.type=0
     </select>
 
@@ -46,7 +46,7 @@
         FROM blog AS b
         JOIN user AS u
         on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
-        WHERE #{release_time} &lt;= b.release_time AND
+        WHERE (#{release_time} &lt;= b.release_time and #{nowtime} &gt;= b.release_time) AND
               type IN (0,1) AND
               visibility=0
         ORDER BY u.weight DESC
@@ -84,8 +84,7 @@
         WHERE u.uid=b.user_id
         AND b.type=0
         AND b.visibility=0
-        AND FROM_UNIXTIME(b.release_time, '%Y-%c-%d')=DATE_FORMAT(NOW(),'%Y-%c-%d')
-        AND b.release_time &lt; UNIX_TIMESTAMP(NOW())
+
     </select>
 
     <!-- 得到指定用户微博 -->

@@ -62,7 +62,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             User user = (User) request.getSession().getAttribute("user");
             user_id = user.getUid();
 
-            Set<String> set = filter.getSensitiveWord(content1, 1);
+                Set<String> set = filter.getSensitiveWord(content1, 1);
 
             if (release_time == null || "".equals(release_time)) {
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
@@ -434,9 +434,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             System.out.println(nowtime);*/
             int sevenDay = 7 * 24 * 3600;
             nowtime = ((int) (System.currentTimeMillis() / 1000)) - sevenDay;
-
+            map.put("nowtime", (int) (System.currentTimeMillis() / 1000));
             // 封装参数
             map.put("release_time", nowtime);
+            System.out.println("现在的时间为："+nowtime);
             // 调用Dao层 获取数据
             List blogList = BlogDao.selectBlogByTime(map);
 
