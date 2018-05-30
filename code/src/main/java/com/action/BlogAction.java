@@ -361,14 +361,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
             }
-            if (bid != 0) { // 封装响应数据
-                resultMap = PowerfulTools.format("200", "转发成功", user);
-                System.out.println(resultMap);
-            } else if (bid == 0) {
-                // 封装响应数据
-                resultMap = PowerfulTools.format("200", "不能转发同一微博两次", user);
-                System.out.println(resultMap);
-            }
+            resultMap = PowerfulTools.format("200", "转发成功", BlogDao.getBlogById(bid));
+            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -423,7 +417,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             java.util.Date endDate = dft.parse(dft.format(date.getTime()));
             nowtime = (int) endDate.getTime();
             System.out.println(nowtime);*/
-            int sevenDay = 7*24*3600;
+            int sevenDay = 7 * 24 * 3600;
             nowtime = ((int) (System.currentTimeMillis() / 1000)) - sevenDay;
 
             // 封装参数
@@ -454,12 +448,11 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         try {
             name = request.getParameter("name");
             if (null == name) name = "";
-            nowtime=((int) (System.currentTimeMillis() / 1000));
-            Map<String,Object>maps=new HashMap<String,Object>();
-            maps.put("name",name);
-            maps.put("NowTime",nowtime);
-            List<Discuss> DiscussList=BlogDao.selectDiscuss(maps);
-            System.out.println(DiscussList);
+            nowtime = ((int) (System.currentTimeMillis() / 1000));
+            Map<String, Object> maps = new HashMap<String, Object>();
+            maps.put("name", name);
+            maps.put("NowTime", nowtime);
+            List<Discuss> DiscussList = BlogDao.selectDiscuss(maps);
             resultMap = PowerfulTools.format("200", "获取话题", DiscussList);
 
         } catch (NullPointerException ne) {
@@ -472,8 +465,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     @Action(value = "addDisBlog")//将#话题添加到表中
     public String addDisBlog() {
-        int blog_id,discuss_id,user_id;
-        BlogDiscuss bd=new BlogDiscuss();
+        int blog_id, discuss_id, user_id;
+        BlogDiscuss bd = new BlogDiscuss();
         //从前端获取
         User user = (User) request.getSession().getAttribute("user");
         user_id = user.getUid();
@@ -543,8 +536,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Authority("")
     public String reportBlog() {//举报微博
         Sensitivity Sensitivity_blog = new Sensitivity();
-        String details,type;
-        int bid,user_id;
+        String details, type;
+        int bid, user_id;
         //从前端获取
         bid = Integer.parseInt(request.getParameter("bid"));
         type = request.getParameter("type");
@@ -559,10 +552,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 System.out.print("该账户被封");
                 return LOGIN;
             }
-            if (details == null&&"".equals(details)) {
+            if (details == null && "".equals(details)) {
                 Sensitivity_blog.setDetails(type);
             } else {
-                Sensitivity_blog.setDetails(type+details);
+                Sensitivity_blog.setDetails(type + details);
             }
             Sensitivity_blog.setBlog_id(bid);
             Sensitivity_blog.setType(0);
@@ -614,12 +607,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         Map<String, Object> map = new HashMap();
         try {
             // 调用Dao层 获取数据
-            int nowtime = (int) (System.currentTimeMillis()/1000 - 24*3600);
+            int nowtime = (int) (System.currentTimeMillis() / 1000 - 24 * 3600);
 
-            map.put("nowtime",nowtime);
+            map.put("nowtime", nowtime);
             List blogList = BlogDao.getTodayHostBlog(map);
 
-            System.out.println("list集合大小："+blogList.size());
+            System.out.println("list集合大小：" + blogList.size());
 
             // 对今日微博进行热点排序
             blogList.sort((Comparator<Map<String, Object>>) (o1, o2) -> {
