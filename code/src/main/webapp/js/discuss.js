@@ -52,9 +52,9 @@ $(function () {
         var date = new Date(date_str)
         var time = date.getTime() / 1000;
         param = {
-            name: discuss_name,
-            detail: discuss_description,
-            start_time: time
+            "discuss.name": discuss_name,
+            "discuss.detail": discuss_description,
+            "discuss.start_time": time
         }
         $.ajax({
             url: "/discuss/submitDiscuss",
@@ -200,25 +200,7 @@ $(function () {
                     for (x in discusses) {
                         var discuss = discusses[x]
                         if (discuss_page === 0) {
-                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
-                                "                    <div class=\"mdui-grid-tile\">\n" +
-                                "                        <div class=\"mdui-card\">\n" +
-                                "                            <div class=\"mdui-card-media\">\n" +
-                                "                                <img src=\"img/sign_bg.jpg\"/>\n" +
-                                "                                <div class=\"mdui-card-media-covered\">\n" +
-                                "                                    <div class=\"mdui-card-primary\">\n" +
-                                "                                        <div class=\"mdui-card-primary-title\">" + discuss.name + "</div>\n" +
-                                "                                        <div class=\"mdui-card-primary-subtitle\">" + discuss.detail + "</div>\n" +
-                                "                                    </div>\n" +
-                                "                                    <div class=\"mdui-card-actions\">\n" +
-                                // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 1</button>\n" +
-                                // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 2</button>\n" +
-                                "                                    </div>\n" +
-                                "                                </div>\n" +
-                                "                            </div>\n" +
-                                "                        </div>\n" +
-                                "                    </div>\n" +
-                                "                </div>"
+                            var res = format_discuss_centerHtml(discuss);
                         }
                         else if (discuss.is_edit >= 4) {
                             var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
@@ -234,6 +216,7 @@ $(function () {
                                 "                                    <div class=\"mdui-card-actions\">\n" +
                                 "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white end-discuss\" did=\"" + discuss.did + "\">结束话题</button>\n" +
                                 "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white mdui-btn-raised change-discuss\" did=\"" + discuss.did + "\" disabled>禁止修改</button>\n" +
+                                "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white followDiscuss\" did=\"" + discuss.did + "\">关注</button>\n" +
                                 "                                    </div>\n" +
                                 "                                </div>\n" +
                                 "                            </div>\n" +
@@ -276,6 +259,32 @@ $(function () {
         });
     });
 
+    //关注话题事件
+    $(".discuss-list").on("click", ".followDiscuss", function (event) {
+        var did = $(this).attr("did");
+        param = {
+            did: did
+        }
+        event.stopPropagation();
+        $.ajax({
+            url: "/discuss/followDiscussion",
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 200 && data.data == 1) {
+                    mdui.snackbar("关注成功");
+                } else {
+                    mdui.snackbar("关注错误");
+                }
+            },
+            error: function () {
+                mdui.snackbar("请求错误");
+            },
+        });
+    })
+
     // function
     var intiDiscuss = function () {
         getAllDiscuss()
@@ -294,25 +303,8 @@ $(function () {
                     var discusses = data.data;
                     for (x in discusses) {
                         var discuss = discusses[x]
-                        var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
-                            "                    <div class=\"mdui-grid-tile\">\n" +
-                            "                        <div class=\"mdui-card\">\n" +
-                            "                            <div class=\"mdui-card-media\">\n" +
-                            "                                <img src=\"img/sign_bg.jpg\"/>\n" +
-                            "                                <div class=\"mdui-card-media-covered\">\n" +
-                            "                                    <div class=\"mdui-card-primary\">\n" +
-                            "                                        <div class=\"mdui-card-primary-title\">" + discuss.name + "</div>\n" +
-                            "                                        <div class=\"mdui-card-primary-subtitle\">" + discuss.detail + "</div>\n" +
-                            "                                    </div>\n" +
-                            "                                    <div class=\"mdui-card-actions\">\n" +
-                            // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 1</button>\n" +
-                            // "                                        <button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\">action 2</button>\n" +
-                            "                                    </div>\n" +
-                            "                                </div>\n" +
-                            "                            </div>\n" +
-                            "                        </div>\n" +
-                            "                    </div>\n" +
-                            "                </div>"
+                        var res = format_discuss_centerHtml(discuss);
+
                         $(".discuss-list").append(res);
                     }
 
@@ -365,7 +357,7 @@ $(function () {
                                 "                </div>"
                         }
                         else {
-                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\""+ discuss.name +"\">\n" +
+                            var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
                                 "                    <div class=\"mdui-grid-tile\">\n" +
                                 "                        <div class=\"mdui-card\">\n" +
                                 "                            <div class=\"mdui-card-media\">\n" +
@@ -429,6 +421,34 @@ $(function () {
                 mdui.snackbar("请求错误");
             },
         });
+    }
+
+    var format_discuss_centerHtml = function (discuss) {
+        var res = "<div class=\"mdui-col\" did=\"" + discuss.did + "\" dname=\"" + discuss.name + "\">\n" +
+            "                    <div class=\"mdui-grid-tile\">\n" +
+            "                        <div class=\"mdui-card\">\n" +
+            "                            <div class=\"mdui-card-media\">\n" +
+            "                                <img src=\"img/sign_bg.jpg\"/>\n" +
+            "                                <div class=\"mdui-card-media-covered\">\n" +
+            "                                    <div class=\"mdui-card-primary\">\n" +
+            "                                        <div class=\"mdui-card-primary-title\">" + discuss.name + "</div>\n" +
+            "                                        <div class=\"mdui-card-primary-subtitle\">" + discuss.detail + "</div>\n" +
+            "                                    </div>\n" +
+            "                                    <div class=\"mdui-card-actions\">\n";
+
+        if (discuss.followNum > 0) {
+            res += "<button class=\"mdui-btn mdui-ripple mdui-ripple-white followDiscuss\" did=\"" + discuss.did + "\">关注</button>\n"
+        } else {
+            res += "<button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\" disabled>已关注</button>\n"
+        }
+        res += "                                    </div>\n" +
+            "                                </div>\n" +
+            "                            </div>\n" +
+            "                        </div>\n" +
+            "                    </div>\n" +
+            "                </div>";
+
+        return res;
     }
 
 });

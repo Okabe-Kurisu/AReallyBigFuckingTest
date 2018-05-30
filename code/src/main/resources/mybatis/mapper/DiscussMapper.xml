@@ -43,8 +43,12 @@
     </select>
 
     <!-- 查询话题（正在使用的） -->
-    <select id="selectDiscuss" parameterType="Map" resultType="Discuss">
-        SELECT *
+    <select id="selectDiscuss" parameterType="Map" resultType="Map">
+        SELECT d.*
+        <if test="userid != null">
+            ,(SELECT COUNT(f.fid) FROM follow f WHERE f.user_id=#{userid} AND f.followed_id=d.did AND f.type=1) AS
+            followNum
+        </if>
         FROM discuss d,user u
         WHERE d.user_id=u.uid
         AND visibility = 0
@@ -114,8 +118,23 @@
         LIMIT #{startNum},#{endNum}
     </select>
 
+    <!-- 关注话题（插入关注表） -->
+    <insert id="insertFollowDis" parameterType="Map" keyProperty="fid" useGeneratedKeys="true">
+        INSERT INTO follow (user_id, type, followed_id, time, visibility)
+            SELECT
+                #{user_id},
+                1,
+                #{did},
+                #{start_time},
+                0
+            FROM DUAL
+            WHERE NOT EXISTS(SELECT fid
+                             FROM follow
+                             WHERE user_id = #{user_id} AND followed_id = #{did});
+    </insert>
+
     <!-- 建立话题（话题名不能重复） -->
-    <insert id="insertDiscuss" parameterType="Map" useGeneratedKeys="true">
+    <insert id="insertDiscuss" parameterType="Map" keyProperty="did" useGeneratedKeys="true">
         INSERT INTO discuss (name, user_id, detail, start_time, release_time)
             SELECT
                 #{name},

@@ -67,9 +67,9 @@ public class DiscussDao {
         return discussList;
     }
 
-    public static List<Discuss> selectDiscuss(Map map) {
+    public static List<Map> selectDiscuss(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        List<Discuss> discussList;
+        List<Map> discussList;
         try {
             discussList = sqlSession.selectList("weibo/DiscussMapper.selectDiscuss", map);
         } finally {
@@ -100,11 +100,12 @@ public class DiscussDao {
         return BlogList;
     }
 
-    public static Integer insertDiscuss(Map map) {
+    public static Discuss insertDiscuss(Discuss discuss) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        int discussId = 0;
         try {
-            discussId = sqlSession.insert("weibo/DiscussMapper.insertDiscuss", map);
+            sqlSession.insert("weibo/DiscussMapper.insertDiscuss", discuss);
+            System.out.println(discuss.getDid());
+            sqlSession.insert("weibo/DiscussMapper.insertFollowDis", discuss);
             sqlSession.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +113,7 @@ public class DiscussDao {
             sqlSession.close();
         }
 
-        return discussId;
+        return discuss;
     }
 
     public static Integer updateDiscuss(int userId, Discuss discuss) {
@@ -130,6 +131,22 @@ public class DiscussDao {
             sqlSession.close();
         }
         return discuss.getDid();
+    }
+
+    // 关注话题
+    public static Integer insertFollowDis(Map map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        int id = 0;
+        try {
+            id = sqlSession.insert("weibo/DiscussMapper.insertFollowDis", map);
+            sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
+
+        return id;
     }
 
     // 查找用户所关注话题地全部微博
