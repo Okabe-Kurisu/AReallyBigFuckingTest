@@ -461,7 +461,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             maps.put("name",name);
             maps.put("NowTime",nowtime);
             List<Discuss> DiscussList=BlogDao.selectDiscuss(maps);
-            System.out.println(DiscussList);
             resultMap = PowerfulTools.format("200", "获取话题", DiscussList);
 
         } catch (NullPointerException ne) {
