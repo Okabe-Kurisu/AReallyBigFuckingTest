@@ -276,6 +276,30 @@ public class BlogDao {
         }
         return blogList;
     }
+    //获得五个#话题
+    public static List<Discuss> selectDiscuss(Map<String, Object> map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Discuss> DiscussList = null;
+        try {
+            DiscussList = sqlSession.selectList("weibo/BlogMapper.getFiveDiscuss", map);
+            sqlSession.commit();
+            System.out.println(DiscussList);
+        } finally {
+            sqlSession.close();
+        }
+        return DiscussList;
+    }
+
+    public static int addDisBlog(BlogDiscuss blogDiscuss) {//#话题添加到表
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.insert("weibo/BlogMapper.addDisBlog",blogDiscuss);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return blogDiscuss.getBdid();
+    }
 
     public static List<Map> getFollowBlogByUserid(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();

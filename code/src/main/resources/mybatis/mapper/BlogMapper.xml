@@ -198,6 +198,23 @@
             VALUE (#{user_id}, #{blog_id}, #{date})
     </insert>
 
+    <!--#话题 -->
+    <select id="getFiveDiscuss" parameterType="Map" resultType="Discuss">
+        SELECT *
+        FROM discuss
+        WHERE
+        discuss.visibility=0
+        <if test="#{name}!=null">
+            AND discuss.name LIKE "%"#{name}"%"</if>
+        <if test="#{NowTime}!=null">
+            AND  #{NowTime}&gt;discuss.start_time</if>
+        limit 5
+    </select>
+
+    <insert id="addDisBlog" parameterType="BlogDiscuss" useGeneratedKeys="true" keyProperty="bdid">
+        INSERT INTO blog_discuss (blog_id,discuss_id,user_id)
+        VALUE (#{blog_id}, #{discuss_id}, #{user_id})
+    </insert>
     <!-- 转发微博 只能转发一次-->
     <select id="CheckforwardBlog" parameterType="Map" resultType="Blog">
         SELECT *

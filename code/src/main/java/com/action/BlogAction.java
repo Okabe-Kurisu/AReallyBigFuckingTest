@@ -1,6 +1,7 @@
 package com.action;
 
 import com.DAO.BlogDao;
+import com.DAO.UserDao;
 import com.annotations.Authority;
 import com.google.gson.Gson;
 import com.model.*;
@@ -446,6 +447,55 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     }
 
 
+    @Action(value = "getFiveDiscuss", results = {//#话题获得5个话题
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
+    })
+    public String getFiveDiscuss() {
+        String name;
+        int nowtime;
+        Map<String, Object> map = new HashMap();
+
+        try {
+            name = request.getParameter("name");
+            if (null == name) name = "";
+            nowtime=((int) (System.currentTimeMillis() / 1000));
+            Map<String,Object>maps=new HashMap<String,Object>();
+            maps.put("name",name);
+            maps.put("NowTime",nowtime);
+            List<Discuss> DiscussList=BlogDao.selectDiscuss(maps);
+            System.out.println(DiscussList);
+            resultMap = PowerfulTools.format("200", "获取话题", DiscussList);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "addDisBlog")//将#话题添加到表中
+    public String addDisBlog() {
+        int blog_id,discuss_id,user_id;
+        BlogDiscuss bd=new BlogDiscuss();
+        //从前端获取
+        User user = (User) request.getSession().getAttribute("user");
+        user_id = user.getUid();
+        discuss_id = Integer.parseInt(request.getParameter("discuss_id"));
+        blog_id = Integer.parseInt(request.getParameter("blog_id"));
+        try {
+            bd.setBlog_id(blog_id);
+            bd.setDiscuss_id(discuss_id);
+            bd.setUser_id(user_id);
+            BlogDao.addDisBlog(bd);
+            resultMap = PowerfulTools.format("200", "#话题添加成功", user);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", user);
+        }
+        return SUCCESS;
+    }
 
     @Action(value = "collectBlog")
     @Authority("")

@@ -401,6 +401,18 @@ $(function() {
         ataDialog_inst.close();
     })
 
+    // #列表点击事件
+    $(".discuss-list").on("click", ".callat-item", function() {
+        var uid = $(this).attr("userid")
+        var username = $(this).attr("username");
+
+        //todo: 未添加到博客话题表
+
+        var v = $("#blog-content").val();
+        $("#blog-content").val(" #" + username + " "+v);
+        ataDialog_inst.close();
+    })
+
     // 发布微博数据
     $(".send").click(function(argument) {
         param = {
@@ -779,6 +791,12 @@ $(function() {
     $(".callat").on("click", function callat(argument) {
         var cDialog = $(".callat-dialog");
         var inst = new mdui.Dialog(cDialog, overlay = true);
+        inst.open();
+    })
+
+    $(".discuss").on("click", function discussat(argument) {
+        var dDialog = $(".discuss-dialog");
+        var inst = new mdui.Dialog(dDialog, overlay = true);
         inst.open();
     })
 
