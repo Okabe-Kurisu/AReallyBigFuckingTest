@@ -338,7 +338,9 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         //从前端获取
         Commentid = Integer.parseInt(request.getParameter("bid"));
         content1 = request.getParameter("content");
+
         if (content1 == null && "".equals(content1)) content1 = "";
+
         try {
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
@@ -349,9 +351,22 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 System.out.print("该账户被封");
                 return LOGIN;
             }
+            String userAgent = request.getHeader("user-agent");//获取浏览器信息
+            String ip = UserAtion.getIpAddr(request);//获取IP地址
+            blog.setBrowser_sign(userAgent);
+            blog.setIp_address(ip);
+            blog.setComment_on(Commentid);
+            blog.setContent(content1);
+            blog.setUser_id(user_id);
+            blog.setType(1);
+            blog.setMultimedia("");
+            blog.setVisibility(0);
+            blog.setIs_edit(0);
+            blog.setRelease_time((int) (System.currentTimeMillis()/1000));
+
             Set<String> set = filter.getSensitiveWord(content1, 1);
             //后台添加
-            bid = BlogDao.forwordBlog(Commentid, content1, user.getUid());
+            bid = BlogDao.forwordBlog(blog);
 
             if (set.size() > 0) {
                 System.out.println("转发评论存在敏感词");
@@ -647,6 +662,23 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 获得参数
             bid = Integer.parseInt(request.getParameter("bid"));
             Map data = BlogDao.getBlogById(bid);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", data);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getCommitById")
+    public String getCommitById() {
+        int bid;
+        try {
+            // 获得参数
+            bid = Integer.parseInt(request.getParameter("bid"));
+            List<Map> data = BlogDao.getCommitById(bid);
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", data);
 

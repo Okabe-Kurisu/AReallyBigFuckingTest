@@ -4,6 +4,7 @@ $(function() {
     var weiboDB = openDatabase('weibo', '1.0', '主表', 2 * 1024 * 1024);
     //临时数据库，存储临时微博，每次页面打开先删除全部表，然后向里面填充数值
     var tempDB = openDatabase('temp', '1.0', '临时表', 2 * 1024 * 1024);
+    var block = [];
     //全局变量
     var ataDialog_inst; //@dialog对话框
     var myDialog_inst //我的话题对话框
@@ -211,8 +212,14 @@ $(function() {
                 var len = datas.length;
                 if (len != 0) {
                     for (x in datas) {
-                        insertBlog(datas[x]);
-                        tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                        if (!block.find(function(num) {
+                                return num == datas[x].userid;
+                            })) {
+                            insertBlog(datas[x]);
+                            tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                        } else {
+                            console.log("屏蔽了来自" + datas[x].nickname + "的信息")
+                        }
                         if (x == (len - 1))
                             break;
                     }
@@ -255,6 +262,19 @@ $(function() {
             $(".userpanel-nickname").html(me.nickname);
             $(".userpanel-motto").html(me.motto);
             $(".userpanel-href").attr("href", "/?method=userinfo&uid=" + me.uid);
+
+            weiboDB.transaction(function(tx) { //这tm是异步方法
+                tx.executeSql('SELECT * FROM follow where type = 3', [], function(tx, results) {
+                    var datas = results.rows;
+                    var len = datas.length;
+                    if (len != 0) {
+                        for (x in datas) {
+                            block.push(datas[x].userid)
+                        }
+                    }
+                    console.log("加载黑名单完成");
+                }, null);
+            })
         }
     }
 
@@ -511,12 +531,12 @@ $(function() {
                 "</div>\n";
         }
         // 如果blog中包含转发内容
-        if (data.type == 1) {
+        if (parseInt(data.type) == 1) {
             res += "<div class=\"mdui-card-content\" content=\"" + data.content + "\">" + data.content + //转发博客的主体内容
-                "<!-- 被转发微博在下面， 相当于是在本身微博的最后加上一个新的微博卡片 -->"
-            //先显示正在加载，然后在每次生成微博后绑定上真正的转发内容加载方法,待加载bid获取方法为$(".waitload").attr("bid")
-            "<div class=\"mdui-spinner mdui-spinner-colorful waitload\" bid=\"" + data.commentOn + "\"></div>"
-            "</div>\n"
+                "<!-- 被转发微博在下面， 相当于是在本身微博的最后加上一个新的微博卡片 -->" +
+                //先显示正在加载，然后在每次生成微博后绑定上真正的转发内容加载方法,待加载bid获取方法为$(".waitload").attr("bid")
+                "<div class=\"mdui-spinner mdui-spinner-colorful waitload\"  bid=\"" + data.commentOn + "\"></div>" +
+                "</div>\n"
         } else {
             res += "<div class=\"mdui-card-content\" content=\"" + data.content + "\">" + data.content + "</div>\n"
         }
@@ -549,16 +569,26 @@ $(function() {
             "<i class=\"mdui-icon material-icons\">check</i> 评论</div>" +
             "<div class=\"mdui-btn mdui-btn-dense mdui-color-red mdui-float-right mdui-ripple mdui-m-r-1 forward-send\">" +
             "<i class=\"mdui-icon material-icons\">format_quote</i> 转发并评论" +
-            "</div></div></div></li>" +
-            "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 comment-load\"><div class=\"mdui-list-item-content mdui-center\"><div class=\"mdui-spinner mdui-spinner-colorful\"></div></div></li>" +
-            "</ul></div> </div></div></div>";
+            "</div></div></div></li>";
+        if (parseInt(data.commentNum) != 0)
+            res += "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 comment-load\"><div class=\"mdui-list-item-content mdui-center\">" +
+            "<div class=\"mdui-spinner mdui-spinner-colorful\"></div></li>";
+        res += "</ul></div></div></div></div></div>";
         $(".blogs").after(res);
+    }
+
+    function insertComment(blog) {
+        var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1\">" +
+            "<div class=\"mdui-list-item-avatar\"><img src=\"" + blog.avatar + "\"/></div>" +
+            "<div class=\"mdui-list-item-content\">" + blog.content + "</div>" +
+            "</li>";
+        return html;
     }
 
 
     //开发者信息按钮的代码绑定。因为该内容会动态生成很多次，所以写成方法
     function initCard() {
-        if (typeof(sessionStorage.uid) == "undefined") 
+        if (typeof(sessionStorage.uid) == "undefined")
             $(".send-card").hide();
 
         $(".forward-send").off("click");
@@ -628,12 +658,38 @@ $(function() {
                 inst.close();
             }
         }
+
         $(".commit-toggle").off("click");
         $(".commit-toggle").on("click", commitToggle);
 
         function commitToggle(argument) {
             var inst = new mdui.Collapse($(this).parent().next(), accordion = true);
             inst.openAll()
+
+            //如果有评论 ，就加载
+            if (parseInt($(this).attr("commentnum")) != 0) {
+                var commitlist = $(this).parent().next().find(".mdui-list");
+                param = {
+                    bid: $(this).parents(".blog-card").attr("bid")
+                }
+                $.ajax({
+                    url: "/blog/getCommitById",
+                    type: "POST",
+                    data: param,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.code == 200 && data.data != null) {
+                            var commits = data.data;
+                            commitlist.children(".comment-load").hide()
+                            for (x in commits){
+                                var html = insertComment(commits[x])
+                                commitlist.append(html);
+                            }
+                        }
+                    }
+                })
+            }
         }
 
 
@@ -753,6 +809,7 @@ $(function() {
         $(".commit-send").on("click", commit);
 
         function commit(argument) {
+            var sendCard = $(this).parent().parent();
             var bid = $(this).parents(".blog-card").attr("bid");
             var content = $(this).parents(".mdui-list-item-content").find("input").val();
             param = {
@@ -767,6 +824,7 @@ $(function() {
                 dataType: "json",
                 success: function(data) {
                     mdui.snackbar(data.msg);
+                    sendCard.after(insertComment(commits[x]));
                 },
                 error: function(data) {
                     mdui.snackbar(data.msg);
@@ -776,6 +834,7 @@ $(function() {
 
         $(".favorite").off("click");
         $(".favorite").on("click", favorite);
+
         function favorite(argument) {
             var fImg = $(this).children("i");
             if (fImg.html() == "folder_open") {
@@ -823,6 +882,7 @@ $(function() {
 
         $(".dev-info-btn").off("click");
         $(".dev-info-btn").on("click", devInfoBtn);
+
         function devInfoBtn() {
             var devInfo = $(this).parent().prev();
             if (devInfo.css("display") == 'none') {
@@ -855,12 +915,13 @@ $(function() {
                         thisDiv.removeClass("waitload");
                         var html = "<div class=\"mdui-card mdui-m-t-1\">" +
                             "<div class=\"mdui-card-header\">" +
-                            "<a href=\"./?method=userinfo&uid=" + rtn.userid + "\"<img class=\"mdui-card-header-avatar\" src=\"" + rtn.avatar + "\"/>\n" +
+                            "<a href=\"./?method=userinfo&uid=" + rtn.userid + "\"><img class=\"mdui-card-header-avatar\" src=\"" + rtn.avatar + "\"/></a>\n" +
                             "<div class=\"mdui-card-header-title\">" + rtn.username + "</div>\n" +
                             "<div class=\"mdui-card-header-subtitle\">" + rtn.motto + "</div>\n" +
                             "</div>" +
                             "<div class=\"mdui-card-content\">" + rtn.content + "</div>" +
                             "</div>";
+                        thisDiv.html(html)
                     }
                 },
             })

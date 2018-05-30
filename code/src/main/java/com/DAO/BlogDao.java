@@ -165,14 +165,9 @@ public class BlogDao {
     }
 
     //转发微博
-    public static int forwordBlog(int bid, String content, int user_id) {
+    public static int forwordBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        Blog blog = new Blog();
-        Map<String, Object> maps = new HashMap();
-        int blogid = 0;
-        System.out.println("bid=" + bid);
-        maps.put("comment_on", bid);
-        maps.put("user_id", user_id);
+        int blogid;
         try {
             blogid = sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
             sqlSession.commit();
@@ -362,4 +357,14 @@ public class BlogDao {
     }
 
 
+    public static List<Map> getCommitById(int bid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getCommitById", bid);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
 }
