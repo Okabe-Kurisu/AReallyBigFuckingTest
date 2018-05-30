@@ -401,8 +401,74 @@ $(function() {
         ataDialog_inst.close();
     })
 
+    $(".callat").on("click", function callat(argument) {
+        $(".friend-list").text("");
+        $.ajax({
+            url: "/user/getFiveUser",
+            async: false,
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                var users = data.data;
+                console.log("获取5个用户...");
+                if (data.code == 200 && users != null) {
+                    for (x in users) {
+                        var user = users[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+                            "                    </li>";
+                        $(".friend-list").append(res);
+                    }
+                }
+
+                var cDialog = $(".callat-dialog");
+                ataDialog_inst = new mdui.Dialog(cDialog, overlay = true);
+                ataDialog_inst.open();
+
+            },
+            error: function () {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+    });
+    // @用户搜索事件（监听keyup的回车事件）
+    $('.peoyourwant').keyup('keyup', function (event) {
+        param = {
+            nickname: $(".peoyourwant").val()
+        };
+        $(".friend-list").text("");
+        $.ajax({
+            url: "/user/getFiveUser",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                var users = data.data;
+                console.log("获取5个用户...");
+                if (data.code == 200 && users != null) {
+                    for (x in users) {
+                        var user = users[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+                            "                    </li>";
+                        $(".friend-list").append(res);
+                    }
+                }
+            },
+            error: function () {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+
+    });
     // #列表点击事件
-    $(".discuss-list").on("click", ".callat-item", function() {
+    $(".discuss-list").on("click", ".discussat-item", function() {
         var uid = $(this).attr("userid")
         var username = $(this).attr("username");
 
@@ -412,6 +478,72 @@ $(function() {
         $("#blog-content").val(" #" + username + " "+v);
         ataDialog_inst.close();
     })
+
+    $(".discuss").on("click", function discussat(argument) {
+        $(".discuss-list").text("");
+        $.ajax({
+            url: "/blog/getFiveDiscuss",
+            async: false,
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                var discusses = data.data;
+                console.log("获取5个话题...");
+                if (data.code == 200 && discusses != null) {
+                    for (x in discusses) {
+                        var discuss = discusses[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discussat-item\" did=\"" + discuss.did+ "\" name=\"" + discuss.name + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"./img/background.jpg\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
+                            "                    </li>";
+                        $(".discuss-list").append(res);
+                    }
+                }
+
+                var dDialog = $(".discuss-dialog");
+                ataDialog_inst = new mdui.Dialog(dDialog, overlay = true);
+                ataDialog_inst.open();
+
+            },
+            error: function () {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+    });
+    // #话题搜索事件（监听keyup的回车事件）
+    $('.putyourwant').keyup('keyup', function (event) {
+        param = {
+            name: $(".putyourwant").val()
+        };
+        $(".discuss-list").text("");
+        $.ajax({
+            url: "/blog/getFiveDiscuss",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+                var discusses = data.data;
+                console.log("获取5个话题...");
+                if (data.code == 200 && discusses != null) {
+                    for (x in discusses) {
+                        var discuss = discusses[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discussat-item\" did=\"" + discuss.did+ "\" name=\"" + discuss.name + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"./img/background.jpg\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
+                            "                    </li>";
+                        $(".discuss-list").append(res);
+                    }
+                }
+            },
+            error: function () {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+
+    });
 
     // 发布微博数据
     $(".send").click(function(argument) {
