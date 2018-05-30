@@ -356,16 +356,34 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         User user = (User) session.getAttribute("user");
         user_id = user.getUid();
         Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         Follow follow = new Follow();
         follow.setUser_id(user_id);
         follow.setFollowed_id(followed_id);
         try {
             UserDao.unfollow(follow);
             resultMap = PowerfulTools.format("200", "关注成功", map);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
         } catch (NullPointerException ne) {
+
+        }
+        return SUCCESS;
+
+    }
+
+    @Action(value = "daisuki")//特别关注 有没有新消息
+    public String daisuki() {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int date = Integer.parseInt(request.getParameter("date"));
+        int nowTime = (int) (System.currentTimeMillis()/1000);
+        Map map = new HashMap();
+        map.put("nowTime", nowTime);
+        map.put("date", date);
+        map.put("uid", user.getUid());
+        try {
+            resultMap = PowerfulTools.format("200", "成功", UserDao.daisuki(map));
+
+        } catch (NullPointerException ne) {
+            resultMap = PowerfulTools.format("100", "失败", "");
 
         }
         return SUCCESS;

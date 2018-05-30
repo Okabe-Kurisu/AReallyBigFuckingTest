@@ -138,6 +138,30 @@
         WHERE b.type = 2 AND b.comment_on = #{bid} AND b.visibility = 0
     </select>
 
+    <select id="getFavorite" parameterType="int" resultType="map">
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM favorite as f
+        JOIN blog AS b
+        ON b.bid = f.blog_id
+        JOIN user AS u
+        on b.user_id=u.uid
+        WHERE b.visibility = 0 AND f.user_id = #{uid}
+    </select>
+
+    <select id="getCallat" parameterType="int" resultType="map">
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM call_at as c
+        JOIN blog AS b
+        ON b.bid = c.blog_id
+        JOIN user AS u
+        on b.user_id=u.uid
+        WHERE b.visibility = 0 AND c.user_id=#{uid}
+    </select>
+
     <!-- 删除微博 查用户 -->
     <update id="delBlog" parameterType="int">
         UPDATE blog

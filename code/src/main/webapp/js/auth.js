@@ -45,7 +45,17 @@ $(function () {
     });
 
     $("#login-btn").click(function() {
-        console.log('登陆')
+        login();
+    })
+    $("#login-btn").keypress(function(event) {
+            var keynum = (event.keyCode ? event.keyCode : event.which);
+            if (keynum == '13') {
+                login();
+            }
+        });
+
+    function login(argument) {
+       console.log('登陆')
         var param = {
             username: $(".login-username").val(),
             password: $(".login-password").val(),
@@ -116,6 +126,5 @@ $(function () {
             })
         };
 
-
-    })
+    }
 })

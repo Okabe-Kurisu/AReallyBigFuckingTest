@@ -275,6 +275,17 @@ public class UserDao {
         return userList;
     }
 
+    public static List<Map> daisuki(Map map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> userList = null;
+        try {
+            userList = sqlSession.selectList("weibo/UserMapper.daisuki", map);
+        } finally {
+            sqlSession.close();
+        }
+        return userList;
+    }
+
 //    public static int testSignup(){
 //        User user = new User();
 //        user.setNickname("超级鹳狸猿");

@@ -225,4 +225,14 @@
         GROUP BY t.uid
         ORDER BY num DESC
     </select>
+
+    <select id="daisuki" parameterType="map" resultType="map">
+        SELECT
+        f.*
+        FROM blog AS b
+        JOIN follow AS f
+        ON f.followed_id = b.user_id AND f.user_id = #{uid} AND f.type = 2
+        WHERE b.release_time >= #{date} AND b.release_time &lt;= #{nowtime}
+        GROUP BY f.followed_id
+    </select>
 </mapper>

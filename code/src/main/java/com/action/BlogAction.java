@@ -679,6 +679,36 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
+    @Action(value = "getFavorite")
+    public String getFavorite() {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int uid = user.getUid();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.getFavorite(uid));
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getCallat")
+    public String getCallat() {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int uid = user.getUid();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.getCallat(uid));
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
     @Action(value = "getCommitById")
     public String getCommitById() {
         int bid;

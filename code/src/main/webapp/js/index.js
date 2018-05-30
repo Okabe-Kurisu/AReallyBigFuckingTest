@@ -87,20 +87,28 @@ $(function() {
             if (method == "search") {
                 // 搜索页面
                 $(".index").show();
+                $("title").html("Fake微博-搜索" + sessionStorage.keyword + "的结果"); 
                 params = {
                     keyword: sessionStorage.keyword,
                     uid: 0,
                 };
-                if (typeof(sessionStorage.uid) != "undefined") {
-                    meid = sessionStorage.uid
-                }
 
                 var db = tempDB;
                 getBlog(2, params, db);
                 readBlog(db);
+                innerHTML = innerHTML.replace(/(新)/ig,"<span class=\"mdui-text-color-red\">$1</span>")
             }
             if (method == "callat") {
                 // at人页面
+                $("title").html("Fake微博-at我的人"); 
+                var db = tempDB;
+                getBlog(3, {}, db);
+            }
+            if (method == "favorite") {
+                // 收藏
+                $("title").html("Fake微博-收藏夹"); 
+                var db = tempDB;
+                getBlog(6, {}, db);
             }
         }
 
@@ -123,6 +131,7 @@ $(function() {
                         $(".usercard-follerNum").html(userinfo.folledNum);
                         $(".usercard-folledNum").html(userinfo.follerNum);
                         $(".usercard-blogNum").html(userinfo.blogNum);
+                        $("title").html("Fake微博-" + userinfo.nickname + "的个人页面"); 
                     } else {
                         mdui.snackbar("当前用户不存在");
                         setTimeout("self.location= '/'", 1500);
@@ -164,9 +173,9 @@ $(function() {
     }
     // 得到博客并存储到websql中
     function getBlog(type, params, db) {
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "callat", "getHotspot", "getFollowBlog", ]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite" ]
         //reason是生成博客列表的时候标注的理由
-        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主"];
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客"];
         var reason = reasons[type];
         //如果不是主页，数据存入临时表中
         $.ajax({
@@ -258,6 +267,7 @@ $(function() {
         } else { //已登录
             var me = JSON.parse(sessionStorage.me);
             sessionStorage.uid = me.uid;
+            sessionStorage.date = Math.round(new Date().getTime() / 1000);
             $(".login-btn").hide();
             $(".userpanel-avatar").attr("src", me.avatar);
             $(".userpanel-nickname").html(me.nickname);
@@ -265,17 +275,43 @@ $(function() {
             $(".userpanel-href").attr("href", "/?method=userinfo&uid=" + me.uid);
 
             weiboDB.transaction(function(tx) { //这tm是异步方法
-                tx.executeSql('SELECT * FROM follow where type = 3', [], function(tx, results) {
+                tx.executeSql('SELECT * FROM follow where (type = 3 or type = 2)', [], function(tx, results) {
                     var datas = results.rows;
                     var len = datas.length;
                     if (len != 0) {
                         for (x in datas) {
-                            block.push(datas[x].userid)
+                            if (parseInt(datas[x].type) == 3)
+                                block.push(datas[x].userid)
+                            if (parseInt(datas[x].type) == 2)
+                                daisuki()
                         }
                     }
                     console.log("加载黑名单完成");
                 }, null);
             })
+
+            function daisuki(argument) {
+                $.ajax({
+                    url: "/user/daisuki",
+                    type: "POST",
+                    data: {
+                        date: sessionStorage.date
+                    },
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.code == 200) {
+                            if (data.data != null) {
+                                var len = data.data.length;
+                                if (len > 0) 
+                                    mdui.snackbar("你特别关注的" + len + "人发布了新博客，快去看看吧");
+                            }
+                            sessionStorage.date = Math.round(new Date().getTime() / 1000);
+                            setTimeout(daisuki,10000);
+                        }
+                    },
+                })
+            }
         }
     }
 
@@ -447,7 +483,7 @@ $(function() {
                 weiboDB.transaction(function(tx) {
                     tx.executeSql('DROP TABLE IF EXISTS follow');
                     tx.executeSql('DROP TABLE IF EXISTS callat');
-                    tx.executeSql('DROP TABLE IF EXISTS favarite');
+                    tx.executeSql('DROP TABLE IF EXISTS favorite');
                 })
                 console.log("用户信息清理完成")
                 self.location = '/';
@@ -668,7 +704,7 @@ $(function() {
     }
 
     function insertComment(blog) {
-        var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1\">" +
+        var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 commit-item\">" +
             "<div class=\"mdui-list-item-avatar\"><img src=\"" + blog.avatar + "\"/></div>" +
             "<div class=\"mdui-list-item-content\">" + blog.content + "</div>" +
             "</li>";
@@ -771,7 +807,8 @@ $(function() {
                     success: function(data) {
                         if (data.code == 200 && data.data != null) {
                             var commits = data.data;
-                            commitlist.children(".comment-load").hide()
+                            commitlist.children(".comment-load").remove();
+                            commitlist.children(".commit-item").remove();
                             for (x in commits) {
                                 var html = insertComment(commits[x])
                                 commitlist.append(html);
@@ -1228,4 +1265,11 @@ $(function() {
             }
         })
     }
+
+    $(".favorite-btn").click(function (){
+        self.location = "/?method=favorite";
+    })
+    $(".callat-btn").click(function (){
+        self.location = "/?method=callat";
+    })
 })

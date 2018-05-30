@@ -367,4 +367,26 @@ public class BlogDao {
         }
         return blogList;
     }
+
+    public static Object getFavorite(int uid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getFavorite", uid);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
+    public static Object getCallat(int uid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getCallat", uid);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
 }
