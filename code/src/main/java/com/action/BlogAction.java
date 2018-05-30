@@ -637,7 +637,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             });
             List rtn = new ArrayList();
             for(int j=0;j<5;j++){
-                rtn.add(blogList.get(j))
+                rtn.add(blogList.get(j));
             }
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", rtn);
