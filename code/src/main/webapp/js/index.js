@@ -239,7 +239,6 @@ $(function() {
         //初始化用户信息弹框
         $(".me").on("click", function(argument) {
             var userPanel = $(".userpanel");
-            closePanel();
             var inst = new mdui.Collapse(userPanel, accordion = true);
             inst.toggle("#userpanel");
         })
@@ -255,7 +254,7 @@ $(function() {
             $(".userpanel-avatar").attr("src", me.avatar);
             $(".userpanel-nickname").html(me.nickname);
             $(".userpanel-motto").html(me.motto);
-            $(".userpanel-href").html("/?method=userinfo&uid=" + me.uid);
+            $(".userpanel-href").attr("href", "/?method=userinfo&uid=" + me.uid);
         }
     }
 
@@ -264,7 +263,6 @@ $(function() {
         //初始化热搜框
         $(".search-input").on("focus", function(argument) {
             var hotspotPanel = $(".hotspot");
-            closePanel();
             var inst = new mdui.Collapse(hotspotPanel, accordion = true);
             inst.toggle("#hotspot");
         })
@@ -351,26 +349,6 @@ $(function() {
     })
 
     $(".back-up").on("click", smoothscroll);
-
-    //召唤用户数据统计
-    $(".usertag-btn").on("click", function(argument) {
-        var me = JSON.parse(sessionStorage.me)
-        var keywords = eval(me.keyword);
-        if (keywords.length == 0) {
-            mdui.snackbar("还没有任何标签信息，请多使用本网站或者等一会再来", timeout = 1500)
-            return;
-        }
-        for (keyword in keywords) {
-            $("#tagsList").append("<a>" + keywords[keyword] + "</a>")
-        }
-        if (sessionStorage.tag != 1) {
-            initTag()
-            sessionStorage.tag = 1
-        }
-        var dDialog = $(".usertag");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
-    })
 
 
     //滚动会最上方
@@ -485,7 +463,7 @@ $(function() {
                 var stringTime = v;
                 var timestamp2 = Date.parse(new Date(stringTime));
                 timestamp2 = timestamp2 / 1000;
-                var now = Math.round(new Date().getTime()/1000);
+                var now = Math.round(new Date().getTime() / 1000);
                 if (timestamp2 <= now) {
                     mdui.snackbar("不能小于当前时间");
                     return;
@@ -639,9 +617,8 @@ $(function() {
         }
 
         function commitToggle(argument) {
-            var commitPanel = $(this).parent().next();
-            var inst = new mdui.Collapse(commitPanel, accordion = true);
-            inst.toggle(".commit")
+            var inst = new mdui.Collapse($(this).parent().next(), accordion = true);
+            inst.openAll()
         }
 
         function blogDel(argument) {
@@ -815,9 +792,9 @@ $(function() {
         function devInfoBtn() {
             var devInfo = $(this).parent().prev();
             if (devInfo.css("display") == 'none') {
-                devInfo.show(speed = "normal");
+                devInfo.show(speed = "fast");
             } else {
-                devInfo.hide(speed = "normal");
+                devInfo.hide(speed = "fast");
             }
         }
     }
@@ -861,32 +838,6 @@ $(function() {
         var cDialog = $(".callat-dialog");
         ataDialog_inst = new mdui.Dialog(cDialog, overlay = true);
         ataDialog_inst.open();
-        // $.ajax({
-        //     url: "/user/getFiveUser",
-        //     type: "POST",
-        //     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        //     dataType: "json",
-        //     success: function(data) {
-        //         console.log(data);
-        //         var users = data.data;
-        //         console.log("获取5个用户...");
-        //         if (data.code == 200 && users != null) {
-        //             for (x in users) {
-        //                 var user = users[x];
-        //                 var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
-        //                     "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
-        //                     "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
-        //                     "                    </li>";
-        //                 $(".friend-list").append(res);
-        //             }
-        //         }
-        //         
-
-        //     },
-        //     error: function() {
-        //         mdui.snackbar("用户获取失败");
-        //     },
-        // })
     });
     // @用户搜索事件（监听keyup的回车事件）
     $('.peoyourwant').keyup('keyup', function(event) {
@@ -908,7 +859,7 @@ $(function() {
                     for (x in users) {
                         var user = users[x];
                         var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
-                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.avatar + "\"/></div>\n" +
                             "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
                             "                    </li>";
                         $(".friend-list").append(res);
@@ -991,13 +942,6 @@ $(function() {
         smoothscroll();
         $("#blog-content").focus();
     })
-
-    function closePanel() { //用来收起多出来的框框
-        var Panel = $('.mdui-collapse-item-open');
-        var inst = new mdui.Collapse(Panel.parent(), accordion = true);
-        inst.closeAll();
-    }
-
 
     $('.insert-img').click(function() {
         inst = upload()
