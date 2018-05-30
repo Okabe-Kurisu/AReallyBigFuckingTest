@@ -31,12 +31,10 @@ $(function() {
             tx.executeSql('DROP TABLE IF EXISTS blog');
             console.log("测试时每次打开网页会清空数据，测试完后记得删")
         })
-        //用户标签初始化标记为0
+        //初始化数据
         sessionStorage.tag = 0;
-        //不应该显示的标签
-        $(".userinfo").hide();
-        $(".index").hide();
-        $(".send-card").hide();
+        sessionStorage.removeItem("time");
+        sessionStorage.removeItem("hotspot");
         // 如果是特殊类型的访问
         if (typeof(method) == "undefined") {
             // 主页
@@ -56,9 +54,6 @@ $(function() {
                 params.userid = sessionStorage.uid
                 getBlog(5, params, db);
             }
-
-
-
             readBlog(db);
             //todo 加载太长了，写一个加载动画
 
@@ -311,6 +306,10 @@ $(function() {
 
 
     function initPanel(argument) {
+        //不应该显示的标签
+        $(".userinfo").hide();
+        $(".index").hide();
+        $(".send-card").hide();
         //让panel弹出来能再收回去
         $(document).click(function(ev) {
             var openPanel = $(".mdui-collapse-item-open");
@@ -441,7 +440,7 @@ $(function() {
                 } else {
                     sessionStorage.removeItem("time");
                 }
-                if (typeof(sessionStorage.discussdid) == "undefined") {
+                if (typeof(sessionStorage.discussdid) != "undefined") {
                     $.ajax({
                         url: "/user/addDisBlog",
                         data: {
@@ -452,7 +451,7 @@ $(function() {
                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     })
                 }
-                if (typeof(sessionStorage.callatuid) == "undefined") {
+                if (typeof(sessionStorage.callatuid) != "undefined") {
                     $.ajax({
                         url: "/user/addCallAt",
                         data: {
@@ -480,7 +479,7 @@ $(function() {
             stamp: false, //是否转成时间戳，默认true;
             format: "yyyy-mm-dd hh:ii", //时间格式 默认 yyyy-mm-dd hh:ii;
             skin: 3, //皮肤颜色，默认随机，可选值：0-8,或者直接标注颜色值;
-            step: 10, //选择时间分钟的精确度;
+            step: 5, //选择时间分钟的精确度;
             callback: function(v, e) {
                 v += ":00"
                 var stringTime = v;
@@ -488,7 +487,6 @@ $(function() {
                 timestamp2 = timestamp2 / 1000;
                 sessionStorage.time = timestamp2;
                 inst.close()
-
             }
         });
     })
@@ -549,9 +547,26 @@ $(function() {
             "</button>\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report \"><i\n" +
             "class=\"mdui-icon material-icons\">flag</i>举报\n" +
-            "</button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
-            "</div>\n" +
-            "</div>"
+            "</button></div><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
+            "<div class=\"commit-panel mdui-collapse\" mdui-panel>" +
+            "<div class=\"mdui-collapse-item commit\">" +
+            "<div class=\"mdui-collapse-item-header\"></div>" +
+            "<div class=\"mdui-collapse-item-body\">" +
+            "<div class=\"mdui-divider\"></div>" +
+            "<ul class=\"mdui-list mdui-list-dense\">" +
+            "<!-- 用户评论部分 -->" +
+            "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1\">" +
+            " <div class=\"mdui-list-item-avatar\"><img class=\"blog-avatar\" src=\"" + data.avatar + "\"/></div>" +
+            "<div class=\"mdui-list-item-content\">" +
+            "<input class=\"mdui-textfield-input\" type=\"text\" placeholder=\"发表评论\"/>" +
+            "<div class=\"btn_list mdui-m-t-1\">" +
+            "<div class=\"mdui-btn mdui-btn-dense mdui-color-red mdui-float-right mdui-ripple mdui-m-r-2 commit-send\">" +
+            "<i class=\"mdui-icon material-icons\">check</i> 评论</div>" +
+            "<div class=\"mdui-btn mdui-btn-dense mdui-color-red mdui-float-right mdui-ripple mdui-m-r-1 forward-send\">" +
+            "<i class=\"mdui-icon material-icons\">format_quote</i> 转发并评论" +
+            "</div></div></div></li>" +
+            "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 comment-load\"><div class=\"mdui-list-item-content mdui-center\"><div class=\"mdui-spinner mdui-spinner-colorful\"></div></div></li>" +
+            "</ul></div> </div></div></div>";
         $(".blogs").after(res);
     }
 
@@ -619,7 +634,6 @@ $(function() {
 
         function commitToggle(argument) {
             var commitPanel = $(this).parent().next();
-            closePanel();
             var inst = new mdui.Collapse(commitPanel, accordion = true);
             inst.toggle(".commit")
         }

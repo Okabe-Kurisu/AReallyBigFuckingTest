@@ -327,10 +327,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "forwardBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"}),
-            @Result(name = "login", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "forwardBlog")
     @Authority("")
     public String forwardBlog() {//转发微博
         Blog blog = new Blog();
