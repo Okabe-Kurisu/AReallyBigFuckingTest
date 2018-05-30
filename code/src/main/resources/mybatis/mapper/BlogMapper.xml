@@ -212,9 +212,11 @@
         WHERE
         discuss.visibility=0
         <if test="#{name}!=null">
-            AND discuss.name LIKE "%"#{name}"%"</if>
+            AND discuss.name LIKE "%"#{name}"%"
+        </if>
         <if test="#{NowTime}!=null">
-            AND  #{NowTime}&gt;discuss.start_time</if>
+            AND #{NowTime}&gt;discuss.start_time
+        </if>
         limit 5
     </select>
 
