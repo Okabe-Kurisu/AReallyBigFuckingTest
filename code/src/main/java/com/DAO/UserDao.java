@@ -40,11 +40,16 @@ public class UserDao {
     public static int follow(Follow follow) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-            sqlSession.insert("weibo/UserMapper.follow",follow);
-            sqlSession.commit();
-        } finally {
-            sqlSession.close();
+            sqlSession.delete("weibo/UserMapper.unfollow", follow);
+        }finally {
+            try {
+                sqlSession.insert("weibo/UserMapper.follow",follow);
+                sqlSession.commit();
+            } finally {
+                sqlSession.close();
+            }
         }
+
         return 0;
     }
     public static int unfollow(Follow follow) {

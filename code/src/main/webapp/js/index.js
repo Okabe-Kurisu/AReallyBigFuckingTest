@@ -120,8 +120,8 @@ $(function() {
                         userinfo = data.data
                         $(".usercard-background").attr("src", userinfo.background);
                         $(".usercard-avatar").attr("src", userinfo.avatar);
-                        $(".usercard-follerNum").html(userinfo.follerNum);
-                        $(".usercard-folledNum").html(userinfo.folledNum);
+                        $(".usercard-follerNum").html(userinfo.folledNum);
+                        $(".usercard-folledNum").html(userinfo.follerNum);
                         $(".usercard-blogNum").html(userinfo.blogNum);
                     } else {
                         mdui.snackbar("当前用户不存在");
@@ -348,17 +348,89 @@ $(function() {
 
     function initUsercardAction() {
         var timeout;
+        var flag = 0;
 
         $(".follow-btn").mousedown(function() {
             timeout = setTimeout(function() {
-                console.log("长按两秒")
+                if (typeof(sessionStorage.uid) == "undefined") {
+                    mdui.snackbar("请先登录");
+                    return;
+                }
+                var user = GetRequest();
+                param = {
+                    followed_id: user.uid,
+                    type: 2
+                }
+                $.ajax({
+                    url: "/user/follow",
+                    type: "POST",
+                    data: param,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.code == 200) {
+                            mdui.snackbar("特别关注成功");
+                        }
+                        flag = 1;
+                    },
+                })
             }, 500);
         });
 
         $(".follow-btn").mouseup(function() {
-            console.log(timeout)
             clearTimeout(timeout);
+            console.log(flag)
+            if (flag == 0) {
+                if (typeof(sessionStorage.uid) == "undefined") {
+                    mdui.snackbar("请先登录");
+                    return;
+                }
+                var user = GetRequest()
+                param = {
+                    followed_id: user.uid,
+                    type: 0
+                }
+                $.ajax({
+                    url: "/user/follow",
+                    type: "POST",
+                    data: param,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.code == 200) {
+                            mdui.snackbar("关注成功");
+                        }
+                    },
+                })
+            }
+            flag = 0
+            return;
         });
+
+
+        $(".block-btn").click(function(argument) {
+            if (typeof(sessionStorage.uid) == "undefined") {
+                mdui.snackbar("请先登录");
+                return;
+            }
+            var user = GetRequest()
+            param = {
+                followed_id: user.uid,
+                type: 1
+            }
+            $.ajax({
+                url: "/user/follow",
+                type: "POST",
+                data: param,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    if (data.code == 200) {
+                        mdui.snackbar("屏蔽成功");
+                    }
+                },
+            })
+        })
     }
 
 
