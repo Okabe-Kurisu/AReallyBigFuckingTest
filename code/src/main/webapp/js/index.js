@@ -485,7 +485,13 @@ $(function() {
                 var stringTime = v;
                 var timestamp2 = Date.parse(new Date(stringTime));
                 timestamp2 = timestamp2 / 1000;
+                var now = Math.round(new Date().getTime()/1000);
+                if (timestamp2 <= now) {
+                    mdui.snackbar("不能小于当前时间");
+                    return;
+                }
                 sessionStorage.time = timestamp2;
+
                 inst.close()
             }
         });
