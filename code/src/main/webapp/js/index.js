@@ -96,19 +96,21 @@ $(function() {
                 var db = tempDB;
                 getBlog(2, params, db);
                 readBlog(db);
-                innerHTML = innerHTML.replace(/(新)/ig,"<span class=\"mdui-text-color-red\">$1</span>")
+                var blogs = document.getElementById("blogs")
             }
             if (method == "callat") {
                 // at人页面
                 $("title").html("Fake微博-at我的人"); 
                 var db = tempDB;
                 getBlog(3, {}, db);
+                readBlog(db);
             }
             if (method == "favorite") {
                 // 收藏
                 $("title").html("Fake微博-收藏夹"); 
                 var db = tempDB;
                 getBlog(6, {}, db);
+                readBlog(db);
             }
         }
 
@@ -625,6 +627,12 @@ $(function() {
 
 
     function insertBlog(data, reason) {
+        data.ocontent = data.content;
+        if (typeof(sessionStorage.keyword)) {
+            data.motto = data.motto.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.nickname = data.nickname.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.content = data.content.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+        }
         var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + data.bid + ">\n" +
             "<div class=\"dev-info\" style=\"display: none;\">\n" +
             "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">这条微博出现在这里，因为<strong>" + data.reason + "</strong></p>\n" +
@@ -658,13 +666,13 @@ $(function() {
         }
         // 如果blog中包含转发内容
         if (parseInt(data.type) == 1) {
-            res += "<div class=\"mdui-card-content\" content=\"" + data.content + "\">" + data.content + //转发博客的主体内容
+            res += "<div class=\"mdui-card-content\" content=\"" + data.ocontent + "\">" + data.content + //转发博客的主体内容
                 "<!-- 被转发微博在下面， 相当于是在本身微博的最后加上一个新的微博卡片 -->" +
                 //先显示正在加载，然后在每次生成微博后绑定上真正的转发内容加载方法,待加载bid获取方法为$(".waitload").attr("bid")
                 "<div class=\"mdui-spinner mdui-spinner-colorful waitload\"  bid=\"" + data.commentOn + "\"></div>" +
                 "</div>\n"
         } else {
-            res += "<div class=\"mdui-card-content\" content=\"" + data.content + "\">" + data.content + "</div>\n"
+            res += "<div class=\"mdui-card-content\" content=\"" + data.ocontent + "\">" + data.content + "</div>\n"
         }
         res += "<div class=\"mdui-card-actions\">\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\" likeNum=\"" + data.likeNum + "\"><i\n" +
@@ -700,7 +708,7 @@ $(function() {
             res += "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 comment-load\"><div class=\"mdui-list-item-content mdui-center\">" +
             "<div class=\"mdui-spinner mdui-spinner-colorful\"></div></li>";
         res += "</ul></div></div></div></div></div>";
-        $(".blogs").after(res);
+        $(".blogs").prepend(res);
     }
 
     function insertComment(blog) {
