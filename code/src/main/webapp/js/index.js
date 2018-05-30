@@ -81,6 +81,7 @@ $(function() {
                 if (uid == meid) {
                     $(".usercard-action").hide()
                 }
+                initUsercardAction()
 
             }
             if (method == "search") {
@@ -344,6 +345,23 @@ $(function() {
             }
         })
     }
+
+    function initUsercardAction() {
+        var timeout;
+
+        $(".follow-btn").mousedown(function() {
+            timeout = setTimeout(function() {
+                console.log("长按两秒")
+            }, 500);
+        });
+
+        $(".follow-btn").mouseup(function() {
+            console.log(timeout)
+            clearTimeout(timeout);
+        });
+    }
+
+
 
     $(".logout").click(function() {
         $.ajax({
@@ -682,7 +700,7 @@ $(function() {
                         if (data.code == 200 && data.data != null) {
                             var commits = data.data;
                             commitlist.children(".comment-load").hide()
-                            for (x in commits){
+                            for (x in commits) {
                                 var html = insertComment(commits[x])
                                 commitlist.append(html);
                             }
@@ -1025,6 +1043,8 @@ $(function() {
             },
         })
     });
+
+
 
     // 创建话题按钮点击事件
     $(".creatDiscuss").on("click", function showAddDiscuss(argument) {
