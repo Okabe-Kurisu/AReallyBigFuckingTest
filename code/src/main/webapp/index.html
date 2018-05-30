@@ -6,6 +6,7 @@
         <meta http-equiv="charset" content="utf-8">
         <link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
         <link rel="stylesheet" type="text/css" href="./css/mine.css">
+        <link rel="stylesheet" href="./css/style.css" />
     </head>
     <body class="mdui-theme-primary-indigo mdui-theme-accent-red mdui-color-grey-100">
         <!-- 头部栏 -->
@@ -38,7 +39,7 @@
                     <div class="mdui-collapse-item-header"></div>
                     <div class="mdui-card mdui-float-right mdui-collapse-item-body userpanel-body">
                         <div class="mdui-card-header mdui-center ">
-                            <img class="mdui-card-header-avatar mdui-center userpanel-avator" src="./img/avatar.jpg"/>
+                            <a href="" class="userpanel-href"><img class="mdui-card-header-avatar mdui-center userpanel-avator" src="./img/avatar.jpg"/></a>
                             <div class="mdui-card-header-title mdui-center userpanel-nickname">默认用户</div>
                             <div class="mdui-card-header-subtitle mdui-center userpanel-motto">一个普通的默认用户</div>
                         </div>
@@ -117,6 +118,7 @@
                             </button>
                             <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme callat">@at某人</button>
                             <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme discuss">#话题</button>
+                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme setTime"><i class="mdui-icon material-icons">access_alarm</i>定时发布</button>
                             <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-float-right mdui-color-teal mdui-text-color-white send">
                             <i class="mdui-icon material-icons">check</i>发送
                             </button>
@@ -184,7 +186,7 @@
                         </div>
                         <div class="mdui-card-content ">
                             <ul class="mdui-list mdui-list-dense">
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+                                <li class="mdui-list-item mdui-ripple mdui-p-l-1">
                                     <p class="mdui-list-item-icon mdui-text-color-red">1</p>
                                     <div class="mdui-list-item-content">热搜词语</div>
                                 </li>
@@ -203,8 +205,6 @@
                     </button>
                     <div class="mdui-fab-dial">
                         <!-- 回到顶部 -->
-                        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-teal myDiscuss"
-                        mdui-tooltip="{content: '我的话题', delay: 500}"><strong>#</strong></button>
                         <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange mdui-text-color-white creatDiscuss"
                         mdui-tooltip="{content: '创建话题', delay: 500}"><i class="mdui-icon material-icons">chat_bubble</i>
                         </button>
@@ -266,13 +266,20 @@
                         </ul>
                     </div>
                 </div>
+                <!-- 定時發佈dialog -->
+                <div class="mdui-dialog setTime-dialog .mdui-color-transparent">
+                    <div class="mdui-dialog-title">定时发布</div>
+                    <div class="mdui-dialog-content setTime-content mdui-center">
+                        <input type="text" name="date" class='ECalendar mdui-textfield-input' id="ECalendar_date" size="16"  value="" placeholder="点击开始设定时间" />
+                    </div>
+                </div>
                 <!-- #话题dialog -->
                 <div class="mdui-dialog discuss-dialog">
                     <div class="mdui-dialog-title">想讨论什么？</div>
                     <div class="mdui-dialog-content discuss-content">
                         <div class="mdui-textfield mdui-textfield-floating-label">
                             <label class="mdui-textfield-label">话题名称</label>
-                            <input type="text" class="mdui-textfield-input putyourwant"/>
+                            <input type="text" class="mdui-textfield-input discuss-input"/>
                         </div>
                         <ul class="mdui-list mdui-list-dense discuss-list">
                         </ul>
@@ -339,71 +346,11 @@
                     </div>
                 </div>
                 <!--todo: 收藏夹 -->
-                <!-- 博客模版 -->
-                <div class="template mdui-hidden">
-                    <div class="mdui-card mdui-m-t-1" blog-id="0">
-                        <div class="mdui-card-header">
-                            <a href="/user/userinfo?userid=123456"><img class="mdui-card-header-avatar blog-avatar" src=""/></a>
-                            <div class="mdui-card-header-title blog-name"></div>
-                            <div class="mdui-card-header-subtitle blog-motto"></div>
-                            <!-- 时间戳生成发博时间 -->
-                            <div class="mdui-card-menu blog-date mdui-text-color-grey-500">
-                            </div>
-                        </div>
-                        <!-- 发布了带有多媒体的博客就加上这个 -->
-                        <div class="mdui-card-media blog-media">
-                            <img class="blog-media" src=""/>
-                        </div>
-                        <div class="mdui-card-content blog-content">
-                            <div class="origin-blog"></div>
-                        </div>
-                        <div class="mdui-card-actions">
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up blog-thumbs"><i
-                            class="mdui-icon material-icons">thumb_up</i>赞()
-                            </button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle blog-commits">
-                            <i class="mdui-icon material-icons">forum</i>()
-                            </button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite blog-favorite"><i
-                            class="mdui-icon material-icons">folder_open</i>收藏
-                            </button>
-                            <button class="mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report "><i
-                            class="mdui-icon material-icons">flag</i>举报
-                            </button>
-                        </div>
-                        <!-- 评论 -->
-                        <div class="commit-panel mdui-collapse" mdui-panel>
-                            <div class="mdui-collapse-item commit">
-                                <div class="mdui-collapse-item-header"></div>
-                                <div class="mdui-collapse-item-body">
-                                    <div class="mdui-divider"></div>
-                                    <ul class="mdui-list mdui-list-dense">
-                                        <!-- 用户评论部分 -->
-                                        <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                                            <div class="mdui-list-item-avatar"><img class="blog-avatar" src=""/></div>
-                                            <div class="mdui-list-item-content">
-                                                <input class="mdui-textfield-input" type="text" placeholder="发表评论"/>
-                                                <div class="btn_list mdui-m-t-1">
-                                                    <div class="mdui-btn mdui-btn-dense mdui-color-red mdui-float-right mdui-ripple mdui-m-r-2 commit-send">
-                                                        <i class="mdui-icon material-icons">check</i> 评论
-                                                    </div>
-                                                    <div class="mdui-btn mdui-btn-dense mdui-color-red mdui-float-right mdui-ripple mdui-m-r-1 forward-send">
-                                                        <i class="mdui-icon material-icons ">format_quote</i> 转发并评论
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <script src="./js/mdui.min.js"></script>
                 <script src="./js/jquery.js"></script>
+                <script src="./js/Ecalendar.jquery.min.js"></script>
                 <script src="./js/tags.js"></script>
                 <script src="./js/datestampTool.js"></script>
-                <script src="./js/laydate.js"></script>
                 <script src="./js/index.js"></script>
             </footer>
         </div>

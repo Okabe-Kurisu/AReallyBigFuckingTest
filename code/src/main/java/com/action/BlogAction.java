@@ -327,10 +327,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "forwardBlog", results = {
-            @Result(name = "success", type = "json", params = {"root", "resultMap"}),
-            @Result(name = "login", type = "json", params = {"root", "resultMap"})
-    })
+    @Action(value = "forwardBlog")
     @Authority("")
     public String forwardBlog() {//转发微博
         Blog blog = new Blog();
@@ -390,6 +387,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 获得参数
             keyword = request.getParameter("keyword");
             userid = request.getParameter("uid");
+            System.out.println(keyword);
             // 获得当前时间戳
             nowtime = new java.util.Date().getTime() / 1000;
             map.put("userid", userid);
@@ -589,6 +587,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
             // 调用Dao层 获取数据
             List blogList = BlogDao.getFollowBlogByUserid(map);
+            System.out.println("得到了用户关注的各种微博" + blogList.size());
 
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", blogList);
@@ -608,7 +607,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         Map<String, Object> map = new HashMap();
         try {
             // 调用Dao层 获取数据
+            int nowtime = (int) (System.currentTimeMillis()/1000 - 24*3600);
+
+            map.put("nowtime",nowtime);
             List blogList = BlogDao.getTodayHostBlog(map);
+
+            System.out.println("list集合大小："+blogList.size());
 
             // 对今日微博进行热点排序
             blogList.sort((Comparator<Map<String, Object>>) (o1, o2) -> {

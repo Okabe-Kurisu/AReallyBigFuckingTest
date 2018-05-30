@@ -10,10 +10,10 @@ $(function() {
     var createDialog_inst //创建话题对话框
 
     $("document").ready(function() {
-        initPage();
         initUser();
         initSearch();
         initPanel();
+        initPage();
     })
 
     // 初始化页面类型
@@ -31,21 +31,32 @@ $(function() {
             tx.executeSql('DROP TABLE IF EXISTS blog');
             console.log("测试时每次打开网页会清空数据，测试完后记得删")
         })
-        //用户标签初始化标记为0
+        //初始化数据
         sessionStorage.tag = 0;
-        //不应该显示的标签
-        $(".userinfo").hide();
-        $(".index").hide();
-        $(".send-card").hide();
+        sessionStorage.removeItem("time");
+        sessionStorage.removeItem("hotspot");
         // 如果是特殊类型的访问
         if (typeof(method) == "undefined") {
             // 主页
             $(".index").show();
-            $(".send-card").show();
+            if (typeof(sessionStorage.uid) != "undefined") {
+                $(".send-card").show();
+            }
             params = {
                 time: Math.round(new Date().getTime() / 1000),
             }
-            getBlog(0, params);
+            var db = weiboDB;
+            // 取到微博
+            //获取热门微博，关注用户微博，关注话题微博
+            getBlog(0, params, db);
+            getBlog(4, params, db);
+            if (typeof(sessionStorage.uid) != "undefined") {
+                params.userid = sessionStorage.uid
+                getBlog(5, params, db);
+            }
+            readBlog(db);
+            //todo 加载太长了，写一个加载动画
+
         } else {
             if (method == "userinfo") {
                 //用户页面
@@ -53,7 +64,11 @@ $(function() {
                 params = {
                     uid: uid
                 };
-                getBlog(1, params);
+
+                var db = tempDB;
+                getBlog(1, params, db);
+                readBlog(db);
+
                 setUsercard(uid);
                 setFanCard(uid);
                 $(".userinfo").show();
@@ -77,7 +92,10 @@ $(function() {
                 if (typeof(sessionStorage.uid) != "undefined") {
                     meid = sessionStorage.uid
                 }
-                getBlog(2, params);
+
+                var db = tempDB;
+                getBlog(2, params, db);
+                readBlog(db);
             }
             if (method == "callat") {
                 // at人页面
@@ -143,19 +161,16 @@ $(function() {
         }
     }
     // 得到博客并存储到websql中
-    function getBlog(type, params) {
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "callat"]
+    function getBlog(type, params, db) {
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "callat", "getHotspot", "getFollowBlog", ]
         //reason是生成博客列表的时候标注的理由
-        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了博主", "你关注了该话题"];
-        var db = weiboDB;
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主"];
         var reason = reasons[type];
         //如果不是主页，数据存入临时表中
-        if (type != 0) {
-            db = tempDB;
-        }
         $.ajax({
             url: "/blog/" + urls[type],
             type: "POST",
+            async: false,
             data: params,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
@@ -165,9 +180,7 @@ $(function() {
                     var blogs = data.data;
                     saveToSql(blogs, db, reason = reason);
                 }
-                console.log("博客数据加载完成")
-
-                readBlog(db);
+                console.log("博客数据加载完成");
             },
         })
 
@@ -180,18 +193,19 @@ $(function() {
             tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow, reason)');
             for (x in data) {
                 var temp = data[x];
-                var bloginfo = [temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight, reason];
-                tx.executeSql('INSERT INTO blog (bid, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, reason) \
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', bloginfo);
+                var bloginfo = [temp.bid, temp.bid, temp.bid, temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight, reason];
+                tx.executeSql('INSERT OR REPLACE INTO blog(bid, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, reason) VALUES(' +
+                    '(SELECT CASE WHEN exists(SELECT ? FROM blog WHERE bid = ? ) THEN ? ELSE ? END' +
+                    '), ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, ? )', bloginfo);
             }
         })
     }
 
-    // 从数据库读取并生成微博
     //todo: 分页查询
+    // 从数据库读取并生成微博
     function readBlog(db) {
         db.transaction(function(tx) { //这tm是异步方法
-            tx.executeSql('SELECT * FROM blog', [], function(tx, results) {
+            tx.executeSql('SELECT * FROM blog order by releaseTime, weight DESC', [], function(tx, results) {
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
@@ -241,13 +255,14 @@ $(function() {
             $(".userpanel-avatar").attr("src", me.avatar);
             $(".userpanel-nickname").html(me.nickname);
             $(".userpanel-motto").html(me.motto);
+            $(".userpanel-href").html("/?method=userinfo&uid=" + me.uid);
         }
     }
 
     //得到热搜列表，点击热搜词填充，以及进行搜索
     function initSearch(argument) {
         //初始化热搜框
-        $(".search-bar").on("click", function(argument) {
+        $(".search-input").on("focus", function(argument) {
             var hotspotPanel = $(".hotspot");
             closePanel();
             var inst = new mdui.Collapse(hotspotPanel, accordion = true);
@@ -276,6 +291,7 @@ $(function() {
         //点击条目填充搜索栏
         $(".hotspot-list").click(function(argument) {
             $('.search-input').val($(this).children('.mdui-list-item-content').html())
+            $('.search-input').focus();
         })
 
         $(".search-input").keypress(function(event) {
@@ -290,6 +306,10 @@ $(function() {
 
 
     function initPanel(argument) {
+        //不应该显示的标签
+        $(".userinfo").hide();
+        $(".index").hide();
+        $(".send-card").hide();
         //让panel弹出来能再收回去
         $(document).click(function(ev) {
             var openPanel = $(".mdui-collapse-item-open");
@@ -555,6 +575,9 @@ $(function() {
             param.multimedia = sessionStorage.img;
             sessionStorage.removeItem("img");
         }
+        if (typeof(sessionStorage.time) != "undefined") {
+            param.release_time = sessionStorage.time;
+        }
         $.ajax({
             url: "/blog/submitBlog",
             data: param,
@@ -567,17 +590,70 @@ $(function() {
                 rtn.releaseTime = rtn.release_time;
                 rtn.browserSign = rtn.browser_sign;
                 rtn.commentOn = rtn.comment_on;
-                insertBlog(rtn, reason = "是你发送的");
-                initCard()()
+                if (typeof(sessionStorage.time) == "undefined") {
+                    insertBlog(rtn, reason = "是你发送的");
+                    initCard();
+                } else {
+                    sessionStorage.removeItem("time");
+                }
+                if (typeof(sessionStorage.discussdid) != "undefined") {
+                    $.ajax({
+                        url: "/user/addDisBlog",
+                        data: {
+                            discuss_id: sessionStorage.discussdid,
+                            bid: rtn.bid,
+                        },
+                        type: "POST",
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    })
+                }
+                if (typeof(sessionStorage.callatuid) != "undefined") {
+                    $.ajax({
+                        url: "/user/addCallAt",
+                        data: {
+                            atuserid: sessionStorage.callatuid,
+                            bid: rtn.bid,
+                        },
+                        type: "POST",
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    })
+                }
                 mdui.snackbar("发送成功");
-                //todo: 获得用户的关注信息
             },
             error: function() {
                 mdui.snackbar("微博发送失败");
             },
         })
-
     })
+
+    $(".setTime").click(function(argument) {
+        var beDialog = $(".setTime-dialog");
+        var inst = new mdui.Dialog(beDialog, overlay = true);
+        inst.open();
+        $("#ECalendar_date").ECalendar({
+            type: "time", //模式，time: 带时间选择; date: 不带时间选择;
+            stamp: false, //是否转成时间戳，默认true;
+            format: "yyyy-mm-dd hh:ii", //时间格式 默认 yyyy-mm-dd hh:ii;
+            skin: 3, //皮肤颜色，默认随机，可选值：0-8,或者直接标注颜色值;
+            step: 5, //选择时间分钟的精确度;
+            callback: function(v, e) {
+                v += ":00"
+                var stringTime = v;
+                var timestamp2 = Date.parse(new Date(stringTime));
+                timestamp2 = timestamp2 / 1000;
+                var now = Math.round(new Date().getTime()/1000);
+                if (timestamp2 <= now) {
+                    mdui.snackbar("不能小于当前时间");
+                    return;
+                }
+                sessionStorage.time = timestamp2;
+
+                inst.close()
+            }
+        });
+    })
+
+
 
     function insertBlog(data, reason) {
         var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + data.bid + ">\n" +
@@ -633,9 +709,26 @@ $(function() {
             "</button>\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-float-right mdui-color-red report \"><i\n" +
             "class=\"mdui-icon material-icons\">flag</i>举报\n" +
-            "</button><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
-            "</div>\n" +
-            "</div>"
+            "</button></div><!-- todo: 如果是鹳狸猿改成封禁 -->\n" +
+            "<div class=\"commit-panel mdui-collapse\" mdui-panel>" +
+            "<div class=\"mdui-collapse-item commit\">" +
+            "<div class=\"mdui-collapse-item-header\"></div>" +
+            "<div class=\"mdui-collapse-item-body\">" +
+            "<div class=\"mdui-divider\"></div>" +
+            "<ul class=\"mdui-list mdui-list-dense\">" +
+            "<!-- 用户评论部分 -->" +
+            "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1\">" +
+            " <div class=\"mdui-list-item-avatar\"><img class=\"blog-avatar\" src=\"" + data.avatar + "\"/></div>" +
+            "<div class=\"mdui-list-item-content\">" +
+            "<input class=\"mdui-textfield-input\" type=\"text\" placeholder=\"发表评论\"/>" +
+            "<div class=\"btn_list mdui-m-t-1\">" +
+            "<div class=\"mdui-btn mdui-btn-dense mdui-color-red mdui-float-right mdui-ripple mdui-m-r-2 commit-send\">" +
+            "<i class=\"mdui-icon material-icons\">check</i> 评论</div>" +
+            "<div class=\"mdui-btn mdui-btn-dense mdui-color-red mdui-float-right mdui-ripple mdui-m-r-1 forward-send\">" +
+            "<i class=\"mdui-icon material-icons\">format_quote</i> 转发并评论" +
+            "</div></div></div></li>" +
+            "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 comment-load\"><div class=\"mdui-list-item-content mdui-center\"><div class=\"mdui-spinner mdui-spinner-colorful\"></div></div></li>" +
+            "</ul></div> </div></div></div>";
         $(".blogs").after(res);
     }
 
@@ -703,7 +796,6 @@ $(function() {
 
         function commitToggle(argument) {
             var commitPanel = $(this).parent().next();
-            closePanel();
             var inst = new mdui.Collapse(commitPanel, accordion = true);
             inst.toggle(".commit")
         }
@@ -921,23 +1013,128 @@ $(function() {
     }
 
     $(".callat").on("click", function callat(argument) {
+        $(".friend-list").text("");
         var cDialog = $(".callat-dialog");
-        var inst = new mdui.Dialog(cDialog, overlay = true);
-        inst.open();
-    })
+        ataDialog_inst = new mdui.Dialog(cDialog, overlay = true);
+        ataDialog_inst.open();
+        // $.ajax({
+        //     url: "/user/getFiveUser",
+        //     type: "POST",
+        //     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        //     dataType: "json",
+        //     success: function(data) {
+        //         console.log(data);
+        //         var users = data.data;
+        //         console.log("获取5个用户...");
+        //         if (data.code == 200 && users != null) {
+        //             for (x in users) {
+        //                 var user = users[x];
+        //                 var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+        //                     "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+        //                     "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+        //                     "                    </li>";
+        //                 $(".friend-list").append(res);
+        //             }
+        //         }
+        //         
 
-    $(".discuss").on("click", function discussat(argument) {
-        var dDialog = $(".discuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
-    })
+        //     },
+        //     error: function() {
+        //         mdui.snackbar("用户获取失败");
+        //     },
+        // })
+    });
+    // @用户搜索事件（监听keyup的回车事件）
+    $('.peoyourwant').keyup('keyup', function(event) {
+        param = {
+            nickname: $(".peoyourwant").val()
+        };
+        $(".friend-list").text("");
+        $.ajax({
+            url: "/user/getFiveUser",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function(data) {
+                var users = data.data;
+                console.log("获取5个用户...");
+                if (data.code == 200 && users != null) {
+                    for (x in users) {
+                        var user = users[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+                            "                    </li>";
+                        $(".friend-list").append(res);
+                    }
+                    // @列表点击事件
+                    $(".friend-list").off("click");
+                    $(".friend-list").on("click", ".callat-item", function() {
+                        var uid = $(this).attr("userid")
+                        var username = $(this).attr("username");
+                        var v = $("#blog-content").val();
+                        $("#blog-content").val(v + " @" + username + " ");
+                        ataDialog_inst.close();
+                        $("#blog-content").focus();
+                        sessionStorage.callatuid = uid;
+                    })
+                }
+            },
+            error: function() {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+    });
 
-    // 我的话题按钮点击时间
-    $(".myDiscuss").on("click", function showMyDiscuss(argument) {
-        var dDialog = $(".manageDiscuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
-    })
+    $(".diucuss").on("click", function diucuss(argument) {
+        var dDialog = $(".diucuss-dialog");
+        dDialog_inst = new mdui.Dialog(dDialog, overlay = true);
+        dDialog_inst.open();
+    });
+    // @用户搜索事件（监听keyup的回车事件）
+    $('.discuss-input').keyup('keyup', function(event) {
+        param = {
+            name: $(".discuss-input").val()
+        };
+        $(".discuss-list").text("");
+        $.ajax({
+            url: "/blog/getFiveDiscuss",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function(data) {
+                var discusses = data.data;
+                console.log("获取5个话题");
+                if (data.code == 200 && discusses != null) {
+                    for (x in discusses) {
+                        var discuss = discusses[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discuss-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
+                            "                    </li>";
+                        $(".discuss-list").append(res);
+                    }
+                }
+                // @列表点击事件
+                $(".discuss-list").off("click");
+                $(".discuss-list").on("click", ".discuss-item", function() {
+                    var did = $(this).attr("did")
+                    var name = $(this).attr("name");
+                    var v = $("#blog-content").val();
+                    $("#blog-content").val(v + " #" + name + " ");
+                    ataDialog_inst.close();
+                    $("#blog-content").focus();
+                    sessionStorage.discussdid = did;
+                })
+            },
+            error: function() {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+    });
 
     // 创建话题按钮点击事件
     $(".creatDiscuss").on("click", function showAddDiscuss(argument) {
@@ -957,7 +1154,6 @@ $(function() {
         inst.closeAll();
     }
 
-    // 下面是上传文件代码
 
     $('.insert-img').click(function() {
         inst = upload()
