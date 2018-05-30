@@ -6,6 +6,7 @@
         <meta http-equiv="charset" content="utf-8">
         <link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
         <link rel="stylesheet" type="text/css" href="./css/mine.css">
+        <link rel="stylesheet" href="./css/style.css" />
     </head>
     <body class="mdui-theme-primary-indigo mdui-theme-accent-red mdui-color-grey-100">
         <!-- 头部栏 -->
@@ -117,6 +118,7 @@
                             </button>
                             <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme callat">@at某人</button>
                             <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme discuss">#话题</button>
+                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme setTime"><i class="mdui-icon material-icons">access_alarm</i>定时发布</button>
                             <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-float-right mdui-color-teal mdui-text-color-white send">
                             <i class="mdui-icon material-icons">check</i>发送
                             </button>
@@ -264,6 +266,13 @@
                         </div>
                         <ul class="mdui-list mdui-list-dense friend-list">
                         </ul>
+                    </div>
+                </div>
+                <!-- 定時發佈dialog -->
+                <div class="mdui-dialog setTime-dialog .mdui-color-transparent">
+                    <div class="mdui-dialog-title">定时发布</div>
+                    <div class="mdui-dialog-content setTime-content mdui-center">
+                        <input type="text" name="date" class='ECalendar' id="ECalendar_date" size="16"  value=""/>
                     </div>
                 </div>
                 <!-- #话题dialog -->
@@ -415,9 +424,9 @@
                 </div>
                 <script src="./js/mdui.min.js"></script>
                 <script src="./js/jquery.js"></script>
+                <script src="./js/Ecalendar.jquery.min.js"></script>
                 <script src="./js/tags.js"></script>
                 <script src="./js/datestampTool.js"></script>
-                <script src="./js/laydate.js"></script>
                 <script src="./js/index.js"></script>
             </footer>
         </div>

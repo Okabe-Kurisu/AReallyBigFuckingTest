@@ -55,6 +55,11 @@
 	background-image: url('../img/imgZone.gif')
 }
 
+.setTime-dialog{
+	height: 430px!important;
+    width: 337px!important;
+}
+
 
 .callat-content{
 	height:  400px!important;
@@ -66,4 +71,8 @@
 
 .report-content{
 	height: 250px!important;
+}
+
+.icon{
+	display:none!important;
 }
