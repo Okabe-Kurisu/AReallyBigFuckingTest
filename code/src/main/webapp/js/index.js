@@ -407,7 +407,7 @@ $(function() {
             type: "POST",
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 console.log(data);
                 var users = data.data;
                 console.log("获取5个用户...");
@@ -427,13 +427,13 @@ $(function() {
                 ataDialog_inst.open();
 
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("用户获取失败");
             },
         })
     });
     // @用户搜索事件（监听keyup的回车事件）
-    $('.peoyourwant').keyup('keyup', function (event) {
+    $('.peoyourwant').keyup('keyup', function(event) {
         param = {
             nickname: $(".peoyourwant").val()
         };
@@ -445,7 +445,7 @@ $(function() {
             data: param,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 var users = data.data;
                 console.log("获取5个用户...");
                 if (data.code == 200 && users != null) {
@@ -459,7 +459,7 @@ $(function() {
                     }
                 }
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("用户获取失败");
             },
         })
@@ -473,7 +473,7 @@ $(function() {
         //todo: 未添加到博客话题表
 
         var v = $("#blog-content").val();
-        $("#blog-content").val(" #" + username + " "+v);
+        $("#blog-content").val(" #" + username + " " + v);
         ataDialog_inst.close();
     })
 
@@ -485,13 +485,13 @@ $(function() {
             type: "POST",
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 var discusses = data.data;
                 console.log("获取5个话题...");
                 if (data.code == 200 && discusses != null) {
                     for (x in discusses) {
                         var discuss = discusses[x];
-                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discussat-item\" did=\"" + discuss.did+ "\" name=\"" + discuss.name + "\">\n" +
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discussat-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
                             "                        <div class=\"mdui-list-item-avatar\"><img src=\"./img/background.jpg\"/></div>\n" +
                             "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
                             "                    </li>";
@@ -504,13 +504,13 @@ $(function() {
                 ataDialog_inst.open();
 
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("用户获取失败");
             },
         })
     });
     // #话题搜索事件（监听keyup的回车事件）
-    $('.putyourwant').keyup('keyup', function (event) {
+    $('.putyourwant').keyup('keyup', function(event) {
         param = {
             name: $(".putyourwant").val()
         };
@@ -522,13 +522,13 @@ $(function() {
             data: param,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 var discusses = data.data;
                 console.log("获取5个话题...");
                 if (data.code == 200 && discusses != null) {
                     for (x in discusses) {
                         var discuss = discusses[x];
-                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discussat-item\" did=\"" + discuss.did+ "\" name=\"" + discuss.name + "\">\n" +
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discussat-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
                             "                        <div class=\"mdui-list-item-avatar\"><img src=\"./img/background.jpg\"/></div>\n" +
                             "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
                             "                    </li>";
@@ -536,7 +536,7 @@ $(function() {
                     }
                 }
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("用户获取失败");
             },
         })
@@ -713,22 +713,33 @@ $(function() {
 
     //开发者信息按钮的代码绑定。因为该内容会动态生成很多次，所以写成方法
     function initCard() {
-        $(".dev-info-btn").off("click");
-        $(".dev-info-btn").on("click", devInfoBtn);
-        $(".thumb_up").off("click");
-        $(".thumb_up").on("click", thumb_up);
-        $(".commit-send").off("click");
-        $(".commit-send").on("click", commit);
-        $(".favorite").off("click");
-        $(".favorite").on("click", favorite);
-        $(".blog-del-btn").off("click");
-        $(".blog-del-btn").on("click", blogDel);
-        $(".blog-edit-btn").off("click");
-        $(".blog-edit-btn").on("click", blogEdit);
-        $(".blog-edit-btn").off("click");
-        $(".blog-edit-btn").on("click", blogEdit);
-        $(".commit-toggle").off("click");
-        $(".commit-toggle").on("click", commitToggle);
+        $(".forward-send").off("click");
+        $(".forward-send").click(function forwardSend(argument) { //转发微博
+            var bid = $(this).parents(".blog-card").attr("bid");
+            var content = $(this).parents(".mdui-list-item-content").find("input").val();
+            param = {
+                bid: bid,
+                content: content
+            }
+            $.ajax({
+                url: "/blog/forwardBlog",
+                type: "POST",
+                data: param,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+
+
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    mdui.snackbar(data.msg);
+                },
+                error: function(data) {
+                    console.log(data);
+                    mdui.snackbar("转发失败");
+                }
+            })
+        })
+
         $(".report").off("click");
         $(".report").on("click", report);
 
@@ -771,11 +782,17 @@ $(function() {
                 inst.close();
             }
         }
+        $(".commit-toggle").off("click");
+        $(".commit-toggle").on("click", commitToggle);
 
         function commitToggle(argument) {
             var inst = new mdui.Collapse($(this).parent().next(), accordion = true);
             inst.openAll()
         }
+
+
+        $(".blog-del-btn").off("click");
+        $(".blog-del-btn").on("click", blogDel);
 
         function blogDel(argument) {
             var thisCard = $(this).parents(".blog-card");
@@ -795,6 +812,9 @@ $(function() {
                 }
             })
         }
+
+        $(".blog-edit-btn").off("click");
+        $(".blog-edit-btn").on("click", blogEdit);
 
         function blogEdit(argument) {
             var thisCard = $(this).parents(".blog-card");
@@ -858,6 +878,9 @@ $(function() {
             })
         }
 
+        $(".thumb_up").off("click");
+        $(".thumb_up").on("click", thumb_up);
+
         function thumb_up(argument) { //点赞博客
             var bid = $(this).parents(".blog-card").attr("bid");
             param = {
@@ -878,6 +901,10 @@ $(function() {
             $(this).toggleClass("mdui-text-color-pink");
 
         }
+
+
+        $(".commit-send").off("click");
+        $(".commit-send").on("click", commit);
 
         function commit(argument) {
             var bid = $(this).parents(".blog-card").attr("bid");
@@ -901,6 +928,8 @@ $(function() {
             })
         }
 
+        $(".favorite").off("click");
+        $(".favorite").on("click", favorite);
         function favorite(argument) {
             var fImg = $(this).children("i");
             if (fImg.html() == "folder_open") {
@@ -945,6 +974,9 @@ $(function() {
             }
         }
 
+
+        $(".dev-info-btn").off("click");
+        $(".dev-info-btn").on("click", devInfoBtn);
         function devInfoBtn() {
             var devInfo = $(this).parent().prev();
             if (devInfo.css("display") == 'none') {
