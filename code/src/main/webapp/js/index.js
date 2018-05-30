@@ -419,17 +419,20 @@ $(function() {
         ataDialog_inst.close();
     })
 
-    // #列表点击事件
-    $(".discuss-list").on("click", ".callat-item", function() {
+
+    // @列表点击事件
+    $(".friend-list").on("click", ".callat-item", function() {
         var uid = $(this).attr("userid")
         var username = $(this).attr("username");
 
         //todo: 未添加到博客话题表
 
         var v = $("#blog-content").val();
-        $("#blog-content").val(" #" + username + " "+v);
+        $("#blog-content").val(v + " @" + username + " ");
+        $("#blog-content").focus();
         ataDialog_inst.close();
     })
+
 
     // 发布微博数据
     $(".send").click(function(argument) {
@@ -459,7 +462,7 @@ $(function() {
                 if (typeof(sessionStorage.time) == "undefined") {
                     insertBlog(rtn, reason = "是你发送的");
                     initCard();
-                }else{
+                } else {
                     sessionStorage.removeItem("time");
                 }
                 mdui.snackbar("发送成功");
@@ -836,23 +839,78 @@ $(function() {
     }
 
     $(".callat").on("click", function callat(argument) {
-        var cDialog = $(".callat-dialog");
-        var inst = new mdui.Dialog(cDialog, overlay = true);
-        inst.open();
-    })
+        $(".friend-list").text("");
+        $.ajax({
+            url: "/user/getFiveUser",
+            async: false,
+            type: "POST",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                var users = data.data;
+                console.log("获取5个用户...");
+                if (data.code == 200 && users != null) {
+                    for (x in users) {
+                        var user = users[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+                            "                    </li>";
+                        $(".friend-list").append(res);
+                    }
+                }
+                var cDialog = $(".callat-dialog");
+                ataDialog_inst = new mdui.Dialog(cDialog, overlay = true);
+                ataDialog_inst.open();
 
-    $(".discuss").on("click", function discussat(argument) {
-        var dDialog = $(".discuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
-    })
+            },
+            error: function() {
+                mdui.snackbar("用户获取失败");
+            },
+        })
+    });
+    // @用户搜索事件（监听keyup的回车事件）
+    $('.peoyourwant').keyup('keyup', function(event) {
+        param = {
+            nickname: $(".peoyourwant").val()
+        };
+        $(".friend-list").text("");
+        $.ajax({
+            url: "/user/getFiveUser",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function(data) {
+                var users = data.data;
+                console.log("获取5个用户...");
+                if (data.code == 200 && users != null) {
+                    for (x in users) {
+                        var user = users[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+                            "                    </li>";
+                        $(".friend-list").append(res);
+                    }
+                }
+            },
+            error: function() {
+                mdui.snackbar("用户获取失败");
+            },
+        })
 
-    // 我的话题按钮点击时间
+    });
+
+
+
     $(".myDiscuss").on("click", function showMyDiscuss(argument) {
         var dDialog = $(".manageDiscuss-dialog");
         var inst = new mdui.Dialog(dDialog, overlay = true);
         inst.open();
-    })
+    });
 
     // 创建话题按钮点击事件
     $(".creatDiscuss").on("click", function showAddDiscuss(argument) {
@@ -872,7 +930,6 @@ $(function() {
         inst.closeAll();
     }
 
-    // 下面是上传文件代码
 
     $('.insert-img').click(function() {
         inst = upload()
