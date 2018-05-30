@@ -635,9 +635,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 float f2 = PowerfulTools.HotBlogSort(o2.get("likeNum"), o2.get("reshareNum"), o2.get("commentNum"));
                 return (f1 > f2) ? -1 : 1;
             });
-
+            List rtn = new ArrayList();
+            for(int j=0;j<5;j++){
+                rtn.add(blogList.get(j))
+            }
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "成功", blogList);
+            resultMap = PowerfulTools.format("200", "成功", rtn);
 
 
         } catch (NullPointerException ne) {
