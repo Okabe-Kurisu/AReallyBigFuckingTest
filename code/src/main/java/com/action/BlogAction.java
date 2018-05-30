@@ -609,7 +609,11 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         try {
             // 调用Dao层 获取数据
             int nowtime = (int) (System.currentTimeMillis()/1000 - 24*3600);
+
+            map.put("nowtime",nowtime);
             List blogList = BlogDao.getTodayHostBlog(map);
+
+            System.out.println("list集合大小："+blogList.size());
 
             // 对今日微博进行热点排序
             blogList.sort((Comparator<Map<String, Object>>) (o1, o2) -> {

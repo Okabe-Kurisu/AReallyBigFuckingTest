@@ -75,16 +75,17 @@
 
     <!-- 得到今日热点微博 -->
     <select id="getTodayHostBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT *,
+
+        SELECT u.*,b.*,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=1) AS reshareNum,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
-        FROM blog as b
-        JOIN user as u
-        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
-        WHERE
-        b.type=0
+        FROM user u,blog b
+        WHERE u.uid=b.user_id
+        AND b.type=0
         AND b.visibility=0
-        AND b.release_time > #{nowtime}
+        AND FROM_UNIXTIME(b.release_time, '%Y-%c-%d')=DATE_FORMAT(NOW(),'%Y-%c-%d')
+        AND b.release_time &lt; UNIX_TIMESTAMP(NOW())
     </select>
 
     <!-- 得到指定用户微博 -->
