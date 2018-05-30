@@ -410,30 +410,6 @@ $(function() {
         setTimeout("self.location= '/auth.html'", 1000);
     }
 
-    // @列表点击事件
-    $(".friend-list").on("click", ".callat-item", function() {
-        var uid = $(this).attr("userid")
-        var username = $(this).attr("username");
-        var v = $("#blog-content").val();
-        $("#blog-content").val(v + " @" + username + " ");
-        ataDialog_inst.close();
-    })
-
-
-    // @列表点击事件
-    $(".friend-list").on("click", ".callat-item", function() {
-        var uid = $(this).attr("userid")
-        var username = $(this).attr("username");
-
-        //todo: 未添加到博客话题表
-
-        var v = $("#blog-content").val();
-        $("#blog-content").val(v + " @" + username + " ");
-        $("#blog-content").focus();
-        ataDialog_inst.close();
-    })
-
-
     // 发布微博数据
     $(".send").click(function(argument) {
         param = {
@@ -464,6 +440,28 @@ $(function() {
                     initCard();
                 } else {
                     sessionStorage.removeItem("time");
+                }
+                if (typeof(sessionStorage.discussdid) == "undefined") {
+                    $.ajax({
+                        url: "/user/addDisBlog",
+                        data: {
+                            discuss_id: sessionStorage.discussdid,
+                            bid: rtn.bid,
+                        },
+                        type: "POST",
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    })
+                }
+                if (typeof(sessionStorage.callatuid) == "undefined") {
+                    $.ajax({
+                        url: "/user/addCallAt",
+                        data: {
+                            atuserid: sessionStorage.callatuid,
+                            bid: rtn.bid,
+                        },
+                        type: "POST",
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    })
                 }
                 mdui.snackbar("发送成功");
             },
@@ -840,35 +838,35 @@ $(function() {
 
     $(".callat").on("click", function callat(argument) {
         $(".friend-list").text("");
-        $.ajax({
-            url: "/user/getFiveUser",
-            async: false,
-            type: "POST",
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                var users = data.data;
-                console.log("获取5个用户...");
-                if (data.code == 200 && users != null) {
-                    for (x in users) {
-                        var user = users[x];
-                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
-                            "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
-                            "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
-                            "                    </li>";
-                        $(".friend-list").append(res);
-                    }
-                }
-                var cDialog = $(".callat-dialog");
-                ataDialog_inst = new mdui.Dialog(cDialog, overlay = true);
-                ataDialog_inst.open();
+        var cDialog = $(".callat-dialog");
+        ataDialog_inst = new mdui.Dialog(cDialog, overlay = true);
+        ataDialog_inst.open();
+        // $.ajax({
+        //     url: "/user/getFiveUser",
+        //     type: "POST",
+        //     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        //     dataType: "json",
+        //     success: function(data) {
+        //         console.log(data);
+        //         var users = data.data;
+        //         console.log("获取5个用户...");
+        //         if (data.code == 200 && users != null) {
+        //             for (x in users) {
+        //                 var user = users[x];
+        //                 var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 callat-item\" userid=\"" + user.uid + "\" username=\"" + user.username + "\">\n" +
+        //                     "                        <div class=\"mdui-list-item-avatar\"><img src=\"" + user.background + "\"/></div>\n" +
+        //                     "                        <div class=\"mdui-list-item-content\">" + user.nickname + "</div>\n" +
+        //                     "                    </li>";
+        //                 $(".friend-list").append(res);
+        //             }
+        //         }
+        //         
 
-            },
-            error: function() {
-                mdui.snackbar("用户获取失败");
-            },
-        })
+        //     },
+        //     error: function() {
+        //         mdui.snackbar("用户获取失败");
+        //     },
+        // })
     });
     // @用户搜索事件（监听keyup的回车事件）
     $('.peoyourwant').keyup('keyup', function(event) {
@@ -895,21 +893,71 @@ $(function() {
                             "                    </li>";
                         $(".friend-list").append(res);
                     }
+                    // @列表点击事件
+                    $(".friend-list").off("click");
+                    $(".friend-list").on("click", ".callat-item", function() {
+                        var uid = $(this).attr("userid")
+                        var username = $(this).attr("username");
+                        var v = $("#blog-content").val();
+                        $("#blog-content").val(v + " @" + username + " ");
+                        ataDialog_inst.close();
+                        $("#blog-content").focus();
+                        sessionStorage.callatuid = uid;
+                    })
                 }
             },
             error: function() {
                 mdui.snackbar("用户获取失败");
             },
         })
-
     });
 
-
-
-    $(".myDiscuss").on("click", function showMyDiscuss(argument) {
-        var dDialog = $(".manageDiscuss-dialog");
-        var inst = new mdui.Dialog(dDialog, overlay = true);
-        inst.open();
+    $(".diucuss").on("click", function diucuss(argument) {
+        var dDialog = $(".diucuss-dialog");
+        dDialog_inst = new mdui.Dialog(dDialog, overlay = true);
+        dDialog_inst.open();
+    });
+    // @用户搜索事件（监听keyup的回车事件）
+    $('.discuss-input').keyup('keyup', function(event) {
+        param = {
+            name: $(".discuss-input").val()
+        };
+        $(".discuss-list").text("");
+        $.ajax({
+            url: "/blog/getFiveDiscuss",
+            //async: false,
+            type: "POST",
+            data: param,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function(data) {
+                var discusses = data.data;
+                console.log("获取5个话题");
+                if (data.code == 200 && discusses != null) {
+                    for (x in discusses) {
+                        var discuss = discusses[x];
+                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discuss-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
+                            "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
+                            "                    </li>";
+                        $(".discuss-list").append(res);
+                    }
+                }
+                // @列表点击事件
+                $(".discuss-list").off("click");
+                $(".discuss-list").on("click", ".discuss-item", function() {
+                    var did = $(this).attr("did")
+                    var name = $(this).attr("name");
+                    var v = $("#blog-content").val();
+                    $("#blog-content").val(v + " #" + name + " ");
+                    ataDialog_inst.close();
+                    $("#blog-content").focus();
+                    sessionStorage.discussdid = did;
+                })
+            },
+            error: function() {
+                mdui.snackbar("用户获取失败");
+            },
+        })
     });
 
     // 创建话题按钮点击事件
