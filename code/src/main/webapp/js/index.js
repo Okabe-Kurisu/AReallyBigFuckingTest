@@ -520,7 +520,7 @@ $(function() {
             success: function(data) {
                 console.log("正在发布微博...")
                 var rtn = data.data.data;
-                rtn.releaseTime = rtn.release_time;
+                rtn.release_time = rtn.release_time;
                 rtn.browserSign = rtn.browser_sign;
                 rtn.commentOn = rtn.comment_on;
                 if (typeof(sessionStorage.time) == "undefined") {
