@@ -884,7 +884,7 @@ $(function() {
     });
 
     $(".diucuss").on("click", function diucuss(argument) {
-        var dDialog = $(".diucuss-dialog");
+        var dDialog = $(".discuss-dialog");
         dDialog_inst = new mdui.Dialog(dDialog, overlay = true);
         dDialog_inst.open();
     });
