@@ -346,11 +346,9 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             if (BlogDao.checkAdmin(user_id) != 0) {
                 // 封装响应数据
                 resultMap = PowerfulTools.format("101", "该账户被封", user);
-                System.out.print("该账户被封");
                 return LOGIN;
             }
             Set<String> set = filter.getSensitiveWord(content1, 1);
-            System.out.println(Commentid);
             //后台添加
             bid = BlogDao.forwordBlog(Commentid, content1, user.getUid());
 
@@ -506,12 +504,20 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
             user_id = user.getUid();
+            /*if (user_id==0||"".equals(user_id)) {
+                // 封装响应数据
+                resultMap = PowerfulTools.format("101", "请登录", user);
+
+                return LOGIN;
+            }*/
+
             if (BlogDao.checkAdmin(user_id) != 0) {
                 // 封装响应数据
                 resultMap = PowerfulTools.format("101", "该账户被封", user);
                 System.out.print("该账户被封");
                 return LOGIN;
             }
+
             Favorite_blog.setUser_id(user_id);
             Favorite_blog.setBlog_id(bid);
             Favorite_blog.setTime((int) (System.currentTimeMillis() / 1000));
