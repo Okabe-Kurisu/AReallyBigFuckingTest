@@ -1113,7 +1113,7 @@ $(function() {
         })
     });
 
-    $(".diucuss").on("click", function diucuss(argument) {
+    $(".discuss").on("click", function diucuss(argument) {
         var dDialog = $(".discuss-dialog");
         dDialog_inst = new mdui.Dialog(dDialog, overlay = true);
         dDialog_inst.open();
