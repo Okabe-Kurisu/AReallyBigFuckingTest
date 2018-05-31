@@ -232,6 +232,14 @@ $(function() {
                         } else {
                             console.log("屏蔽了来自" + datas[x].nickname + "的信息")
                         }
+                        console.log(datas[x])
+                        if (datas[x].reason == "他很热门") {
+                            var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">"+
+                                    "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>"+
+                                    "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
+                            $(".hotweibo").append(html)
+                        }
+
                         if (x == (len - 1))
                             break;
                     }
