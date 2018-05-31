@@ -317,9 +317,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             thumbup.setT_id(BlogDao.getUidByBid(bid));
             //后台添加
             thumbup.setDate((int) (System.currentTimeMillis() / 1000));
-            BlogDao.thumbUp(thumbup);
+            String msg=BlogDao.thumbUp(thumbup);
+            System.out.println(msg);
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "点赞成功", user);
+            resultMap = PowerfulTools.format("200", msg, user);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
