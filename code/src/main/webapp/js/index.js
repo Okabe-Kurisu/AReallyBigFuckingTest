@@ -49,8 +49,9 @@ $(function() {
             var db = weiboDB;
             // 取到微博
             //获取热门微博，关注用户微博，关注话题微博
-            getBlog(0, params, db);
+            // getBlog(0, params, db);
             getBlog(4, params, db);
+            getBlog(7, params, db);
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
                 getBlog(5, params, db);
@@ -175,9 +176,9 @@ $(function() {
     }
     // 得到博客并存储到websql中
     function getBlog(type, params, db) {
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite" ]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "nowtimeHot", "getFollowBlog", "getFavorite", "getHotspot" ]
         //reason是生成博客列表的时候标注的理由
-        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客"];
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客", "热门博客"];
         var reason = reasons[type];
         //如果不是主页，数据存入临时表中
         $.ajax({
@@ -233,7 +234,7 @@ $(function() {
                             console.log("屏蔽了来自" + datas[x].nickname + "的信息")
                         }
                         console.log(datas[x])
-                        if (datas[x].reason == "他很热门") {
+                        if (datas[x].reason == "热门博客") {
                             var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">"+
                                     "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>"+
                                     "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
