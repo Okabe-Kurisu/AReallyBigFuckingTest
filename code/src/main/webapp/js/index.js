@@ -946,7 +946,7 @@ $(function() {
         $(".commit-send").on("click", commit);
 
         function commit(argument) {
-            var sendCard = $(this).parent().parent();
+            var sendCard = $(this).parent().parent().parent();
             var bid = $(this).parents(".blog-card").attr("bid");
             var content = $(this).parents(".mdui-list-item-content").find("input").val();
             param = {
@@ -960,8 +960,9 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
+                    var commits = data.data;
                     mdui.snackbar(data.msg);
-                    sendCard.after(insertComment(commits[x]));
+                    sendCard.after(insertComment(commits[commits.length-1]));
                     var num = $(this).children(".commentNum").html()
                     $(this).children(".commentNum").html(parseInt(num) + 1)
                 },
@@ -1121,49 +1122,51 @@ $(function() {
         var dDialog = $(".discuss-dialog");
         dDialog_inst = new mdui.Dialog(dDialog, overlay = true);
         dDialog_inst.open();
-    });
-    // @用户搜索事件（监听keyup的回车事件）
-    $('.discuss-input').keyup('keyup', function(event) {
-        param = {
-            name: $(".discuss-input").val()
-        };
-        $(".discuss-list").text("");
-        $.ajax({
-            url: "/blog/getFiveDiscuss",
-            //async: false,
-            type: "POST",
-            data: param,
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            dataType: "json",
-            success: function(data) {
-                var discusses = data.data;
-                console.log("获取5个话题");
-                if (data.code == 200 && discusses != null) {
-                    for (x in discusses) {
-                        var discuss = discusses[x];
-                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discuss-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
-                            "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
-                            "                    </li>";
-                        $(".discuss-list").append(res);
+
+        // @用户搜索事件（监听keyup的回车事件）
+        $('.discuss-input').keyup('keyup', function(event) {
+            param = {
+                name: $(".discuss-input").val()
+            };
+            $(".discuss-list").text("");
+            $.ajax({
+                url: "/blog/getFiveDiscuss",
+                //async: false,
+                type: "POST",
+                data: param,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    var discusses = data.data;
+                    console.log("获取5个话题");
+                    if (data.code == 200 && discusses != null) {
+                        for (x in discusses) {
+                            var discuss = discusses[x];
+                            var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discuss-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
+                                "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
+                                "                    </li>";
+                            $(".discuss-list").append(res);
+                        }
                     }
-                }
-                // @列表点击事件
-                $(".discuss-list").off("click");
-                $(".discuss-list").on("click", ".discuss-item", function() {
-                    var did = $(this).attr("did")
-                    var name = $(this).attr("name");
-                    var v = $("#blog-content").val();
-                    $("#blog-content").val(v + " #" + name + " ");
-                    ataDialog_inst.close();
-                    $("#blog-content").focus();
-                    sessionStorage.discussdid = did;
-                })
-            },
-            error: function() {
-                mdui.snackbar("用户获取失败");
-            },
-        })
+                    // @列表点击事件
+                    $(".discuss-list").off("click");
+                    $(".discuss-list").on("click", ".discuss-item", function() {
+                        var did = $(this).attr("did")
+                        var name = $(this).attr("name");
+                        var v = $("#blog-content").val();
+                        $("#blog-content").val(v + " #" + name + " ");
+                        dDialog_inst.close();
+                        $("#blog-content").focus();
+                        sessionStorage.discussdid = did;
+                    })
+                },
+                error: function() {
+                    mdui.snackbar("用户获取失败");
+                },
+            })
+        });
     });
+
 
 
 
