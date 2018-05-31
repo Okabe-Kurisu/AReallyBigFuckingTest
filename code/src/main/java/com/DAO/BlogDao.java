@@ -165,39 +165,12 @@ public class BlogDao {
     }
 
     //转发微博
-    public static int forwordBlog(int bid, String content, int user_id) {
+    public static int forwordBlog(Blog blog) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        Blog blog = new Blog();
-        Map<String, Object> maps = new HashMap();
-        int blogid = 0;
-        System.out.println("bid=" + bid);
-        maps.put("comment_on", bid);
-        maps.put("user_id", user_id);
+        int blogid;
         try {
-            blog = sqlSession.selectOne("weibo/BlogMapper.CheckforwardBlog", maps);
-            if (blog != null) {
-                System.out.println("不能转发同一微博两次");
-                return 0;
-            }
-            blog = sqlSession.selectOne("weibo/BlogMapper.GetforwardBlog", bid);
+            blogid = sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
             sqlSession.commit();
-            if (blog == null) {
-                System.out.println("不能转发非博客或可见性不为公开");
-                return 0;
-            }
-            //自己不能转发自己的微博
-            if (blog.getUser_id() != user_id && blog.getType() == 0) {
-                blog.setUser_id(user_id);
-                blog.setContent(content);
-                blog.setType(1);
-                blog.setComment_on(bid);
-                blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
-                blogid = sqlSession.insert("weibo/BlogMapper.submitBlog", blog);
-                sqlSession.commit();
-            } else if (blog.getUser_id() == user_id && blog.getType() != 0) {
-                System.out.println("不能转发自己的微博");
-                return 0;
-            }
         } finally {
             sqlSession.close();
         }
@@ -276,6 +249,7 @@ public class BlogDao {
         }
         return blogList;
     }
+
     //获得五个#话题
     public static List<Discuss> selectDiscuss(Map<String, Object> map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
@@ -293,7 +267,7 @@ public class BlogDao {
     public static int addDisBlog(BlogDiscuss blogDiscuss) {//#话题添加到表
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-            sqlSession.insert("weibo/BlogMapper.addDisBlog",blogDiscuss);
+            sqlSession.insert("weibo/BlogMapper.addDisBlog", blogDiscuss);
             sqlSession.commit();
         } finally {
             sqlSession.close();
@@ -383,4 +357,36 @@ public class BlogDao {
     }
 
 
+    public static List<Map> getCommitById(int bid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getCommitById", bid);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
+    public static Object getFavorite(int uid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getFavorite", uid);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
+
+    public static Object getCallat(int uid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> blogList = null;
+        try {
+            blogList = sqlSession.selectList("weibo/BlogMapper.getCallat", uid);
+        } finally {
+            sqlSession.close();
+        }
+        return blogList;
+    }
 }

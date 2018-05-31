@@ -62,7 +62,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             User user = (User) request.getSession().getAttribute("user");
             user_id = user.getUid();
 
-            Set<String> set = filter.getSensitiveWord(content1, 1);
+                Set<String> set = filter.getSensitiveWord(content1, 1);
 
             if (release_time == null || "".equals(release_time)) {
                 blog.setRelease_time((int) (System.currentTimeMillis() / 1000));
@@ -338,7 +338,9 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         //从前端获取
         Commentid = Integer.parseInt(request.getParameter("bid"));
         content1 = request.getParameter("content");
+
         if (content1 == null && "".equals(content1)) content1 = "";
+
         try {
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
@@ -346,13 +348,24 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             if (BlogDao.checkAdmin(user_id) != 0) {
                 // 封装响应数据
                 resultMap = PowerfulTools.format("101", "该账户被封", user);
-                System.out.print("该账户被封");
                 return LOGIN;
             }
+            String userAgent = request.getHeader("user-agent");//获取浏览器信息
+            String ip = UserAtion.getIpAddr(request);//获取IP地址
+            blog.setBrowser_sign(userAgent);
+            blog.setIp_address(ip);
+            blog.setComment_on(Commentid);
+            blog.setContent(content1);
+            blog.setUser_id(user_id);
+            blog.setType(1);
+            blog.setMultimedia("");
+            blog.setVisibility(0);
+            blog.setIs_edit(0);
+            blog.setRelease_time((int) (System.currentTimeMillis()/1000));
+
             Set<String> set = filter.getSensitiveWord(content1, 1);
-            System.out.println(Commentid);
             //后台添加
-            bid = BlogDao.forwordBlog(Commentid, content1, user.getUid());
+            bid = BlogDao.forwordBlog(blog);
 
             if (set.size() > 0) {
                 System.out.println("转发评论存在敏感词");
@@ -363,14 +376,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
             }
-            if (bid != 0) { // 封装响应数据
-                resultMap = PowerfulTools.format("200", "转发成功", user);
-                System.out.println(resultMap);
-            } else if (bid == 0) {
-                // 封装响应数据
-                resultMap = PowerfulTools.format("200", "不能转发同一微博两次", user);
-                System.out.println(resultMap);
-            }
+            resultMap = PowerfulTools.format("200", "转发成功", BlogDao.getBlogById(bid));
+            System.out.println(resultMap);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -425,11 +432,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             java.util.Date endDate = dft.parse(dft.format(date.getTime()));
             nowtime = (int) endDate.getTime();
             System.out.println(nowtime);*/
-            int sevenDay = 7*24*3600;
+            int sevenDay = 7 * 24 * 3600;
             nowtime = ((int) (System.currentTimeMillis() / 1000)) - sevenDay;
-
+            map.put("nowtime", (int) (System.currentTimeMillis() / 1000));
             // 封装参数
             map.put("release_time", nowtime);
+            System.out.println("现在的时间为："+nowtime);
             // 调用Dao层 获取数据
             List blogList = BlogDao.selectBlogByTime(map);
 
@@ -456,11 +464,11 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         try {
             name = request.getParameter("name");
             if (null == name) name = "";
-            nowtime=((int) (System.currentTimeMillis() / 1000));
-            Map<String,Object>maps=new HashMap<String,Object>();
-            maps.put("name",name);
-            maps.put("NowTime",nowtime);
-            List<Discuss> DiscussList=BlogDao.selectDiscuss(maps);
+            nowtime = ((int) (System.currentTimeMillis() / 1000));
+            Map<String, Object> maps = new HashMap<String, Object>();
+            maps.put("name", name);
+            maps.put("NowTime", nowtime);
+            List<Discuss> DiscussList = BlogDao.selectDiscuss(maps);
             resultMap = PowerfulTools.format("200", "获取话题", DiscussList);
 
         } catch (NullPointerException ne) {
@@ -473,8 +481,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     @Action(value = "addDisBlog")//将#话题添加到表中
     public String addDisBlog() {
-        int blog_id,discuss_id,user_id;
-        BlogDiscuss bd=new BlogDiscuss();
+        int blog_id, discuss_id, user_id;
+        BlogDiscuss bd = new BlogDiscuss();
         //从前端获取
         User user = (User) request.getSession().getAttribute("user");
         user_id = user.getUid();
@@ -505,12 +513,20 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
             user_id = user.getUid();
+            /*if (user_id==0||"".equals(user_id)) {
+                // 封装响应数据
+                resultMap = PowerfulTools.format("101", "请登录", user);
+
+                return LOGIN;
+            }*/
+
             if (BlogDao.checkAdmin(user_id) != 0) {
                 // 封装响应数据
                 resultMap = PowerfulTools.format("101", "该账户被封", user);
                 System.out.print("该账户被封");
                 return LOGIN;
             }
+
             Favorite_blog.setUser_id(user_id);
             Favorite_blog.setBlog_id(bid);
             Favorite_blog.setTime((int) (System.currentTimeMillis() / 1000));
@@ -536,8 +552,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     @Authority("")
     public String reportBlog() {//举报微博
         Sensitivity Sensitivity_blog = new Sensitivity();
-        String details,type;
-        int bid,user_id;
+        String details, type;
+        int bid, user_id;
         //从前端获取
         bid = Integer.parseInt(request.getParameter("bid"));
         type = request.getParameter("type");
@@ -552,10 +568,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 System.out.print("该账户被封");
                 return LOGIN;
             }
-            if (details == null&&"".equals(details)) {
+            if (details == null && "".equals(details)) {
                 Sensitivity_blog.setDetails(type);
             } else {
-                Sensitivity_blog.setDetails(type+details);
+                Sensitivity_blog.setDetails(type + details);
             }
             Sensitivity_blog.setBlog_id(bid);
             Sensitivity_blog.setType(0);
@@ -607,12 +623,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         Map<String, Object> map = new HashMap();
         try {
             // 调用Dao层 获取数据
-            int nowtime = (int) (System.currentTimeMillis()/1000 - 24*3600);
+            int nowtime = (int) (System.currentTimeMillis() / 1000 - 24 * 3600);
 
-            map.put("nowtime",nowtime);
+            map.put("nowtime", nowtime);
             List blogList = BlogDao.getTodayHostBlog(map);
 
-            System.out.println("list集合大小："+blogList.size());
+            System.out.println("list集合大小：" + blogList.size());
 
             // 对今日微博进行热点排序
             blogList.sort((Comparator<Map<String, Object>>) (o1, o2) -> {
@@ -620,9 +636,12 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 float f2 = PowerfulTools.HotBlogSort(o2.get("likeNum"), o2.get("reshareNum"), o2.get("commentNum"));
                 return (f1 > f2) ? -1 : 1;
             });
-
+            List rtn = new ArrayList();
+            for(int j=0;j<5;j++){
+                rtn.add(blogList.get(j));
+            }
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "成功", blogList);
+            resultMap = PowerfulTools.format("200", "成功", rtn);
 
 
         } catch (NullPointerException ne) {
@@ -654,6 +673,53 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 获得参数
             bid = Integer.parseInt(request.getParameter("bid"));
             Map data = BlogDao.getBlogById(bid);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", data);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getFavorite")
+    public String getFavorite() {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int uid = user.getUid();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.getFavorite(uid));
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getCallat")
+    public String getCallat() {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        int uid = user.getUid();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.getCallat(uid));
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getCommitById")
+    public String getCommitById() {
+        int bid;
+        try {
+            // 获得参数
+            bid = Integer.parseInt(request.getParameter("bid"));
+            List<Map> data = BlogDao.getCommitById(bid);
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", data);
 

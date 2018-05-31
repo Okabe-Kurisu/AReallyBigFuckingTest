@@ -8,20 +8,20 @@
     <!-- 查询功能，resultType 设置返回值类型 -->
     <select id="selectAllUser" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT *,
-            (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
-            (SELECT COUNT(tu.tuid)
-            FROM thumb_up AS tu
-            JOIN blog AS b
-            ON tu.blog_id = b.bid
-            WHERE b.user_id = u.uid) AS likeNum,
-            (SELECT COUNT(b1.bid)
-            FROM blog AS b1
-            WHERE b1.user_id = u.uid) AS blogNum,
-            (SELECT COUNT(b.bid)
-            FROM blog AS b
-            JOIN blog AS b2
-            ON b.comment_on = b2.bid
-            WHERE u.uid = b.user_id) AS forwardNum
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND (type=0 OR type=2)) AS follerNum,
+        (SELECT COUNT(tu.tuid)
+        FROM thumb_up AS tu
+        JOIN blog AS b
+        ON tu.blog_id = b.bid
+        WHERE b.user_id = u.uid) AS likeNum,
+        (SELECT COUNT(b1.bid)
+        FROM blog AS b1
+        WHERE b1.user_id = u.uid) AS blogNum,
+        (SELECT COUNT(b.bid)
+        FROM blog AS b
+        JOIN blog AS b2
+        ON b.comment_on = b2.bid
+        WHERE u.uid = b.user_id) AS forwardNum
         FROM user AS u
         WHERE u.alive = 0 AND u.last_logtime > 0
         ORDER BY u.weight DESC, u.last_logtime DESC
@@ -60,8 +60,8 @@
     <select id="selectUser" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT
         u.*,
-        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
-        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND type=0) AS folledNum
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND (type=0 OR type=2)) AS follerNum,
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND (type=0 OR type=2)) AS folledNum
         FROM user AS u
         WHERE u.alive = 0
         <if test="keyword != null">
@@ -81,8 +81,8 @@
     <select id="getUserByUid" parameterType="int" resultType="Map">  <!-- 书写 SQL 语句 -->
         SELECT
         u.*,
-        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND type=0) AS follerNum,
-        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND type=0) AS folledNum,
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND (type=0 OR type=2)) AS follerNum,
+        (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND (type=0 OR type=2)) AS folledNum,
         (SELECT COUNT(b.bid) FROM blog AS b WHERE u.uid=b.user_id AND b.visibility=0) AS blogNum
         FROM user AS u
         WHERE u.alive = 0 AND uid = #{uid}
@@ -194,9 +194,15 @@
         VALUES (#{user_id}, #{type}, #{followed_id}, #{time}, #{visibility})
     </insert>
 
+    <select id="checkFollow" parameterType="Follow">
+        SELECT f.fid
+        FROM follow AS f
+        WHERE f.followed_id = #{followed_id} AND user_id = #{user_id}
+    </select>
+
     <delete id="unfollow" parameterType="Follow">
         DELETE FROM follow
-        WHERE user_id = #{user_id} AND followed_id = followed_id
+        WHERE user_id = #{user_id} AND followed_id = #{followed_id}
     </delete>
 
     <update id="initUser" parameterType="User">
@@ -218,5 +224,15 @@
              ) AS t
         GROUP BY t.uid
         ORDER BY num DESC
+    </select>
+
+    <select id="daisuki" parameterType="map" resultType="map">
+        SELECT
+        f.*
+        FROM blog AS b
+        JOIN follow AS f
+        ON f.followed_id = b.user_id AND f.user_id = #{uid} AND f.type = 2
+        WHERE b.release_time >= #{date} AND b.release_time &lt;= #{nowtime}
+        GROUP BY f.followed_id
     </select>
 </mapper>

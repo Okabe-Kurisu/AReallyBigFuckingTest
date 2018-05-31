@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Fake 微博-个人页面</title>
+        <title>Fake 微博</title>
         <meta charset="UTF-8">
         <meta http-equiv="charset" content="utf-8">
         <link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
@@ -46,7 +46,10 @@
                         <div class="mdui-card-content ">
                             <ul class="mdui-list mdui-list-dense">
                                 <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                                    <div class="mdui-list-item-content">@我的</div>
+                                    <div class="mdui-list-item-content callat-btn">@我的</div>
+                                </li>
+                                <li class="mdui-list-item mdui-ripple mdui-p-l-1">
+                                    <div class="mdui-list-item-content favorite-btn">收藏夹</div>
                                 </li>
                                 <li class="mdui-list-item mdui-ripple mdui-p-l-1">
                                     <div class="mdui-list-item-content">修改个人信息</div>
@@ -124,7 +127,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="blogs"></div>
+                    <div class="blogs" id="blogs"></div>
                 </div>
                 <!-- 右侧边栏 -->
                 <div class="mdui-col-xs-3 mdui-m-t-1">
@@ -154,11 +157,11 @@
                         <!-- todo:如果这个人的id不是自己，就加上关注按钮组和屏蔽按钮
                         如果当前用户是鹳狸猿，则显示封禁按钮 -->
                         <div class="user-info-list mdui-row-xs-3 mdui-center mdui-valign usercard-action">
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"
+                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center follow-btn"
                             mdui-tooltip="{content: '长按特别关注', delay: 500}">关注
                             </button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center">屏蔽</button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center">私信</button>
+                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center block-btn">屏蔽</button>
+                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center message-btn">私信</button>
                         </div>
                     </div>
                     <!-- 关注与被关注 -->

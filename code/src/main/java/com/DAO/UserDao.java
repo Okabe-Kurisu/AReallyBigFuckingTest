@@ -40,11 +40,16 @@ public class UserDao {
     public static int follow(Follow follow) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         try {
-            sqlSession.insert("weibo/UserMapper.follow",follow);
-            sqlSession.commit();
-        } finally {
-            sqlSession.close();
+            sqlSession.delete("weibo/UserMapper.unfollow", follow);
+        }finally {
+            try {
+                sqlSession.insert("weibo/UserMapper.follow",follow);
+                sqlSession.commit();
+            } finally {
+                sqlSession.close();
+            }
         }
+
         return 0;
     }
     public static int unfollow(Follow follow) {
@@ -264,6 +269,17 @@ public class UserDao {
         List<Map> userList = null;
         try {
             userList = sqlSession.selectList("weibo/UserMapper.selectUser", map);
+        } finally {
+            sqlSession.close();
+        }
+        return userList;
+    }
+
+    public static List<Map> daisuki(Map map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<Map> userList = null;
+        try {
+            userList = sqlSession.selectList("weibo/UserMapper.daisuki", map);
         } finally {
             sqlSession.close();
         }
