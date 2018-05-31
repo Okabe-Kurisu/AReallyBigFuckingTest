@@ -96,14 +96,14 @@ public class DataTool {
         List<Map> userList = UserDao.getAllUser();
         for (Map user : userList) {
             int weight = 0;
-            weight += Integer.valueOf(user.get("follerNum").toString())*1
-                    + Integer.valueOf(user.get("likeNum").toString())*2
-                    + Integer.valueOf(user.get("forwardNum").toString())*1
-                    + Integer.valueOf(user.get("blogNum").toString())*1;
-            int nowdate = Integer.parseInt(System.currentTimeMillis()/1000 + "") ;
-            int leftDays = (nowdate - (int) user.get("last_logtime"))/3600/24;
+            weight += Integer.valueOf(user.get("follerNum").toString()) * 1
+                    + Integer.valueOf(user.get("likeNum").toString()) * 2
+                    + Integer.valueOf(user.get("forwardNum").toString()) * 1
+                    + Integer.valueOf(user.get("blogNum").toString()) * 1;
+            int nowdate = Integer.parseInt(System.currentTimeMillis() / 1000 + "");
+            int leftDays = (nowdate - (int) user.get("last_logtime")) / 3600 / 24;
             weight -= leftDays * 1;
-            if (weight != (int) user.get("weight")){
+            if (weight != (int) user.get("weight")) {
                 user.put("weight", weight);
                 System.out.println("用户:" + user.get("nickname") + "的权重更新为" + weight);
             }
@@ -168,6 +168,7 @@ public class DataTool {
     public void saveRtn(List<String> temp, String filename) {
         BufferedWriter bw = null;
         try {
+            System.out.println("文件路径：" + DataTool.class.getResource(filename).toString());
             String encoding = "UTF-8";
             File file = new File(new URI(DataTool.class.getResource(filename).toString()));
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), encoding));

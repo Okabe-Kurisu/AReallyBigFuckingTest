@@ -44,7 +44,7 @@ public class DataAction extends ActionSupport implements ServletRequestAware {
     public String getNowtimeHot() {
         Map<String, Object> map = new HashMap();
         try {
-            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600));//获得一小时有过评论转发和点赞的微博
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600*24));//获得一小时有过评论转发和点赞的微博
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
