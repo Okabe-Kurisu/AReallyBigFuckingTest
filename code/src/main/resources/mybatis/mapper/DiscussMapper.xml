@@ -42,6 +42,16 @@
         LIMIT #{startNum}, #{endNum}
     </select>
 
+    <!-- 查询话题数量 -->
+    <select id="selectDisCount" resultType="Map">
+        SELECT count(did) AS num
+        FROM discuss
+        WHERE 1=1
+        <if test="user_id!=null">
+            AND user_id=#{user_id}
+        </if>
+    </select>
+
     <!-- 查询话题（正在使用的） -->
     <select id="selectDiscuss" parameterType="Map" resultType="Map">
         SELECT d.*
