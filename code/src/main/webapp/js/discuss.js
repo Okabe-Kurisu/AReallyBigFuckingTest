@@ -446,7 +446,7 @@ $(function () {
             "                                    </div>\n" +
             "                                    <div class=\"mdui-card-actions\">\n";
 
-        if (discuss.followNum > 0) {
+        if (discuss.followNum == 0) {
             res += "<button class=\"mdui-btn mdui-ripple mdui-ripple-white followDiscuss\" did=\"" + discuss.did + "\">关注</button>\n"
         } else {
             res += "<button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\" disabled>已关注</button>\n"

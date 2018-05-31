@@ -49,8 +49,13 @@ $(function() {
             var db = weiboDB;
             // 取到微博
             //获取热门微博，关注用户微博，关注话题微博
-            // getBlog(0, params, db);
+
+            getBlog(0, params, db);
             getBlog(4, params, db);
+
+            //getBlog(0, params, db);
+            getBlog(5, params, db);
+
             getBlog(7, params, db);
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
@@ -580,7 +585,7 @@ $(function() {
                 }
                 if (typeof(sessionStorage.discussdid) != "undefined") {
                     $.ajax({
-                        url: "/user/addDisBlog",
+                        url: "/blog/addDisBlog",
                         data: {
                             discuss_id: sessionStorage.discussdid,
                             bid: rtn.bid,
@@ -935,6 +940,7 @@ $(function() {
             param = {
                 bid: bid
             }
+            var thisclass=$(this);
             $.ajax({
                 url: "/blog/thumbUp",
                 type: "POST",
@@ -942,12 +948,27 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
-                    var num = $(this).children(".likeNum").html()
-                    $(this).children(".likeNum").html(parseInt(num) + 1)
+                    if(data.msg=="点赞"){
+                        console.log(thisclass.children(".likeNum"))
+                        thisclass.toggleClass("mdui-text-color-theme");
+                        thisclass.toggleClass("mdui-text-color-pink");
+                        mdui.snackbar(data.msg);
+                        var num = thisclass.children(".likeNum").html();
+                        thisclass.children(".likeNum").html(parseInt(num) + 1)
+                    }else{
+                        thisclass.toggleClass("mdui-text-color-pink");
+                        thisclass.toggleClass("mdui-text-color-theme");
+
+                        mdui.snackbar(data.msg);
+                        var num = thisclass.children(".likeNum").html();
+                        console.log(num)
+                        thisclass.children(".likeNum").html(parseInt(num) - 1)
+                    }
+
                 }
             })
-            $(this).toggleClass("mdui-text-color-theme");
-            $(this).toggleClass("mdui-text-color-pink");
+
+
 
         }
 

@@ -59,18 +59,31 @@
 
     <!-- 搜索关注者的微博 -->
     <select id="getFollowBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-        SELECT DISTINCT *,
+        select DISTINCT *
+        from
+        (
+        SELECT b.*,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM blog AS b
-        JOIN user AS u
-        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
         LEFT JOIN follow AS f
-        ON f.followed_id=b.user_id AND (f.type &lt; 3)
-        WHERE f.user_id=#{userid}
-        AND b.type=0
-        AND b.visibility=0
-        group by b.bid
+        ON f.followed_id=b.user_id AND (f.type = 2 or f.type = 0)
+        WHERE f.user_id=#{uid}
+        union all
+        SELECT b.*,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
+        FROM blog AS b
+        join blog_discuss as bd
+        on bd.blog_id = b.bid
+        LEFT JOIN follow AS f
+        ON f.followed_id=b.user_id AND f.type = 1 and f.user_id=#{uid}
+        ) as t
+        JOIN user AS u
+        on t.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
+        WHERE t.type=0
+        AND t.visibility=0
+        group by t.bid
     </select>
 
     <!-- 得到今日热点微博 -->
@@ -157,8 +170,8 @@
         JOIN blog AS b
         ON b.bid = c.blog_id
         JOIN user AS u
-        on b.user_id=u.uid
-        WHERE b.visibility = 0 AND c.user_id=#{uid}
+        on c.user_id=u.uid
+        WHERE b.visibility = 0 AND c.at_userid=#{uid}
     </select>
 
     <!-- 删除微博 查用户 -->
@@ -234,8 +247,8 @@
     </select>
 
     <insert id="atUser" parameterType="CallAt" useGeneratedKeys="true" keyProperty="cid">
-        INSERT INTO call_at (user_id, blog_id, date)
-            VALUE (#{user_id}, #{blog_id}, #{date})
+        INSERT INTO call_at (user_id, blog_id, date,at_userid)
+            VALUE (#{user_id}, #{blog_id}, #{date},#{at_userid})
     </insert>
 
     <!--#话题 -->

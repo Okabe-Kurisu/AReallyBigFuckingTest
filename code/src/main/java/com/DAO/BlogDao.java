@@ -147,18 +147,20 @@ public class BlogDao {
     }
 
     //点赞微博
-    public static void thumbUp(ThumbUp thumb) {
+    public static String thumbUp(ThumbUp thumb) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {
             blogList = sqlSession.selectList("weibo/BlogMapper.checkThumbUp", thumb);
             if (blogList.isEmpty()) {
-
                 sqlSession.insert("weibo/BlogMapper.addThumbUp", thumb);
+                sqlSession.commit();
+                return "点赞";
             } else {
                 sqlSession.delete("weibo/BlogMapper.delThumbUp", blogList.get(0));
+                sqlSession.commit();
+                return "取消点赞";
             }
-            sqlSession.commit();
         } finally {
             sqlSession.close();
         }

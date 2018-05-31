@@ -1,20 +1,16 @@
 package com.action;
 
 import com.DAO.BlogDao;
-import com.DAO.UserDao;
 import com.annotations.Authority;
-import com.google.gson.Gson;
 import com.model.*;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
 import com.tool.SensitivewordFilter;
-import org.apache.struts2.components.Date;
 import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -317,9 +313,10 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             thumbup.setT_id(BlogDao.getUidByBid(bid));
             //后台添加
             thumbup.setDate((int) (System.currentTimeMillis() / 1000));
-            BlogDao.thumbUp(thumbup);
+            String msg=BlogDao.thumbUp(thumbup);
+            System.out.println(msg);
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "点赞成功", user);
+            resultMap = PowerfulTools.format("200", msg, user);
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
@@ -488,7 +485,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         User user = (User) request.getSession().getAttribute("user");
         user_id = user.getUid();
         discuss_id = Integer.parseInt(request.getParameter("discuss_id"));
-        blog_id = Integer.parseInt(request.getParameter("blog_id"));
+        blog_id = Integer.parseInt(request.getParameter("bid"));
         try {
             bd.setBlog_id(blog_id);
             bd.setDiscuss_id(discuss_id);
