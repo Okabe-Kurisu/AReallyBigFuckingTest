@@ -290,8 +290,9 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
             }
+            List<Map> data = BlogDao.getCommitById(Commentid);
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "发布成功", user);
+            resultMap = PowerfulTools.format("200", "发布成功", data);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
