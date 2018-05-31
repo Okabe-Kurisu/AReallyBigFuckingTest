@@ -127,17 +127,21 @@
     <select id="getFanAvatarByUid" resultType="Map">
         SELECT *
         FROM (
-            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid, u.nickname
+            SELECT foller.avatar, foller.uid AS userid, u.nickname, f.user_id AS fid
             FROM follow AS f
             JOIN user AS u
             ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
+            JOIN user AS foller
+            ON f.user_id = foller.uid
             WHERE u.uid = #{uid}
             LIMIT 6
             UNION ALL
-            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid, u.nickname
+            SELECT foller.avatar, foller.uid AS userid, u.nickname, f.user_id AS fid
             FROM follow AS f
             JOIN user AS u
             ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)
+            JOIN user AS foller
+            ON f.followed_id = foller.uid
             WHERE u.uid = #{uid}
             LIMIT 6
         ) AS a
@@ -215,15 +219,13 @@
     <select id="hotUser" parameterType="int" resultType="User">
         SELECT
             *,
-            COUNT(t.uid) AS num
-        FROM (
-                 SELECT u.*
-                 FROM follow AS f
-                     JOIN user AS u
-                         ON f.followed_id = u.uid AND f.time >= (unix_timestamp(now()) - #{date})
-             ) AS t
-        GROUP BY t.uid
-        ORDER BY num DESC
+            (SELECT count(tu.tuid) FROM thumb_up tu
+            WHERE tu.user_id=u.uid AND tu.date >= (unix_timestamp(now()) - #{date}) AS likeNum,
+            (SELECT count(u.uid) FROM follow AS f JOIN user AS fan
+            ON f.followed_id = fan.uid AND f.time >= (unix_timestamp(now()) - #{date}) AS fansNum,
+            SUM(t.fans) AS sums
+        FROM user AS u
+        ORDER BY sums DESC
     </select>
 
     <select id="daisuki" parameterType="map" resultType="map">

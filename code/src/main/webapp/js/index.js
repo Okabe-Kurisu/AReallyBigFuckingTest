@@ -159,12 +159,12 @@ $(function() {
                         userinfo = data.data
                         for (x in userinfo) {
                             user = userinfo[x]
-                            if (user.userid != id) {
-                                text = '<a href="./?method=userinfo&uid=' + user.userid + '" class=" mdui-col"><img src="' + user.avatar + '" class="mdui-img-fluid" mdui-tooltip="{content: \'' + user.nickname + '\', delay: 100}""></a>'
+                            text = '<a href="./?method=userinfo&uid=' + user.userid + '" class=" mdui-col"><img src="' + user.avatar + '" class="mdui-img-fluid" mdui-tooltip="{content: \'' + user.nickname + '\', delay: 100}""></a>'
+
+                            if (user.fid != id) {
                                 var html = $(".usercard-folled").html()
                                 $(".usercard-folled").html(html + text)
                             } else {
-                                text = '<a href="./?method=userinfo&uid=' + user.fid + '" class=" mdui-col"><img src="' + user.avatar + '" class="mdui-img-fluid" mdui-tooltip="{content: \'' + user.nickname + '\', delay: 100}""></a>'
                                 var html = $(".usercard-foller").html()
                                 $(".usercard-foller").html(html + text)
                             }
@@ -972,7 +972,7 @@ $(function() {
                 success: function(data) {
                     var commits = data.data;
                     mdui.snackbar(data.msg);
-                    sendCard.after(insertComment(commits[commits.length-1]));
+                    sendCard.after(insertComment(commits[commits.length - 1]));
                     var num = $(this).children(".commentNum").html()
                     $(this).children(".commentNum").html(parseInt(num) + 1)
                 },
@@ -1176,7 +1176,6 @@ $(function() {
             })
         });
     });
-
 
 
 
