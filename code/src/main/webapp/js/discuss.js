@@ -11,18 +11,23 @@ $(function () {
 
         initHotDiscuss();
 
+        //初始化分页器
+        initPagination()
+
     });
 
     //绑定事件
 
     //话题中心绑定事件
     $(".discuss-center").click(function () {
+        $(".pagination-bar").show()
         discuss_page = 0;
         getAllDiscuss();
     });
 
     //我的话题绑定事件
     $(".my-discuss").click(function () {
+        $(".pagination-bar").hide()
         discuss_page = 1;
         getUserDiscuss();
     });
@@ -287,14 +292,19 @@ $(function () {
 
     // function
     var intiDiscuss = function () {
-        getAllDiscuss()
+        getAllDiscuss(1, 10)
     };
 
     // 获得全部话题
-    var getAllDiscuss = function () {
+    var getAllDiscuss = function (page, pageCap) {
+        param = {
+            page: page,
+            pageCap: pageCap
+        }
         $.ajax({
             url: "/discuss/searchDiscuss",
             type: "POST",
+            data: param,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
             success: function (data) {
@@ -436,7 +446,7 @@ $(function () {
             "                                    </div>\n" +
             "                                    <div class=\"mdui-card-actions\">\n";
 
-        if (discuss.followNum > 0) {
+        if (discuss.followNum == 0) {
             res += "<button class=\"mdui-btn mdui-ripple mdui-ripple-white followDiscuss\" did=\"" + discuss.did + "\">关注</button>\n"
         } else {
             res += "<button class=\"mdui-btn mdui-ripple mdui-ripple-white\" did=\"" + discuss.did + "\" disabled>已关注</button>\n"
@@ -451,4 +461,66 @@ $(function () {
         return res;
     }
 
+    var initPagination = function () {
+        if (discuss_page == 0) {
+
+            var num = 0;
+            parm = {
+                flag: discuss_page
+            };
+            $.ajax({
+                url: "/discuss/selectDisCount",
+                type: "GET",
+                data: parm,
+                async: false,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200 && data.data != null) {
+                        num = data.data.num;
+                        var num_y = num % 10;
+                        num = num / 10;
+                        if (num_y != 0) num += 1;
+                    }
+                }
+            });
+            $('.pagination-bar').pagination({
+                pageCount: num,
+                jump: true,
+                callback: function (api) {
+                    getAllDiscuss(api.getCurrent(), 10)
+                }
+            });
+        }
+        /*else {
+            var num = 0;
+            parm = {
+                flag: discuss_page
+            };
+            $.ajax({
+                url: "/discuss/selectDisCount",
+                type: "GET",
+                data: parm,
+                async: false,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200 && data.data != null) {
+                        num = data.data.num;
+                        var num_y = num % 10;
+                        num = num / 10;
+                        if (num_y != 0) num += 1;
+                    }
+                }
+            });
+            $('.pagination-bar').pagination({
+                pageCount: num,
+                jump: true,
+                callback: function (api) {
+                    getUserDiscuss(api.getCurrent(), 10)
+                }
+            });
+        }*/
+
+    }
 });

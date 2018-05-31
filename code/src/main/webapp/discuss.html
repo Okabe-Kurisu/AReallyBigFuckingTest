@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
     <link rel="stylesheet" type="text/css" href="./css/mine.css">
     <link rel="stylesheet" type="text/css" href="./css/discuss.css">
+    <link rel="stylesheet" type="text/css" href="./css/pagination.css">
 </head>
 
 <body>
@@ -36,21 +37,24 @@
     </div>
     <!-- 登陆后的个人信息弹框 -->
     <div class="mdui-collapse userpanel">
-        <div class="mdui-collapse-item" id="userpanel">
+        <div class="mdui-collapse-item " id="userpanel">
             <div class="mdui-collapse-item-header"></div>
             <div class="mdui-card mdui-float-right mdui-collapse-item-body userpanel-body">
                 <div class="mdui-card-header mdui-center ">
-                    <img class="mdui-card-header-avatar mdui-center userpanel-avator" src="./img/avatar.jpg"/>
+                    <a href="" class="userpanel-href"><img class="mdui-card-header-avatar mdui-center userpanel-avator" src="./img/avatar.jpg"/></a>
                     <div class="mdui-card-header-title mdui-center userpanel-nickname">默认用户</div>
                     <div class="mdui-card-header-subtitle mdui-center userpanel-motto">一个普通的默认用户</div>
                 </div>
                 <div class="mdui-card-content ">
                     <ul class="mdui-list mdui-list-dense">
                         <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                            <div class="mdui-list-item-content">@我的</div>
+                            <div class="mdui-list-item-content callat-btn">@我的</div>
                         </li>
                         <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                            <div class="mdui-list-item-content">评论我的</div>
+                            <div class="mdui-list-item-content favorite-btn">收藏夹</div>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple mdui-p-l-1">
+                            <div class="mdui-list-item-content">修改个人信息</div>
                         </li>
                         <li class="mdui-list-item mdui-ripple mdui-p-l-1">
                             <div class="mdui-list-item-content">私信</div>
@@ -58,8 +62,7 @@
                     </ul>
                 </div>
                 <div class="mdui-card-actions">
-                    <button class="mdui-btn mdui-btn-icon mdui-text-color-theme usertag-btn"
-                            mdui-tooltip="{content: '用户分析', delay: 100}">
+                    <button class="mdui-btn mdui-btn-icon mdui-text-color-theme usertag-btn" mdui-tooltip="{content: '用户分析', delay: 100}">
                         <i class="mdui-icon material-icons">bubble_chart</i>
                     </button>
                     <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme mdui-float-right logout"><i
@@ -122,6 +125,8 @@
                 <!-- 每个话题框 -->
 
             </div>
+            <div class="mdui-divider"></div><br>
+            <div class="pagination-bar m-style"></div><br>
         </div>
         <!-- 右侧边栏 -->
         <div class="mdui-col-xs-3 mdui-m-t-1">
@@ -269,6 +274,7 @@
 <script src="./js/tags.js"></script>
 <script src="./js/datestampTool.js"></script>
 <script src="./js/laydate.js"></script>
+<script src="./js/jquery.pagination.js"></script>
 <script src="./js/index.js"></script>
 <script src="js/discuss.js"></script>
 

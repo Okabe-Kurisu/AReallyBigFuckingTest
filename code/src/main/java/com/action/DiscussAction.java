@@ -106,6 +106,31 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
         return SUCCESS;
     }
 
+    @Action(value = "selectDisCount", results = {
+            @Result(name = "success", type = "json", params = {"root", "resultMap"})
+    })
+    public String selectDisCount() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            // 获得参数
+            String flag = request.getParameter("flag");
+            if (null != flag && flag.equals("1")) {
+                //获得当前登录用户id
+                User user = (User) request.getSession().getAttribute("user");
+                int userId = user.getUid();
+                map.put("user_id", userId);
+            }
+
+            Map<String, String> discussList = DiscussDao.getDisCount(map);
+            resultMap = PowerfulTools.format("200", "成功", discussList);
+
+        } catch (Exception ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
     @Action(value = "searchDiscuss", results = {
             @Result(name = "success", type = "json", params = {"root", "resultMap"})
     })
@@ -139,6 +164,7 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
                 int userId = user.getUid();
                 map.put("user_id", userId);
             }
+            System.out.println(startNum + "---" + endNum);
 
             map.put("key", key);
             map.put("startNum", startNum);

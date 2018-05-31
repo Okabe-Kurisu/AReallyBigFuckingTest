@@ -67,6 +67,17 @@ public class DiscussDao {
         return discussList;
     }
 
+    public static Map<String, String> getDisCount(Map map1) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        Map<String, String> map = new HashMap<>();
+        try {
+            map = sqlSession.selectOne("weibo/DiscussMapper.selectDisCount", map1);
+        } finally {
+            sqlSession.close();
+        }
+        return map;
+    }
+
     public static List<Map> selectDiscuss(Map map) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> discussList;

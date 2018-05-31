@@ -127,14 +127,14 @@
     <select id="getFanAvatarByUid" resultType="Map">
         SELECT *
         FROM (
-            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
+            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid, u.nickname
             FROM follow AS f
             JOIN user AS u
             ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
             WHERE u.uid = #{uid}
             LIMIT 6
             UNION ALL
-            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid
+            SELECT u.avatar, f.user_id AS userid, f.followed_id AS fid, u.nickname
             FROM follow AS f
             JOIN user AS u
             ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)

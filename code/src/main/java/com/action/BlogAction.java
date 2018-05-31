@@ -1,20 +1,16 @@
 package com.action;
 
 import com.DAO.BlogDao;
-import com.DAO.UserDao;
 import com.annotations.Authority;
-import com.google.gson.Gson;
 import com.model.*;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
 import com.tool.SensitivewordFilter;
-import org.apache.struts2.components.Date;
 import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -489,7 +485,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         User user = (User) request.getSession().getAttribute("user");
         user_id = user.getUid();
         discuss_id = Integer.parseInt(request.getParameter("discuss_id"));
-        blog_id = Integer.parseInt(request.getParameter("blog_id"));
+        blog_id = Integer.parseInt(request.getParameter("bid"));
         try {
             bd.setBlog_id(blog_id);
             bd.setDiscuss_id(discuss_id);
@@ -732,6 +728,20 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
+
+    //得到即时热门微博
+    @Action(value = "nowtimeHot")
+    public String getNowtimeHot() {
+        Map<String, Object> map = new HashMap();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600*24));//获得一小时有过评论转发和点赞的微博
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
 
     public String getMessage() {
         return message;
