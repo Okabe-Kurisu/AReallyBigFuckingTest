@@ -49,8 +49,9 @@ $(function() {
             var db = weiboDB;
             // 取到微博
             //获取热门微博，关注用户微博，关注话题微博
-            getBlog(0, params, db);
+            // getBlog(0, params, db);
             getBlog(4, params, db);
+            getBlog(7, params, db);
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
                 getBlog(5, params, db);
@@ -87,7 +88,7 @@ $(function() {
             if (method == "search") {
                 // 搜索页面
                 $(".index").show();
-                $("title").html("Fake微博-搜索" + sessionStorage.keyword + "的结果"); 
+                $("title").html("Fake微博-搜索" + sessionStorage.keyword + "的结果");
                 params = {
                     keyword: sessionStorage.keyword,
                     uid: 0,
@@ -100,14 +101,14 @@ $(function() {
             }
             if (method == "callat") {
                 // at人页面
-                $("title").html("Fake微博-at我的人"); 
+                $("title").html("Fake微博-at我的人");
                 var db = tempDB;
                 getBlog(3, {}, db);
                 readBlog(db);
             }
             if (method == "favorite") {
                 // 收藏
-                $("title").html("Fake微博-收藏夹"); 
+                $("title").html("Fake微博-收藏夹");
                 var db = tempDB;
                 getBlog(6, {}, db);
                 readBlog(db);
@@ -133,7 +134,7 @@ $(function() {
                         $(".usercard-follerNum").html(userinfo.folledNum);
                         $(".usercard-folledNum").html(userinfo.follerNum);
                         $(".usercard-blogNum").html(userinfo.blogNum);
-                        $("title").html("Fake微博-" + userinfo.nickname + "的个人页面"); 
+                        $("title").html("Fake微博-" + userinfo.nickname + "的个人页面");
                     } else {
                         mdui.snackbar("当前用户不存在");
                         setTimeout("self.location= '/'", 1500);
@@ -175,9 +176,9 @@ $(function() {
     }
     // 得到博客并存储到websql中
     function getBlog(type, params, db) {
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite" ]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "nowtimeHot", "getFollowBlog", "getFavorite", "getHotspot"]
         //reason是生成博客列表的时候标注的理由
-        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客"];
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客", "热门博客"];
         var reason = reasons[type];
         //如果不是主页，数据存入临时表中
         $.ajax({
@@ -227,11 +228,20 @@ $(function() {
                         if (!block.find(function(num) {
                                 return num == datas[x].userid;
                             })) {
-                            insertBlog(datas[x]);
-                            tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                            if (datas[x].reason == "热门博客") {
+                                var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">" +
+                                    "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>" +
+                                    "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
+                                $(".hotweibo").append(html)
+                            } else {
+                                insertBlog(datas[x]);
+                                tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                            }
                         } else {
                             console.log("屏蔽了来自" + datas[x].nickname + "的信息")
                         }
+
+
                         if (x == (len - 1))
                             break;
                     }
@@ -305,11 +315,11 @@ $(function() {
                         if (data.code == 200) {
                             if (data.data != null) {
                                 var len = data.data.length;
-                                if (len > 0) 
+                                if (len > 0)
                                     mdui.snackbar("你特别关注的" + len + "人发布了新博客，快去看看吧");
                             }
                             sessionStorage.date = Math.round(new Date().getTime() / 1000);
-                            setTimeout(daisuki,10000);
+                            setTimeout(daisuki, 10000);
                         }
                     },
                 })
@@ -631,9 +641,9 @@ $(function() {
     function insertBlog(data, reason) {
         data.ocontent = data.content;
         if (typeof(sessionStorage.keyword)) {
-            data.motto = data.motto.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
-            data.nickname = data.nickname.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
-            data.content = data.content.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.motto = data.motto.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.nickname = data.nickname.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.content = data.content.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
         }
         var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + data.bid + ">\n" +
             "<div class=\"dev-info\" style=\"display: none;\">\n" +
@@ -946,7 +956,7 @@ $(function() {
         $(".commit-send").on("click", commit);
 
         function commit(argument) {
-            var sendCard = $(this).parent().parent();
+            var sendCard = $(this).parent().parent().parent();
             var bid = $(this).parents(".blog-card").attr("bid");
             var content = $(this).parents(".mdui-list-item-content").find("input").val();
             param = {
@@ -960,8 +970,9 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
+                    var commits = data.data;
                     mdui.snackbar(data.msg);
-                    sendCard.after(insertComment(commits[x]));
+                    sendCard.after(insertComment(commits[commits.length-1]));
                     var num = $(this).children(".commentNum").html()
                     $(this).children(".commentNum").html(parseInt(num) + 1)
                 },
@@ -1121,49 +1132,51 @@ $(function() {
         var dDialog = $(".discuss-dialog");
         dDialog_inst = new mdui.Dialog(dDialog, overlay = true);
         dDialog_inst.open();
-    });
-    // @用户搜索事件（监听keyup的回车事件）
-    $('.discuss-input').keyup('keyup', function(event) {
-        param = {
-            name: $(".discuss-input").val()
-        };
-        $(".discuss-list").text("");
-        $.ajax({
-            url: "/blog/getFiveDiscuss",
-            //async: false,
-            type: "POST",
-            data: param,
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            dataType: "json",
-            success: function(data) {
-                var discusses = data.data;
-                console.log("获取5个话题");
-                if (data.code == 200 && discusses != null) {
-                    for (x in discusses) {
-                        var discuss = discusses[x];
-                        var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discuss-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
-                            "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
-                            "                    </li>";
-                        $(".discuss-list").append(res);
+
+        // @用户搜索事件（监听keyup的回车事件）
+        $('.discuss-input').keyup('keyup', function(event) {
+            param = {
+                name: $(".discuss-input").val()
+            };
+            $(".discuss-list").text("");
+            $.ajax({
+                url: "/blog/getFiveDiscuss",
+                //async: false,
+                type: "POST",
+                data: param,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    var discusses = data.data;
+                    console.log("获取5个话题");
+                    if (data.code == 200 && discusses != null) {
+                        for (x in discusses) {
+                            var discuss = discusses[x];
+                            var res = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 discuss-item\" did=\"" + discuss.did + "\" name=\"" + discuss.name + "\">\n" +
+                                "                        <div class=\"mdui-list-item-content\">" + discuss.name + "</div>\n" +
+                                "                    </li>";
+                            $(".discuss-list").append(res);
+                        }
                     }
-                }
-                // @列表点击事件
-                $(".discuss-list").off("click");
-                $(".discuss-list").on("click", ".discuss-item", function() {
-                    var did = $(this).attr("did")
-                    var name = $(this).attr("name");
-                    var v = $("#blog-content").val();
-                    $("#blog-content").val(v + " #" + name + " ");
-                    ataDialog_inst.close();
-                    $("#blog-content").focus();
-                    sessionStorage.discussdid = did;
-                })
-            },
-            error: function() {
-                mdui.snackbar("用户获取失败");
-            },
-        })
+                    // @列表点击事件
+                    $(".discuss-list").off("click");
+                    $(".discuss-list").on("click", ".discuss-item", function() {
+                        var did = $(this).attr("did")
+                        var name = $(this).attr("name");
+                        var v = $("#blog-content").val();
+                        $("#blog-content").val(v + " #" + name + " ");
+                        dDialog_inst.close();
+                        $("#blog-content").focus();
+                        sessionStorage.discussdid = did;
+                    })
+                },
+                error: function() {
+                    mdui.snackbar("用户获取失败");
+                },
+            })
+        });
     });
+
 
 
 
@@ -1278,10 +1291,10 @@ $(function() {
         })
     }
 
-    $(".favorite-btn").click(function (){
+    $(".favorite-btn").click(function() {
         self.location = "/?method=favorite";
     })
-    $(".callat-btn").click(function (){
+    $(".callat-btn").click(function() {
         self.location = "/?method=callat";
     })
 })

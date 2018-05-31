@@ -302,6 +302,8 @@
     <select id="nowTimeHot" parameterType="int" resultType="Map">
         SELECT
             *,
+            (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) AS commentNum,
+            (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS likeNum,
             COUNT(t.bid) AS num
         FROM (
                  SELECT b.*
@@ -314,8 +316,10 @@
                      JOIN blog AS bc
                          ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - #{date})
              ) AS t
+        JOIN user AS u
+        on t.user_id=u.uid
         GROUP BY t.bid
-        ORDER BY num DESC
+        ORDER BY num DESC, u.weight
     </select>
 
     <!--得到昨日讨论的微博-->

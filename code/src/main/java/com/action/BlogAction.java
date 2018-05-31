@@ -290,8 +290,9 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 Sensitivity_blog.setTime((int) (System.currentTimeMillis() / 1000));
                 BlogDao.reportBlog(Sensitivity_blog);
             }
+            List<Map> data = BlogDao.getCommitById(Commentid);
             // 封装响应数据
-            resultMap = PowerfulTools.format("200", "发布成功", user);
+            resultMap = PowerfulTools.format("200", "发布成功", data);
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("101", "内容为空或者过长", null);
@@ -730,6 +731,20 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
+
+    //得到即时热门微博
+    @Action(value = "nowtimeHot")
+    public String getNowtimeHot() {
+        Map<String, Object> map = new HashMap();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600*24));//获得一小时有过评论转发和点赞的微博
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
 
     public String getMessage() {
         return message;
