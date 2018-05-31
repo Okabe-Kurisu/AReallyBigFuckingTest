@@ -88,7 +88,7 @@ $(function() {
             if (method == "search") {
                 // 搜索页面
                 $(".index").show();
-                $("title").html("Fake微博-搜索" + sessionStorage.keyword + "的结果"); 
+                $("title").html("Fake微博-搜索" + sessionStorage.keyword + "的结果");
                 params = {
                     keyword: sessionStorage.keyword,
                     uid: 0,
@@ -101,14 +101,14 @@ $(function() {
             }
             if (method == "callat") {
                 // at人页面
-                $("title").html("Fake微博-at我的人"); 
+                $("title").html("Fake微博-at我的人");
                 var db = tempDB;
                 getBlog(3, {}, db);
                 readBlog(db);
             }
             if (method == "favorite") {
                 // 收藏
-                $("title").html("Fake微博-收藏夹"); 
+                $("title").html("Fake微博-收藏夹");
                 var db = tempDB;
                 getBlog(6, {}, db);
                 readBlog(db);
@@ -134,7 +134,7 @@ $(function() {
                         $(".usercard-follerNum").html(userinfo.folledNum);
                         $(".usercard-folledNum").html(userinfo.follerNum);
                         $(".usercard-blogNum").html(userinfo.blogNum);
-                        $("title").html("Fake微博-" + userinfo.nickname + "的个人页面"); 
+                        $("title").html("Fake微博-" + userinfo.nickname + "的个人页面");
                     } else {
                         mdui.snackbar("当前用户不存在");
                         setTimeout("self.location= '/'", 1500);
@@ -176,7 +176,7 @@ $(function() {
     }
     // 得到博客并存储到websql中
     function getBlog(type, params, db) {
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "nowtimeHot", "getFollowBlog", "getFavorite", "getHotspot" ]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "nowtimeHot", "getFollowBlog", "getFavorite", "getHotspot"]
         //reason是生成博客列表的时候标注的理由
         var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客", "热门博客"];
         var reason = reasons[type];
@@ -228,18 +228,19 @@ $(function() {
                         if (!block.find(function(num) {
                                 return num == datas[x].userid;
                             })) {
-                            insertBlog(datas[x]);
-                            tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                            if (datas[x].reason == "热门博客") {
+                                var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">" +
+                                    "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>" +
+                                    "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
+                                $(".hotweibo").append(html)
+                            } else {
+                                insertBlog(datas[x]);
+                                tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                            }
                         } else {
                             console.log("屏蔽了来自" + datas[x].nickname + "的信息")
                         }
-                        console.log(datas[x])
-                        if (datas[x].reason == "热门博客") {
-                            var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">"+
-                                    "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>"+
-                                    "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
-                            $(".hotweibo").append(html)
-                        }
+
 
                         if (x == (len - 1))
                             break;
@@ -314,11 +315,11 @@ $(function() {
                         if (data.code == 200) {
                             if (data.data != null) {
                                 var len = data.data.length;
-                                if (len > 0) 
+                                if (len > 0)
                                     mdui.snackbar("你特别关注的" + len + "人发布了新博客，快去看看吧");
                             }
                             sessionStorage.date = Math.round(new Date().getTime() / 1000);
-                            setTimeout(daisuki,10000);
+                            setTimeout(daisuki, 10000);
                         }
                     },
                 })
@@ -640,9 +641,9 @@ $(function() {
     function insertBlog(data, reason) {
         data.ocontent = data.content;
         if (typeof(sessionStorage.keyword)) {
-            data.motto = data.motto.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
-            data.nickname = data.nickname.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
-            data.content = data.content.replace(sessionStorage.keyword,"<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.motto = data.motto.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.nickname = data.nickname.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
+            data.content = data.content.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
         }
         var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + data.bid + ">\n" +
             "<div class=\"dev-info\" style=\"display: none;\">\n" +
@@ -1287,10 +1288,10 @@ $(function() {
         })
     }
 
-    $(".favorite-btn").click(function (){
+    $(".favorite-btn").click(function() {
         self.location = "/?method=favorite";
     })
-    $(".callat-btn").click(function (){
+    $(".callat-btn").click(function() {
         self.location = "/?method=callat";
     })
 })

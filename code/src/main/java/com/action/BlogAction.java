@@ -731,6 +731,20 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     }
 
 
+    //得到即时热门微博
+    @Action(value = "nowtimeHot")
+    public String getNowtimeHot() {
+        Map<String, Object> map = new HashMap();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600*24));//获得一小时有过评论转发和点赞的微博
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
     public String getMessage() {
         return message;
     }
