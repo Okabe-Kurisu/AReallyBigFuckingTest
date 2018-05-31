@@ -678,10 +678,10 @@ $(function() {
         }
         res += "<div class=\"mdui-card-actions\">\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme thumb_up\" likeNum=\"" + data.likeNum + "\"><i\n" +
-            "class=\"mdui-icon material-icons\">thumb_up</i>赞(" + data.likeNum + ")\n" +
+            "class=\"mdui-icon material-icons\">thumb_up</i>赞(<span class=\"likeNum\" >" + data.likeNum + "</span>)\n" +
             "</button>\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme commit-toggle\" commentNum=\"" + data.commentNum + "\"><i\n" +
-            "class=\"mdui-icon material-icons\">forum</i>(" + data.commentNum + ")\n" +
+            "class=\"mdui-icon material-icons\">forum</i>(<span class=\"commentNum\" >" + data.commentNum + "</span>)\n" +
             "</button>\n" +
             "<button class=\"mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme favorite\"><i\n" +
             "class=\"mdui-icon material-icons\">folder</i>收藏\n" +
@@ -803,7 +803,7 @@ $(function() {
             inst.openAll()
 
             //如果有评论 ，就加载
-            if (parseInt($(this).attr("commentnum")) != 0) {
+            if (parseInt($(this).attr("commentNum")) != 0) {
                 var commitlist = $(this).parent().next().find(".mdui-list");
                 param = {
                     bid: $(this).parents(".blog-card").attr("bid")
@@ -932,8 +932,8 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
-                    var num = $(this).parents(".blog-card").val()
-                    $(this).parents(".blog-card").val(num + 1)
+                    var num = $(this).children(".likeNum").html()
+                    $(this).children(".likeNum").html(parseInt(num) + 1)
                 }
             })
             $(this).toggleClass("mdui-text-color-theme");
@@ -962,6 +962,8 @@ $(function() {
                 success: function(data) {
                     mdui.snackbar(data.msg);
                     sendCard.after(insertComment(commits[x]));
+                    var num = $(this).children(".commentNum").html()
+                    $(this).children(".commentNum").html(parseInt(num) + 1)
                 },
                 error: function(data) {
                     mdui.snackbar(data.msg);
