@@ -170,8 +170,8 @@
         JOIN blog AS b
         ON b.bid = c.blog_id
         JOIN user AS u
-        on b.user_id=u.uid
-        WHERE b.visibility = 0 AND c.user_id=#{uid}
+        on c.user_id=u.uid
+        WHERE b.visibility = 0 AND c.at_userid=#{uid}
     </select>
 
     <!-- 删除微博 查用户 -->
@@ -247,8 +247,8 @@
     </select>
 
     <insert id="atUser" parameterType="CallAt" useGeneratedKeys="true" keyProperty="cid">
-        INSERT INTO call_at (user_id, blog_id, date)
-            VALUE (#{user_id}, #{blog_id}, #{date})
+        INSERT INTO call_at (user_id, blog_id, date,at_userid)
+            VALUE (#{user_id}, #{blog_id}, #{date},#{at_userid})
     </insert>
 
     <!--#话题 -->
