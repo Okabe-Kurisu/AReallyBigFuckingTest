@@ -561,6 +561,7 @@ $(function() {
                 rtn.release_time = rtn.release_time;
                 rtn.browserSign = rtn.browser_sign;
                 rtn.commentOn = rtn.comment_on;
+
                 if (typeof(sessionStorage.time) == "undefined") {
                     insertBlog(rtn, reason = "是你发送的");
                     initCard();
@@ -589,6 +590,7 @@ $(function() {
                         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     })
                 }
+                $("#blog-content").val("")
                 mdui.snackbar("发送成功");
             },
             error: function() {
@@ -650,12 +652,12 @@ $(function() {
 
         res += "</div>\n" +
             "<div class=\"mdui-card-header\">\n" +
-            "<a href=\"./?method=userinfo&uid=" + data.userid + "\"><img class=\"mdui-card-header-avatar\" src=\"" + data.avatar + "\"/></a>\n" +
+            "<a href=\"./?method=userinfo&uid=" + data.uid + "\"><img class=\"mdui-card-header-avatar\" src=\"" + data.avatar + "\"/></a>\n" +
             "<div class=\"mdui-card-header-title\">" + data.nickname + "</div>\n" +
             "<div class=\"mdui-card-header-subtitle\">" + data.motto + "</div>\n" +
             "<!-- 时间戳生成发博时间 -->\n" +
             "<div class=\"mdui-card-menu mdui-text-color-grey-500\">\n" +
-            "<p>" + formatMsgTime(data.releaseTime) + "</p>\n" +
+            "<p>" + formatMsgTime(data.release_time | data.releaseTime) + "</p>\n" +
             "</div>\n" +
             "</div>\n";
         // 如果blog中包含图片
