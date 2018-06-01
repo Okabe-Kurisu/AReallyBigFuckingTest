@@ -151,12 +151,14 @@
     </select>
 
     <select id="getFavorite" parameterType="int" resultType="map">
-        SELECT *,
+        SELECT fbz.*,b.*,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM favorite as f
         JOIN blog AS b
         ON b.bid = f.blog_id
+        JOIN user AS fbz
+        ON b.user_id = fbz.uid
         JOIN user AS u
         on f.user_id=u.uid
         WHERE b.visibility = 0 AND f.user_id = #{uid}
