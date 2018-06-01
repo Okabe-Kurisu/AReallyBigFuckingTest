@@ -52,16 +52,11 @@ $(function() {
 
             getBlog(0, params, db);
             getBlog(4, params, db);
-
-            //getBlog(0, params, db);
-            getBlog(5, params, db);
-
             getBlog(7, params, db);
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
                 getBlog(5, params, db);
             }
-            readBlog(db);
             //todo 加载太长了，写一个加载动画
 
         } else {
@@ -74,8 +69,6 @@ $(function() {
 
                 var db = tempDB;
                 getBlog(1, params, db);
-                readBlog(db);
-
                 setUsercard(uid);
                 setFanCard(uid);
                 $(".userinfo").show();
@@ -101,7 +94,6 @@ $(function() {
 
                 var db = tempDB;
                 getBlog(2, params, db);
-                readBlog(db);
                 var blogs = document.getElementById("blogs")
             }
             if (method == "callat") {
@@ -109,7 +101,6 @@ $(function() {
                 $("title").html("Fake微博-at我的人");
                 var db = tempDB;
                 getBlog(3, {}, db);
-                readBlog(db);
             }
             if (method == "favorite") {
                 // 收藏
@@ -189,7 +180,6 @@ $(function() {
         $.ajax({
             url: "/blog/" + urls[type],
             type: "POST",
-            async: false,
             data: params,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
@@ -200,6 +190,7 @@ $(function() {
                     saveToSql(blogs, db, reason = reason);
                 }
                 console.log("博客数据加载完成");
+                readBlog(db);
             },
         })
 
@@ -645,7 +636,7 @@ $(function() {
 
     function insertBlog(data, reason) {
         data.ocontent = data.content;
-        if (typeof(sessionStorage.keyword)) {
+        if (typeof(sessionStorage.keyword) != "undefined" && data.reason == "包含了搜索词") {
             data.motto = data.motto.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
             data.nickname = data.nickname.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
             data.content = data.content.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
@@ -940,7 +931,7 @@ $(function() {
             param = {
                 bid: bid
             }
-            var thisclass=$(this);
+            var thisclass = $(this);
             $.ajax({
                 url: "/blog/thumbUp",
                 type: "POST",
@@ -948,14 +939,14 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
-                    if(data.msg=="点赞"){
+                    if (data.msg == "点赞") {
                         console.log(thisclass.children(".likeNum"))
                         thisclass.toggleClass("mdui-text-color-theme");
                         thisclass.toggleClass("mdui-text-color-pink");
                         mdui.snackbar(data.msg);
                         var num = thisclass.children(".likeNum").html();
                         thisclass.children(".likeNum").html(parseInt(num) + 1)
-                    }else{
+                    } else {
                         thisclass.toggleClass("mdui-text-color-pink");
                         thisclass.toggleClass("mdui-text-color-theme");
 
@@ -1078,7 +1069,7 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
-                    if (data.code = 200 && data.code != null) {
+                    if (data.code = 200 && data.data != null) {
                         var rtn = data.data;
                         thisDiv.addClass("origin-blog");
                         thisDiv.removeClass("mdui-spinner");
@@ -1091,6 +1082,17 @@ $(function() {
                             "<div class=\"mdui-card-header-subtitle\">" + rtn.motto + "</div>\n" +
                             "</div>" +
                             "<div class=\"mdui-card-content\">" + rtn.content + "</div>" +
+                            "</div>";
+                        thisDiv.html(html)
+                    } else {
+                        var rtn = data.data;
+                        thisDiv.addClass("origin-blog");
+                        thisDiv.removeClass("mdui-spinner");
+                        thisDiv.removeClass("mdui-spinner-colorful");
+                        thisDiv.removeClass("waitload");
+                        var html = "<div class=\"mdui-card mdui-m-t-1\">" +
+                            "<div class=\"mdui-card-header\">" +
+                            "<div class=\"mdui-card-content\">该内容不存在</div>" +
                             "</div>";
                         thisDiv.html(html)
                     }
