@@ -83,21 +83,22 @@
         on t.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
         WHERE t.type=0
         AND t.visibility=0
+        and t.release_time &lt;= unix_timestamp(now())
         group by t.bid
     </select>
 
     <!-- 得到今日热点微博 -->
     <select id="getTodayHostBlog" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
-
-        SELECT u.*,b.*,
+        SELECT *,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=1) AS reshareNum,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
-        FROM user u,blog b
-        WHERE u.uid=b.user_id
+        FROM blog b
+        join user as u
+        on u.uid = b.user_id
         AND b.type=0
         AND b.visibility=0
-
+        and b.release_time &lt;= unix_timestamp(now())
     </select>
 
     <!-- 得到指定用户微博 -->
@@ -110,7 +111,8 @@
         on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
         WHERE u.uid=#{uid}
         AND b.type &lt;= 1
-        AND (visibility=0 OR visibility=1)
+        AND b.visibility=0
+        and b.release_time &lt;= unix_timestamp(now())
         ORDER BY b.release_time DESC
     </select>
 
@@ -137,7 +139,8 @@
         FROM blog AS b
         JOIN user AS u
         on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
-        WHERE b.bid = #{bid} AND b.visibility = 0
+        WHERE b.bid = #{bid} AND b.visibility = 0 and b.release_time &lt;= unix_timestamp(now())
+
     </select>
 
     <select id="getCommitById" parameterType="int" resultType="map">
@@ -147,7 +150,8 @@
         FROM blog AS b
         JOIN user AS u
         on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
-        WHERE b.type = 2 AND b.comment_on = #{bid} AND b.visibility = 0
+        WHERE b.type = 2 AND b.comment_on = #{bid} AND b.visibility = 0 and b.release_time &lt;= unix_timestamp(now())
+
     </select>
 
     <select id="getFavorite" parameterType="int" resultType="map">
@@ -161,7 +165,8 @@
         ON b.user_id = fbz.uid
         JOIN user AS u
         on f.user_id=u.uid
-        WHERE b.visibility = 0 AND f.user_id = #{uid}
+        WHERE b.visibility = 0 AND f.user_id = #{uid} and b.release_time &lt;= unix_timestamp(now())
+
     </select>
 
     <select id="getCallat" parameterType="int" resultType="map">
@@ -174,6 +179,8 @@
         JOIN user AS u
         on c.user_id=u.uid
         WHERE b.visibility = 0 AND c.at_userid=#{uid}
+        and b.release_time &lt;= unix_timestamp(now())
+
     </select>
 
     <!-- 删除微博 查用户 -->
@@ -315,7 +322,7 @@
 
     <!--收集最近正在讨论的微博-->
     <select id="nowTimeHot" parameterType="int" resultType="Map">
-        SELECT
+        SELECT distinct
             *,
             (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) AS commentNum,
             (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS likeNum,
@@ -332,7 +339,8 @@
                          ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - #{date})
              ) AS t
         JOIN user AS u
-        on t.user_id=u.uid
+        on t.user_id=u.uid and t.visibility = 0 and t.release_time &lt;= unix_timestamp(now())
+
         GROUP BY t.bid
         ORDER BY num DESC, u.weight
     </select>
@@ -353,6 +361,8 @@
                      JOIN blog AS bc
                          ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - 86400)
              ) AS t
+        where t.visibility = 0 and t.release_time &lt;= unix_timestamp(now())
+
         GROUP BY t.bid
         ORDER BY num DESC
     </select>

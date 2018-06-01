@@ -55,6 +55,8 @@ $(function() {
             getBlog(7, params, db);//插在列表的
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
+                params.uid = sessionStorage.uid
+                getBlog(1, params, db);
                 getBlog(5, params, db);//拿到关注
             }
             //todo 加载太长了，写一个加载动画
@@ -172,7 +174,7 @@ $(function() {
     }
     // 得到博客并存储到websql中
     function getBlog(type, params, db) {   //1不同的链接 2条件 3
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "nowtimeHot", "getFollowBlog", "getFavorite", "getHotspot"]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite", "nowtimeHot"]
         //reason是生成博客列表的时候标注的理由
         var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客", "热门博客"];
         var reason = reasons[type];
@@ -614,19 +616,7 @@ $(function() {
             stamp: false, //是否转成时间戳，默认true;
             format: "yyyy-mm-dd hh:ii", //时间格式 默认 yyyy-mm-dd hh:ii;
             skin: 3, //皮肤颜色，默认随机，可选值：0-8,或者直接标注颜色值;
-            step: 5, //选择时间分钟的精确度;
-            callback: function(v, e) {
-                v += ":00"
-                var stringTime = v;
-                var timestamp2 = Date.parse(new Date(stringTime));
-                timestamp2 = timestamp2 / 1000;
-                var now = Math.round(new Date().getTime() / 1000);
-                if (timestamp2 <= now) {
-                    mdui.snackbar("不能小于当前时间");
-                    return;
-                }
-                sessionStorage.time = timestamp2;
-            }
+            step: 5, //选择时间分钟的精确度
         });
         $("#ECalendar_date").off("blur");
         $("#ECalendar_date").blur(function(argument) {
@@ -634,7 +624,8 @@ $(function() {
             var timestamp2 = Date.parse(new Date(stringTime));
             timestamp2 = timestamp2 / 1000;
             var now = Math.round(new Date().getTime() / 1000);
-            if (timestamp2 <= now) {
+            console.log(timestamp2, now)
+            if (timestamp2 <d now) {
                 mdui.snackbar("不能小于当前时间");
                 return;
             }

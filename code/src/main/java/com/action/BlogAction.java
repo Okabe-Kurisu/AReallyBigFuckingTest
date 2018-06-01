@@ -635,7 +635,11 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
                 return (f1 > f2) ? -1 : 1;
             });
             List rtn = new ArrayList();
+            int size = blogList.size();
+            System.out.println(size);
             for(int j=0;j<5;j++){
+                if (j >= size)
+                    break;
                 rtn.add(blogList.get(j));
             }
             // 封装响应数据
@@ -671,6 +675,8 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             // 获得参数
             bid = Integer.parseInt(request.getParameter("bid"));
             Map data = BlogDao.getBlogById(bid);
+            System.out.println(bid);
+            System.out.println(BlogDao.getBlogById(bid));
             // 封装响应数据
             resultMap = PowerfulTools.format("200", "成功", data);
 

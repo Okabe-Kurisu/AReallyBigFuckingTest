@@ -28,7 +28,6 @@ public class PowerfulTools {
         // 这里暂时 权重是写死的，后期有什么好的算法再改
 
         float result = (float) (ln * 0.2 + rn * 0.3 + cn * 0.5);
-        System.out.println(result);
         return result;
     }
 
