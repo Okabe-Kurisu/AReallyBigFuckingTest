@@ -50,12 +50,12 @@ $(function() {
             // 取到微博
             //获取热门微博，关注用户微博，关注话题微博
 
-            getBlog(0, params, db);
-            getBlog(4, params, db);
-            getBlog(7, params, db);
+           // getBlog(0, params, db);
+            getBlog(4, params, db);//拿到热门在右边
+            getBlog(7, params, db);//插在列表的
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
-                getBlog(5, params, db);
+                getBlog(5, params, db);//拿到关注
             }
             //todo 加载太长了，写一个加载动画
 
@@ -171,7 +171,7 @@ $(function() {
         }
     }
     // 得到博客并存储到websql中
-    function getBlog(type, params, db) {
+    function getBlog(type, params, db) {   //1不同的链接 2条件 3
         var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "nowtimeHot", "getFollowBlog", "getFavorite", "getHotspot"]
         //reason是生成博客列表的时候标注的理由
         var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客", "热门博客"];
