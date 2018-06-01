@@ -625,7 +625,7 @@ $(function() {
             timestamp2 = timestamp2 / 1000;
             var now = Math.round(new Date().getTime() / 1000);
             console.log(timestamp2, now)
-            if (timestamp2 <d now) {
+            if (timestamp2 < now) {
                 mdui.snackbar("不能小于当前时间");
                 return;
             }

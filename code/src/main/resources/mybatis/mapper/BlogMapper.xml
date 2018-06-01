@@ -29,7 +29,7 @@
         OR user.nickname LIKE "%"#{keyword}"%"
         OR user.motto LIKE "%"#{keyword}"%"
         ) AND
-        blog.release_time &lt; #{nowtime} and #{nowtime} &gt;= b.release_time AND
+        blog.release_time &lt; #{nowtime} and #{nowtime} &gt;= blog.release_time AND
         blog.visibility=0 AND blog.type=0
     </select>
 
