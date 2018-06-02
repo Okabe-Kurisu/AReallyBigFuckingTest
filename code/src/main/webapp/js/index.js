@@ -178,7 +178,7 @@ $(function() {
     function getBlog(type, params, db) { //1不同的链接 2条件 3
         var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite", "nowtimeHot"]
         //reason是生成博客列表的时候标注的理由
-        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客", "热门博客"];
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了博主", "你收藏了该博客", "热门博客"];
         var reason = reasons[type];
         //如果不是主页，数据存入临时表中
         $.ajax({
@@ -228,24 +228,23 @@ $(function() {
                         if (!block.find(function(num) {
                                 return num == datas[x].userid;
                             })) {
-                            if (datas[x].reason == "热门博客") {
+                            if (datas[x].reason == "热门博客") { //热门博客插入到边栏
                                 var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">" +
                                     "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>" +
                                     "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
                                 $(".hotweibo").append(html)
                             } else {
                                 insertBlog(datas[x]);
-                                tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
                             }
                         } else {
                             console.log("屏蔽了来自" + datas[x].nickname + "的信息")
                         }
+                        tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
                         if (x == (len - 1))
                             break;
                     }
-                } else {
-                    insertNone();
                 }
+                insertNone();
                 insertForword();
                 initCard();
                 mdui.mutation();
@@ -255,11 +254,13 @@ $(function() {
     }
 
     function insertNone() {
-        if ($(".blogs").html() != "") {
-            var res = "<div class=\"mdui-card mdui-color-red mdui-text-color-white mdui-m-t-5\">" +
+        if ($(".blogs").html() == "") {
+            var res = "<div class=\"mdui-card mdui-color-red mdui-text-color-white none mdui-m-t-5\">" +
                 "<div class=\"mdui-card-content\">这里空空如也</div>" +
                 "</div>";
-            $(".blogs").html(res);
+            $(".blogs").append(res);
+        } else {
+            $(".none").remove()
         }
     }
 
@@ -315,16 +316,32 @@ $(function() {
                 $.ajax({
                     url: "/discuss/getBlogDiscuss",
                     type: "POST",
-                    data: {did: did},
+                    data: {
+                        did: did
+                    },
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
                     success: function(data) {
                         console.log("加载博客数据")
                         if (data.code == 200 && data.data != null) {
-                            console.log(data.data)
+                            datas = data.data
+                            for (x in datas) {
+                                weiboDB.transaction(function(tx) { //这tm是异步方法
+                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? order by releaseTime, weight DESC', [data[x]], function(tx, results) {
+                                        var datas = results.rows;
+                                        var len = datas.length;
+                                        if (len != 0) {
+                                            tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [data[x]]);
+                                            insertBlog(datas[0], reason = "你关注了该话题")
+                                        }
+                                    })
+                                })
+                            }
+                            insertForword();
+                            initCard();
                         }
-                    },
-                }) 
+                    }
+                })
             }
 
             function daisuki(argument) {
