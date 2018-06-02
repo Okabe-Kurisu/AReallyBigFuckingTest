@@ -327,12 +327,12 @@ $(function() {
                             datas = data.data
                             for (x in datas) {
                                 weiboDB.transaction(function(tx) { //这tm是异步方法
-                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? order by releaseTime, weight DESC', [data[x]], function(tx, results) {
-                                        var datas = results.rows;
-                                        var len = datas.length;
+                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? and isShow = 0 order by releaseTime, weight DESC', [datas[x]], function(tx, results) {
+                                        var data = results.rows;
+                                        var len = data.length;
                                         if (len != 0) {
-                                            tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [data[x]]);
-                                            insertBlog(datas[0], reason = "你关注了该话题")
+                                            tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x]]);
+                                            insertBlog(data[0], reason = "你关注了该话题")
                                         }
                                     })
                                 })
@@ -680,6 +680,8 @@ $(function() {
 
 
     function insertBlog(data, reason) {
+        if ($(".blogs").children("[bid='" + data.bid + "']").length > 0)
+            return
         data.ocontent = data.content;
         if (typeof(sessionStorage.keyword) != "undefined" && data.reason == "包含了搜索词") {
             data.motto = data.motto.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
@@ -688,7 +690,7 @@ $(function() {
         }
         var res = "<div class=\"mdui-card mdui-m-t-1 blog-card\" bid=" + data.bid + ">\n" +
             "<div class=\"dev-info\" style=\"display: none;\">\n" +
-            "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">这条微博出现在这里，因为<strong>" + data.reason + "</strong></p>\n" +
+            "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">这条微博出现在这里，因为<strong>" + (reason || data.reason) + "</strong></p>\n" +
             "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">用户权重：<strong>" + data.weight + "</strong></p>\n" +
             "<p class=\"mdui-typo-caption mdui-text-color-pink-400 mdui-m-a-1\">发布环境：<strong>" + data.browserSign + "</strong></p>\n" +
             "</div>\n" +

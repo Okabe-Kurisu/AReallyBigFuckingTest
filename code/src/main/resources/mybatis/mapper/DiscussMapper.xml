@@ -92,6 +92,7 @@
         WHERE b.type=0
         AND b.visibility=0
         and b.release_time &lt;= unix_timestamp(now())
+        AND bd.discuss_id = #{did}
     </select>
 
     <!-- 判断指定话题是否是当前用户建立的 -->

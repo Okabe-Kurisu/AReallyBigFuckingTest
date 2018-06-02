@@ -329,7 +329,7 @@
         ) AS t
         JOIN user AS u
         on t.user_id=u.uid and t.visibility = 0
-        WHERE t.release_time >= (unix_timestamp(now() - 86400)) AND t.release_time &lt;= unix_timestamp(now())
+        WHERE t.release_time >= (unix_timestamp(now() - 86400000)) AND t.release_time &lt;= unix_timestamp(now())
         GROUP BY t.bid
         ORDER BY nums DESC, u.weight
     </select>
@@ -352,7 +352,7 @@
         ) AS t
         JOIN user AS u
         on t.user_id=u.uid and t.visibility = 0
-        WHERE t.release_time >= (unix_timestamp(now() - 172800)) AND t.release_time &lt;= (unix_timestamp(now()) - 86400)
+        WHERE t.release_time >= (unix_timestamp(now() - 172800000)) AND t.release_time &lt;= (unix_timestamp(now()) - 86400000)
         GROUP BY t.bid
         ORDER BY nums DESC, u.weight
     </select>
