@@ -58,7 +58,7 @@
     </insert>
 
     <!-- 搜索关注者的微博 -->
-    <select id="getFollowBlogByUserid" parameterType="Map" resultType="Map">  <!-- 书写 SQL 语句 -->
+    <select id="getFollowBlogByUserid" parameterType="int" resultType="Map">  <!-- 书写 SQL 语句 -->
         select DISTINCT *
         from
         (
@@ -69,15 +69,6 @@
         LEFT JOIN follow AS f
         ON f.followed_id=b.user_id AND (f.type = 2 or f.type = 0)
         WHERE f.user_id=#{uid}
-        union all
-        SELECT b.*,
-        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=b.bid AND type=2) AS commentNum,
-        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
-        FROM blog AS b
-        join blog_discuss as bd
-        on bd.blog_id = b.bid
-        LEFT JOIN follow AS f
-        ON f.followed_id=b.user_id AND f.type = 1 and f.user_id=#{uid}
         ) as t
         JOIN user AS u
         on t.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
@@ -323,48 +314,47 @@
     <!--收集最近正在讨论的微博-->
     <select id="nowTimeHot" parameterType="int" resultType="Map">
         SELECT distinct
-            *,
-            (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) AS commentNum,
-            (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS likeNum,
-            COUNT(t.bid) AS num
+        *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) + (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS nums
         FROM (
-                 SELECT b.*
-                 FROM blog AS b
-                     JOIN thumb_up AS tu
-                         ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - #{date})
-                 UNION ALL
-                 SELECT b.*
-                 FROM blog AS b
-                     JOIN blog AS bc
-                         ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - #{date})
-             ) AS t
+        SELECT b.*
+        FROM blog AS b
+        JOIN thumb_up AS tu
+        ON tu.blog_id = b.bid
+        UNION ALL
+        SELECT b.*
+        FROM blog AS b
+        JOIN blog AS bc
+        ON bc.comment_on = b.bid
+        ) AS t
         JOIN user AS u
-        on t.user_id=u.uid and t.visibility = 0 and t.release_time &lt;= unix_timestamp(now())
-
+        on t.user_id=u.uid and t.visibility = 0
+        WHERE t.release_time >= (unix_timestamp(now() - 86400)) AND t.release_time &lt;= unix_timestamp(now())
         GROUP BY t.bid
-        ORDER BY num DESC, u.weight
+        ORDER BY nums DESC, u.weight
     </select>
 
     <!--得到昨日讨论的微博-->
     <select id="lastTimeHot" resultType="Map">
-        SELECT
-            *,
-            COUNT(t.bid) AS num
+        SELECT distinct
+        *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) + (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS nums
         FROM (
-                 SELECT b.*
-                 FROM blog AS b
-                     JOIN thumb_up AS tu
-                         ON tu.blog_id = b.bid AND tu.date >= (unix_timestamp(now()) - 86400)
-                 UNION ALL
-                 SELECT b.*
-                 FROM blog AS b
-                     JOIN blog AS bc
-                         ON bc.comment_on = b.bid AND bc.release_time >= (unix_timestamp(now()) - 86400)
-             ) AS t
-        where t.visibility = 0 and t.release_time &lt;= unix_timestamp(now())
-
+        SELECT b.*
+        FROM blog AS b
+        JOIN thumb_up AS tu
+        ON tu.blog_id = b.bid
+        UNION ALL
+        SELECT b.*
+        FROM blog AS b
+        JOIN blog AS bc
+        ON bc.comment_on = b.bid
+        ) AS t
+        JOIN user AS u
+        on t.user_id=u.uid and t.visibility = 0
+        WHERE t.release_time >= (unix_timestamp(now() - 172800)) AND t.release_time &lt;= (unix_timestamp(now()) - 86400)
         GROUP BY t.bid
-        ORDER BY num DESC
+        ORDER BY nums DESC, u.weight
     </select>
     <!--用户注销，微博不可见-->
     <update id="userLeave" parameterType="int">

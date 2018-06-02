@@ -277,11 +277,11 @@ public class BlogDao {
         return blogDiscuss.getBdid();
     }
 
-    public static List<Map> getFollowBlogByUserid(Map<String, Object> map) {
+    public static List<Map> getFollowBlogByUserid(int uid) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
         List<Map> blogList = null;
         try {
-            blogList = sqlSession.selectList("weibo/BlogMapper.getFollowBlogByUserid", map);
+            blogList = sqlSession.selectList("weibo/BlogMapper.getFollowBlogByUserid", uid);
         } finally {
             sqlSession.close();
         }

@@ -193,4 +193,15 @@ public class DiscussDao {
         }
         return result;
     }
+
+    public static List getBlogDiscuss(int did) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List BlogList;
+        try {
+            BlogList = sqlSession.selectList("weibo/DiscussMapper.getBlogDiscuss", did);
+        } finally {
+            sqlSession.close();
+        }
+        return BlogList;
+    }
 }

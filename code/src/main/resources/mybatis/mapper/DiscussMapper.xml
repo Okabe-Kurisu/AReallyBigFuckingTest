@@ -83,6 +83,17 @@
         LIMIT 0, 5
     </select>
 
+    <select id="getBlogDiscuss" resultType="Integer">
+        SELECT
+        b.bid
+        FROM blog AS b
+        JOIN blog_discuss AS bd
+        ON bd.blog_id = b.bid
+        WHERE b.type=0
+        AND b.visibility=0
+        and b.release_time &lt;= unix_timestamp(now())
+    </select>
+
     <!-- 判断指定话题是否是当前用户建立的 -->
     <select id="judgeUserDiscuss" parameterType="Map" resultType="Map">
         SELECT *

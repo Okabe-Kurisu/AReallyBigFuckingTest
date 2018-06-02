@@ -7,10 +7,7 @@ import com.model.Discuss;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +20,13 @@ import java.util.Map;
  */
 @Namespace("/discuss")
 @ParentPackage("custom-default")
+@Results({@Result(name = ActionSupport.SUCCESS, type = "json", params = {"root", "resultMap"}),
+        @Result(name = ActionSupport.ERROR, type = "json", params = {"root", "resultMap"})})
 public class DiscussAction extends ActionSupport implements ServletRequestAware {
 
     private Discuss discuss;
 
     private HttpServletRequest request;
-
     private String message;
 
     private List<String> dids;
@@ -401,6 +399,19 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
         } catch (Exception ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "getBlogDiscuss")
+    public String getBlogDiscuss() {
+        int did = Integer.parseInt(request.getParameter("did"));
+        try {
+            resultMap = PowerfulTools.format("200", "成功", DiscussDao.getBlogDiscuss(did));//获得一小时有过评论转发和点赞的微博
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
         }
         return SUCCESS;
     }

@@ -1,15 +1,15 @@
-$(function () {
+$(function() {
     var baseUrl = "http://localhost:8080"
-    $(".sign").click(function () {
+    $(".sign").click(function() {
         $("#SignFlowHomepage-content1").show();
         $("#SignFlowHomepage-content2").hide();
     });
-    $(".login").click(function () {
+    $(".login").click(function() {
         $("#SignFlowHomepage-content1").hide();
         $("#SignFlowHomepage-content2").show();
 
     });
-    $("#signin-btn").click(function () {
+    $("#signin-btn").click(function() {
         console.log('注册')
         var param = {
             username: $(".signin-username").val(),
@@ -29,7 +29,7 @@ $(function () {
             type: "POST",
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 if (data.code == 200) {
                     mdui.snackbar("注册成功");
                     sessionStorage.me = JSON.stringify(data.data.me);
@@ -38,7 +38,7 @@ $(function () {
                     mdui.snackbar("注册失败,");
                 }
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("注册失败");
             },
         })
@@ -47,20 +47,20 @@ $(function () {
     $("#login-btn").click(function() {
         login();
     })
-    $("#login-btn").keypress(function(event) {
-            var keynum = (event.keyCode ? event.keyCode : event.which);
-            if (keynum == '13') {
-                login();
-            }
-        });
+    $("。login-password").keypress(function(event) {
+        var keynum = (event.keyCode ? event.keyCode : event.which);
+        if (keynum == '13') {
+            login();
+        }
+    });
 
     function login(argument) {
-       console.log('登陆')
+        console.log('登陆')
         var param = {
             username: $(".login-username").val(),
             password: $(".login-password").val(),
         }
-        console.log(param)
+        mdui.snackbar("登陆中");
         $.ajax({
             url: "/user/login",
             data: param,
@@ -73,7 +73,6 @@ $(function () {
                     sessionStorage.me = JSON.stringify(data.data.me);
                     var uid = data.data.me.uid;
                     initUserinfo(uid);
-                    self.location = '/';
                 } else {
                     mdui.snackbar("登陆失败");
                 }
@@ -91,7 +90,6 @@ $(function () {
             $.ajax({
                 url: "/user/initUserinfo",
                 data: param,
-                async: false,
                 type: "POST",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
@@ -112,14 +110,16 @@ $(function () {
                             console.log("关注表加载完成")
                             for (x in favorites) {
                                 var favorite = favorites[x];
-                                tx.executeSql('INSERT INTO favorite (fid unique, userid, blogid, time) VALUES (?, ?, ?, ?)', [favorite.fid, favorite.user_id, favorite.blog_id, favorite.time]);
+                                tx.executeSql('INSERT INTO favorite (fid, userid, blogid, time) VALUES (?, ?, ?, ?)', [favorite.fid, favorite.user_id, favorite.blog_id, favorite.time]);
                             }
                             console.log("收藏表加载完成")
                             for (x in callats) {
                                 var callat = callats[x];
-                                tx.executeSql('INSERT INTO callat (cid unique, userid, blogid, time, atuserid) VALUES (?, ?, ?, ?, ?)', [callat.cid, callat.user_id, callat.blog_id, callat.date, callat.at_userid]);
+                                tx.executeSql('INSERT INTO callat (cid, userid, blogid, time, atuserid) VALUES (?, ?, ?, ?, ?)', [callat.cid, callat.user_id, callat.blog_id, callat.date, callat.at_userid]);
                             }
-                            console.log("收藏表加载完成")
+                            console.log("at表加载完成")
+                            self.location = '/';
+
                         })
                     }
                 },

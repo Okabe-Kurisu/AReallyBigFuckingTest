@@ -53,20 +53,6 @@ public class DataAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    //得到昨日热门微博
-    @Action(value = "lastTimeHot")
-    public String getLastTimeHot() {
-        Map<String, Object> map = new HashMap();
-        try {
-            resultMap = PowerfulTools.format("200", "成功", BlogDao.lastTimeHot());//获得一小时有过评论转发和点赞的微博
-        } catch (NullPointerException ne) {
-            ne.printStackTrace();
-            resultMap = PowerfulTools.format("500", "系统异常", null);
-            return ERROR;
-        }
-        return SUCCESS;
-    }
-
 
     public HttpServletRequest getRequest() {
         return request;

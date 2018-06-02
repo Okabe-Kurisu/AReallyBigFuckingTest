@@ -223,7 +223,6 @@
             WHERE tu.user_id=u.uid AND tu.date >= (unix_timestamp(now()) - #{date}) AS likeNum,
             (SELECT count(u.uid) FROM follow AS f JOIN user AS fan
             ON f.followed_id = fan.uid AND f.time >= (unix_timestamp(now()) - #{date}) AS fansNum,
-            SUM(t.fans) AS sums
         FROM user AS u
         ORDER BY sums DESC
     </select>

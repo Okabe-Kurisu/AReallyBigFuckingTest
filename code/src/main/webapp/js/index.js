@@ -5,6 +5,7 @@ $(function() {
     //临时数据库，存储临时微博，每次页面打开先删除全部表，然后向里面填充数值
     var tempDB = openDatabase('temp', '1.0', '临时表', 2 * 1024 * 1024);
     var block = [];
+    var followDiscusses = [];
     //全局变量
     var ataDialog_inst; //@dialog对话框
     var myDialog_inst //我的话题对话框
@@ -50,14 +51,14 @@ $(function() {
             // 取到微博
             //获取热门微博，关注用户微博，关注话题微博
 
-           // getBlog(0, params, db);
-            getBlog(4, params, db);//拿到热门在右边
-            getBlog(7, params, db);//插在列表的
+            getBlog(0, params, db);
+            getBlog(4, params, db); //拿到热门在右边
+            getBlog(7, params, db); //插在列表的
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
                 params.uid = sessionStorage.uid
                 getBlog(1, params, db);
-                getBlog(5, params, db);//拿到关注
+                getBlog(5, params, db); //拿到关注
             }
             //todo 加载太长了，写一个加载动画
 
@@ -172,8 +173,9 @@ $(function() {
             })
         }
     }
+
     // 得到博客并存储到websql中
-    function getBlog(type, params, db) {   //1不同的链接 2条件 3
+    function getBlog(type, params, db) { //1不同的链接 2条件 3
         var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite", "nowtimeHot"]
         //reason是生成博客列表的时候标注的理由
         var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了该话题或博主", "你收藏了该博客", "热门博客"];
@@ -202,7 +204,7 @@ $(function() {
     // 将数据保存至数据库
     function saveToSql(data, db, reason) {
         db.transaction(function(tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow, reason)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow default 0, reason)');
             for (x in data) {
                 var temp = data[x];
                 var bloginfo = [temp.bid, temp.bid, temp.bid, temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight, reason];
@@ -217,7 +219,7 @@ $(function() {
     // 从数据库读取并生成微博
     function readBlog(db) {
         db.transaction(function(tx) { //这tm是异步方法
-            tx.executeSql('SELECT * FROM blog order by releaseTime, weight DESC', [], function(tx, results) {
+            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 and reason != "没啥好显示的" order by releaseTime, weight DESC', [], function(tx, results) {
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
@@ -238,8 +240,6 @@ $(function() {
                         } else {
                             console.log("屏蔽了来自" + datas[x].nickname + "的信息")
                         }
-
-
                         if (x == (len - 1))
                             break;
                     }
@@ -255,10 +255,12 @@ $(function() {
     }
 
     function insertNone() {
-        var res = "<div class=\"mdui-card mdui-color-red mdui-text-color-white mdui-m-t-5\">" +
-            "<div class=\"mdui-card-content\">这里空空如也</div>" +
-            "</div>";
-        $(".blogs").html(res);
+        if ($(".blogs").html() != "") {
+            var res = "<div class=\"mdui-card mdui-color-red mdui-text-color-white mdui-m-t-5\">" +
+                "<div class=\"mdui-card-content\">这里空空如也</div>" +
+                "</div>";
+            $(".blogs").html(res);
+        }
     }
 
     // 得到用户信息
@@ -284,21 +286,46 @@ $(function() {
             $(".userpanel-motto").html(me.motto);
             $(".userpanel-href").attr("href", "/?method=userinfo&uid=" + me.uid);
 
-            weiboDB.transaction(function(tx) { //这tm是异步方法
-                tx.executeSql('SELECT * FROM follow where (type = 3 or type = 2)', [], function(tx, results) {
+            weiboDB.transaction(function(tx) {
+                tx.executeSql('SELECT * FROM follow', [], function(tx, results) {
                     var datas = results.rows;
                     var len = datas.length;
+                    var daisukiFlag = 0;
                     if (len != 0) {
                         for (x in datas) {
-                            if (parseInt(datas[x].type) == 3)
-                                block.push(datas[x].userid)
+                            if (parseInt(datas[x].type) == 1)
+                                followDiscusses.push(datas[x].followid);
                             if (parseInt(datas[x].type) == 2)
-                                daisuki()
+                                daisukiFlag = 1;
+                            if (parseInt(datas[x].type) == 3)
+                                block.push(datas[x].followid)
                         }
+                    }
+                    if (daisukiFlag == 1)
+                        daisuki(0);
+                    console.log(followDiscusses)
+                    for (x in followDiscusses) {
+                        getBlogDiscuss(followDiscusses[x]);
                     }
                     console.log("加载黑名单完成");
                 }, null);
             })
+
+            function getBlogDiscuss(did) { //取到博客话题表
+                $.ajax({
+                    url: "/discuss/getBlogDiscuss",
+                    type: "POST",
+                    data: {did: did},
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
+                        console.log("加载博客数据")
+                        if (data.code == 200 && data.data != null) {
+                            console.log(data.data)
+                        }
+                    },
+                }) 
+            }
 
             function daisuki(argument) {
                 $.ajax({
@@ -375,21 +402,21 @@ $(function() {
         $(".userinfo").hide();
         $(".index").hide();
         $(".send-card").hide();
-        //让panel弹出来能再收回去
-        $(document).click(function(ev) {
-            var openPanel = $(".mdui-collapse-item-open");
-            if (openPanel.length != 0) {
-                var ev = ev || window.event;
-                var x = $(event.target);
-                if (x.parents('.mdui-collapse-item-open').length == 0 && sessionStorage.panel == 1) {
-                    var inst = new mdui.Collapse(openPanel.parent(), accordion = true);
-                    inst.closeAll();
-                    sessionStorage.panel = 0;
-                } else {
-                    sessionStorage.panel = 1
-                }
-            }
-        })
+        // //让panel弹出来能再收回去
+        // $(document).click(function(ev) {
+        //     var openPanel = $(".mdui-collapse-item-open");
+        //     if (openPanel.length != 0) {
+        //         var ev = ev || window.event;
+        //         var x = $(event.target);
+        //         if (x.parents('.mdui-collapse-item-open').length == 0 && sessionStorage.panel == 1) {
+        //             var inst = new mdui.Collapse(openPanel.parent(), accordion = true);
+        //             inst.closeAll();
+        //             sessionStorage.panel = 0;
+        //         } else {
+        //             sessionStorage.panel = 1
+        //         }
+        //     }
+        // })
     }
 
     function initUsercardAction() {

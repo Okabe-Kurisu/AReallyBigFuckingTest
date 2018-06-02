@@ -590,17 +590,17 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
     @Action(value = "getFollowBlog")
     public String getFollowBlog() {
-        String userid;
+        int userid;
         Map<String, Object> map = new HashMap();
         try {
             // 获得参数
-            userid = request.getParameter("userid");
+            userid = Integer.parseInt(request.getParameter("userid"));
 
             // 封装参数
             map.put("userid", userid);
 
             // 调用Dao层 获取数据
-            List blogList = BlogDao.getFollowBlogByUserid(map);
+            List blogList = BlogDao.getFollowBlogByUserid(userid);
             System.out.println("得到了用户关注的各种微博" + blogList.size());
 
             // 封装响应数据
@@ -626,7 +626,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             map.put("nowtime", nowtime);
             List blogList = BlogDao.getTodayHostBlog(map);
 
-            System.out.println("list集合大小：" + blogList.size());
 
             // 对今日微博进行热点排序
             blogList.sort((Comparator<Map<String, Object>>) (o1, o2) -> {
@@ -636,7 +635,6 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             });
             List rtn = new ArrayList();
             int size = blogList.size();
-            System.out.println(size);
             for(int j=0;j<5;j++){
                 if (j >= size)
                     break;
@@ -740,7 +738,21 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
     public String getNowtimeHot() {
         Map<String, Object> map = new HashMap();
         try {
-            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600*24));//获得一小时有过评论转发和点赞的微博
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.nowTimeHot(3600*10));//获得一小时有过评论转发和点赞的微博
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    //得到昨日热门微博
+    @Action(value = "lastTimeHot")
+    public String getLastTimeHot() {
+        Map<String, Object> map = new HashMap();
+        try {
+            resultMap = PowerfulTools.format("200", "成功", BlogDao.lastTimeHot());//获得一小时有过评论转发和点赞的微博
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
