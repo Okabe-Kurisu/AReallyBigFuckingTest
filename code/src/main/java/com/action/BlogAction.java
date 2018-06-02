@@ -620,7 +620,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
 
         Map<String, Object> map = new HashMap();
         try {
-            // 调用Dao层 获取数据
+
             int nowtime = (int) (System.currentTimeMillis() / 1000 - 24 * 3600);
 
             map.put("nowtime", nowtime);
