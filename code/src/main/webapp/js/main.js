@@ -133,10 +133,11 @@ function closeSidebar(e) {
       curX = -75;
       animatePathD($path, startD, animTime / 3 * 2, true);
       animating = false;
+      $(".demo").css("z-index", 0)
     }, "inCubic");
   }, sContTrans);
   $(document).off("click", closeSidebar);
-  $(".demo").css("z-index", 0)
+
 }
 
 function moveImage(that) {
