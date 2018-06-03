@@ -12,9 +12,9 @@ $(function() {
     var createDialog_inst //创建话题对话框
 
     $("document").ready(function() {
+        initPanel();
         initUser();
         initSearch();
-        initPanel();
         initPage();
     })
 
@@ -309,7 +309,7 @@ $(function() {
             sessionStorage.uid = me.uid;
             sessionStorage.date = Math.round(new Date().getTime() / 1000);
             $(".login-btn").hide();
-            $(".demo").show();
+            $(".demo").show()
             $(".userpanel-avatar").attr("src", me.avatar);
             $(".userpanel-nickname").html(me.nickname);
             $(".userpanel-motto").html(me.motto);
