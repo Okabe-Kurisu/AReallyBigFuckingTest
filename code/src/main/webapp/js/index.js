@@ -283,6 +283,7 @@ $(function() {
             sessionStorage.uid = me.uid;
             sessionStorage.date = Math.round(new Date().getTime() / 1000);
             $(".login-btn").hide();
+            $(".demo").show();
             $(".userpanel-avatar").attr("src", me.avatar);
             $(".userpanel-nickname").html(me.nickname);
             $(".userpanel-motto").html(me.motto);
@@ -420,6 +421,7 @@ $(function() {
         $(".userinfo").hide();
         $(".index").hide();
         $(".send-card").hide();
+        $(".demo").hide();
         // //让panel弹出来能再收回去
         // $(document).click(function(ev) {
         //     var openPanel = $(".mdui-collapse-item-open");
