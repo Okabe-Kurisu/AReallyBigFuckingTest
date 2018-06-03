@@ -44,6 +44,13 @@ $(function () {
         });
     });
 
+    // 赞助框
+    $(".give-sponsor").click(function () {
+        var dDialog = $(".sponsor");
+        createDialog_inst = new mdui.Dialog(dDialog, overlay = true);
+        createDialog_inst.open();
+    });
+
     // 提交话题按钮点击事件（创建话题）
     $(".submit-discussion").click(function () {
         var discuss_name = $(".discuss-name").val();
@@ -56,6 +63,15 @@ $(function () {
         }
         var date = new Date(date_str)
         var time = date.getTime() / 1000;
+
+        var now_time = Date.parse(new Date()) / 1000;
+
+        if (time < now_time) {
+            mdui.snackbar("开始时间不能小于当前时间");
+            return;
+        }
+
+
         param = {
             "discuss.name": discuss_name,
             "discuss.detail": discuss_description,
@@ -74,8 +90,9 @@ $(function () {
                 if (data.code == 200) {
                     mdui.snackbar("话题添加成功");
                     createDialog_inst.close()
+                    $(".discuss-center").trigger("click");
                 } else {
-                    mdui.snackbar("话题添加失败");
+                    mdui.snackbar(data.msg);
                 }
             },
             error: function () {
@@ -107,7 +124,7 @@ $(function () {
                         if (data.code == 200) {
                             mdui.alert('话题结束成功');
                         } else {
-                            mdui.snackbar("话题结束失败");
+                            mdui.snackbar(data.msg);
                         }
                     },
                     error: function () {
@@ -135,8 +152,8 @@ $(function () {
         changeDiscuss_inst.open();
 
         // 填充文本框
-        var name = $(this).parent().parent().find(".mdui-card-primary-title").text()
-        var des = $(this).parent().parent().find(".mdui-card-primary-subtitle").text()
+        var name = $(this).parent().parent().find(".mdui-card-primary-title").text();
+        var des = $(this).parent().parent().find(".mdui-card-primary-subtitle").text();
         $(".cdiscuss-name").val(name);
         $(".cdiscuss-description").val(des);
 
@@ -165,8 +182,9 @@ $(function () {
                 if (data.code == 200) {
                     changeDiscuss_inst.close()
                     mdui.alert('话题修改成功');
+                    $(".my-discuss").trigger("click")
                 } else {
-                    mdui.snackbar("话题修改失败");
+                    mdui.snackbar(data.msg);
                 }
             },
             error: function () {

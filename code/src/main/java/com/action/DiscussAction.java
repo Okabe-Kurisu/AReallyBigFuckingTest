@@ -7,6 +7,7 @@ import com.model.Discuss;
 import com.model.User;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tool.PowerfulTools;
+import com.tool.SensitivewordFilter;
 import org.apache.struts2.convention.annotation.*;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Amadeus on 2018/4/12.
@@ -324,8 +326,17 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
         Map<String, Object> map = new HashMap<>();
         try {
 
+            // 参数判断
             if (discuss == null || discuss.getName() == null || discuss.getDetail() == null)
                 throw new Exception("参数错误");
+
+            // 敏感字处理
+            SensitivewordFilter filter = new SensitivewordFilter();
+            Set<String> set1 = filter.getSensitiveWord(discuss.getName(), 1);
+            Set<String> set2 = filter.getSensitiveWord(discuss.getDetail(), 1);
+            if (set1.size() > 0 || set2.size() > 0)
+                throw new Exception("敏感字");
+
 
             //获得当前登录用户
             User user = (User) request.getSession().getAttribute("user");
@@ -354,7 +365,11 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
         } catch (Exception ne) {
             ne.printStackTrace();
-            resultMap = PowerfulTools.format("500", "系统异常", null);
+            if (ne.getMessage().equals("敏感字") || ne.getMessage().equals("参数错误")) {
+                resultMap = PowerfulTools.format("500", "输入不合法", null);
+            } else {
+                resultMap = PowerfulTools.format("500", "系统异常", null);
+            }
         }
         return SUCCESS;
     }
@@ -366,29 +381,26 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
     public String updateDiscuss() {
         //String name, user_id, detail, start_time, end_time, did;
         try {
-            // 封装请求数据
-//            name = request.getParameter("name");
-//            user_id = request.getParameter("user_id");
-//            detail = request.getParameter("detail");
-//            start_time = request.getParameter("start_time");
-//            end_time = request.getParameter("end_time");
-//            did = request.getParameter("did");
-//            discuss.setDid(Integer.parseInt(did));
-//            discuss.setName(name);
-//            discuss.setDetail(detail);
-//            discuss.setUser_id(Integer.parseInt(user_id));
-//            discuss.setStart_time(Integer.parseInt(start_time));
-//            discuss.setEnd_time(Integer.parseInt(end_time));
-
             //获得当前登录用户id
             User user = (User) request.getSession().getAttribute("user");
             int userId = user.getUid();
             int is_ban = user.getIs_ban();
 
+            // 参数判断
             if (discuss == null || discuss.getDid() == null) throw new Exception("参数错误");
 
+            // 敏感字处理
+            SensitivewordFilter filter = new SensitivewordFilter();
+            if (discuss.getName() != null) {
+                Set<String> set1 = filter.getSensitiveWord(discuss.getName(), 1);
+                if (set1.size() > 0) throw new Exception("敏感字");
+            }
+            if (discuss.getDetail() != null) {
+                Set<String> set2 = filter.getSensitiveWord(discuss.getDetail(), 1);
+                if (set2.size() > 0) throw new Exception("敏感字");
+            }
+
             discuss.setUser_id(userId);
-            System.out.println(discuss.toString());
 
             // 如果用户被封，或者用户不是指定话题的创建者则修改失败
             if (is_ban != 0 || DiscussDao.updateDiscuss(userId, discuss) == 0) {
@@ -398,7 +410,11 @@ public class DiscussAction extends ActionSupport implements ServletRequestAware 
 
         } catch (Exception ne) {
             ne.printStackTrace();
-            resultMap = PowerfulTools.format("500", "系统异常", null);
+            if (ne.getMessage().equals("敏感字") || ne.getMessage().equals("参数错误")) {
+                resultMap = PowerfulTools.format("500", "输入不合法", null);
+            } else {
+                resultMap = PowerfulTools.format("500", "系统异常", null);
+            }
         }
         return SUCCESS;
     }
