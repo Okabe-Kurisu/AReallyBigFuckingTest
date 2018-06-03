@@ -219,13 +219,15 @@
 
     <select id="hotUser" parameterType="int" resultType="User">
         SELECT
-            *,
-            (SELECT count(tu.tuid) FROM thumb_up tu
-            WHERE tu.user_id=u.uid AND tu.date >= (unix_timestamp(now()) - #{date}) AS likeNum,
-            (SELECT count(u.uid) FROM follow AS f JOIN user AS fan
-            ON f.followed_id = fan.uid AND f.time >= (unix_timestamp(now()) - #{date}) AS fansNum,
+            *,(
+                (SELECT count(tu.tuid) FROM thumb_up AS tu
+                WHERE tu.user_id=u.uid
+                AND tu.date >= (unix_timestamp(now()) - 86400)) +
+                (SELECT count(f.fid) FROM follow AS f
+                JOIN user AS fan ON f.followed_id = fan.uid AND f.time >= (unix_timestamp(now()) - 86400)) ) AS sums
         FROM user AS u
         ORDER BY sums DESC
+        LIMIT 5
     </select>
 
     <select id="daisuki" parameterType="map" resultType="map">

@@ -51,6 +51,8 @@
                     mdui-tooltip="{content: '话题中心', delay: 100}"><i class="mdui-icon material-icons">filter_vintage</i></a>
                     <div class="mdui-toolbar-spacer"></div>
                     <!-- 弹出搜索 -->
+                    <div class="search-helper" style="display: none">搜索建议</div>
+                    
                     <div class="search-bar">
                         <div class="mdui-textfield mdui-textfield-expandable mdui-float-right">
                             <button class="mdui-textfield-icon mdui-btn mdui-btn-icon" mdui-tooltip="{content: '搜索', delay: 100}"><i
@@ -111,27 +113,7 @@
                                 <h3><strong>大家在搜什么</strong></h3>
                             </div>
                             <div class="mdui-card-content ">
-                                <ul class="mdui-list mdui-list-dense">
-                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                        <p class="mdui-list-item-icon mdui-text-color-red">1</p>
-                                        <div class="mdui-list-item-content">热搜词语</div>
-                                    </li>
-                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                        <p class="mdui-list-item-icon mdui-text-color-red">2</p>
-                                        <div class="mdui-list-item-content">热搜词语</div>
-                                    </li>
-                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                        <p class="mdui-list-item-icon mdui-text-color-red">3</p>
-                                        <div class="mdui-list-item-content">热搜词语</div>
-                                    </li>
-                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                        <p class="mdui-list-item-icon mdui-text-color-red">4</p>
-                                        <div class="mdui-list-item-content">热搜词语</div>
-                                    </li>
-                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                        <p class="mdui-list-item-icon mdui-text-color-red">5</p>
-                                        <div class="mdui-list-item-content">热搜词语</div>
-                                    </li>
+                                <ul class="mdui-list mdui-list-dense hotspot-ul">
                                 </ul>
                             </div>
                         </div>
@@ -199,7 +181,7 @@
                         <!-- 关注与被关注 -->
                         <div class="mdui-card mdui-m-t-1 userinfo">
                             <div class="mdui-card-header">
-                                <p>这些人关注着他</p>
+                                <h2>这些人关注着他</h2>
                                 <div class="mdui-divider"></div>
                             </div>
                             <div class="mdui-card-content mdui-row-xs-3 usercard-folled">
@@ -207,7 +189,7 @@
                         </div>
                         <div class="mdui-card mdui-m-t-1 userinfo">
                             <div class="mdui-card-header">
-                                <p>这些人被他关注着</p>
+                                <h2>这些人被他关注着</h2>
                                 <div class="mdui-divider"></div>
                             </div>
                             <div class="mdui-card-content mdui-row-xs-3 usercard-foller">
@@ -221,6 +203,16 @@
                             </div>
                             <div class="mdui-card-content ">
                                 <ul class="mdui-list mdui-list-dense hotweibo">
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mdui-card mdui-m-t-1 index">
+                            <div class="mdui-card-header mdui-center">
+                                <h2><strong>今日热门用户</strong></h2>
+                            </div>
+                            <div class="mdui-card-content ">
+                                <ul class="mdui-list mdui-list-dense hotuser">
                                     
                                 </ul>
                             </div>

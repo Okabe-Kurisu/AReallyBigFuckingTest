@@ -76,7 +76,6 @@ public class DataTool {
                     if (i == 5) break;
                     temp.add(key);
                     i++;
-                    System.out.println(key);
                 }
                 saveRtn(temp, Type.HotSPot.getPath());
                 System.out.println("热词获取程序执行结束");
@@ -100,10 +99,14 @@ public class DataTool {
                     + Integer.valueOf(user.get("likeNum").toString()) * 2
                     + Integer.valueOf(user.get("forwardNum").toString()) * 1
                     + Integer.valueOf(user.get("blogNum").toString()) * 1;
+            weight /= 5;
             int nowdate = Integer.parseInt(System.currentTimeMillis() / 1000 + "");
             int leftDays = (nowdate - (int) user.get("last_logtime")) / 3600 / 24;
             weight -= leftDays * 1;
             if (weight != (int) user.get("weight")) {
+                if (weight < 1) {
+                    weight = 1;
+                }
                 user.put("weight", weight);
                 System.out.println("用户:" + user.get("nickname") + "的权重更新为" + weight);
             }
@@ -168,7 +171,6 @@ public class DataTool {
     public void saveRtn(List<String> temp, String filename) {
         BufferedWriter bw = null;
         try {
-            System.out.println("文件路径：" + DataTool.class.getResource(filename).toString());
             String encoding = "UTF-8";
             File file = new File(new URI(DataTool.class.getResource(filename).toString()));
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false), encoding));
@@ -212,6 +214,51 @@ public class DataTool {
             e.printStackTrace();
         }
         return list;
+    }
+
+    //热门搜索匹配
+    public static List<String> getSearchLog() {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        List<String> hotWords = null;
+        try {
+            hotWords = sqlSession.selectList("weibo/SearchLogMapper.getSearchLog");
+        } finally {
+            sqlSession.close();
+        }
+        return hotWords;
+    }
+
+
+    public static String getHotSearch(String keyword) {
+        List<String> searchLogs = getSearchLog();
+        Map<String, Integer> keywordMap = new HashMap();
+        Map<String, Integer> rtn = new HashMap();
+        for (Term term : NlpAnalysis.parse(keyword)) {
+            String rst = term.getName();
+            keywordMap.put(rst, 1);
+        }
+        for (String log : searchLogs) {
+            if (log.length() < keyword.length()) continue;//如果目标日志小于搜索词。则无意义
+            int count = 0;
+            int length = 0;
+            for (Term term : NlpAnalysis.parse(log)) {
+                String rst = term.getName();
+                if (keywordMap.containsKey(rst) || (rst.indexOf(keyword) != -1 && keyword != "")) count += 1;
+                length += 1;
+            }
+            float degree = count / length;//相似度
+            if (degree > 0) rtn.put(log, (int) (degree * 100));
+        }
+        rtn = MapSorter.sortMapByValue(rtn);
+        if (rtn != null)
+            for (String key : rtn.keySet()) {
+                return key;
+            }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        getHotSearch("吴彦祖");
     }
 
 }

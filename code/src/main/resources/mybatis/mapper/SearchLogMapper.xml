@@ -9,4 +9,10 @@
         from search_log as sl
         WHERE date >= #{date}
     </select>
+
+    <select id="getSearchLog" resultType="String">
+        select content
+        from search_log as sl
+        WHERE date >=  (unix_timestamp(now()) - 86400)
+    </select>
 </mapper>
