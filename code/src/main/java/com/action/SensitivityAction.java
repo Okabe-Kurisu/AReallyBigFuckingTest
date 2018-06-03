@@ -1,6 +1,5 @@
 package com.action;
 
-import com.DAO.BlogDao;
 import com.DAO.SensitivityDao;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;

@@ -40,9 +40,18 @@ public class MessageDao {
     }
     public static void yesRead(Map<String, Object> map){
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        List<Map> blogList = null;
         try {
-            blogList = sqlSession.selectList("weibo/MessageMapper.yesRead",map);
+            sqlSession.selectList("weibo/MessageMapper.yesRead",map);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    public static void delSession(Map<String, Object> map) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.delete("weibo/MessageMapper.delSession",map);
             sqlSession.commit();
         } finally {
             sqlSession.close();

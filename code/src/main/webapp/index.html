@@ -7,352 +7,389 @@
         <link rel="stylesheet" type="text/css" href="./css/mdui.min.css">
         <link rel="stylesheet" type="text/css" href="./css/mine.css">
         <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/default.css">
+        <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
     <body class="mdui-theme-primary-indigo mdui-theme-accent-red mdui-color-grey-100">
-        <!-- 头部栏 -->
-        <header>
-            <div class="mdui-toolbar mdui-color-white mdui-shadow-2">
-                <span class="mdui-typo-title mdui-m-l-5">Fake 微博</span>
-                <a href="./index.html" class="mdui-btn mdui-btn-icon index-page"
-                mdui-tooltip="{content: '首页', delay: 100}"><i class="mdui-icon material-icons">home</i></a>
-                <a href="./discuss.html" class="mdui-btn mdui-btn-icon discuss-page"
-                mdui-tooltip="{content: '话题中心', delay: 100}"><i class="mdui-icon material-icons">filter_vintage</i></a>
-                <div class="mdui-toolbar-spacer"></div>
-                <!-- 弹出搜索 -->
-                <div class="search-bar">
-                    <div class="mdui-textfield mdui-textfield-expandable mdui-float-right">
-                        <button class="mdui-textfield-icon mdui-btn mdui-btn-icon" mdui-tooltip="{content: '搜索', delay: 100}"><i
-                        class="mdui-icon material-icons">search</i></button>
-                        <input class="mdui-textfield-input search-input" type="text" placeholder="键入以搜索"/>
-                        <button class="mdui-textfield-close mdui-btn mdui-btn-icon"><i
-                        class="mdui-icon material-icons">close</i></button>
-                    </div>
-                </div>
-                <a href="./auth.html" class="mdui-btn mdui-btn-icon mdui-m-r-5 login-btn"
-                mdui-tooltip="{content: '登陆', delay: 100}"><i class="mdui-icon material-icons">open_in_new</i></a>
-                <a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5 me" mdui-tooltip="{content: '我', delay: 100}"><i
-                class="mdui-icon material-icons">person_outline</i></a>
-            </div>
-            <!-- 登陆后的个人信息弹框 -->
-            <div class="mdui-collapse userpanel">
-                <div class="mdui-collapse-item " id="userpanel">
-                    <div class="mdui-collapse-item-header"></div>
-                    <div class="mdui-card mdui-float-right mdui-collapse-item-body userpanel-body">
-                        <div class="mdui-card-header mdui-center ">
-                            <a href="" class="userpanel-href"><img class="mdui-card-header-avatar mdui-center userpanel-avator" src="./img/avatar.jpg"/></a>
-                            <div class="mdui-card-header-title mdui-center userpanel-nickname">默认用户</div>
-                            <div class="mdui-card-header-subtitle mdui-center userpanel-motto">一个普通的默认用户</div>
-                        </div>
-                        <div class="mdui-card-content ">
-                            <ul class="mdui-list mdui-list-dense">
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                                    <div class="mdui-list-item-content callat-btn">@我的</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                                    <div class="mdui-list-item-content favorite-btn">收藏夹</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                                    <div class="mdui-list-item-content">修改个人信息</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                                    <div class="mdui-list-item-content">私信</div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="mdui-card-actions">
-                            <button class="mdui-btn mdui-btn-icon mdui-text-color-theme usertag-btn" mdui-tooltip="{content: '用户分析', delay: 100}">
-                            <i class="mdui-icon material-icons">bubble_chart</i>
-                            </button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme mdui-float-right logout"><i
-                            class="mdui-icon material-icons">open_in_new</i>退出
-                            </button>
-                        </div>
-                    </div>
+        <div class="demo">
+            <svg class="sidebar" viewBox="0 0 300 500">
+                <path class="s-path" fill="#fff" d="M0,0 50,0 a0,250 0 1,1 0,500 L0,500" />
+            </svg>
+            <div class="sidebar-content">
+                <div class="contact" bid="0">
+                    <img src="img/1.png" alt="" class="contact__photo" />
+                    <span class="contact__name">Ethan Hawke</span>
+                    <span class="delete-chat">x</span>
                 </div>
             </div>
-            <!-- 热门搜索 -->
-            <div class="mdui-collapse hotspot">
-                <div class="mdui-collapse-item " id="hotspot">
-                    <div class="mdui-collapse-item-header"></div>
-                    <div class="mdui-card mdui-float-right mdui-collapse-item-body hotspot-body">
-                        <div class="mdui-card-header mdui-center">
-                            <h3><strong>大家在搜什么</strong></h3>
-                        </div>
-                        <div class="mdui-card-content ">
-                            <ul class="mdui-list mdui-list-dense">
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">1</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">2</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">3</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">4</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                                <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                                    <p class="mdui-list-item-icon mdui-text-color-red">5</p>
-                                    <div class="mdui-list-item-content">热搜词语</div>
-                                </li>
-                            </ul>
-                        </div>
+            <div class="chat">
+                <span class="chat__back"></span>
+                <div class="chat__person">
+                    <span class="chat__name">Huehue Huehue</span>
+                </div>
+                <div class="chat__messages">
+                    <div class="chat__msgRow">
+                        <div class="chat__message mine">Such SVG, much Javascript, very CSS!</div>
+                    </div>
+                    <div class="chat__msgRow">
+                        <div class="chat__message notMine">Wow!</div>
                     </div>
                 </div>
+                <input type="text" class="chat__input" placeholder="回车以发送" />
             </div>
-        </header>
-        <div class="mdui-container-fluid">
-            <div class="mdui-col-row">
-                <div class="mdui-col-xs-5 mdui-col-offset-xs-2">
-                    <!-- 发布微博 -->
-                    <div class="mdui-card mdui-m-t-1 send-card">
-                        <div class="mdui-textfield mdui-textfield-floating-label">
-                            <label class="mdui-textfield-label">有什么新鲜事？</label>
-                            <textarea class="mdui-textfield-input" rows="3" maxlength="140" id="blog-content"></textarea>
-                        </div>
-                        <div class="mdui-card-actions">
-                            <button class="mdui-btn mdui-ripple mdui-text-color-theme insert-img"><i
-                            class="mdui-icon material-icons">photo</i>插入图片
-                            </button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme callat">@at某人</button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme discuss">#话题</button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme setTime"><i class="mdui-icon material-icons">access_alarm</i>定时发布</button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-float-right mdui-color-teal mdui-text-color-white send">
-                            <i class="mdui-icon material-icons">check</i>发送
-                            </button>
+        </div>
+        <div class="body">
+            <!-- 头部栏 -->
+            <header>
+                <div class="mdui-toolbar mdui-color-white mdui-shadow-2">
+                    <span class="mdui-typo-title mdui-m-l-5">Fake 微博</span>
+                    <a href="./index.html" class="mdui-btn mdui-btn-icon index-page"
+                    mdui-tooltip="{content: '首页', delay: 100}"><i class="mdui-icon material-icons">home</i></a>
+                    <a href="./discuss.html" class="mdui-btn mdui-btn-icon discuss-page"
+                    mdui-tooltip="{content: '话题中心', delay: 100}"><i class="mdui-icon material-icons">filter_vintage</i></a>
+                    <div class="mdui-toolbar-spacer"></div>
+                    <!-- 弹出搜索 -->
+                    <div class="search-bar">
+                        <div class="mdui-textfield mdui-textfield-expandable mdui-float-right">
+                            <button class="mdui-textfield-icon mdui-btn mdui-btn-icon" mdui-tooltip="{content: '搜索', delay: 100}"><i
+                            class="mdui-icon material-icons">search</i></button>
+                            <input class="mdui-textfield-input search-input" type="text" placeholder="键入以搜索"/>
+                            <button class="mdui-textfield-close mdui-btn mdui-btn-icon"><i
+                            class="mdui-icon material-icons">close</i></button>
                         </div>
                     </div>
-                    <div class="blogs" id="blogs"></div>
+                    <a href="./auth.html" class="mdui-btn mdui-btn-icon mdui-m-r-5 login-btn"
+                    mdui-tooltip="{content: '登陆', delay: 100}"><i class="mdui-icon material-icons">open_in_new</i></a>
+                    <a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-m-r-5 me" mdui-tooltip="{content: '我', delay: 100}"><i
+                    class="mdui-icon material-icons">person_outline</i></a>
                 </div>
-                <!-- 右侧边栏 -->
-                <div class="mdui-col-xs-3 mdui-m-t-1">
-                    <div class="mdui-card usercard userinfo">
-                        <!-- 用户背景图片 和头像-->
-                        <div class="mdui-card-media mdui-center">
-                            <img src="./img/background.jpg" class="usercard-background">
-                            <div class="mdui-card-media-covered mdui-card-media-covered-transparent mdui-card-media-covered-top mdui-valign user-cover">
-                                <img class="mdui-img-circle user-cover-avatar mdui-center usercard-avatar"
-                                src="./img/avatar.jpg"/>
+                <!-- 登陆后的个人信息弹框 -->
+                <div class="mdui-collapse userpanel">
+                    <div class="mdui-collapse-item " id="userpanel">
+                        <div class="mdui-collapse-item-header"></div>
+                        <div class="mdui-card mdui-float-right mdui-collapse-item-body userpanel-body">
+                            <div class="mdui-card-header mdui-center ">
+                                <a href="" class="userpanel-href"><img class="mdui-card-header-avatar mdui-center userpanel-avator" src="./img/avatar.jpg"/></a>
+                                <div class="mdui-card-header-title mdui-center userpanel-nickname">默认用户</div>
+                                <div class="mdui-card-header-subtitle mdui-center userpanel-motto">一个普通的默认用户</div>
                             </div>
-                        </div>
-                        <!-- 关注粉丝数之类的 -->
-                        <div class="mdui-card-content mdui-center mdui-valign ">
-                            <div class="user-info-list mdui-row-xs-3 mdui-center mdui-valign">
-                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong
-                                class="usercard-follerNum">0</strong>关注
+                            <div class="mdui-card-content ">
+                                <ul class="mdui-list mdui-list-dense">
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
+                                        <div class="mdui-list-item-content callat-btn">@我的</div>
+                                    </li>
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
+                                        <div class="mdui-list-item-content favorite-btn">收藏夹</div>
+                                    </li>
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
+                                        <div class="mdui-list-item-content">修改个人信息</div>
+                                    </li>
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1">
+                                        <div class="mdui-list-item-content">私信</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mdui-card-actions">
+                                <button class="mdui-btn mdui-btn-icon mdui-text-color-theme usertag-btn" mdui-tooltip="{content: '用户分析', delay: 100}">
+                                <i class="mdui-icon material-icons">bubble_chart</i>
                                 </button>
-                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong
-                                class="usercard-folledNum">0</strong>粉丝
-                                </button>
-                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong
-                                class="usercard-blogNum">0</strong>微博
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme mdui-float-right logout"><i
+                                class="mdui-icon material-icons">open_in_new</i>退出
                                 </button>
                             </div>
                         </div>
-                        <!-- todo:如果这个人的id不是自己，就加上关注按钮组和屏蔽按钮
-                        如果当前用户是鹳狸猿，则显示封禁按钮 -->
-                        <div class="user-info-list mdui-row-xs-3 mdui-center mdui-valign usercard-action">
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center follow-btn"
-                            mdui-tooltip="{content: '长按特别关注', delay: 500}">关注
+                    </div>
+                </div>
+                <!-- 热门搜索 -->
+                <div class="mdui-collapse hotspot">
+                    <div class="mdui-collapse-item " id="hotspot">
+                        <div class="mdui-collapse-item-header"></div>
+                        <div class="mdui-card mdui-float-right mdui-collapse-item-body hotspot-body">
+                            <div class="mdui-card-header mdui-center">
+                                <h3><strong>大家在搜什么</strong></h3>
+                            </div>
+                            <div class="mdui-card-content ">
+                                <ul class="mdui-list mdui-list-dense">
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+                                        <p class="mdui-list-item-icon mdui-text-color-red">1</p>
+                                        <div class="mdui-list-item-content">热搜词语</div>
+                                    </li>
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+                                        <p class="mdui-list-item-icon mdui-text-color-red">2</p>
+                                        <div class="mdui-list-item-content">热搜词语</div>
+                                    </li>
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+                                        <p class="mdui-list-item-icon mdui-text-color-red">3</p>
+                                        <div class="mdui-list-item-content">热搜词语</div>
+                                    </li>
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+                                        <p class="mdui-list-item-icon mdui-text-color-red">4</p>
+                                        <div class="mdui-list-item-content">热搜词语</div>
+                                    </li>
+                                    <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
+                                        <p class="mdui-list-item-icon mdui-text-color-red">5</p>
+                                        <div class="mdui-list-item-content">热搜词语</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="mdui-container-fluid">
+                <div class="mdui-col-row">
+                    <div class="mdui-col-xs-5 mdui-col-offset-xs-2">
+                        <!-- 发布微博 -->
+                        <div class="mdui-card mdui-m-t-1 send-card">
+                            <div class="mdui-textfield mdui-textfield-floating-label">
+                                <label class="mdui-textfield-label">有什么新鲜事？</label>
+                                <textarea class="mdui-textfield-input" rows="3" maxlength="140" id="blog-content"></textarea>
+                            </div>
+                            <div class="mdui-card-actions">
+                                <button class="mdui-btn mdui-ripple mdui-text-color-theme insert-img"><i
+                                class="mdui-icon material-icons">photo</i>插入图片
+                                </button>
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme callat">@at某人</button>
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme discuss">#话题</button>
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-text-color-theme setTime"><i class="mdui-icon material-icons">access_alarm</i>定时发布</button>
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-float-right mdui-color-teal mdui-text-color-white send">
+                                <i class="mdui-icon material-icons">check</i>发送
+                                </button>
+                            </div>
+                        </div>
+                        <div class="blogs" id="blogs"></div>
+                    </div>
+                    <!-- 右侧边栏 -->
+                    <div class="mdui-col-xs-3 mdui-m-t-1">
+                        <div class="mdui-card usercard userinfo">
+                            <!-- 用户背景图片 和头像-->
+                            <div class="mdui-card-media mdui-center">
+                                <img src="./img/background.jpg" class="usercard-background">
+                                <div class="mdui-card-media-covered mdui-card-media-covered-transparent mdui-card-media-covered-top mdui-valign user-cover">
+                                    <img class="mdui-img-circle user-cover-avatar mdui-center usercard-avatar"
+                                    src="./img/avatar.jpg"/>
+                                </div>
+                            </div>
+                            <!-- 关注粉丝数之类的 -->
+                            <div class="mdui-card-content mdui-center mdui-valign ">
+                                <div class="user-info-list mdui-row-xs-3 mdui-center mdui-valign">
+                                    <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong
+                                    class="usercard-follerNum">0</strong>关注
+                                    </button>
+                                    <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong
+                                    class="usercard-folledNum">0</strong>粉丝
+                                    </button>
+                                    <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center"><strong
+                                    class="usercard-blogNum">0</strong>微博
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- todo:如果这个人的id不是自己，就加上关注按钮组和屏蔽按钮
+                            如果当前用户是鹳狸猿，则显示封禁按钮 -->
+                            <div class="user-info-list mdui-row-xs-3 mdui-center mdui-valign usercard-action">
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center follow-btn"
+                                mdui-tooltip="{content: '长按特别关注', delay: 500}">关注
+                                </button>
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center block-btn">屏蔽</button>
+                                <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center message-btn">私信</button>
+                            </div>
+                        </div>
+                        <!-- 关注与被关注 -->
+                        <div class="mdui-card mdui-m-t-1 userinfo">
+                            <div class="mdui-card-header">
+                                <p>这些人关注着他</p>
+                                <div class="mdui-divider"></div>
+                            </div>
+                            <div class="mdui-card-content mdui-row-xs-3 usercard-folled">
+                            </div>
+                        </div>
+                        <div class="mdui-card mdui-m-t-1 userinfo">
+                            <div class="mdui-card-header">
+                                <p>这些人被他关注着</p>
+                                <div class="mdui-divider"></div>
+                            </div>
+                            <div class="mdui-card-content mdui-row-xs-3 usercard-foller">
+                            </div>
+                        </div>
+                        <!--todo: 热门话题 -->
+                        <!-- todo:热门微博 -->
+                        <div class="mdui-card mdui-m-t-1 index">
+                            <div class="mdui-card-header mdui-center">
+                                <h2><strong>今日热门微博</strong></h2>
+                            </div>
+                            <div class="mdui-card-content ">
+                                <ul class="mdui-list mdui-list-dense hotweibo">
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer>
+                    <div class="mdui-fab-wrapper" id="aFab" mdui-fab="{trigger: 'hover'}">
+                        <button class="mdui-fab mdui-ripple mdui-color-theme back-up">
+                        <!-- 默认显示的图标 -->
+                        <i class="mdui-icon material-icons">add</i>
+                        <!-- 在拨号菜单开始打开时，平滑切换到该图标，若不需要切换图标，则可以省略该元素 -->
+                        <i class="mdui-icon mdui-fab-opened material-icons " mdui-tooltip="{content: '返回顶部', delay: 500}">arrow_upward</i>
+                        </button>
+                        <div class="mdui-fab-dial">
+                            <!-- 回到顶部 -->
+                            <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange mdui-text-color-white creatDiscuss"
+                            mdui-tooltip="{content: '创建话题', delay: 500}"><i class="mdui-icon material-icons">chat_bubble</i>
                             </button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center block-btn">屏蔽</button>
-                            <button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center message-btn">私信</button>
+                            <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange mdui-text-color-white"
+                            mdui-tooltip="{content: '收藏夹', delay: 500}"><i class="mdui-icon material-icons">folder</i>
+                            </button>
+                            <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-teal send-fab"
+                            mdui-tooltip="{content: '发送文章', delay: 500}"><i class="mdui-icon material-icons">send</i>
+                            </button>
                         </div>
                     </div>
-                    <!-- 关注与被关注 -->
-                    <div class="mdui-card mdui-m-t-2 userinfo">
-                        <div class="mdui-card-header">
-                            <p>这些人关注着他</p>
-                            <div class="mdui-divider"></div>
+                    <!-- 举报dialog -->
+                    <div class="mdui-dialog report-dialog">
+                        <div class="mdui-dialog-title">举报</div>
+                        <div class="mdui-dialog-content report-content">
+                            <label>举报理由:</label>
+                            <select class="mdui-select report-type" mdui-select="{position: 'bottom'}">
+                                <option value="0" selected="">无</option>
+                                <option value="1">反动</option>
+                                <option value="2">不良词汇</option>
+                                <option value="3">其他</option>
+                            </select>
+                            <div class="mdui-textfield mdui-textfield-floating-label">
+                                <label class="mdui-textfield-label">举报理由</label>
+                                <textarea class="mdui-textfield-input" rows="3" maxlength="140"></textarea>
+                            </div>
                         </div>
-                        <div class="mdui-card-content mdui-row-xs-3 usercard-folled">
+                        <div class="mdui-dialog-actions">
+                            <button class="mdui-btn mdui-ripple report-cancel mdui-color-red">取消</button>
+                            <button class="mdui-btn mdui-ripple report-send mdui-color-teal">确认</button>
                         </div>
                     </div>
-                    <div class="mdui-card mdui-m-t-2 userinfo">
-                        <div class="mdui-card-header">
-                            <p>这些人被他关注着</p>
-                            <div class="mdui-divider"></div>
+                    <!-- 博客编辑 -->
+                    <div class="mdui-dialog blog-edit-dialog">
+                        <div class="mdui-dialog-title">编辑</div>
+                        <div class="mdui-dialog-content blog-edit-content" bid="0">
+                            <textarea class="mdui-textfield-input blog-edit-input" rows="3" maxlength="140"></textarea>
+                            <img src="" class="blog-edit-image">
+                            <div class="image-content">
+                                <div class="image-zone mdui-center" id="edit-image"></div>
+                            </div>
+                            <button class="mdui-btn mdui-ripple mdui-text-color-theme blog-edit-delimg"><i
+                            class="mdui-icon material-icons">clear</i>清空图片</button>
                         </div>
-                        <div class="mdui-card-content mdui-row-xs-3 usercard-foller">
+                        <div class="mdui-dialog-actions">
+                            <button class="mdui-btn mdui-ripple blog-edit-cancel mdui-color-red">取消</button>
+                            <button class="mdui-btn mdui-ripple blog-edit-send mdui-color-teal">确认</button>
                         </div>
                     </div>
-                    <!--todo: 热门话题 -->
-                    <!-- todo:热门微博 -->
-                    <div class="mdui-card mdui-m-t-2 index">
-                        <div class="mdui-card-header mdui-center">
-                            <h3><strong>今日热门微博</strong></h3>
-                        </div>
-                        <div class="mdui-card-content ">
-                            <ul class="mdui-list mdui-list-dense hotweibo">
-                                
+                    <!-- @人dialog -->
+                    <div class="mdui-dialog callat-dialog">
+                        <div class="mdui-dialog-title">@你想提到的人</div>
+                        <div class="mdui-dialog-content callat-content">
+                            <div class="mdui-textfield mdui-textfield-floating-label">
+                                <label class="mdui-textfield-label">用户昵称</label>
+                                <input type="text" class="mdui-textfield-input peoyourwant" maxlength="7"/>
+                            </div>
+                            <ul class="mdui-list mdui-list-dense friend-list">
                             </ul>
                         </div>
                     </div>
-                </div>
+                    <!-- 定時發佈dialog -->
+                    <div class="mdui-dialog setTime-dialog .mdui-color-transparent">
+                        <div class="mdui-dialog-title">定时发布</div>
+                        <div class="mdui-dialog-content setTime-content mdui-center">
+                            <input type="text" name="date" class='ECalendar mdui-textfield-input' id="ECalendar_date" size="16"  value="" placeholder="点击开始设定时间" />
+                        </div>
+                    </div>
+                    <!-- #话题dialog -->
+                    <div class="mdui-dialog discuss-dialog">
+                        <div class="mdui-dialog-title">想讨论什么？</div>
+                        <div class="mdui-dialog-content discuss-content">
+                            <div class="mdui-textfield mdui-textfield-floating-label">
+                                <label class="mdui-textfield-label">话题名称</label>
+                                <input type="text" class="mdui-textfield-input discuss-input"/>
+                            </div>
+                            <ul class="mdui-list mdui-list-dense discuss-list">
+                            </ul>
+                            <!--  <ul class="mdui-list mdui-list-dense discuss-list">
+                                <li class="mdui-list-item mdui-ripple mdui-p-l-1">
+                                    <div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
+                                    <div class="mdui-list-item-content">为什么还没做完</div>
+                                </li>
+                            </ul>-->
+                        </div>
+                    </div>
+                    <!-- 拖动上传 -->
+                    <div class="mdui-dialog upload-dialog">
+                        <div class="mdui-dialog-title">上传图片</div>
+                        <div class="mdui-dialog-content image-content">
+                            <div class="image-zone mdui-center" id="image-zone"></div>
+                        </div>
+                    </div>
+                    <!-- 用户标签 -->
+                    <div class="mdui-dialog usertag">
+                        <div class="mdui-dialog-title">用户标签</div>
+                        <div class="mdui-dialog-content usertag-content" id="tagsList">
+                        </div>
+                    </div>
+                    <!-- 添加话题 -->
+                    <div class="mdui-dialog addDiscuss-dialog">
+                        <div class="mdui-dialog-title">添加话题</div>
+                        <div class="mdui-dialog-content">
+                            <div class="mdui-textfield">
+                                <label class="mdui-textfield-label">话题名称</label>
+                                <input class="mdui-textfield-input discuss-name" type="text" maxlength="20" placeholder="请输入合法话题名"
+                                required/>
+                            </div>
+                            <div class="mdui-textfield">
+                                <label class="mdui-textfield-label">话题简介</label>
+                                <input class="mdui-textfield-input discuss-description" type="text" maxlength="20"
+                                placeholder="请输入合法文字" required/>
+                            </div>
+                            <div class="mdui-textfield">
+                                <label class="mdui-textfield-label">开始时间</label>
+                                <input class="mdui-textfield-input" id="discuss-startTime" type="text" required/>
+                            </div>
+                        </div>
+                        <div class="mdui-dialog-actions">
+                            <button class="mdui-btn mdui-ripple submit-discussion">提交</button>
+                            <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
+                        </div>
+                    </div>
+                    <!-- 管理话题 -->
+                    <div class="mdui-dialog manageDiscuss-dialog">
+                        <div class="mdui-table-fluid">
+                            <table class="mdui-table mdui-table-hoverable discuss-manage-list">
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>话题名称</th>
+                                        <th>话题描述</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--todo: 收藏夹 -->
+                    <script src="js/mdui.min.js"></script>
+                    <script src="js/jquery.min.js"></script>
+                    <script src="js/Ecalendar.jquery.min.js"></script>
+                    <script src="js/tags.js"></script>
+                    <script src="js/datestampTool.js"></script>
+                    <script src="js/index.js"></script>
+                    <!-- //聊天插件 -->
+                    <script src='js/stopExecutionOnTimeout.js?t=1'></script>
+                    <script src="js/main.js"></script>
+                    <script src='js/chat.js'></script>
+                </footer>
             </div>
-            <footer>
-                <div class="mdui-fab-wrapper" id="aFab" mdui-fab="{trigger: 'hover'}">
-                    <button class="mdui-fab mdui-ripple mdui-color-theme back-up">
-                    <!-- 默认显示的图标 -->
-                    <i class="mdui-icon material-icons">add</i>
-                    <!-- 在拨号菜单开始打开时，平滑切换到该图标，若不需要切换图标，则可以省略该元素 -->
-                    <i class="mdui-icon mdui-fab-opened material-icons " mdui-tooltip="{content: '返回顶部', delay: 500}">arrow_upward</i>
-                    </button>
-                    <div class="mdui-fab-dial">
-                        <!-- 回到顶部 -->
-                        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange mdui-text-color-white creatDiscuss"
-                        mdui-tooltip="{content: '创建话题', delay: 500}"><i class="mdui-icon material-icons">chat_bubble</i>
-                        </button>
-                        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange mdui-text-color-white"
-                        mdui-tooltip="{content: '收藏夹', delay: 500}"><i class="mdui-icon material-icons">folder</i>
-                        </button>
-                        <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-teal send-fab"
-                        mdui-tooltip="{content: '发送文章', delay: 500}"><i class="mdui-icon material-icons">send</i>
-                        </button>
-                    </div>
-                </div>
-                <!-- 举报dialog -->
-                <div class="mdui-dialog report-dialog">
-                    <div class="mdui-dialog-title">举报</div>
-                    <div class="mdui-dialog-content report-content">
-                        <label>举报理由:</label>
-                        <select class="mdui-select report-type" mdui-select="{position: 'bottom'}">
-                            <option value="0" selected="">无</option>
-                            <option value="1">反动</option>
-                            <option value="2">不良词汇</option>
-                            <option value="3">其他</option>
-                        </select>
-                        <div class="mdui-textfield mdui-textfield-floating-label">
-                            <label class="mdui-textfield-label">举报理由</label>
-                            <textarea class="mdui-textfield-input" rows="3" maxlength="140"></textarea>
-                        </div>
-                    </div>
-                    <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-ripple report-cancel mdui-color-red">取消</button>
-                        <button class="mdui-btn mdui-ripple report-send mdui-color-teal">确认</button>
-                    </div>
-                </div>
-                <!-- 博客编辑 -->
-                <div class="mdui-dialog blog-edit-dialog">
-                    <div class="mdui-dialog-title">编辑</div>
-                    <div class="mdui-dialog-content blog-edit-content" bid="0">
-                        <textarea class="mdui-textfield-input blog-edit-input" rows="3" maxlength="140"></textarea>
-                        <img src="" class="blog-edit-image">
-                        <div class="image-content">
-                            <div class="image-zone mdui-center" id="edit-image"></div>
-                        </div>
-                        <button class="mdui-btn mdui-ripple mdui-text-color-theme blog-edit-delimg"><i
-                        class="mdui-icon material-icons">clear</i>清空图片</button>
-                    </div>
-                    <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-ripple blog-edit-cancel mdui-color-red">取消</button>
-                        <button class="mdui-btn mdui-ripple blog-edit-send mdui-color-teal">确认</button>
-                    </div>
-                </div>
-                <!-- @人dialog -->
-                <div class="mdui-dialog callat-dialog">
-                    <div class="mdui-dialog-title">@你想提到的人</div>
-                    <div class="mdui-dialog-content callat-content">
-                        <div class="mdui-textfield mdui-textfield-floating-label">
-                            <label class="mdui-textfield-label">用户昵称</label>
-                            <input type="text" class="mdui-textfield-input peoyourwant" maxlength="7"/>
-                        </div>
-                        <ul class="mdui-list mdui-list-dense friend-list">
-                        </ul>
-                    </div>
-                </div>
-                <!-- 定時發佈dialog -->
-                <div class="mdui-dialog setTime-dialog .mdui-color-transparent">
-                    <div class="mdui-dialog-title">定时发布</div>
-                    <div class="mdui-dialog-content setTime-content mdui-center">
-                        <input type="text" name="date" class='ECalendar mdui-textfield-input' id="ECalendar_date" size="16"  value="" placeholder="点击开始设定时间" />
-                    </div>
-                </div>
-                <!-- #话题dialog -->
-                <div class="mdui-dialog discuss-dialog">
-                    <div class="mdui-dialog-title">想讨论什么？</div>
-                    <div class="mdui-dialog-content discuss-content">
-                        <div class="mdui-textfield mdui-textfield-floating-label">
-                            <label class="mdui-textfield-label">话题名称</label>
-                            <input type="text" class="mdui-textfield-input discuss-input"/>
-                        </div>
-                        <ul class="mdui-list mdui-list-dense discuss-list">
-                        </ul>
-                      <!--  <ul class="mdui-list mdui-list-dense discuss-list">
-                            <li class="mdui-list-item mdui-ripple mdui-p-l-1">
-                                <div class="mdui-list-item-avatar"><img src="./img/avatar.jpg"/></div>
-                                <div class="mdui-list-item-content">为什么还没做完</div>
-                            </li>
-                        </ul>-->
-                    </div>
-                </div>
-                <!-- 拖动上传 -->
-                <div class="mdui-dialog upload-dialog">
-                    <div class="mdui-dialog-title">上传图片</div>
-                    <div class="mdui-dialog-content image-content">
-                        <div class="image-zone mdui-center" id="image-zone"></div>
-                    </div>
-                </div>
-                <!-- 用户标签 -->
-                <div class="mdui-dialog usertag">
-                    <div class="mdui-dialog-title">用户标签</div>
-                    <div class="mdui-dialog-content usertag-content" id="tagsList">
-                    </div>
-                </div>
-                <!-- 添加话题 -->
-                <div class="mdui-dialog addDiscuss-dialog">
-                    <div class="mdui-dialog-title">添加话题</div>
-                    <div class="mdui-dialog-content">
-                        <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">话题名称</label>
-                            <input class="mdui-textfield-input discuss-name" type="text" maxlength="20" placeholder="请输入合法话题名"
-                            required/>
-                        </div>
-                        <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">话题简介</label>
-                            <input class="mdui-textfield-input discuss-description" type="text" maxlength="20"
-                            placeholder="请输入合法文字" required/>
-                        </div>
-                        <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">开始时间</label>
-                            <input class="mdui-textfield-input" id="discuss-startTime" type="text" required/>
-                        </div>
-                    </div>
-                    <div class="mdui-dialog-actions">
-                        <button class="mdui-btn mdui-ripple submit-discussion">提交</button>
-                        <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
-                    </div>
-                </div>
-                <!-- 管理话题 -->
-                <div class="mdui-dialog manageDiscuss-dialog">
-                    <div class="mdui-table-fluid">
-                        <table class="mdui-table mdui-table-hoverable discuss-manage-list">
-                            <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>话题名称</th>
-                                    <th>话题描述</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!--todo: 收藏夹 -->
-                <script src="./js/mdui.min.js"></script>
-                <script src="./js/jquery.js"></script>
-                <script src="./js/Ecalendar.jquery.min.js"></script>
-                <script src="./js/tags.js"></script>
-                <script src="./js/datestampTool.js"></script>
-                <script src="./js/index.js"></script>
-            </footer>
         </div>
     </body>
 </html>

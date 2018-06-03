@@ -37,6 +37,7 @@ $(function() {
         sessionStorage.tag = 0;
         sessionStorage.removeItem("time");
         sessionStorage.removeItem("hotspot");
+        sessionStorage.removeItem("userid");
         // 如果是特殊类型的访问
         if (typeof(method) == "undefined") {
             // 主页
@@ -66,10 +67,10 @@ $(function() {
             if (method == "userinfo") {
                 //用户页面
                 var uid = request.uid;
+                sessionStorage.userid = uid;
                 params = {
                     uid: uid
                 };
-
                 var db = tempDB;
                 getBlog(1, params, db);
                 setUsercard(uid);
@@ -80,7 +81,7 @@ $(function() {
                     meid = sessionStorage.uid
                 }
                 //如果这不是用户的主页，则显示关注按钮
-                if (uid == meid) {
+                if (parseInt(uid) == parseInt(meid)) {
                     $(".usercard-action").hide()
                 }
                 initUsercardAction()
