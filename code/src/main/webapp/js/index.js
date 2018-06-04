@@ -228,7 +228,7 @@ $(function() {
                         if (!block.find(function(num) {
                                 return num == datas[x].userid;
                             })) {
-                            if (datas[x].reason == "热门博客") { //热门博客插入到边栏
+                            if (datas[x].reason == "热门博客" && $(".hotweibo").children().length <6) { //热门博客插入到边栏
                                 var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">" +
                                     "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>" +
                                     "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
