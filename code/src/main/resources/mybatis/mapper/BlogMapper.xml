@@ -89,7 +89,7 @@
         on u.uid = b.user_id
         AND b.type=0
         AND b.visibility=0
-        and b.release_time &lt;= unix_timestamp(now())
+        and b.release_time &lt;= unix_timestamp(now())  AND b.release_time >= (unix_timestamp(now()) - 86400)
     </select>
 
     <!-- 得到指定用户微博 -->
@@ -338,6 +338,8 @@
     <select id="lastTimeHot" resultType="Map">
         SELECT distinct
         *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS likeNum,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) + (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS nums
         FROM (
         SELECT b.*

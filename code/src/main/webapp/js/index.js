@@ -55,6 +55,7 @@ $(function() {
             getBlog(0, params, db);
             getBlog(4, params, db); //拿到热门在右边
             getBlog(7, params, db); //插在列表的
+            getBlog(8, params, db); //昨日热门
             if (typeof(sessionStorage.uid) != "undefined") {
                 params.userid = sessionStorage.uid
                 params.uid = sessionStorage.uid
@@ -203,9 +204,9 @@ $(function() {
 
     // 得到博客并存储到websql中
     function getBlog(type, params, db) { //1不同的链接 2条件 3
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite", "nowtimeHot"]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite", "nowtimeHot", "lastTimeHot"]
         //reason是生成博客列表的时候标注的理由
-        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了博主", "你收藏了该博客", "热门博客"];
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了博主", "你收藏了该博客", "热门博客", "他昨天很热门"];
         var reason = reasons[type];
         //如果不是主页，数据存入临时表中
         $.ajax({
