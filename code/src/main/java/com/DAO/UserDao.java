@@ -231,11 +231,11 @@ public class UserDao {
         return userList;
     }
 
-    public static List<User> hotUser(int date) {
+    public static List<Map> hotUser() {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        List<User> userList = null;
+        List<Map> userList = null;
         try {
-            userList = sqlSession.selectList("weibo/BlogMapper.hotUser",date);
+            userList = sqlSession.selectList("weibo/UserMapper.hotUser");
         } finally {
             sqlSession.close();
         }

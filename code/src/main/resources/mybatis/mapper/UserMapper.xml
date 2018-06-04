@@ -127,24 +127,25 @@
     <select id="getFanAvatarByUid" resultType="Map">
         SELECT *
         FROM (
-            SELECT foller.avatar, foller.uid AS userid, foller.nickname, f.user_id AS fid
-            FROM follow AS f
-            JOIN user AS u
-            ON u.uid = f.followed_id AND (f.type = 0 OR f.type = 2)
-            JOIN user AS foller
-            ON f.user_id = foller.uid
-            WHERE u.uid = #{uid}
-            LIMIT 6
-            UNION ALL
-            SELECT foller.avatar, foller.uid AS userid, foller.nickname, f.user_id AS fid
+            (SELECT foller.avatar, foller.uid AS userid, foller.nickname, f.user_id AS fid
             FROM follow AS f
             JOIN user AS u
             ON u.uid = f.user_id AND (f.type = 0 OR f.type = 2)
             JOIN user AS foller
             ON f.followed_id = foller.uid
             WHERE u.uid = #{uid}
-            LIMIT 6
+            LIMIT 6)
+            UNION
+            (SELECT foller.avatar, foller.uid AS userid, foller.nickname, f1.user_id AS fid
+            FROM follow AS f1
+            JOIN user AS u
+            ON u.uid = f1.followed_id AND (f1.type = 0 OR f1.type = 2)
+            JOIN user AS foller
+            ON f1.user_id = foller.uid
+            WHERE u.uid = #{uid}
+            LIMIT 6)
         ) AS a
+
     </select>
     <!-- 设置权重 -->
     <update id="setWeight">
@@ -218,13 +219,15 @@
 
     <select id="hotUser" parameterType="int" resultType="User">
         SELECT
-            *,
-            (SELECT count(tu.tuid) FROM thumb_up tu
-            WHERE tu.user_id=u.uid AND tu.date >= (unix_timestamp(now()) - #{date}) AS likeNum,
-            (SELECT count(u.uid) FROM follow AS f JOIN user AS fan
-            ON f.followed_id = fan.uid AND f.time >= (unix_timestamp(now()) - #{date}) AS fansNum,
+            *,(
+                (SELECT count(tu.tuid) FROM thumb_up AS tu
+                WHERE tu.user_id=u.uid
+                AND tu.date >= (unix_timestamp(now()) - 86400)) +
+                (SELECT count(f.fid) FROM follow AS f
+                JOIN user AS fan ON f.followed_id = fan.uid AND f.time >= (unix_timestamp(now()) - 86400)) ) AS sums
         FROM user AS u
         ORDER BY sums DESC
+        LIMIT 5
     </select>
 
     <select id="daisuki" parameterType="map" resultType="map">

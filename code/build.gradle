@@ -28,8 +28,6 @@ dependencies {
     //http访问支持
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
 
-
-
 }
 
 

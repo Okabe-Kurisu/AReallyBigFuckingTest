@@ -12,9 +12,9 @@ $(function() {
     var createDialog_inst //创建话题对话框
 
     $("document").ready(function() {
+        initPanel();
         initUser();
         initSearch();
-        initPanel();
         initPage();
     })
 
@@ -37,6 +37,7 @@ $(function() {
         sessionStorage.tag = 0;
         sessionStorage.removeItem("time");
         sessionStorage.removeItem("hotspot");
+        sessionStorage.removeItem("userid");
         // 如果是特殊类型的访问
         if (typeof(method) == "undefined") {
             // 主页
@@ -60,16 +61,16 @@ $(function() {
                 getBlog(1, params, db);
                 getBlog(5, params, db); //拿到关注
             }
-            //todo 加载太长了，写一个加载动画
 
+            setHotUser();
         } else {
             if (method == "userinfo") {
                 //用户页面
                 var uid = request.uid;
+                sessionStorage.userid = uid;
                 params = {
                     uid: uid
                 };
-
                 var db = tempDB;
                 getBlog(1, params, db);
                 setUsercard(uid);
@@ -80,7 +81,7 @@ $(function() {
                     meid = sessionStorage.uid
                 }
                 //如果这不是用户的主页，则显示关注按钮
-                if (uid == meid) {
+                if (parseInt(uid) == parseInt(meid)) {
                     $(".usercard-action").hide()
                 }
                 initUsercardAction()
@@ -112,6 +113,32 @@ $(function() {
                 getBlog(6, {}, db);
                 readBlog(db);
             }
+        }
+
+        function setHotUser() {
+            $.ajax({
+                url: "/data/hotuser",
+                type: "POST",
+                data: params,
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    if (data.code == 200 && data.data != null) {
+                        var users = data.data;
+                        for (x in users) {
+                            var user = users[x];
+                            var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotuser-item\" uid=\"" + user.uid + "\">" +
+                                "<div class=\"mdui-list-item-avatar\"><img src=\"" + user.avatar + "\"/></div>" +
+                                "<div class=\"mdui-list-item-content\">" + user.nickname + "</div></li>";
+                            $(".hotuser").append(html)
+                        }
+                        $(".hotuser-item").click(function() {
+                            url = "/?method=userinfo&uid=" + $(this).attr("uid");
+                            self.location = url;
+                        })
+                    }
+                },
+            })
         }
 
         function setUsercard(id) {
@@ -282,6 +309,7 @@ $(function() {
             sessionStorage.uid = me.uid;
             sessionStorage.date = Math.round(new Date().getTime() / 1000);
             $(".login-btn").hide();
+            $(".demo").show()
             $(".userpanel-avatar").attr("src", me.avatar);
             $(".userpanel-nickname").html(me.nickname);
             $(".userpanel-motto").html(me.motto);
@@ -387,12 +415,15 @@ $(function() {
             dataType: "json",
             success: function(data) {
                 if (data.code == 200) {
-                    var hotspot = data.data;
+                    var hotspots = data.data;
                     sessionStorage.hotspot = hotspot;
-                    $(".hotspot-list").each(function(argument) {
-                        $(this).children('.mdui-list-item-content').html(hotspot[0]);
-                        hotspot.shift();
-                    })
+                    for (x in hotspots) {
+                        var hotspot = hotspots[x]
+                        html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list\">" +
+                            "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + (parseInt(x) + 1) + "</p>" +
+                            "<div class=\"mdui-list-item-content\">" + hotspot + "</div></li>"
+                        $(".hotspot-ul").append(html);
+                    }
                 }
             },
         })
@@ -411,6 +442,26 @@ $(function() {
                 self.location = url;
             }
         });
+
+        $(".search-input").keyup(function() {
+            $.ajax({
+                url: "/data/getHotSearch",
+                data: {
+                    keyword: $(".search-input").val()
+                },
+                type: "POST",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    if (data.code == 200 && data.data != null) {
+                        $(".search-helper").show();
+                        $(".search-helper").html("搜索建议：" + data.data)
+                    }else{
+                        $(".search-helper").hide();
+                    }
+                }
+            })
+        })
     }
 
 
@@ -419,6 +470,7 @@ $(function() {
         $(".userinfo").hide();
         $(".index").hide();
         $(".send-card").hide();
+        $(".demo").hide();
         // //让panel弹出来能再收回去
         // $(document).click(function(ev) {
         //     var openPanel = $(".mdui-collapse-item-open");

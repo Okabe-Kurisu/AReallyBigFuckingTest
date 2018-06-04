@@ -39,12 +39,26 @@ public class DataAction extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
+    //得到热门搜索结果
+    @Action(value = "getHotSearch")
+    public String getHotSearch() {
+        String keyword = request.getParameter("keyword");
+        try {
+            resultMap = PowerfulTools.format("200", "成功", DataTool.getHotSearch(keyword));
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
     //得到热门用户
     @Action(value = "hotuser")
     public String getHotuser() {
         Map<String, Object> map = new HashMap();
         try {
-            resultMap = PowerfulTools.format("200", "成功", UserDao.hotUser(24*3600));//获得一小时有过评论转发和点赞的微博
+            resultMap = PowerfulTools.format("200", "成功", UserDao.hotUser());//获得24小时有过评论转发和点赞的微博
         } catch (NullPointerException ne) {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);

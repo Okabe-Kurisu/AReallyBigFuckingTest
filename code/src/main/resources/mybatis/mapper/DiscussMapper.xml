@@ -84,15 +84,14 @@
     </select>
 
     <select id="getBlogDiscuss" resultType="Integer">
-        SELECT
-        b.bid
+        SELECT b.bid
         FROM blog AS b
-        JOIN blog_discuss AS bd
-        ON bd.blog_id = b.bid
-        WHERE b.type=0
-        AND b.visibility=0
-        and b.release_time &lt;= unix_timestamp(now())
-        AND bd.discuss_id = #{did}
+            JOIN blog_discuss AS bd
+                ON bd.blog_id = b.bid
+        WHERE b.type = 0
+              AND b.visibility = 0
+              and b.release_time &lt;= unix_timestamp(now())
+              AND bd.discuss_id = #{did}
     </select>
 
     <!-- 判断指定话题是否是当前用户建立的 -->
@@ -155,7 +154,7 @@
                              WHERE user_id = #{user_id} AND followed_id = #{did});
     </insert>
 
-    <!-- 建立话题（话题名不能重复） -->
+    <!-- 建立话题（话题名不能重复:未结束的话题） -->
     <insert id="insertDiscuss" parameterType="Map" keyProperty="did" useGeneratedKeys="true">
         INSERT INTO discuss (name, user_id, detail, start_time, release_time)
             SELECT
@@ -167,7 +166,7 @@
             FROM DUAL
             WHERE NOT EXISTS(SELECT did
                              FROM discuss
-                             WHERE name = #{name});
+                             WHERE name = #{name} AND visibility = 0);
     </insert>
 
     <update id="updateDiscuss" parameterType="Discuss" useGeneratedKeys="true" keyProperty="did">

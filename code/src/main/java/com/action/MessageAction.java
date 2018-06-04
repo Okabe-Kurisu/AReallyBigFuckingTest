@@ -51,25 +51,43 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
         return SUCCESS;
     }
 
-     //获得发送私信用户的用户名
-     @Action(value = "getSendMessageUserId")
-     public  String GetSendMessageUserId() {
-         Map<String, Object> map = new HashMap();
-         String uid;
-         try {
-             //获得参数
-             uid = request.getParameter("uid");
-             map.put("uid",uid);//传过来的是登录用户账号
-             // 调用Dao层 获取数据
-             List blogList = MessageDao.getSendMassageUserid(map);
-             // 封装响应数据
-             resultMap = PowerfulTools.format("200", "成功", blogList);
-         } catch (NullPointerException ne) {
-             ne.printStackTrace();
-             resultMap = PowerfulTools.format("500", "系统异常", null);
-         }
-         return SUCCESS;
-     }
+    //获得发送私信用户的用户名
+    @Action(value = "getSendMessageUserId")
+    public  String GetSendMessageUserId() {
+        Map<String, Object> map = new HashMap();
+        String uid;
+        try {
+            //获得参数
+            uid = request.getParameter("uid");
+            map.put("uid",uid);//传过来的是登录用户账号
+            // 调用Dao层 获取数据
+            List blogList = MessageDao.getSendMassageUserid(map);
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", blogList);
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
+    //删除一整个会话
+    @Action(value = "delSession")
+    public  String delSession() {
+        Map<String, Object> map = new HashMap();
+        String uid, aid;
+        try {
+            uid = request.getParameter("uid");
+            aid = request.getParameter("aid");
+            map.put("uid",uid);//传过来的是登录用户账号
+            map.put("aid",aid);
+            MessageDao.delSession(map);
+            resultMap = PowerfulTools.format("200", "成功", "");
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
+        }
+        return SUCCESS;
+    }
      //通过用户id和发送方的id查看信息
      @Action(value = "GetMassageUseridAndAccpeter")
     public String GetMassageUseridAndAccpeter(){
@@ -93,14 +111,9 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
              List blogList = MessageDao.getMassageUseridAndAccpeter(map);
              // 封装响应数据
              resultMap = PowerfulTools.format("200", "成功", blogList);
-             // 转换为JSON字符串
-             Gson gson = new Gson();
-             message = gson.toJson(resultMap);
          }catch (NullPointerException ne) {
              ne.printStackTrace();
              resultMap = PowerfulTools.format("500", "系统异常", null);
-             Gson gson = new Gson();
-             message = gson.toJson(resultMap);
          }
         return SUCCESS;
     }

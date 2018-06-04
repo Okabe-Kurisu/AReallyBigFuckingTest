@@ -19,7 +19,7 @@
     <select id="getMassageUseridAndAccpeter" parameterType="Map" resultType="Map">
         select * FROM message
         where ((accpeter_id=#{uid} and user_id=#{sid}) OR (accpeter_id=#{sid} and user_id=#{uid}))
-        and is_showName=#{is_showName}
+        and is_showName=#{is_showName} AND is_read=0
         order by date asc
     </select>
     <!--标志已读-->
@@ -29,5 +29,11 @@
        where
        user_id =#{sid} and accpeter_id =#{uid}
     </update>
+    <delete id="delSession" parameterType="Map">
+        DELETE FROM message
+        where
+        (user_id =#{aid} and accpeter_id =#{uid})
+        OR (user_id =#{uid} and accpeter_id =#{aid})
+    </delete>
     <!---->
 </mapper>
