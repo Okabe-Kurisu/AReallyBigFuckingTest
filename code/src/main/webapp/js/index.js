@@ -247,7 +247,7 @@ $(function() {
     // 从数据库读取并生成微博
     function readBlog(db) {
         db.transaction(function(tx) { //这tm是异步方法
-            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 and reason != "没啥好显示的" order by releaseTime, weight DESC', [], function(tx, results) {
+            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 and reason != "没啥好显示的" order by weight DESC, releaseTime DESC', [], function(tx, results) {
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
@@ -356,7 +356,7 @@ $(function() {
                             datas = data.data
                             for (x in datas) {
                                 weiboDB.transaction(function(tx) { //这tm是异步方法
-                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? and isShow = 0 order by releaseTime, weight DESC', [datas[x]], function(tx, results) {
+                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? and isShow = 0 order by weight DESC, releaseTime DESC', [datas[x]], function(tx, results) {
                                         var data = results.rows;
                                         var len = data.length;
                                         if (len != 0) {
@@ -587,6 +587,7 @@ $(function() {
             success: function(data) {
                 mdui.snackbar("退出成功");
                 sessionStorage.removeItem("me")
+                sessionStorage.removeItem("uid")
                 weiboDB.transaction(function(tx) {
                     tx.executeSql('DROP TABLE IF EXISTS follow');
                     tx.executeSql('DROP TABLE IF EXISTS callat');
