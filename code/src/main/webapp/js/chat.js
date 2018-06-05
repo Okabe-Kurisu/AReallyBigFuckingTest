@@ -33,7 +33,7 @@ $(function() {
 			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType: "json",
 			success: function(data) {
-				if (data.code == 200 && data.data != null){
+				if (data.code == 200 && data.data != null) {
 					sessions = data.data
 					for (x in sessions) {
 						var s = sessions[x]
@@ -48,6 +48,40 @@ $(function() {
 		})
 	}
 
+	function listen() {
+		if (!$(".chat").hasClass("active")) return;
+		//監聽与某id對話
+		params = {
+			uid: sessionStorage.uid,
+			sid: $(".chat__input").attr('aid'),
+			is_showName: 0,
+		};
+		$.ajax({
+			url: "/message/GetMassageUseridAndAccpeter",
+			type: "POST",
+			data: params,
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+			dataType: "json",
+			success: function(data) {
+				if (data.code == 200 && data.data != null) {
+					chats = data.data
+					for (x in chats) {
+						var c = chats[x]
+						if (parseInt(c.user_id) == parseInt(sessionStorage.uid)) {
+							html = '<div class="chat__msgRow"><div class="chat__message mine">' + c.content + '</div></div>';
+						} else {
+							html = '<div class="chat__msgRow"><div class="chat__message notMine">' + c.content + '</div></div>';
+						}
+						$(".chat__messages").append(html);
+					}
+				}
+				setTimeout(listen, 5000);
+			},
+			error: function() {
+				setTimeout(listen, 5000);
+			}
+		})
+	}
 	//點擊會話后
 	$(document).on("click", ".contact", function(e) {
 		if (delFlag == 1) {
@@ -60,42 +94,8 @@ $(function() {
 		$(".chat__messages").html(""); //加載新对话前先清空对话内容
 		$(".chat__input").attr('aid', $(this).attr('uid'))
 
-		function listen() {
-			if (!$(".chat").hasClass("active")) return;
-			//監聽与某id對話
-			params = {
-				uid: sessionStorage.uid,
-				sid: $(".chat__input").attr('aid'),
-				is_showName: 0,
-			};
-			$.ajax({
-				url: "/message/GetMassageUseridAndAccpeter",
-				type: "POST",
-				data: params,
-				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-				dataType: "json",
-				success: function(data) {
-					if (data.code == 200 && data.data != null) {
-						chats = data.data
-						for (x in chats) {
-							var c = chats[x]
-							if (parseInt(c.user_id) == parseInt(sessionStorage.uid)) {
-								html = '<div class="chat__msgRow"><div class="chat__message mine">' + c.content + '</div></div>';
-							} else {
-								html = '<div class="chat__msgRow"><div class="chat__message notMine">' + c.content + '</div></div>';
-							}
-							$(".chat__messages").append(html);
-						}
-					}
-					listen();
-				},
-				error: function () {
-					listen();
-				}
-			})
-		}
-
 		$(document).off("click", closeSidebar);
+		$(".chat__person").html($(this).find(".contact__name").html());
 		var that = this,
 			name = $(this).find(".contact__name").text(),
 			online = $(this).find(".contact__status").hasClass("online");
@@ -116,6 +116,7 @@ $(function() {
 						$chat.show();
 						$chat.css("top");
 						$chat.addClass("active");
+						listen();
 						animating = false;
 					});
 				}, "inCubic");

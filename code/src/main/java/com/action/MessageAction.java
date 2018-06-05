@@ -105,9 +105,7 @@ public class MessageAction extends ActionSupport implements ServletRequestAware 
              map.put("sid",sid);//发送方的id
              map.put("idate",idate);//获得当前时间
              map.put("is_showName",is_showName);
-             System.out.println(map.get("idate"));
              // 调用Dao层 获取数据
-             MessageDao.yesRead(map);
              List blogList = MessageDao.getMassageUseridAndAccpeter(map);
              // 封装响应数据
              resultMap = PowerfulTools.format("200", "成功", blogList);

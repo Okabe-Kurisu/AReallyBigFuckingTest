@@ -33,6 +33,11 @@ public class MessageDao {
         List<Map> blogList = null;
         try {
             blogList = sqlSession.selectList("weibo/MessageMapper.getMassageUseridAndAccpeter",map);
+            for (Map msg: blogList){
+                msg.put("idate",map.get("idate"));
+                System.out.println(msg);
+                yesRead(msg);
+            }
         } finally {
             sqlSession.close();
         }
