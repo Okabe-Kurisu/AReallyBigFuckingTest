@@ -450,21 +450,23 @@ $(function() {
         });
 
         $(".search-input").keyup(function() {
+            keyword = $(".search-input").val();
             $.ajax({
                 url: "/data/getHotSearch",
                 data: {
-                    keyword: $(".search-input").val()
+                    keyword: keyword
                 },
                 type: "POST",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
-                    if (data.code == 200 && data.data != null) {
-                        $(".search-helper").show();
-                        $(".search-helper").html("搜索建议：" + data.data)
-                    } else {
-                        $(".search-helper").hide();
-                    }
+                    if ($(".search-input").val().indexOf(keyword))//如果现在输入的搜索内容仍然可以被这个搜索建议适配
+                        if (data.code == 200 && data.data != null) {
+                            $(".search-helper").show();
+                            $(".search-helper").html("搜索建议：" + data.data)
+                        } else {
+                            $(".search-helper").hide();
+                        }
                 }
             })
         })

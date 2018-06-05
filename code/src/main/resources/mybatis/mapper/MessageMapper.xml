@@ -3,17 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="weibo/MessageMapper">
-   <!--用户发送私信-->
+    <!--用户发送私信-->
     <insert id="sendMassage" parameterType="Map">
         INSERT INTO message (user_id,accpeter_id,content,date,is_showName)
         VALUES(#{uid},#{aid},#{content},#{date},#{is_showName})
     </insert>
     <!--用户获得私信发送者-->
     <select id="getSendMassageUserid" parameterType="Map" resultType="Map">
-        select distinct user.uid , user.nickname ,user.avatar , message1.is_read
-        from user,(SELECT * from message) as message1
-        where user.uid=message1.user_id and message1.accpeter_id=#{uid}
-        order by date desc
+        SELECT * FROM (
+            SELECT  DISTINCT u.uid , u.nickname ,u.avatar, m.date
+            FROM message AS m
+            JOIN user AS u
+            ON m.accpeter_id = u.uid
+            WHERE u.uid = #{uid}
+            UNION
+            SELECT  DISTINCT s.uid , s.nickname , s.avatar, m.date
+            FROM message AS m
+            JOIN user AS u
+            ON m.user_id = u.uid
+            JOIN user AS s
+            ON m.accpeter_id = s.uid
+            WHERE u.uid = #{uid}
+        ) as t
+        GROUP BY t.uid
+        ORDER BY t.date DESC
     </select>
     <!--通过发送者和接收者的id查看私信-->
     <select id="getMassageUseridAndAccpeter" parameterType="Map" resultType="Map">

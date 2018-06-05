@@ -33,7 +33,7 @@ $(function() {
 			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 			dataType: "json",
 			success: function(data) {
-				if (data.code == 200 && data.data != null) {} else {
+				if (data.code == 200 && data.data != null){
 					sessions = data.data
 					for (x in sessions) {
 						var s = sessions[x]
@@ -41,7 +41,7 @@ $(function() {
 							'<img src="' + s.avatar + '" alt="" class="contact__photo" />' +
 							'<span class="contact__name">' + s.nickname + '</span>' +
 							'<span class="delete-chat">x</span></div>';
-						$("sidebar-content").append(html)
+						$(".sidebar-content").append(html)
 					}
 				}
 			},
@@ -59,11 +59,13 @@ $(function() {
 
 		$(".chat__messages").html(""); //加載新对话前先清空对话内容
 		$(".chat__input").attr('aid', $(this).attr('uid'))
+
 		function listen() {
+			if (!$(".chat").hasClass("active")) return;
 			//監聽与某id對話
 			params = {
 				uid: sessionStorage.uid,
-				sid: sessionStorage.userid,
+				sid: $(".chat__input").attr('aid'),
 				is_showName: 0,
 			};
 			$.ajax({
@@ -73,7 +75,7 @@ $(function() {
 				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType: "json",
 				success: function(data) {
-					if (data.code == 200 && data.data != null) {} else {
+					if (data.code == 200 && data.data != null) {
 						chats = data.data
 						for (x in chats) {
 							var c = chats[x]
@@ -85,7 +87,11 @@ $(function() {
 							$(".chat__messages").append(html);
 						}
 					}
+					listen();
 				},
+				error: function () {
+					listen();
+				}
 			})
 		}
 
