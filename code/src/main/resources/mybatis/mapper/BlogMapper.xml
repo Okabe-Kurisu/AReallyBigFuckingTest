@@ -87,6 +87,7 @@
         FROM blog b
         join user as u
         on u.uid = b.user_id
+        AND u.alive = 0 AND u.is_ban = 0
         AND b.type=0
         AND b.visibility=0
         and b.release_time &lt;= unix_timestamp(now())  AND b.release_time >= (unix_timestamp(now()) - 86400)
@@ -99,8 +100,9 @@
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=b.bid) AS likeNum
         FROM blog AS b
         JOIN user AS u
-        on b.user_id=u.uid AND u.alive = 0 AND u.is_ban = 0
+        on b.user_id=u.uid
         WHERE u.uid=#{uid}
+        AND u.alive = 0 AND u.is_ban = 0
         AND b.type &lt;= 1
         AND b.visibility=0
         and b.release_time &lt;= unix_timestamp(now())
@@ -330,6 +332,7 @@
         JOIN user AS u
         on t.user_id=u.uid and t.visibility = 0
         WHERE t.release_time >= (unix_timestamp(now()) - 86400) AND t.release_time &lt;= unix_timestamp(now())
+        AND u.alive = 0 AND u.is_ban = 0
         GROUP BY t.bid
         ORDER BY nums DESC, u.weight
     </select>
@@ -355,6 +358,7 @@
         JOIN user AS u
         on t.user_id=u.uid and t.visibility = 0
         WHERE t.release_time >= (unix_timestamp(now()) - 172800) AND t.release_time &lt;= (unix_timestamp(now()) - 86400)
+        AND u.alive = 0 AND u.is_ban = 0
         GROUP BY t.bid
         ORDER BY nums DESC, u.weight
     </select>

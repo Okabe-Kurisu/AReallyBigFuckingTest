@@ -162,6 +162,8 @@ $(function() {
                         $(".usercard-folledNum").html(userinfo.follerNum);
                         $(".usercard-blogNum").html(userinfo.blogNum);
                         $("title").html("Fake微博-" + userinfo.nickname + "的个人页面");
+                        $(".userinfo").attr("uid", userinfo.bid);
+                        $(".userinfo").attr("nickname", userinfo.nickname);
                     } else {
                         mdui.snackbar("当前用户不存在");
                         setTimeout("self.location= '/'", 1500);
@@ -256,7 +258,7 @@ $(function() {
                         if (!block.find(function(num) {
                                 return num == datas[x].userid;
                             })) {
-                            if (datas[x].reason == "热门博客" && $(".hotweibo").children().length <6) { //热门博客插入到边栏
+                            if (datas[x].reason == "热门博客" && $(".hotweibo").children().length < 6) { //热门博客插入到边栏
                                 var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">" +
                                     "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>" +
                                     "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
@@ -331,13 +333,16 @@ $(function() {
                                 block.push(datas[x].followid)
                         }
                     }
-                    if (daisukiFlag == 1)
-                        daisuki(0);
-                    console.log(followDiscusses)
-                    for (x in followDiscusses) {
-                        getBlogDiscuss(followDiscusses[x]);
+
+                    if (typeof(GetRequest().method) == "undefined") {
+                        if (daisukiFlag == 1)
+                            daisuki(0);
+                        console.log("加载黑名单完成");
+                        for (x in followDiscusses) {
+                            getBlogDiscuss(followDiscusses[x]);
+                        }
+                        console.log("加载关注话题博客完成");
                     }
-                    console.log("加载黑名单完成");
                 }, null);
             })
 
@@ -457,7 +462,7 @@ $(function() {
                     if (data.code == 200 && data.data != null) {
                         $(".search-helper").show();
                         $(".search-helper").html("搜索建议：" + data.data)
-                    }else{
+                    } else {
                         $(".search-helper").hide();
                     }
                 }

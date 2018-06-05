@@ -3,20 +3,21 @@ $(function() {
 	delFlag = 0
 	getAllChat()
 
-	$("message-btn").click(function(argument) { //点击私信按钮
+	$(".message-btn").click(function(argument) { //点击私信按钮
 		$(".demo").css("z-index", 1)
+		html = '<div class="contact" uid="' + sessionStorage.userid + '">' +
+			'<img src="' + $(".user-cover-avatar").attr("src") + '" alt="" class="contact__photo" />' +
+			'<span class="contact__name">' + $(".userinfo").attr("nickname") + '</span>' +
+			'<span class="delete-chat">x</span></div>';
+		$(".sidebar-content").prepend(html);
 		animatePathD($path, finalD, animTime, false, function() {
 			$sCont.addClass("active");
 			setTimeout(function() {
 				$(document).on("click", closeSidebar);
 			}, sContTrans);
+			$('.contact').first().trigger('click');
+
 		});
-		uid =
-			html = '<div class="contact" uid="' + sessionStorage.userid + '">' +
-			'<img src="' + $(".user-cover-avatar").attr("src") + '" alt="" class="contact__photo" />' +
-			'<span class="contact__name">' + $(".mdui-card-header-title").get(1).html() + '</span>' +
-			'<span class="delete-chat">x</span></div>';
-		$("sidebar-content").prepend(html)
 	})
 
 	function getAllChat() {
@@ -57,7 +58,7 @@ $(function() {
 		animating = true;
 
 		$(".chat__messages").html(""); //加載新对话前先清空对话内容
-
+		$(".chat__input").attr('aid', $(this).attr('uid'))
 		function listen() {
 			//監聽与某id對話
 			params = {
@@ -124,15 +125,15 @@ $(function() {
 		contact.hide(speed = "normal");
 		params = {
 			uid: sessionStorage.uid,
-			aid: $(this).parent.attr(uid),
+			aid: $(this).parent().attr('uid'),
 		}
 		$.ajax({
-				url: "/message/delSession",
-				type: "POST",
-				data: params,
-				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-				dataType: "json",
-			})
+			url: "/message/delSession",
+			type: "POST",
+			data: params,
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+			dataType: "json",
+		})
 	})
 	$(".chat__input").keypress(function(e) {
 		if (e.which == 13) {
@@ -143,7 +144,7 @@ $(function() {
 			params = {
 				content: content,
 				uid: sessionStorage.uid,
-				aid: $(this).parent.attr(uid),
+				aid: $(this).attr('aid'),
 				is_showName: 0,
 			}
 			$.ajax({
