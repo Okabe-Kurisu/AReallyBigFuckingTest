@@ -1039,7 +1039,6 @@ $(function() {
                 dataType: "json",
                 success: function(data) {
                     if (data.msg == "点赞") {
-                        console.log(thisclass.children(".likeNum"))
                         thisclass.toggleClass("mdui-text-color-theme");
                         thisclass.toggleClass("mdui-text-color-pink");
                         mdui.snackbar(data.msg);
@@ -1048,10 +1047,8 @@ $(function() {
                     } else {
                         thisclass.toggleClass("mdui-text-color-pink");
                         thisclass.toggleClass("mdui-text-color-theme");
-
                         mdui.snackbar(data.msg);
                         var num = thisclass.children(".likeNum").html();
-                        console.log(num)
                         thisclass.children(".likeNum").html(parseInt(num) - 1)
                     }
 
