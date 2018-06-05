@@ -1,3 +1,6 @@
+#main {
+	margin-top: 56px!important;
+}
 .userpanel-body{
 	z-index: 2;
     position: fixed;
@@ -9,6 +12,12 @@
     z-index: 2;
     position: fixed;
     right: 120px;
+}
+header{
+	position: fixed!important;
+    z-index: 1;
+    width: 100%;
+    top: 0px;
 }
 .usertag{
 	width: 450px;

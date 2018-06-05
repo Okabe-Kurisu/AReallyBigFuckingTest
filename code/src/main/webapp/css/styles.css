@@ -13,19 +13,13 @@ button, input {
   outline: none;
 }
 
-body {
-  background: -webkit-linear-gradient(45deg, #636f85, #6960a0);
-  background: linear-gradient(45deg, #636f85, #6960a0);
-}
-
 .demo {
   position: fixed!important;
-  top: 7%;
+  top: 45px;
   left: 0%;
   width: 100%;
-  height: 93%;
+  height: 100%;
 }
-
 
 .sidebar-content {
   z-index: -1;
@@ -158,21 +152,7 @@ svg {
 .chat.active {
   opacity: 1;
 }
-.chat.active:before {
-  width: 100%;
-}
-.chat:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0.5rem;
-  background: #1CC6AE;
-  width: 0;
-  -webkit-transition: width 0.2s;
-          transition: width 0.2s;
-}
+
 .chat__back {
   position: relative;
   display: inline-block;
