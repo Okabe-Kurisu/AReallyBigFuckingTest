@@ -10,7 +10,7 @@
 <body>
 <!-- 头部栏 -->
 <header>
-    <div class="mdui-toolbar mdui-color-white mdui-shadow-2">
+    <div class="mdui-toolbar mdui-color-white mdui-shadow-2 .mdui-appbar-fixed">
         <span class="mdui-typo-title mdui-m-l-5">Fake 微博</span>
         <a href="./index.html" class="mdui-btn mdui-btn-icon index-page"
            mdui-tooltip="{content: '首页', delay: 100}"><i class="mdui-icon material-icons">home</i></a>
@@ -18,6 +18,8 @@
            mdui-tooltip="{content: '话题中心', delay: 100}"><i class="mdui-icon material-icons">filter_vintage</i></a>
         <div class="mdui-toolbar-spacer"></div>
         <!-- 弹出搜索 -->
+        <div class="search-helper" style="display: none">搜索建议</div>
+
         <div class="search-bar">
             <div class="mdui-textfield mdui-textfield-expandable mdui-float-right">
                 <button class="mdui-textfield-icon mdui-btn mdui-btn-icon" mdui-tooltip="{content: '搜索', delay: 100}"><i
@@ -78,27 +80,7 @@
                     <h3><strong>大家在搜什么</strong></h3>
                 </div>
                 <div class="mdui-card-content ">
-                    <ul class="mdui-list mdui-list-dense">
-                        <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                            <p class="mdui-list-item-icon mdui-text-color-red">1</p>
-                            <div class="mdui-list-item-content">热搜词语</div>
-                        </li>
-                        <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                            <p class="mdui-list-item-icon mdui-text-color-red">2</p>
-                            <div class="mdui-list-item-content">热搜词语</div>
-                        </li>
-                        <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                            <p class="mdui-list-item-icon mdui-text-color-red">3</p>
-                            <div class="mdui-list-item-content">热搜词语</div>
-                        </li>
-                        <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                            <p class="mdui-list-item-icon mdui-text-color-red">4</p>
-                            <div class="mdui-list-item-content">热搜词语</div>
-                        </li>
-                        <li class="mdui-list-item mdui-ripple mdui-p-l-1 hotspot-list">
-                            <p class="mdui-list-item-icon mdui-text-color-red">5</p>
-                            <div class="mdui-list-item-content">热搜词语</div>
-                        </li>
+                    <ul class="mdui-list mdui-list-dense hotspot-ul">
                     </ul>
                 </div>
             </div>

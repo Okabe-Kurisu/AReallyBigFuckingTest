@@ -11,10 +11,12 @@ body {
 }
 
 .discuss-search-div {
+    margin-top: 20px;
     width: 60%;
 }
 
 .blog-discuss-name {
     display: block;
     text-align: center;
+    margin-top: 50px;
 }

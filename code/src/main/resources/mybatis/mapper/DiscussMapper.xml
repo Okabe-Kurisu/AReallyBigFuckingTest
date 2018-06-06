@@ -183,6 +183,10 @@
         WHEN is_edit IS NULL THEN
         1 ELSE is_edit + 1
         END
-        WHERE did = #{did} AND is_edit &lt; 4 AND user_id=#{user_id}
+        WHERE did = #{did}
+        <if test="visibility == null">
+            AND is_edit &lt; 4
+        </if>
+        AND user_id=#{user_id}
     </update>
 </mapper>
