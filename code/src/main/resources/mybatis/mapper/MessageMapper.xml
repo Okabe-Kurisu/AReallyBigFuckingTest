@@ -11,10 +11,12 @@
     <!--用户获得私信发送者-->
     <select id="getSendMassageUserid" parameterType="Map" resultType="Map">
         SELECT * FROM (
-            SELECT  DISTINCT u.uid , u.nickname ,u.avatar, m.date
+            SELECT  DISTINCT s.uid , s.nickname , s.avatar, m.date
             FROM message AS m
             JOIN user AS u
             ON m.accpeter_id = u.uid
+            JOIN user AS s
+            ON m.user_id = s.uid
             WHERE u.uid = #{uid}
             UNION
             SELECT  DISTINCT s.uid , s.nickname , s.avatar, m.date
@@ -31,7 +33,7 @@
     <!--通过发送者和接收者的id查看私信-->
     <select id="getMassageUseridAndAccpeter" parameterType="Map" resultType="Map">
         select * FROM message
-        where ((accpeter_id=#{uid} and user_id=#{sid}) OR (accpeter_id=#{sid} and user_id=#{uid}))
+        where accpeter_id=#{uid} and user_id=#{sid}
         and is_showName=#{is_showName} AND is_read=0
         order by date asc
     </select>

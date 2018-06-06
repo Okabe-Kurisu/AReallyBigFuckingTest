@@ -35,7 +35,6 @@ public class MessageDao {
             blogList = sqlSession.selectList("weibo/MessageMapper.getMassageUseridAndAccpeter",map);
             for (Map msg: blogList){
                 msg.put("idate",map.get("idate"));
-                System.out.println(msg);
                 yesRead(msg);
             }
         } finally {
