@@ -44,6 +44,24 @@ $(function() {
 						$(".sidebar-content").append(html)
 					}
 				}
+				//删除会话
+				$(".delete-chat").off("click");
+				$(".delete-chat").click(function(e) {
+					delFlag = 1;
+					var contact = $(this).parent()
+					contact.hide(speed = "normal");
+					params = {
+						uid: sessionStorage.uid,
+						aid: $(this).parent().attr('uid'),
+					}
+					$.ajax({
+						url: "/message/delSession",
+						type: "POST",
+						data: params,
+						contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+						dataType: "json",
+					})
+				})
 			},
 		})
 	}
@@ -123,25 +141,7 @@ $(function() {
 			}, sContTrans);
 		}, sContTrans);
 	});
-
-	//删除会话
-	$(".delete-chat").off("click");
-	$(".delete-chat").click(function(e) {
-		delFlag = 1;
-		var contact = $(this).parent()
-		contact.hide(speed = "normal");
-		params = {
-			uid: sessionStorage.uid,
-			aid: $(this).parent().attr('uid'),
-		}
-		$.ajax({
-			url: "/message/delSession",
-			type: "POST",
-			data: params,
-			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-			dataType: "json",
-		})
-	})
+	
 	$(".chat__input").keypress(function(e) {//回车发送私信
 		if (e.which == 13) {
 			content = $(".chat__input").val();//先出字，再发送

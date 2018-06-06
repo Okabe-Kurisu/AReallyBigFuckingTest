@@ -83,7 +83,7 @@
         u.*,
         (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.followed_id AND (type=0 OR type=2)) AS follerNum,
         (SELECT COUNT(f.fid) FROM follow AS f WHERE u.uid=f.user_id AND (type=0 OR type=2)) AS folledNum,
-        (SELECT COUNT(b.bid) FROM blog AS b WHERE u.uid=b.user_id AND b.visibility=0) AS blogNum
+        (SELECT COUNT(b.bid) FROM blog AS b WHERE u.uid=b.user_id AND b.visibility=0 AND ( b.type = 0 or b.type = 1)) AS blogNum
         FROM user AS u
         WHERE u.alive = 0 AND uid = #{uid}
     </select>

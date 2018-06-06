@@ -35,9 +35,6 @@ $(function() {
         })
         //初始化数据
         sessionStorage.tag = 0;
-        sessionStorage.removeItem("time");
-        sessionStorage.removeItem("hotspot");
-        sessionStorage.removeItem("userid");
         // 如果是特殊类型的访问
         if (typeof(method) == "undefined") {
             // 主页
@@ -82,8 +79,8 @@ $(function() {
                     meid = sessionStorage.uid
                 }
                 //如果这不是用户的主页，则显示关注按钮
-                if (parseInt(uid) == parseInt(meid)) {
-                    $(".usercard-action").hide()
+                if (parseInt(uid) == parseInt(meid) || meid == 0) {
+                    $(".usercard-action").remove()
                 }
                 initUsercardAction()
 
@@ -460,7 +457,7 @@ $(function() {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
                 success: function(data) {
-                    if ($(".search-input").val().indexOf(keyword))//如果现在输入的搜索内容仍然可以被这个搜索建议适配
+                    if ($(".search-input").val().indexOf(keyword)) //如果现在输入的搜索内容仍然可以被这个搜索建议适配
                         if (data.code == 200 && data.data != null) {
                             $(".search-helper").show();
                             $(".search-helper").html("搜索建议：" + data.data)
@@ -520,6 +517,8 @@ $(function() {
                     success: function(data) {
                         if (data.code == 200) {
                             mdui.snackbar("特别关注成功");
+                            tx.executeSql('INSERT INTO follow (type, followid) VALUES (2, ?)', [sessionStorage.uid]);
+                            console.log("特别关注成功")
                         }
                         flag = 1;
                     },
@@ -549,6 +548,10 @@ $(function() {
                     success: function(data) {
                         if (data.code == 200) {
                             mdui.snackbar("关注成功");
+                            weiboDB.transaction(function(tx) {
+                            tx.executeSql('INSERT INTO follow (type, followid) VALUES (0, ?)', [sessionStorage.uid]);
+                            console.log("关注成功")
+                        })
                         }
                     },
                 })
@@ -566,7 +569,7 @@ $(function() {
             var user = GetRequest()
             param = {
                 followed_id: user.uid,
-                type: 1
+                type: 3
             }
             $.ajax({
                 url: "/user/follow",
@@ -577,6 +580,10 @@ $(function() {
                 success: function(data) {
                     if (data.code == 200) {
                         mdui.snackbar("屏蔽成功");
+                        weiboDB.transaction(function(tx) {
+                            tx.executeSql('INSERT INTO follow (type, followid) VALUES (3, ?)', [sessionStorage.uid]);
+                            console.log("屏蔽成功")
+                        })
                     }
                 },
             })
@@ -593,8 +600,7 @@ $(function() {
             dataType: "json",
             success: function(data) {
                 mdui.snackbar("退出成功");
-                sessionStorage.removeItem("me")
-                sessionStorage.removeItem("uid")
+                sessionStorage.clear()
                 weiboDB.transaction(function(tx) {
                     tx.executeSql('DROP TABLE IF EXISTS follow');
                     tx.executeSql('DROP TABLE IF EXISTS callat');
