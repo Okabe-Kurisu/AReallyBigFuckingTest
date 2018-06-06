@@ -32,9 +32,9 @@ function createD(top, ax, dir) {
 var startD = createD(50, 0, 1),
   midD = createD(125, 75, 0),
   finalD = createD(200, 0, 1),
-  clickMidD = createD(300, 80, 0),
+  clickMidD = createD(200, 80, 0),
   clickMidDRev = createD(200, 100, 1),
-  clickD = createD(300, 0, 1),
+  clickD = createD(200, 0, 1),
   currentPath = startD;
 
 function newD(num1, num2) {
@@ -95,21 +95,18 @@ function handlers1() {
     });
   });
 
-  $(document).on("mouseup touchend", function() {
+  $(document).on("click", function() {
     $(document).off("mousemove touchmove");
     if (animating) return;
     if (!diffX) return;
-    if (diffX < 40) {
-      animatePathD($path, newD(0), animTime, true);
-    } else {
-      $(".demo").css("z-index", 1)
-      animatePathD($path, finalD, animTime, false, function() {
-        $sCont.addClass("active");
-        setTimeout(function() {
-          $(document).on("click", closeSidebar);
-        }, sContTrans);
-      });
-    }
+
+    $(".demo").css("z-index", 2)
+    animatePathD($path, finalD, animTime, false, function() {
+      $sCont.addClass("active");
+      setTimeout(function() {
+        $(document).on("click", closeSidebar);
+      }, sContTrans);
+    });
   });
 
 }
@@ -154,7 +151,7 @@ function moveImage(that) {
   $clone.css("top");
   $clone.css({
     top: "2.5rem",
-    left: "32rem"
+    left: "300px"
   });
 }
 

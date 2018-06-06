@@ -104,7 +104,7 @@ svg {
 }
 
 .sidebar {
-  z-index: 1;
+  z-index: 2;
   position: absolute;
   top: 0;
   left: 0;
@@ -198,7 +198,7 @@ svg {
   position: absolute;
   top: 7.5rem;
   left: 2.5rem;
-  width: 35rem;
+  width: 340px;
   height: 47rem;
   padding-right: 2.5rem;
   overflow-y: auto;
@@ -230,8 +230,8 @@ svg {
 .chat__input {
   position: absolute;
   left: 0;
-  top: 620px;
-  width: 437px;
+  bottom: 42px;
+  width: 376px;
   height: 70px;
   padding: 1rem 1rem 1rem 4rem;
   background-color: #E9EAF3;
