@@ -44,7 +44,6 @@ $(function () {
             $(".index").show();
             if (typeof(sessionStorage.uid) != "undefined") {
                 $(".send-card").show();
-<<<<<<< HEAD
             } else {
                 var me = JSON.parse(sessionStorage.me)
                 if (me.is_ns != 0) {
@@ -71,26 +70,6 @@ $(function () {
 
                     setHotUser();
                 }
-=======
-            }
-            params = {
-                time: Math.round(new Date().getTime() / 1000),
-            }
-            var db = weiboDB;
-            // 取到微博
-            //获取热门微博，关注用户微博，关注话题微博
-
-            getBlog(0, params, db);
-            getBlog(4, params, db); //拿到热门在右边
-            getBlog(5, params, db); //话题类推送
-            //getBlog(7, params, db); //插在列表的
-            //getBlog(8, params, db); //昨日热门
-            if (typeof(sessionStorage.uid) != "undefined") {
-                params.userid = sessionStorage.uid
-                params.uid = sessionStorage.uid
-                getBlog(1, params, db);
-                getBlog(5, params, db); //拿到关注
->>>>>>> 6d14c935452ff824640e25f506227f83071e5bfa
             }
 
         } else {
@@ -262,13 +241,8 @@ $(function () {
 
     // 将数据保存至数据库
     function saveToSql(data, db, reason) {
-<<<<<<< HEAD
         db.transaction(function(tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid UNIQUE, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow DEFAULT 0, reason)');
-=======
-        db.transaction(function (tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow default 0, reason)');
->>>>>>> 6d14c935452ff824640e25f506227f83071e5bfa
             for (x in data) {
                 var temp = data[x];
                 var bloginfo = [temp.bid, temp.bid, temp.bid, temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight, reason];
@@ -282,13 +256,8 @@ $(function () {
     //todo: 分页查询
     // 从数据库读取并生成微博
     function readBlog(db) {
-<<<<<<< HEAD
-        db.transaction(function(tx) { //这tm是异步方法
-            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 AND reason != "没啥好显示的" ORDER BY weight, releaseTime', [], function(tx, results) {
-=======
         db.transaction(function (tx) { //这tm是异步方法
             tx.executeSql('SELECT * FROM blog WHERE isShow = 0 and reason != "没啥好显示的" order by weight, releaseTime', [], function (tx, results) {
->>>>>>> 6d14c935452ff824640e25f506227f83071e5bfa
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
@@ -399,13 +368,8 @@ $(function () {
                         if (data.code == 200 && data.data != null) {
                             datas = data.data
                             for (x in datas) {
-<<<<<<< HEAD
-                                weiboDB.transaction(function(tx) { //这tm是异步方法
-                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? AND isShow = 0 ORDER BY weight, releaseTime', [datas[x]], function(tx, results) {
-=======
                                 weiboDB.transaction(function (tx) { //这tm是异步方法
                                     tx.executeSql('SELECT * FROM blog WHERE bid = ? and isShow = 0 order by weight, releaseTime', [datas[x]], function (tx, results) {
->>>>>>> 6d14c935452ff824640e25f506227f83071e5bfa
                                         var data = results.rows;
                                         var len = data.length;
                                         if (len != 0) {
@@ -495,7 +459,6 @@ $(function () {
 
         $(".search-input").keyup(function () {
             keyword = $(".search-input").val();
-<<<<<<< HEAD
             if (keyword != "")
                 $.ajax({
                     url: "/data/getHotSearch",
@@ -506,18 +469,6 @@ $(function () {
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
                     success: function(data) {
-=======
-            $.ajax({
-                url: "/data/getHotSearch",
-                data: {
-                    keyword: keyword
-                },
-                type: "POST",
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                dataType: "json",
-                success: function (data) {
-                    if ($(".search-input").val().indexOf(keyword))//如果现在输入的搜索内容仍然可以被这个搜索建议适配
->>>>>>> 6d14c935452ff824640e25f506227f83071e5bfa
                         if (data.code == 200 && data.data != null) {
                             $(".search-helper").show();
                             $(".search-helper").html("搜索建议：" + data.data)
@@ -604,13 +555,10 @@ $(function () {
                     success: function (data) {
                         if (data.code == 200) {
                             mdui.snackbar("关注成功");
-<<<<<<< HEAD
                             weiboDB.transaction(function(tx) {
                                 tx.executeSql('INSERT INTO follow (type, followid) VALUES (0, ?)', [sessionStorage.uid]);
                                 console.log("关注成功")
                             })
-=======
->>>>>>> 6d14c935452ff824640e25f506227f83071e5bfa
                         }
                     },
                 })
@@ -646,11 +594,7 @@ $(function () {
     }
 
 
-<<<<<<< HEAD
     $(".logout").click(function() {
-=======
-    $(".logout").click(function () {
->>>>>>> 6d14c935452ff824640e25f506227f83071e5bfa
         $.ajax({
             url: "/user/logout",
             type: "POST",
