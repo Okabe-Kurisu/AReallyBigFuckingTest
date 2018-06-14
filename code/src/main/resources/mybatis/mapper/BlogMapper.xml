@@ -345,15 +345,15 @@
         (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS likeNum,
         (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) + (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS nums
         FROM (
-        SELECT b.*
-        FROM blog AS b
-        JOIN thumb_up AS tu
-        ON tu.blog_id = b.bid
-        UNION ALL
-        SELECT b.*
-        FROM blog AS b
-        JOIN blog AS bc
-        ON bc.comment_on = b.bid
+            SELECT b.*
+            FROM blog AS b
+            JOIN thumb_up AS tu
+            ON tu.blog_id = b.bid
+            UNION ALL
+            SELECT b.*
+            FROM blog AS b
+            JOIN blog AS bc
+            ON bc.comment_on = b.bid
         ) AS t
         JOIN user AS u
         on t.user_id=u.uid and t.visibility = 0
@@ -397,7 +397,7 @@
                  SELECT
                      b.content,
                      1 AS weight
-                 FROM thumb_up AS tu
+                          FROM thumb_up AS tu
                      JOIN blog AS b
                          ON b.bid = tu.blog_id AND tu.user_id = #{uid}
              ) AS t

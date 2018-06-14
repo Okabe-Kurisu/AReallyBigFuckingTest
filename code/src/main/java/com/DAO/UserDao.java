@@ -182,12 +182,10 @@ public class UserDao {
         } finally {
             sqlSession.close();
         }
-        System.out.println(user1.getAvatar()+"1111111111111111111111111111111111");
         return user1;
     }
     public static User checkusername(String username) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        System.out.println(username);
         User user = new User();
         try {
             user = sqlSession.selectOne("weibo/UserMapper.checkusername", username);

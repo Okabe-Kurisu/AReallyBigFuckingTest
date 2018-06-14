@@ -12,15 +12,16 @@ import jieba
 def main():
     print("开始分析用户")
     total_time_start = time.time()
-    userlist = sqlTool.get_all_user()
-    for uid in userlist:
-        print("正在对用户", str(uid), "进行分析")
-        time_start = time.time()
-        content = sqlTool.get_all_about_user(uid)
-        keywords = seg(content)
-        sqlTool.setKeyword(uid, keywords)
-        time_end = time.time()
-        print("用户", str(uid), "分析完成，关键字为", keywords, "用时", str(time_end - time_start), "秒")
+    # userlist = sqlTool.get_all_user()
+    # for uid in userlist:
+    print("正在对用户", str(37), "进行分析")
+    time_start = time.time()
+    content = sqlTool.get_all_about_user(37)
+    print(content)
+    keywords = seg(content)
+    sqlTool.setKeyword(37, keywords)
+    time_end = time.time()
+    print("用户", str(37), "分析完成，关键字为", keywords, "用时", str(time_end - time_start), "秒")
 
     total_time_end = time.time()
     print("分析完成，总用时", str(total_time_end - total_time_start), "秒")
@@ -66,7 +67,7 @@ def getCag(key, rtn={}):
 
 # 将list中的数据使用dict进行统计
 def list2dict(list, rtn={}, type="nor"):
-    extensionsToCheck = ['article', 'wikipedia', 'webarchive', 'cs1', 'page', 'parameters', ' dmy ']
+    extensionsToCheck = ['article', 'wikipedia', 'webarchive', 'cs1', 'page', 'parameters', ' dmy ', ' mdy ']
     while len(list) != 0:
         key = list[0]
         counts = list.count(key)

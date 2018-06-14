@@ -247,54 +247,26 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         return SUCCESS;
     }
 
-    @Action(value = "Update", results = {//修改用户
-            @Result(name = "success", type = "json", params = {"root", "message"})
-    })
+    @Action(value = "Update")//修改用户
     public String Update() {
-        Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
-        String username, nickname, password;
-        Integer age, sex;
-        User user = new User();
         //从前端获取
-        username = request.getParameter("username");
-        nickname = request.getParameter("nickname");
-        password = request.getParameter("password");
-        age = Integer.parseInt(request.getParameter("age"));
-        sex = Integer.parseInt(request.getParameter("sex"));
-        int logtime = (int) System.currentTimeMillis() / 1000;
-        String userAgent = request.getHeader("user-agent");//获取浏览器信息
-        String ip = getIpAddr(request);//获取IP地址
-        user.setUsername(username);
-        user.setIs_ban(0);
-        user.setNickname(nickname);
-        user.setPassword(password);
-        user.setSex(sex);
-        user.setAge(age);
-        user.setLast_logtime(logtime);
-        user.setIp_address(ip);
         try {
-            resultMap = PowerfulTools.format("200", "成功", map);
-            // 封装响应数据
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
+            UserDao.updateUser(user);
+            System.out.println(user);
+            resultMap = PowerfulTools.format("200", "成功", "");
         } catch (NullPointerException ne) {
         }
         return SUCCESS;
     }
 
     @Action(value = "leave")//注销用户
-
     public String leave() {//注销用户
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         int uid = user.getUid();
-        Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
         try {
             UserDao.userLeave(uid);
-            resultMap = PowerfulTools.format("200", "注销成功", map);
+            resultMap = PowerfulTools.format("200", "注销成功", "");
             Gson gson = new Gson();
             message = gson.toJson(resultMap);
         } catch (NullPointerException ne) {

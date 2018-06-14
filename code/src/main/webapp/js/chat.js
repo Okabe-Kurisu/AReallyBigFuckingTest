@@ -2,6 +2,8 @@ $(function() {
 	log = console.log
 	delFlag = 0
 	getAllChat()
+	if (typeof(sessionStorage.uid) == "undefined")
+		setTimeout(getAllChat, 500)
 
 	$(".message-btn").click(function(argument) { //点击私信按钮
 		$(".demo").css("z-index", 1)

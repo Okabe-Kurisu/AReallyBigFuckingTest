@@ -74,28 +74,7 @@ public class SensitivityAction extends ActionSupport implements ServletRequestAw
         }
         return SUCCESS;
     }
-    //获得被举报的微博
-    @Action(value = "getReportedBlog")
-    public  String getReportedBlog() {
-        Map<String, Object> map = new HashMap();
-        Map<String, Object> resultMap;
-        try {
-            // 调用Dao层 获取数据
-            List blogList = SensitivityDao.getReportedBlog();
-            System.out.println(blogList.toString());
-            // 封装响应数据
-            resultMap = PowerfulTools.format("200", "成功", blogList);
-            // 转换为JSON字符串
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-        } catch (NullPointerException ne) {
-            ne.printStackTrace();
-            resultMap = PowerfulTools.format("500", "系统异常", null);
-            Gson gson = new Gson();
-            message = gson.toJson(resultMap);
-        }
-        return SUCCESS;
-    }
+
     public String getMessage() {
         return message;
     }

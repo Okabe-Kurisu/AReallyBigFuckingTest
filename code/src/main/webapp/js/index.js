@@ -41,26 +41,34 @@ $(function() {
             $(".index").show();
             if (typeof(sessionStorage.uid) != "undefined") {
                 $(".send-card").show();
-            }
-            params = {
-                time: Math.round(new Date().getTime() / 1000),
-            }
-            var db = weiboDB;
-            // 取到微博
-            //获取热门微博，关注用户微博，关注话题微博
+            } else {
+                var me = JSON.parse(sessionStorage.me)
+                if (me.is_ns != 0) {
+                    var db = weiboDB;
+                    getBlog(9, {}, db);
+                } else {
+                    params = {
+                        time: Math.round(new Date().getTime() / 1000),
+                    }
+                    var db = weiboDB;
+                    // 取到微博
+                    //获取热门微博，关注用户微博，关注话题微博
 
-            getBlog(0, params, db);
-            getBlog(4, params, db); //拿到热门在右边
-            getBlog(7, params, db); //插在列表的
-            getBlog(8, params, db); //昨日热门
-            if (typeof(sessionStorage.uid) != "undefined") {
-                params.userid = sessionStorage.uid
-                params.uid = sessionStorage.uid
-                getBlog(1, params, db);
-                getBlog(5, params, db); //拿到关注
+                    getBlog(0, params, db);
+                    getBlog(4, params, db); //拿到热门在右边
+                    getBlog(7, params, db); //插在列表的
+                    getBlog(8, params, db); //昨日热门
+                    if (typeof(sessionStorage.uid) != "undefined") {
+                        params.userid = sessionStorage.uid
+                        params.uid = sessionStorage.uid
+                        getBlog(1, params, db);
+                        getBlog(5, params, db); //拿到关注
+                    }
+
+                    setHotUser();
+                }
             }
 
-            setHotUser();
         } else {
             if (method == "userinfo") {
                 //用户页面
@@ -203,9 +211,9 @@ $(function() {
 
     // 得到博客并存储到websql中
     function getBlog(type, params, db) { //1不同的链接 2条件 3
-        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite", "nowtimeHot", "lastTimeHot"]
+        var urls = ["selectBlogByTime", "getUserBlog", "searchBlog", "getCallat", "getHotspot", "getFollowBlog", "getFavorite", "nowtimeHot", "lastTimeHot", "getReportedBlog"]
         //reason是生成博客列表的时候标注的理由
-        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了博主", "你收藏了该博客", "热门博客", "他昨天很热门"];
+        var reasons = ["没啥好显示的", "这是个人主页", "包含了搜索词", "包含了At信息", "他很热门", "你关注了博主", "你收藏了该博客", "热门博客", "他昨天很热门", "被举报的博客"];
         var reason = reasons[type];
         //如果不是主页，数据存入临时表中
         $.ajax({
@@ -231,7 +239,7 @@ $(function() {
     // 将数据保存至数据库
     function saveToSql(data, db, reason) {
         db.transaction(function(tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid unique, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow default 0, reason)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS blog (bid UNIQUE, userid, content, multimedia, type, releaseTime, isEdit, commentNum, likeNum, browserSign, commentOn, uid, avatar, nickname, motto, weight, isShow DEFAULT 0, reason)');
             for (x in data) {
                 var temp = data[x];
                 var bloginfo = [temp.bid, temp.bid, temp.bid, temp.bid, temp.user_id, temp.content, temp.multimedia, temp.type, temp.release_time, temp.is_edit, temp.commentNum, temp.likeNum, temp.browser_sign, temp.comment_on, temp.uid, temp.avatar, temp.nickname, temp.motto, temp.weight, reason];
@@ -246,7 +254,7 @@ $(function() {
     // 从数据库读取并生成微博
     function readBlog(db) {
         db.transaction(function(tx) { //这tm是异步方法
-            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 and reason != "没啥好显示的" order by weight, releaseTime', [], function(tx, results) {
+            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 AND reason != "没啥好显示的" ORDER BY weight, releaseTime', [], function(tx, results) {
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
@@ -266,7 +274,7 @@ $(function() {
                         } else {
                             console.log("屏蔽了来自" + datas[x].nickname + "的信息")
                         }
-                        tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x].bid]);
+                        tx.executeSql('UPDATE blog SET isShow = 1 WHERE bid = ?', [datas[x].bid]);
                         if (x == (len - 1))
                             break;
                     }
@@ -358,11 +366,11 @@ $(function() {
                             datas = data.data
                             for (x in datas) {
                                 weiboDB.transaction(function(tx) { //这tm是异步方法
-                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? and isShow = 0 order by weight, releaseTime', [datas[x]], function(tx, results) {
+                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? AND isShow = 0 ORDER BY weight, releaseTime', [datas[x]], function(tx, results) {
                                         var data = results.rows;
                                         var len = data.length;
                                         if (len != 0) {
-                                            tx.executeSql('UPDATE blog set isShow = 1 WHERE bid = ?', [datas[x]]);
+                                            tx.executeSql('UPDATE blog SET isShow = 1 WHERE bid = ?', [datas[x]]);
                                             insertBlog(data[0], reason = "你关注了该话题")
                                         }
                                     })
@@ -448,24 +456,22 @@ $(function() {
 
         $(".search-input").keyup(function() {
             keyword = $(".search-input").val();
-            $.ajax({
-                url: "/data/getHotSearch",
-                data: {
-                    keyword: keyword
-                },
-                type: "POST",
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                dataType: "json",
-                success: function(data) {
-                    if ($(".search-input").val().indexOf(keyword)) //如果现在输入的搜索内容仍然可以被这个搜索建议适配
+            if (keyword != "")
+                $.ajax({
+                    url: "/data/getHotSearch",
+                    data: {
+                        keyword: keyword
+                    },
+                    type: "POST",
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(data) {
                         if (data.code == 200 && data.data != null) {
                             $(".search-helper").show();
                             $(".search-helper").html("搜索建议：" + data.data)
-                        } else {
-                            $(".search-helper").hide();
                         }
-                }
-            })
+                    }
+                })
         })
     }
 
@@ -549,9 +555,9 @@ $(function() {
                         if (data.code == 200) {
                             mdui.snackbar("关注成功");
                             weiboDB.transaction(function(tx) {
-                            tx.executeSql('INSERT INTO follow (type, followid) VALUES (0, ?)', [sessionStorage.uid]);
-                            console.log("关注成功")
-                        })
+                                tx.executeSql('INSERT INTO follow (type, followid) VALUES (0, ?)', [sessionStorage.uid]);
+                                console.log("关注成功")
+                            })
                         }
                     },
                 })
@@ -589,7 +595,6 @@ $(function() {
             })
         })
     }
-
 
 
     $(".logout").click(function() {
@@ -745,7 +750,6 @@ $(function() {
     })
 
 
-
     function insertBlog(data, reason) {
         if ($(".blogs").children("[bid='" + data.bid + "']").length > 0)
             return
@@ -885,6 +889,7 @@ $(function() {
             function reportCancel(argument) {
                 inst.close();
             }
+
             $(".report-send").off("click");
             $(".report-send").on("click", reportSend);
 
@@ -1071,7 +1076,6 @@ $(function() {
             })
 
 
-
         }
 
 
@@ -1164,6 +1168,30 @@ $(function() {
                 devInfo.hide(speed = "fast");
             }
         }
+
+        $(".godie").off("click");
+        $(".godie").on("click", godie);
+
+        function godie() {
+            $.ajax({
+                url: "/user/leave",
+                type: "POST",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                dataType: "json",
+                success: function(data) {
+                    mdui.snackbar("注销成功");
+                    sessionStorage.clear()
+                    weiboDB.transaction(function(tx) {
+                        tx.executeSql('DROP TABLE IF EXISTS follow');
+                        tx.executeSql('DROP TABLE IF EXISTS callat');
+                        tx.executeSql('DROP TABLE IF EXISTS favorite');
+                    })
+                    console.log("用户信息清理完成")
+                    self.location = '/';
+                },
+            })
+        }
+
     }
 
     //生成所有被转发的微博
@@ -1312,7 +1340,6 @@ $(function() {
     });
 
 
-
     // 创建话题按钮点击事件
     $(".creatDiscuss").on("click", function showAddDiscuss(argument) {
         var dDialog = $(".addDiscuss-dialog");
@@ -1419,6 +1446,48 @@ $(function() {
                     $(".blog-edit-image").attr("src", data.data);
                     $(".blog-edit-delimg").show();
                     $("#edit-image").hide();
+                    if (sessionStorage.imgType == "avatar") {
+                        user = JSON.parse(sessionStorage.me)
+                        user.avatar = data.data;
+                        sessionStorage.removeItem("img");
+                        editUser(user);
+                    }else if (sessionStorage.imgType == "background"){
+                        user = JSON.parse(sessionStorage.me)
+                        user.background = data.data;
+                        sessionStorage.removeItem("img");
+                        editUser(user)
+                    }
+                }
+            }
+        })
+    }
+
+    $(".editAvatar").off("click");
+    $(".editAvatar").on("click", editAvatar);
+
+    function editAvatar() {
+        sessionStorage.imgType = "avatar"
+        var inst = upload()
+    }
+
+    $(".editBack").off("click");
+    $(".editBack").on("click", editBack);
+
+    function editBack() {
+        sessionStorage.imgType = "background"
+        var inst = upload()
+    }
+
+    function editUser(user) {
+        $.ajax({
+            url: '/user/upload',
+            type: "POST",
+            data: {user: user},
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: "json",
+            success: function(data) {
+                if (data.code == 200) {
+                    mdui.snackbar("编辑成功");
                 }
             }
         })

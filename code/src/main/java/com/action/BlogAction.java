@@ -1,6 +1,7 @@
 package com.action;
 
 import com.DAO.BlogDao;
+import com.DAO.SensitivityDao;
 import com.annotations.Authority;
 import com.model.*;
 import com.opensymphony.xwork2.ActionSupport;
@@ -757,6 +758,23 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             ne.printStackTrace();
             resultMap = PowerfulTools.format("500", "系统异常", null);
             return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    //获得被举报的微博
+    @Action(value = "getReportedBlog")
+    public  String getReportedBlog() {
+        try {
+            // 调用Dao层 获取数据
+            List blogList = SensitivityDao.getReportedBlog();
+            System.out.println(blogList.toString());
+            // 封装响应数据
+            resultMap = PowerfulTools.format("200", "成功", blogList);
+            // 转换为JSON字符串
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            resultMap = PowerfulTools.format("500", "系统异常", null);
         }
         return SUCCESS;
     }

@@ -243,22 +243,26 @@ public class DataTool {
             int length = 0;
             for (Term term : NlpAnalysis.parse(log)) {
                 String rst = term.getName();
+                System.out.println(rst);
+                System.out.println((keywordMap.containsKey(rst) || rst.indexOf(keyword) != -1 && keyword != ""));
                 if (keywordMap.containsKey(rst) || (rst.indexOf(keyword) != -1 && keyword != "")) count += 1;
                 length += 1;
             }
-            float degree = count / length;//相似度
+            float degree = ((float) count) / length;//相似度
             if (degree > 0) rtn.put(log, (int) (degree * 100));
         }
         rtn = MapSorter.sortMapByValue(rtn);
-        if (rtn != null)
+        if (rtn != null) {
             for (String key : rtn.keySet()) {
                 return key;
             }
+        }
         return null;
     }
 
     public static void main(String[] args) {
-        getHotSearch("吴彦祖");
+        System.out.println("孤岛".indexOf("孤"));
+        System.out.println(getHotSearch("孤"));
     }
 
 }

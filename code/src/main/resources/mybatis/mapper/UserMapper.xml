@@ -170,7 +170,6 @@
 
     <!--用户修改-->
     <update id="updateUser" parameterType="User">
-
         UPDATE user
         SET username     = #{username},
             nickname     = #{nickname},
@@ -179,7 +178,9 @@
             is_ban       = #{is_ban},
             ip_address   = #{ip_address},
             last_logtime = #{last_logtime},
-            browser_sign = #{browser_sign}
+            browser_sign = #{browser_sign},
+            avatar = #{avatar},
+            background = #{background}
         WHERE
             uid = #{uid}
     </update>

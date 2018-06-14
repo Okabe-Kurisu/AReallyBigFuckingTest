@@ -3,7 +3,7 @@ import pymysql
 
 
 def get_conn():
-    return pymysql.connect("makise.tech", "admin", "admin", "weibo", charset='utf8')
+    return pymysql.connect("localhost", "root", "", "weibo", charset='utf8')
 
 
 def get_all_user():
