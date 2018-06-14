@@ -70,7 +70,7 @@ $(function() {
 
 	function listen() {
 		if (!$(".chat").hasClass("active")) return;
-		//監聽与某id對話
+		//用户私信，对话
 		params = {
 			uid: sessionStorage.uid,
 			sid: $(".chat__input").attr('aid'),
@@ -143,11 +143,10 @@ $(function() {
 			}, sContTrans);
 		}, sContTrans);
 	});
-
-
-	$(".chat__input").keypress(function(e) {
+	
+	$(".chat__input").keypress(function(e) {//回车发送私信
 		if (e.which == 13) {
-			content = $(".chat__input").val();
+			content = $(".chat__input").val();//先出字，再发送
 			html = '<div class="chat__msgRow"><div class="chat__message mine">' + content + '</div></div>'
 			$(".chat__messages").append(html);
 			//jq發送事件
@@ -164,7 +163,7 @@ $(function() {
 				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 				dataType: "json",
 				success: function(data) {
-					if (data.code == 200 && data.data != null) {
+					if (data.code == 200) {
 						$(".chat__input").val("");
 						$(".chat__input").focus();
 					}

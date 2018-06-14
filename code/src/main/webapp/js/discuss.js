@@ -27,13 +27,21 @@ $(function () {
 
     //我的话题绑定事件
     $(".my-discuss").click(function () {
-        $(".pagination-bar").hide()
+        if(sessionStorage.me == null) {
+            mdui.snackbar("请先登陆");
+            return;
+        }
+        $(".pagination-bar").hide();
         discuss_page = 1;
         getUserDiscuss();
     });
 
     //创建话题绑定事件
     $(".create-discuss").click(function () {
+        if(sessionStorage.me == null) {
+            mdui.snackbar("请先登陆");
+            return;
+        }
         var dDialog = $(".addDiscuss-dialog");
         createDialog_inst = new mdui.Dialog(dDialog, overlay = true);
         createDialog_inst.open();
@@ -55,7 +63,7 @@ $(function () {
     $(".submit-discussion").click(function () {
         var discuss_name = $(".discuss-name").val();
         var discuss_description = $(".discuss-description").val();
-        var date_str = $("#discuss-startTime").val()
+        var date_str = $("#discuss-startTime").val();
 
         if (discuss_name === "" || discuss_description === "" || date_str === "") {
             mdui.snackbar("数据不能为空");
