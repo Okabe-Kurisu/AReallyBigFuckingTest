@@ -185,6 +185,7 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         username = request.getParameter("username");
         nickname = request.getParameter("nickname");
         is_ns = Integer.parseInt(request.getParameter("is_ns"));
+        System.out.println(is_ns);
         password = request.getParameter("password");
         age = Integer.parseInt(request.getParameter("age"));
         sex = Integer.parseInt(request.getParameter("sex"));
@@ -229,9 +230,13 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         password = request.getParameter("password");
         user = UserDao.checkusername(username);
         try {
-            if (user == null) {
-                resultMap = PowerfulTools.format("101", "登录失败，该用户名不存在", map);
+            if (user == null || user.getAlive() != 0) {
+                resultMap = PowerfulTools.format("101", "登录失败，该用户名不存在", "");
             } else if (user.getPassword().equals(password)) {
+                if (user.getIs_ban() != 0){
+                    resultMap = PowerfulTools.format("102", "登录失败，该用户被封禁", "");
+                    return SUCCESS;
+                }
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 Map temp = new HashMap();
@@ -252,8 +257,8 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         //从前端获取
         try {
             UserDao.updateUser(user);
-            System.out.println(user);
-            resultMap = PowerfulTools.format("200", "成功", "");
+            System.out.println(user + user.getAvatar() + user.getUid());
+            resultMap = PowerfulTools.format("200", "成功", user);
         } catch (NullPointerException ne) {
         }
         return SUCCESS;
@@ -410,6 +415,17 @@ public class UserAtion extends ActionSupport implements ServletRequestAware {
         try {
             int uid = Integer.parseInt(request.getParameter("uid"));
             resultMap = PowerfulTools.format("200", "成功", UserDao.getFollow(uid));
+        } catch (NullPointerException ne) {
+            resultMap = PowerfulTools.format("100", "失败", "");
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "ban")
+    public String ban() {
+        try {
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            resultMap = PowerfulTools.format("200", "成功", UserDao.ban(uid));
         } catch (NullPointerException ne) {
             resultMap = PowerfulTools.format("100", "失败", "");
         }

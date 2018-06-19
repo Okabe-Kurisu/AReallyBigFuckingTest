@@ -51,8 +51,8 @@
         -- useGeneratedKeys="true" 表示给主键设置自增长
         -- keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段。
         -- parameterType="com.chenzhou.mybatis.User" 这个属性指向传递的参数实体类
-        INSERT INTO user (username, nickname, password, sex, age, is_ban, ip_address, last_logtime, browser_sign)
-        VALUES (#{username}, #{nickname}, #{password}, #{sex}, #{age}, #{is_ban}, #{ip_address}, #{last_logtime},
+        INSERT INTO user (username, nickname, password, sex, age, is_ban, is_ns, ip_address, last_logtime, browser_sign)
+        VALUES (#{username}, #{nickname}, #{password}, #{sex}, #{age}, #{is_ban}, #{is_ns}, #{ip_address}, #{last_logtime},
                 #{browser_sign})
     </insert>
 
@@ -176,9 +176,6 @@
             password     = #{password},
             sex          = #{sex},
             is_ban       = #{is_ban},
-            ip_address   = #{ip_address},
-            last_logtime = #{last_logtime},
-            browser_sign = #{browser_sign},
             avatar = #{avatar},
             background = #{background}
         WHERE
@@ -240,4 +237,11 @@
         WHERE b.release_time >= #{date} AND b.release_time &lt;= #{nowtime}
         GROUP BY f.followed_id
     </select>
+
+    <update id="ban" parameterType="int">
+        UPDATE user
+        SET is_ban = (1 - is_ban)
+        WHERE
+        uid = #{uid}
+    </update>
 </mapper>

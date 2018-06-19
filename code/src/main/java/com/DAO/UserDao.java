@@ -17,7 +17,6 @@ import java.util.Map;
 public class UserDao {
     public static Integer updateUser(User user) {
         SqlSession sqlSession = MybatisTool.getSqlSession();
-        System.out.println(user);
         try {
             sqlSession.update("weibo/UserMapper.updateUser", user);
             sqlSession.commit();
@@ -189,7 +188,6 @@ public class UserDao {
         User user = new User();
         try {
             user = sqlSession.selectOne("weibo/UserMapper.checkusername", username);
-            sqlSession.commit();
         } finally {
             sqlSession.close();
         }
@@ -282,6 +280,17 @@ public class UserDao {
             sqlSession.close();
         }
         return userList;
+    }
+
+    public static String ban(int uid) {
+        SqlSession sqlSession = MybatisTool.getSqlSession();
+        try {
+            sqlSession.update("weibo/UserMapper.ban", uid);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return "成功";
     }
 
 //    public static int testSignup(){

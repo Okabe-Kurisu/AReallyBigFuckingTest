@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
     //全局变量
     //主数据库,主要存放关注表，at表，收藏表以及主页的微博信息存储
     var weiboDB = openDatabase('weibo', '1.0', '主表', 2 * 1024 * 1024);
@@ -11,25 +11,78 @@ $(function () {
     var myDialog_inst //我的话题对话框
     var createDialog_inst //创建话题对话框
 
-    $("document").ready(function () {
+    $("document").ready(function() {
         initPanel();
         initUser();
         initSearch();
         initPage();
+        initNs();
     })
+
+    function initNs() {
+        if (typeof(sessionStorage.me) == "undefined" || typeof(sessionStorage.user) == "undefined") {
+            return;
+        }
+        var me = JSON.parse(sessionStorage.me);
+        if (me.is_ns == 0) {
+            return;
+        }
+        var user = JSON.parse(sessionStorage.user);
+        if (user.is_ban == 0) {
+            //设置用户面板的按键为封禁
+            var banBtn = '<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center ban">封禁' +
+                '</button>'
+            $(".usercard-action").html(banBtn);
+            $(".ban").click(function() {
+                $.ajax({
+                    url: "/user/ban",
+                    type: "POST",
+                    data: {
+                        uid: sessionStorage.userid
+                    },
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(argument) {
+                        mdui.snackbar("封禁用户成功");
+                    }
+                })
+            })
+        } else {
+            //设置用户面板的按键为解封
+            var banBtn = '<button class="mdui-btn mdui-btn-dense mdui-ripple mdui-col mdui-text-center unban">解封' +
+                '</button>'
+            $(".usercard-action").html(banBtn);
+            $(".unban").click(function() {
+                $.ajax({
+                    url: "/user/ban",
+                    type: "POST",
+                    data: {
+                        uid: sessionStorage.userid
+                    },
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: "json",
+                    success: function(argument) {
+                        mdui.snackbar("解除封禁用户");
+                    }
+                })
+            })
+        }
+
+
+    }
 
     // 初始化页面类型
     function initPage(argument) {
         var request = GetRequest(); //取得url参数
         var method = request.method;
         //清空临时数据
-        tempDB.transaction(function (tx) {
+        tempDB.transaction(function(tx) {
             tx.executeSql('DROP TABLE IF EXISTS blog');
             console.log("清空全部临时数据")
         })
 
         //清空测试数据
-        weiboDB.transaction(function (tx) {
+        weiboDB.transaction(function(tx) {
             tx.executeSql('DROP TABLE IF EXISTS blog');
             console.log("测试时每次打开网页会清空数据，测试完后记得删")
         })
@@ -38,39 +91,34 @@ $(function () {
         sessionStorage.removeItem("time");
         sessionStorage.removeItem("hotspot");
         sessionStorage.removeItem("userid");
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("page");
         // 如果是特殊类型的访问
         if (typeof(method) == "undefined") {
             // 主页
             $(".index").show();
             if (typeof(sessionStorage.uid) != "undefined") {
                 $(".send-card").show();
-            } else {
-                var me = JSON.parse(sessionStorage.me)
-                if (me.is_ns != 0) {
-                    var db = weiboDB;
-                    getBlog(9, {}, db);
-                } else {
-                    params = {
-                        time: Math.round(new Date().getTime() / 1000),
-                    }
-                    var db = weiboDB;
-                    // 取到微博
-                    //获取热门微博，关注用户微博，关注话题微博
-
-                    getBlog(0, params, db);
-                    getBlog(4, params, db); //拿到热门在右边
-                    getBlog(7, params, db); //插在列表的
-                    getBlog(8, params, db); //昨日热门
-                    if (typeof(sessionStorage.uid) != "undefined") {
-                        params.userid = sessionStorage.uid
-                        params.uid = sessionStorage.uid
-                        getBlog(1, params, db);
-                        getBlog(5, params, db); //拿到关注
-                    }
-
-                    setHotUser();
-                }
             }
+            params = {
+                time: Math.round(new Date().getTime() / 1000),
+            }
+            var db = weiboDB;
+            // 取到微博
+            //获取热门微博，关注用户微博，关注话题微博
+
+            getBlog(0, params, db);
+            getBlog(4, params, db); //拿到热门在右边
+            getBlog(7, params, db); //插在列表的
+            getBlog(8, params, db); //昨日热门
+            if (typeof(sessionStorage.uid) != "undefined") {
+                params.userid = sessionStorage.uid
+                params.uid = sessionStorage.uid
+                getBlog(1, params, db);
+                getBlog(5, params, db); //拿到关注
+            }
+            readBlog(db);
+            setHotUser();
 
         } else {
             if (method == "userinfo") {
@@ -94,7 +142,7 @@ $(function () {
                     $(".usercard-action").hide()
                 }
                 initUsercardAction()
-
+                readBlog(db);
             }
             if (method == "search") {
                 // 搜索页面
@@ -108,6 +156,7 @@ $(function () {
                 var db = tempDB;
                 getBlog(2, params, db);
                 var blogs = document.getElementById("blogs")
+                readBlog(db);
             }
             if (method == "callat") {
                 // at人页面
@@ -122,6 +171,13 @@ $(function () {
                 getBlog(6, {}, db);
                 readBlog(db);
             }
+            if (method == "report") {
+                // 收藏
+                $("title").html("Fake微博-被举报信息");
+                var db = tempDB;
+                getBlog(9, {}, db);
+                readBlog(db);
+            }
         }
 
         function setHotUser() {
@@ -131,7 +187,7 @@ $(function () {
                 data: params,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     if (data.code == 200 && data.data != null) {
                         var users = data.data;
                         for (x in users) {
@@ -141,7 +197,7 @@ $(function () {
                                 "<div class=\"mdui-list-item-content\">" + user.nickname + "</div></li>";
                             $(".hotuser").append(html)
                         }
-                        $(".hotuser-item").click(function () {
+                        $(".hotuser-item").click(function() {
                             url = "/?method=userinfo&uid=" + $(this).attr("uid");
                             self.location = url;
                         })
@@ -161,9 +217,11 @@ $(function () {
                 data: params,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                async: false,
+                success: function(data) {
                     if (data.code == 200 && data.data != null) {
                         userinfo = data.data
+                        sessionStorage.user = JSON.stringify(userinfo);
                         $(".usercard-background").attr("src", userinfo.background);
                         $(".usercard-avatar").attr("src", userinfo.avatar);
                         $(".usercard-follerNum").html(userinfo.folledNum);
@@ -191,7 +249,7 @@ $(function () {
                 data: params,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     if (data.code == 200 && data.data != null) {
                         userinfo = data.data
                         for (x in userinfo) {
@@ -223,16 +281,16 @@ $(function () {
             url: "/blog/" + urls[type],
             type: "POST",
             data: params,
+            async: false,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 console.log("加载博客数据")
                 if (data.code == 200 && data.data != null) {
                     var blogs = data.data;
                     saveToSql(blogs, db, reason = reason);
                 }
                 console.log("博客数据加载完成");
-                readBlog(db);
             },
         })
 
@@ -256,33 +314,25 @@ $(function () {
     //todo: 分页查询
     // 从数据库读取并生成微博
     function readBlog(db) {
-        db.transaction(function (tx) { //这tm是异步方法
-            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 and reason != "没啥好显示的" order by weight, releaseTime', [], function (tx, results) {
+        db.transaction(function(tx) { //这tm是异步方法
+            var page = 0
+            if (typeof(sessionStorage.page) != "undefined") {
+                page = parseInt(sessionStorage.page)
+            }
+            console.log(page)
+            tx.executeSql('SELECT * FROM blog WHERE isShow = 0 order by weight, releaseTime limit ?,?', [page, 10 * (page + 1)], function(tx, results) {
                 console.log("开始生成博客html");
                 var datas = results.rows;
                 var len = datas.length;
                 if (len != 0) {
                     for (x in datas) {
-                        if (!block.find(function (num) {
-                            return num == datas[x].userid;
-                        })) {
-                            if (datas[x].reason == "热门博客" && $(".hotweibo").children().length < 6) { //热门博客插入到边栏
-                                var html = "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 hotweibo-item\">" +
-                                    "<p class=\"mdui-list-item-icon mdui-text-color-red\">" + datas[x].nickname + "</p>" +
-                                    "<div class=\"mdui-list-item-content\">" + datas[x].content + "</div></li>";
-                                $(".hotweibo").append(html)
-                            } else {
-                                insertBlog(datas[x]);
-                            }
-                        } else {
-                            console.log("屏蔽了来自" + datas[x].nickname + "的信息")
-                        }
+                        insertBlog(datas[x]);
                         tx.executeSql('UPDATE blog SET isShow = 1 WHERE bid = ?', [datas[x].bid]);
                         if (x == (len - 1))
                             break;
                     }
                 }
-                insertNone();
+                insertNone(db);
                 insertForword();
                 initCard();
                 mdui.mutation();
@@ -291,7 +341,8 @@ $(function () {
         })
     }
 
-    function insertNone() {
+
+    function insertNone(db) {
         if ($(".blogs").html() == "") {
             var res = "<div class=\"mdui-card mdui-color-red mdui-text-color-white none mdui-m-t-5\">" +
                 "<div class=\"mdui-card-content\">这里空空如也</div>" +
@@ -299,13 +350,33 @@ $(function () {
             $(".blogs").append(res);
         } else {
             $(".none").remove()
+            insertNextPage(db);
         }
     }
+
+
+    function insertNextPage(db) {
+        var html = "<div class=\"mdui-card nextPage mdui-ripple mdui-m-t-5\">" +
+            "<div class=\"mdui-card-content\">点击加载下一页</div>" +
+            "</div>";
+        $("#blogs").after(html);
+        $(".nextPage").click(function() {
+            if (typeof(sessionStorage.page) == "undefined") {
+                sessionStorage.page = 1
+            } else {
+                sessionStorage.page = parseInt(sessionStorage.page) + 1
+            }
+            $(".nextPage").remove();
+            $(".blogs").html("")
+            readBlog(db)
+        });
+    }
+
 
     // 得到用户信息
     function initUser(argument) {
         //初始化用户信息弹框
-        $(".me").on("click", function (argument) {
+        $(".me").on("click", function(argument) {
             var userPanel = $(".userpanel");
             var inst = new mdui.Collapse(userPanel, accordion = true);
             inst.toggle("#userpanel");
@@ -321,13 +392,17 @@ $(function () {
             sessionStorage.date = Math.round(new Date().getTime() / 1000);
             $(".login-btn").hide();
             $(".demo").show()
-            $(".userpanel-avatar").attr("src", me.avatar);
+            $(".userpanel-avator").attr("src", me.avatar);
+            if (me.is_ns == 0) {
+                $(".read-report").remove()
+            }
+            console.log(me.avatar)
             $(".userpanel-nickname").html(me.nickname);
             $(".userpanel-motto").html(me.motto);
             $(".userpanel-href").attr("href", "/?method=userinfo&uid=" + me.uid);
 
-            weiboDB.transaction(function (tx) {
-                tx.executeSql('SELECT * FROM follow', [], function (tx, results) {
+            weiboDB.transaction(function(tx) {
+                tx.executeSql('SELECT * FROM follow', [], function(tx, results) {
                     var datas = results.rows;
                     var len = datas.length;
                     var daisukiFlag = 0;
@@ -363,13 +438,13 @@ $(function () {
                     },
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         console.log("加载博客数据")
                         if (data.code == 200 && data.data != null) {
                             datas = data.data
                             for (x in datas) {
-                                weiboDB.transaction(function (tx) { //这tm是异步方法
-                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? and isShow = 0 order by weight, releaseTime', [datas[x]], function (tx, results) {
+                                weiboDB.transaction(function(tx) { //这tm是异步方法
+                                    tx.executeSql('SELECT * FROM blog WHERE bid = ? and isShow = 0 order by weight, releaseTime', [datas[x]], function(tx, results) {
                                         var data = results.rows;
                                         var len = data.length;
                                         if (len != 0) {
@@ -395,7 +470,7 @@ $(function () {
                     },
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.code == 200) {
                             if (data.data != null) {
                                 var len = data.data.length;
@@ -414,7 +489,7 @@ $(function () {
     //得到热搜列表，点击热搜词填充，以及进行搜索
     function initSearch(argument) {
         //初始化热搜框
-        $(".search-input").on("focus", function (argument) {
+        $(".search-input").on("focus", function(argument) {
             var hotspotPanel = $(".hotspot");
             var inst = new mdui.Collapse(hotspotPanel, accordion = true);
             inst.toggle("#hotspot");
@@ -427,7 +502,7 @@ $(function () {
             type: "POST",
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 if (data.code == 200) {
                     var hotspots = data.data;
                     sessionStorage.hotspot = hotspot;
@@ -443,12 +518,12 @@ $(function () {
         })
 
         //点击条目填充搜索栏
-        $(".hotspot-list").click(function (argument) {
+        $(".hotspot-list").click(function(argument) {
             $('.search-input').val($(this).children('.mdui-list-item-content').html())
             $('.search-input').focus();
         })
 
-        $(".search-input").keypress(function (event) {
+        $(".search-input").keypress(function(event) {
             var keynum = (event.keyCode ? event.keyCode : event.which);
             if (keynum == '13') {
                 var url = "./?method=search";
@@ -457,7 +532,7 @@ $(function () {
             }
         });
 
-        $(".search-input").keyup(function () {
+        $(".search-input").keyup(function() {
             keyword = $(".search-input").val();
             if (keyword != "")
                 $.ajax({
@@ -506,8 +581,8 @@ $(function () {
         var timeout;
         var flag = 0;
 
-        $(".follow-btn").mousedown(function () {
-            timeout = setTimeout(function () {
+        $(".follow-btn").mousedown(function() {
+            timeout = setTimeout(function() {
                 if (typeof(sessionStorage.uid) == "undefined") {
                     mdui.snackbar("请先登录");
                     return;
@@ -523,7 +598,7 @@ $(function () {
                     data: param,
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.code == 200) {
                             mdui.snackbar("特别关注成功");
                         }
@@ -533,7 +608,7 @@ $(function () {
             }, 500);
         });
 
-        $(".follow-btn").mouseup(function () {
+        $(".follow-btn").mouseup(function() {
             clearTimeout(timeout);
             console.log(flag)
             if (flag == 0) {
@@ -552,7 +627,7 @@ $(function () {
                     data: param,
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.code == 200) {
                             mdui.snackbar("关注成功");
                             weiboDB.transaction(function(tx) {
@@ -568,7 +643,7 @@ $(function () {
         });
 
 
-        $(".block-btn").click(function (argument) {
+        $(".block-btn").click(function(argument) {
             if (typeof(sessionStorage.uid) == "undefined") {
                 mdui.snackbar("请先登录");
                 return;
@@ -584,7 +659,7 @@ $(function () {
                 data: param,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     if (data.code == 200) {
                         mdui.snackbar("屏蔽成功");
                     }
@@ -600,11 +675,11 @@ $(function () {
             type: "POST",
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 mdui.snackbar("退出成功");
                 sessionStorage.removeItem("me")
                 sessionStorage.removeItem("uid")
-                weiboDB.transaction(function (tx) {
+                weiboDB.transaction(function(tx) {
                     tx.executeSql('DROP TABLE IF EXISTS follow');
                     tx.executeSql('DROP TABLE IF EXISTS callat');
                     tx.executeSql('DROP TABLE IF EXISTS favorite');
@@ -612,7 +687,7 @@ $(function () {
                 console.log("用户信息清理完成")
                 self.location = '/';
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("退出失败");
             },
         })
@@ -631,7 +706,7 @@ $(function () {
     }
 
     //召唤用户数据统计
-    $(".usertag-btn").on("click", function (argument) {
+    $(".usertag-btn").on("click", function(argument) {
         var me = JSON.parse(sessionStorage.me)
         var keywords = eval(me.keyword);
         if (keywords.length == 0) {
@@ -659,7 +734,7 @@ $(function () {
 
 
     // 发布微博数据
-    $(".send").click(function (argument) {
+    $(".send").click(function(argument) {
         param = {
             content: $("#blog-content").val(),
             multimedia: ""
@@ -677,7 +752,7 @@ $(function () {
             type: "POST",
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 console.log("正在发布微博...")
                 var rtn = data.data.data;
                 rtn.release_time = rtn.release_time;
@@ -715,13 +790,13 @@ $(function () {
                 $("#blog-content").val("")
                 mdui.snackbar("发送成功");
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("微博发送失败");
             },
         })
     })
 
-    $(".setTime").click(function (argument) {
+    $(".setTime").click(function(argument) {
         var beDialog = $(".setTime-dialog");
         var inst = new mdui.Dialog(beDialog, overlay = true);
         inst.open();
@@ -733,7 +808,7 @@ $(function () {
             step: 5, //选择时间分钟的精确度
         });
         $("#ECalendar_date").off("blur");
-        $("#ECalendar_date").blur(function (argument) {
+        $("#ECalendar_date").blur(function(argument) {
             var stringTime = $("#ECalendar_date").val() + ":00"
             var timestamp2 = Date.parse(new Date(stringTime));
             timestamp2 = timestamp2 / 1000;
@@ -749,8 +824,10 @@ $(function () {
 
 
     function insertBlog(data, reason) {
-        if ($(".blogs").children("[bid='" + data.bid + "']").length > 0)
-            return
+        // if ($(".blogs").children("[bid='" + data.bid + "']").length > 0)
+        //     return
+        user = {}
+        if (typeof(sessionStorage.me) != "undefined") user = JSON.parse(sessionStorage.me)
         data.ocontent = data.content;
         if (typeof(sessionStorage.keyword) != "undefined" && data.reason == "包含了搜索词") {
             data.motto = data.motto.replace(sessionStorage.keyword, "<span class=\"mdui-text-color-red\">" + sessionStorage.keyword + "</span>");
@@ -767,7 +844,7 @@ $(function () {
             "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal dev-info-btn\" mdui-tooltip=\"{content: \'开发信息\', delay: 100}\">\n" +
             "<i class=\"mdui-icon material-icons\">arrow_drop_up</i>\n" +
             "</button>\n";
-        if (typeof(sessionStorage.uid) != "undefined" && parseInt(sessionStorage.uid) == parseInt(data.uid)) {
+        if ((typeof(sessionStorage.uid) != "undefined" && parseInt(sessionStorage.uid) == parseInt(data.uid)) || user.is_ns == 1) {
             res += "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-del-btn\">删除</button>\n" +
                 "<button class=\"mdui-btn mdui-btn-dense mdui-text-color-teal mdui-float-right blog-edit-btn\">编辑</button>\n";
         }
@@ -830,7 +907,7 @@ $(function () {
             "</div></div></div></li>";
         if (parseInt(data.commentNum) != 0)
             res += "<li class=\"mdui-list-item mdui-ripple mdui-p-l-1 comment-load\"><div class=\"mdui-list-item-content mdui-center\">" +
-                "<div class=\"mdui-spinner mdui-spinner-colorful\"></div></li>";
+            "<div class=\"mdui-spinner mdui-spinner-colorful\"></div></li>";
         res += "</ul></div></div></div></div></div>";
         $(".blogs").prepend(res);
     }
@@ -863,11 +940,11 @@ $(function () {
                 data: param,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     console.log(data);
                     mdui.snackbar(data.msg);
                 },
-                error: function (data) {
+                error: function(data) {
                     console.log(data);
                     mdui.snackbar("转发失败");
                 }
@@ -906,11 +983,11 @@ $(function () {
                     data: param,
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         mdui.snackbar(data.msg);
 
                     },
-                    error: function (data) {
+                    error: function(data) {
                         mdui.snackbar("举报失败");
                     }
                 })
@@ -937,7 +1014,7 @@ $(function () {
                     data: param,
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.code == 200 && data.data != null) {
                             var commits = data.data;
                             commitlist.children(".comment-load").remove();
@@ -968,7 +1045,7 @@ $(function () {
                 data: param,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     mdui.snackbar("删除成功");
                     thisCard.hide();
                 }
@@ -996,13 +1073,13 @@ $(function () {
             inst.open();
 
             $(".blog-edit-delimg").off("click");
-            $(".blog-edit-delimg").click(function (argument) {
+            $(".blog-edit-delimg").click(function(argument) {
                 $(".blog-edit-image").attr("src", "");
                 $("#edit-image").show();
             })
 
             $(".blog-edit-cancel").off("click");
-            $(".blog-edit-cancel").click(function (argument) {
+            $(".blog-edit-cancel").click(function(argument) {
                 $(".blog-edit-image").attr("src", "");
                 $(".blog-edit-input").val();
                 $(".blog-edit-content").attr("bid", "");
@@ -1010,7 +1087,7 @@ $(function () {
             })
 
             $(".blog-edit-send").off("click");
-            $(".blog-edit-send").click(function (argument) {
+            $(".blog-edit-send").click(function(argument) {
                 params = {
                     bid: $(".blog-edit-content").attr("bid"),
                     multimedia: $(".blog-edit-image").attr("src"),
@@ -1030,7 +1107,7 @@ $(function () {
                     data: params,
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         if (data.code == 200) {
                             mdui.snackbar("编辑成功");
                             setTimeout("location.reload()", "500");
@@ -1055,7 +1132,7 @@ $(function () {
                 data: param,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     if (data.msg == "点赞") {
                         thisclass.toggleClass("mdui-text-color-theme");
                         thisclass.toggleClass("mdui-text-color-pink");
@@ -1094,14 +1171,14 @@ $(function () {
                 data: param,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     var commits = data.data;
                     mdui.snackbar(data.msg);
                     sendCard.after(insertComment(commits[commits.length - 1]));
                     var num = $(this).children(".commentNum").html()
                     $(this).children(".commentNum").html(parseInt(num) + 1)
                 },
-                error: function (data) {
+                error: function(data) {
                     mdui.snackbar(data.msg);
                 }
             })
@@ -1124,7 +1201,7 @@ $(function () {
                     data: param,
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         mdui.snackbar("收藏");
                         mdui.snackbar(data.msg);
                     }
@@ -1141,12 +1218,12 @@ $(function () {
                     data: param,
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: "json",
-                    success: function (data) {
+                    success: function(data) {
                         mdui.snackbar("取消收藏");
                         mdui.snackbar(data.msg);
 
                     },
-                    error: function (data) {
+                    error: function(data) {
                         mdui.snackbar("取消收藏失败");
                     }
                 })
@@ -1194,7 +1271,7 @@ $(function () {
 
     //生成所有被转发的微博
     function insertForword() {
-        $(".waitload").each(function () {
+        $(".waitload").each(function() {
             var id = $(this).attr("bid");
             var thisDiv = $(this)
             $.ajax({
@@ -1205,7 +1282,7 @@ $(function () {
                 type: "POST",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     if (data.code = 200 && data.data != null) {
                         var rtn = data.data;
                         thisDiv.addClass("origin-blog");
@@ -1245,7 +1322,7 @@ $(function () {
         ataDialog_inst.open();
     });
     // @用户搜索事件（监听keyup的回车事件）
-    $('.peoyourwant').keyup('keyup', function (event) {
+    $('.peoyourwant').keyup('keyup', function(event) {
         param = {
             nickname: $(".peoyourwant").val()
         };
@@ -1257,7 +1334,7 @@ $(function () {
             data: param,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 var users = data.data;
                 console.log("获取5个用户...");
                 if (data.code == 200 && users != null) {
@@ -1271,7 +1348,7 @@ $(function () {
                     }
                     // @列表点击事件
                     $(".friend-list").off("click");
-                    $(".friend-list").on("click", ".callat-item", function () {
+                    $(".friend-list").on("click", ".callat-item", function() {
                         var uid = $(this).attr("userid")
                         var username = $(this).attr("username");
                         var v = $("#blog-content").val();
@@ -1282,7 +1359,7 @@ $(function () {
                     })
                 }
             },
-            error: function () {
+            error: function() {
                 mdui.snackbar("用户获取失败");
             },
         })
@@ -1294,7 +1371,7 @@ $(function () {
         dDialog_inst.open();
 
         // @用户搜索事件（监听keyup的回车事件）
-        $('.discuss-input').keyup('keyup', function (event) {
+        $('.discuss-input').keyup('keyup', function(event) {
             param = {
                 name: $(".discuss-input").val()
             };
@@ -1306,7 +1383,7 @@ $(function () {
                 data: param,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     var discusses = data.data;
                     console.log("获取5个话题");
                     if (data.code == 200 && discusses != null) {
@@ -1320,7 +1397,7 @@ $(function () {
                     }
                     // @列表点击事件
                     $(".discuss-list").off("click");
-                    $(".discuss-list").on("click", ".discuss-item", function () {
+                    $(".discuss-list").on("click", ".discuss-item", function() {
                         var did = $(this).attr("did")
                         var name = $(this).attr("name");
                         var v = $("#blog-content").val();
@@ -1330,7 +1407,7 @@ $(function () {
                         sessionStorage.discussdid = did;
                     })
                 },
-                error: function () {
+                error: function() {
                     mdui.snackbar("用户获取失败");
                 },
             })
@@ -1350,21 +1427,25 @@ $(function () {
         $("#blog-content").focus();
     })
 
-    $('.insert-img').click(function () {
+    $('.insert-img').click(function() {
         inst = upload()
+        uploadDialog(inst)
+    })
+
+    function uploadDialog(inst) {
         var box = document.getElementById("image-zone");
-        box.ondragenter = function (e) {
+        box.ondragenter = function(e) {
             e.preventDefault();
         };
-        box.ondragover = function (e) {
+        box.ondragover = function(e) {
             e.preventDefault();
             box.innerHTML = "松开鼠标开始上传";
         };
-        box.ondragleave = function (e) {
+        box.ondragleave = function(e) {
             e.preventDefault();
             box.innerHTML = "拖拽到这里上传";
         };
-        box.ondrop = function (e) {
+        box.ondrop = function(e) {
             e.preventDefault();
             box.innerHTML = "上传中...";
             var files = e.dataTransfer.files;
@@ -1378,17 +1459,29 @@ $(function () {
                 processData: false,
                 contentType: false,
                 data: fd,
-                success: function (data) {
+                success: function(data) {
                     if (data.code == 200) {
                         mdui.snackbar("上传成功");
                         sessionStorage.img = data.data;
                         inst.close()
+                        if (sessionStorage.imgType == "avatar") {
+                            user = JSON.parse(sessionStorage.me)
+                            user.avatar = data.data;
+                            sessionStorage.removeItem("img");
+                            sessionStorage.removeItem("imgType");
+                            editUser(user);
+                        } else if (sessionStorage.imgType == "background") {
+                            user = JSON.parse(sessionStorage.me)
+                            user.background = data.data;
+                            sessionStorage.removeItem("img");
+                            sessionStorage.removeItem("imgType");
+                            editUser(user)
+                        }
                     }
                 }
             })
         }
-
-    })
+    }
 
     //文件上传框呼出
     function upload(argument) {
@@ -1412,18 +1505,18 @@ $(function () {
     }
 
     var box = document.getElementById("edit-image");
-    box.ondragenter = function (e) {
+    box.ondragenter = function(e) {
         e.preventDefault();
     };
-    box.ondragover = function (e) {
+    box.ondragover = function(e) {
         e.preventDefault();
         box.innerHTML = "松开鼠标开始上传";
     };
-    box.ondragleave = function (e) {
+    box.ondragleave = function(e) {
         e.preventDefault();
         box.innerHTML = "拖拽到这里上传";
     };
-    box.ondrop = function (e) {
+    box.ondrop = function(e) {
         e.preventDefault();
         box.innerHTML = "上传中...";
         var files = e.dataTransfer.files;
@@ -1437,24 +1530,13 @@ $(function () {
             processData: false,
             contentType: false,
             data: fd,
-            success: function (data) {
+            success: function(data) {
                 if (data.code == 200) {
                     mdui.snackbar("上传成功");
                     sessionStorage.img = data.data;
                     $(".blog-edit-image").attr("src", data.data);
                     $(".blog-edit-delimg").show();
                     $("#edit-image").hide();
-                    if (sessionStorage.imgType == "avatar") {
-                        user = JSON.parse(sessionStorage.me)
-                        user.avatar = data.data;
-                        sessionStorage.removeItem("img");
-                        editUser(user);
-                    }else if (sessionStorage.imgType == "background"){
-                        user = JSON.parse(sessionStorage.me)
-                        user.background = data.data;
-                        sessionStorage.removeItem("img");
-                        editUser(user)
-                    }
                 }
             }
         })
@@ -1465,7 +1547,8 @@ $(function () {
 
     function editAvatar() {
         sessionStorage.imgType = "avatar"
-        var inst = upload()
+        inst = upload()
+        uploadDialog(inst)
     }
 
     $(".editBack").off("click");
@@ -1473,28 +1556,47 @@ $(function () {
 
     function editBack() {
         sessionStorage.imgType = "background"
-        var inst = upload()
+        inst = upload()
+        uploadDialog(inst)
     }
 
     function editUser(user) {
+        userData = {
+            "user.uid": user.uid,
+            "user.age": user.age,
+            "user.alive": user.alive,
+            "user.avatar": user.avatar,
+            "user.background": user.background,
+            "user.is_ban": user.is_ban,
+            "user.is_ns": user.is_ns,
+            "user.username": user.username,
+            "user.nickname": user.nickname,
+            "user.password": user.password,
+            "user.motto": user.motto,
+            "user.sex": user.sex,
+        }
         $.ajax({
-            url: '/user/upload',
+            url: '/user/Update',
             type: "POST",
-            data: {user: user},
+            data: userData,
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
             success: function(data) {
                 if (data.code == 200) {
                     mdui.snackbar("编辑成功");
+                    sessionStorage.me = JSON.stringify(data.data);
                 }
             }
         })
     }
 
-    $(".favorite-btn").click(function () {
+    $(".favorite-btn").click(function() {
         self.location = "/?method=favorite";
     })
-    $(".callat-btn").click(function () {
+    $(".callat-btn").click(function() {
         self.location = "/?method=callat";
+    })
+    $(".read-report").click(function() {
+        self.location = "/?method=report";
     })
 })

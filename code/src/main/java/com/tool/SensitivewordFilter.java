@@ -109,23 +109,6 @@ public class SensitivewordFilter extends AbstractInterceptor{
 		return matchFlag;
 	}
 
-	public static void main(String[] args) {
-		SensitivewordFilter filter = new SensitivewordFilter();
-		System.out.println("敏感词的数量：" + filter.sensitiveWordMap.size());
-		String string = "三级片第三方刚回家发个梵蒂冈地方";
-		try {
-			string = URLDecoder.decode(string, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		System.out.println("待检测语句字数：" + string.length());
-		long beginTime = System.currentTimeMillis();
-		Set<String> set = filter.getSensitiveWord(string, 1);
-		long endTime = System.currentTimeMillis();
-		System.out.println("语句中包含敏感词的个数为：" + set.size() + "。包含：" + set);
-		System.out.println("总共消耗时间为：" + (endTime - beginTime));
-	}
-
 	@Override
 	public String intercept(ActionInvocation arg0) throws Exception {
 		// TODO Auto-generated method stub

@@ -5,10 +5,16 @@
 <mapper namespace="weibo/SensitivityMapper">
     <!-- 查看被举报的微博-->
     <select id="getReportedBlog"  resultType="Map">
-        SELECT *
+        SELECT *,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) AS commentNum,
+        (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS likeNum,
+        (SELECT count(bl.bid) FROM blog bl WHERE bl.comment_on=t.bid AND type=2) + (SELECT count(tu.tuid) FROM thumb_up tu WHERE tu.blog_id=t.bid) AS nums
         FROM sensitivity as s
         JOIN blog as b
         ON s.blog_id = b.bid
+        JOIN user AS u
+        on u.uid = b.user_id
+        WHERE u.is_ban = 0
     </select>
     <!--封禁账号通过id-->
     <update id="banByUserId" parameterType="Map">

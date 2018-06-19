@@ -68,13 +68,11 @@ $(function() {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: "json",
             success: function(data) {
+                mdui.snackbar(data.msg);
                 if (data.code == 200) {
-                    mdui.snackbar("登陆成功");
                     sessionStorage.me = JSON.stringify(data.data.me);
                     var uid = data.data.me.uid;
                     initUserinfo(uid);
-                } else {
-                    mdui.snackbar("登陆失败");
                 }
             },
             error: function() {

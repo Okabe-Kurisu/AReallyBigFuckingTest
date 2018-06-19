@@ -431,7 +431,7 @@ public class BlogAction extends ActionSupport implements ServletRequestAware {
             java.util.Date endDate = dft.parse(dft.format(date.getTime()));
             nowtime = (int) endDate.getTime();
             System.out.println(nowtime);*/
-            int sevenDay = 7 * 24 * 3600;
+            int sevenDay = 4 * 7 * 24 * 3600;
             nowtime = ((int) (System.currentTimeMillis() / 1000)) - sevenDay;
             map.put("nowtime", (int) (System.currentTimeMillis() / 1000));
             // 封装参数
